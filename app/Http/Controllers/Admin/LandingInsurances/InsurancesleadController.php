@@ -43,10 +43,10 @@ class InsurancesleadController extends Controller
             'ORIGEN' => 'Canal Digital',
             'CLIENTE_WEB' => 1,
         ];
-        $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
-        if (empty($customer)) {
-            $this->customerInterface->updateOrCreateCustomer($dataOportudata);
-        }
+        // $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
+        // if (empty($customer)) {
+        //     $this->customerInterface->updateOrCreateCustomer($dataOportudata);
+        // }
 
         $lead =  $this->leadInterface->createLead($request->input());
 

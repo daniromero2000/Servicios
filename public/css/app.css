@@ -1,1 +1,4429 @@
-@import url(https://fonts.googleapis.com/css?family=Barlow:200,300,400,500,600,700,800,900);#ex-global-content{transition:all .5s ease-out}.ex-loader{position:fixed;width:100%;height:100%;background-color:rgba(227,238,243,.8);z-index:9999999999;top:0}.ex-loader-blur{filter:blur(10px);-webkit-filter:blur(10px);z-index:9999999}#loader{transition:all .5 ease-out;z-index:99999999;top:40%;left:50%;margin-left:-20px;margin-top:-20px;position:absolute;margin:6em auto;font-size:10px;text-indent:-9999em;border-top:1.1em solid rgba(42,172,224,.5);display:block;border-right:1.1em solid rgba(42,172,224,.2);border-bottom:1.1em solid rgba(42,172,224,.2);border-left:1.1em solid #2aace0;-webkit-animation:load8 1.1s infinite linear;animation:load8 1.1s infinite linear}#loader,#loader::after{border-radius:50%;width:40px;height:40px}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load8{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}body{font-family:Barlow}a{text-decoration:none}a:active,a:focus,a:hover,a:visited{text-decoration:none!important}.textModalNumSolic{color:#4a4a4a;font-size:13px;margin-bottom:20px}.resetCol{padding:0!important}.resetRow{margin:0!important}.borderLeftItems{border-right:1px solid #000}.container-itemsPreHeader{padding-top:10px}.preHeader-item{color:#000!important;font-size:13px;font-weight:500;height:25px;padding:5px 25px 0 25px!important}#mensajeFinal{padding:100px 0}.containMensajeFinal{background:#edf7fb;padding:0 0 30px 0;border-radius:70px}.mensajeFinal-containImg{padding:0 25px}.mensajeFinal-img{margin-top:-30px}.mensajeFinal-containText{padding:0 40px;position:absolute;transform:translateY(-50%);top:50%}.mensajeFinal-text{color:#368cae;font-size:22px;border-bottom:1px solid;padding-bottom:20px}.mensajeFinal-text2{color:#606060;font-size:20px}#header{margin-top:10px;position:relative;background-color:#f5f4fe}#header .row{width:100%;margin:auto}#bustour .row,#header .row.resetRow,#travelOffers .row,#viajesHeader .row,.plansContent{max-width:1960px;margin:auto!important}.header-menu{height:100%;padding:0!important}.header-containerItems{height:100%}.buttonResponsive{display:none}.header-containerLogo{background:#f5f4fe;padding:5px 0 5px 30px}.header-menu{width:100%}.header-item{position:relative;color:#000!important;display:block;text-align:center;width:25%}.header-textoItem{color:#fff;display:inline-block;font-size:16px;font-weight:500;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:100%;z-index:3}.header-containerItemsResponsive{display:none}.no_scroll{overflow:hidden}.header-item1{background:#1d84c3}.header-item2{background:#ec2d35}.header-item3{background:#fdbf3c}.header-item4{background:#2aace0}.header-item5{background:#3fcf64}.header-item6{background:#3fcf64}.header-item7{background:#de005d}.header-menu:before{background:#1d84c3;content:"";height:72px;position:absolute;top:0;left:-23px;transform:skew(336deg);width:40px;z-index:2}.logoutButton{position:relative;float:right;color:#000!important;font-size:13px;font-weight:700!important;height:25px}.assesorLogin a{position:absolute;right:20px;top:11px;text-decoration:none;font-weight:500;color:#1d84c3}.assessorModule a{background-color:#007bff;color:#fff;font-weight:600;padding:10px 20px;border-radius:20px}.assessorModule p{margin-top:10%}.assessorHeader{margin-top:30px}.assessorProgress{margin-top:60px}.assessorHeader h3{width:100%}.activeMenu:after{background:url(../images/menu-idintifier.png) no-repeat center center;bottom:-35px;content:"";height:40px;position:absolute;width:40px;z-index:2}.activeMenu:after{left:40%}.activeMenuOportuya:after{left:30%}#sliderPrincipal{position:relative}.slidePrev{background:#464645;color:#fff;cursor:pointer;font-size:30px;height:60px;display: flex;position:absolute;right:0;transform:translate(0,-50%);text-align:center;top:50%;width:60px;z-index:2}.slideNext{background:#464645;color:#fff;cursor:pointer;font-size:30px;height:60px;display: flex;position:absolute;left:0;transform:translate(0,-50%);text-align:center;top:50%;width:60px;z-index:2}.sombraSliderPrincipal{position:absolute;bottom:0}.containImg{position:relative}.sliderPrincipal-containTextLeft{color:#000;position:absolute;left:18%;top:47%;text-align:-webkit-center}.sliderPrincipal-containTextBottom{color:#000;position:absolute;left:40%;top:70%;text-align:-webkit-center;font-size:15px}.sliderPrincipal-textSlider{font-size:21px;font-weight:400;color:#fff;text-shadow:1px 1px 2px #000}.sliderPrincipal-titleSlider{color:#fff;font-size:36px;text-shadow:1px 1px 2px #000}.sliderPrincipal-button{font-weight:600;border-radius:40px;display:inline-block;color:#fff;font-size:18px;padding:15px 40px}.sliderPrincipal-button:active,.sliderPrincipal-button:focus,.sliderPrincipal-button:hover,.sliderPrincipal-button:visited{color:#fff}.oportuyaSliderContentAdvance{background-color:rgba(0,0,0,.2)!important;border-radius:20px!important;padding:30px 19px!important}.oportuyaSliderButtonAdvance p a{background-color:#fdbf3c!important;box-shadow:2px 1px 12px 3px #f9e0e8!important;color:#fff}.requirementsListAdvance{margin-top:15px!important;padding-right:30px!important}.descriptionRequirementsAdvance{margin-top:15px!important;padding:0 30px!important}.descriptionRequirementsAdvance{min-height:480px}.avanceSliderContent.oportuyaSliderContent p{color:#001980!important;font-weight:700}#prestamos{padding:30px 0}#prestamos div h3{color:#009ade}#requisitos-prestamo{background-color:#001980;padding:15px 0}#requisitos-prestamo .requisitos-texto{line-height:.8}#requisitos-prestamo .requisitos-texto h4{color:#009ade;font-weight:600;margin-bottom:0}.requisitos-texto{padding:1.3em 0 0 0}#requisitos-prestamo .requisitos-texto span{color:#fff;font-weight:600;font-size:11px}.requisitos-items{font-size:.8em;color:#fff;font-weight:700}.requisitos-items .row .col-sm-4.col-lg-5{padding:0}.requisitos-items .row .col-sm-8.col-lg-7{padding:1.5em 0 0 0}.solicitudAvanceTitulo{padding-top:30px}.solicitudAvanceTitulo h3{color:#001980;font-weight:700}.solicitudPasos{padding:15px}.solicitudPasos>div{border-radius:20px;padding:25px 35px;background-color:#d9d6e2}.imageSolicitudPasos{padding:0}.tituloSolicitudPasos{padding-top:7%}.tituloSolicitudPasos span{color:#021780;font-weight:800}.descripcionSolicitudPasos{color:#021780}.botonSolicitudContainer a{position:absolute;left:50%;transform:translate(-50%);background-color:#021780;color:#fff;padding:1% 12%;font-weight:800;font-size:1.4em;border-radius:31px}#solicitudPasosBoton{margin-bottom:70px}.oportuyaSliderContent{position:absolute;bottom:10em;left:3em}.oportuyaSliderTitle p{font-size:2.5em;font-weight:500}.oportuyaSliderContent p{text-align:center;line-height:100%;color:#fff}.textTitleSliderPink{color:#e72665;font-weight:700!important}.textTitleSliderBlue{color:#0a50ae;font-weight:700!important}.oportuyaSliderTitle p:first-child{margin-bottom:0}.oportuyaSliderDescription p{font-size:13px}.textTarjeta{color:#332d74;font-size:11px;font-weight:700}.oportuyaSliderButton p a{font-weight:800;background-color:#fff;color:#382989;padding:12px 50px;border-radius:50px;font-size:1.2em;box-shadow:2px 1px 12px 3px #f9e0e8}.oportuyaSliderButton.oportuyaSliderButtonAdvance p a{background-color:#001980!important;color:#fff!important;box-shadow:2px 1px 12px 3px rgba(0,25,128,.5)!important}.containImg img{margin:auto;width:100%}.contentCreditcards{text-align:center}.contentCreditcards img{margin-top:40px}.contentCards{position:absolute;transform:translate(-50%,-50px);left:50%;background-color:#fff;width:80%;box-shadow:2px 1px 12px 3px rgba(0,0,0,.2);border-radius:10px;max-width:1300px;margin:auto}.contentCards p{text-align:center}.titleContentCard{font-weight:700;font-size:1.4em;margin-top:15px}.descriptionContentCard{font-size:.7em;color:#a0a0a0}.buttonCard{margin:25px 0}.buttonCreditCard{background-color:#e72665;color:#fff;padding:6px 25px;border-radius:20px;font-weight:500;font-size:1.1em}.beforeLine{position:relative}.beforeLine::after{position:absolute;content:" ";height:80%;width:2px;background-color:#d8d8d8;transform:translate(-50%,-110%);left:100%}.checkIcon{position:absolute;transform:translate(50%)}.buttonCreditCard:hover{-moz-transform:scale(1.1);-webkit-transform:scale(1.1);transform:scale(1.1);color:#fff}#requirements{margin-top:3em;margin-bottom:6em}.requirementsContent{width:80%;margin:auto}.contentRequirements{text-align:center}.titleRequirements{font-size:1.5em;font-weight:700;margin-top:20px;position:relative}.titleRequirements::after{content:" ";height:10px;width:2em;border-radius:20px;position:absolute;background-color:#ffba00;transform:translate(-50%,2em);left:50%}.descriptionRequirements{width:25em;margin:3em auto;text-align:justify}.buttonRequirements{background-color:#ffd13f;color:#000;font-weight:700;padding:.5em 2.5em;border-radius:1.5em}.requirementsContent::after{content:" ";height:27em;width:2px;left:50%;position:absolute;background-color:#d8d8d8;transform:translate(-50%,2em)}.requirementsList{width:25em;margin:3em auto;text-align:justify}#oportuyaSection{margin-bottom:4em}.oportuyaContent{width:80%;margin:auto}.oportuyaCardsContent{width:100%}.oportuyaContentHeader{padding:20px 0;background-color:#d5eaef;border-radius:10px 10px 0 0}.oportuyaHeaderImage{padding:0;text-align:center}.textOportuyaHeader{position:absolute;left:50%;transform:translate(-50%);text-align:center;margin-top:25px}.textOportuyaHeader>span{font-size:.8em}.buttonOportuyaSection{position:relative;margin-top:0!important;margin-bottom:30px}.buttonOportuyaSection a{background-color:#013485;color:#fff;font-size:1.2em;padding:.5em 3.5em;border-radius:25px;font-weight:800;margin-left:50%;transform:translate(-50%)}.contentFeatures{padding-left:4em}.oportuyaContentFeatures{background-color:#edf7fb;border-radius:0 0 10px 10px;background-image:url(../images/fondoBarras.png)}.oportuyaContentFeatures div.col-md-8 div.row{margin-top:40px}.oportuyaContentImage img{position:absolute;bottom:0;right:-3em}.efectiveText{color:#2c3d5b;font-size:1.6em;text-align:center}.efectiveText span{font-size:1.2em;color:#005daf}.bestPricesImg img{padding:4% 0}.featuresfirstText{margin-top:1.5em;font-size:1.5em;font-weight:700}.contentFeatures>div>div.row+p{font-weight:800;font-size:1.2em;margin-left:2em;margin-bottom:1em;margin-top:.5em}.contentListFeatures div ul li{margin-bottom:.5em;height:1.5em;font-weight:500}.soatImageContainer{margin:4em 0 3em 0}.soatImageContainer div{padding-left:4em}.contentListFeaturesResponsive{display:none}.responsiveButtonOportuya{display:none}.oportuyaTextResponsive{display:none}.cardImageContainer{position:relative;height:300px}.cardImageContainer .cardImage{position:absolute;width:100%;margin:auto;height:100%;transform-style:preserve-3d;transition:all 1.5s ease-in-out}.cardImage .side{backface-visibility:hidden;-webkit-backface-visibility:hidden;height:100%;-webkit-overflow:hidden;overflow:hidden;width:100%}.cardImage .back{position:absolute;text-align:center;width:100%;top:50px;transform:rotateY(180deg) translate(50%);max-width:80%;left:50%}.cardImage .back ul{padding-left:1em}.cardImage .back p{font-size:12px;text-align:justify;color:gray;padding-left:5px}.cardImage .back p i{font-size:6px;transform:translateY(-30%)}.back ul li{text-align:justify;font-size:13px;line-height:1.3;font-weight:500}.hrcards{height:2px;visibility:hidden;margin-bottom:-1px}.stepContainer{position:relative}.stepContainer:after{position:absolute;content:' ';width:2px;right:0;top:0;height:100%;background-color:#c3cad0}.steps img{margin-bottom:20px}.steps p{color:#1c7fa8;font-weight:800;font-size:1.2em;margin-bottom:0;width:75%;margin:auto}.steps p span{color:#012d60;font-weight:800}.servicesPointContainer{position:relative;background-color:#eb1f64;background-image:url(../images/imagenFondoPuntosServicios-05.png);background-repeat:no-repeat;background-position:right;margin-bottom:25px;padding-top:50px;padding-bottom:25px}.servicesPointContainer:before{content:'';position:absolute;top:0;right:0;border-top:25px solid #fff;border-left:25px solid #eb1f64;width:0}.servicesPointCard{position:relative;margin-top:25px;background-image:url(../images/imagenFondoDescuentos.png);background-repeat:no-repeat;background-color:#0f8ac6;padding-top:55px;padding-bottom:50px}.servicesPointCard:before{content:'';position:absolute;bottom:0;left:0;border-bottom:25px solid #fff!important;border-right:25px solid #0f8ac6!important;width:0}#servicesPoint>div.row{width:100%;margin:0 0 50px 0}.servicesPointCard img,.servicesPointContainer img{margin-bottom:20px}.servicesPointCard p,.servicesPointContainer p{color:#fff;line-height:0;font-weight:500;font-size:1.2em}.serviceContainer{margin-left:50%;transform:translate(-50%)}.fixedButton{display:none;background-image:url(../images/fondoFlotante.png);position:fixed;background-size:100% 100%;background-repeat:no-repeat;top:30%;right:0;width:160px;text-align:center;z-index:9}.fixedButton div.row p{margin:0;line-height:13px}.fixedButton>div.row div img{width:2em;margin-left:10px;margin-top:20px}.fixedButton>div.row div.col-8{padding:0;padding-left:23px;margin-top:10px}.fixedButton>div.row div.col-12{margin-bottom:10px}.fixedButton>div.row div.col-12 a{background-color:#fff;font-size:12px;border-radius:20px;padding:4px 14px;font-weight:700;color:#020202;margin-left:20px}.fixedButton>div.row span{color:#fff;font-size:12px;z-index:9;font-weight:500}#offers{background-color:#e3eef3;padding-bottom:5em}.offers{max-width:1600px;margin:auto}.offersTitle{position:relative;left:50%;transform:translate(-50%);margin:2em 0}.offersTitle p{font-size:2.5em;font-weight:700;color:#2d8cca}.offersTitle p::after{content:" ";width:10em;height:8px;background-color:#2d8cca;position:absolute;bottom:0;right:50%;transform:translate(50%);border-radius:21px}.offersDescription{margin-top:10em;width:100%;margin:auto}.offersContent{text-align:center}.offersPrice1{position:absolute;top:0;right:0;transform:translate(-3em,1.5em);color:#ffe002}.offersPrice1 span{position:absolute;top:0;right:50%;transform:translate(50%,0);font-size:2em;font-weight:700}.offersPrice2{position:absolute;top:0;right:0;transform:translate(-9em,1.5em);color:#ffe002}.offersPrice2 span{position:absolute;top:0;right:50%;transform:translate(50%,0);font-size:2em;font-weight:700}.offersDescription::before{content:" ";width:2px;height:25em;background-color:#d8d8d8;position:absolute;right:50%;transform:translate(50%)}.buttonOffers a{transform:translate(-50%);left:50%;padding:.4em 2em;background-color:#005caf;color:#fff;font-weight:700;border-radius:20px}.slick-slide img{margin:auto}.imgOffer{min-height:280px}.offers div.row{width:100%}#conoce{padding:40px 0}.conoce-title{color:#348dc7;font-size:22px;font-weight:700;line-height:20px;margin-bottom:60px;position:relative;text-align:center}.conoce-title:before{background:#348dc7;border-radius:70px;bottom:-14px;content:"";height:4px;left:45%;position:absolute;width:10%}.conoce-TarjetaOportuya{background:#1d84c3}.conoce-creditoMotos{background:#ec2d35}.conoce-creditoLibranza{background:#fdbf3c}.conoce-seguros{background:#2aace0}.conoce-viajes{background:#3fcf64}.conoce-titleTarjeta{color:#fff;font-size:22px;font-weight:300;margin:10px 0 20px 0}.conoce-tarjetasTexto{color:#fff;font-size:12px;font-weight:300;line-height:13px;margin-top:20px}.conoce-titleTarjetaMotos{color:#fff;font-size:22px;font-weight:300;margin:10px 0 54px 0}.conoce-titleTarjetaSeguros{color:#fff;font-size:22px;font-weight:300;margin:10px 0 80px 0}.conoce-titleTarjeta>strong,.conoce-titleTarjetaMotos>strong,.conoce-titleTarjetaSeguros>strong{font-size:25px;font-weight:500}.conoce-containTarjeta>img{border-radius:5px;-webkit-box-shadow:0 0 31px -11px rgba(0,0,0,.75);-moz-box-shadow:0 0 31px -11px rgba(0,0,0,.75);box-shadow:0 0 31px -11px rgba(0,0,0,.75)}.conoce-TarjetaOportuya,.conoce-creditoLibranza,.conoce-creditoMotos,.conoce-seguros,.conoce-viajes{border-radius:5px 0 0 5px;height:100%;padding:0 5px;position:absolute;width:35%}.conoce-containButton{position:absolute;right:15%;top:85%}.conoce-button{font-weight:600;border-radius:20px;color:#fff;font-size:13px;padding:5px 25px}.conoce-button:active,.conoce-button:focus,.conoce-button:hover,.conoce-button:visited{color:#fff}.button-oportuya{background:#1d84c3}.button-creditoMotos{background:#ec2d35}.button-creditoLibranza{background:#fdbf3c}.button-seguros{background:#2aace0}.button-viajes{background:#3fcf64}.libranzaSteplogo{width:72%!important}.form-container-logoLibranza{background:#fff!important;position:relative}.form-container-logoLibranza:before{background:#fff!important;content:"";height:156px;position:absolute;top:0;right:-32px;transform:skew(338deg);width:64px;z-index:2}.container-libranza-forms{background:#ffcf00!important}.progreso>.barra_vacia_libranza{background-color:#ffcf00!important}.progreso>.puntos.listo.punto_listo_libranza+span{background-color:#ffcf00!important}.progreso>.puntos.listo.punto_listo_libranza+span+label{color:#000}.btnStepLibranzaStep1:disabled{background-color:#ffcf00!important;border-color:#000!important}.btnStepLibranzaStep1{background-color:#ffcf00!important;border-color:#000!important}.btnStepLibranza{background-color:#ffcf00!important;border-color:#000!important}.forms-descStepLibranza{background:#ffcf00!important}.text-analyst-libranza{color:#000!important}#creditoLibranza-slider{width:100%;margin:auto}#video{background:url(../images/video-fondo.jpg);background-repeat:no-repeat;background-size:cover;padding:50px 0 150px 0;position:relative}.video-title{color:#3c9cd8;margin-bottom:120px;text-align:center;text-shadow:-1px 0 15px rgba(60,156,216,.6);position:relative}.video-title:after{background:#3c9cd8;border-radius:70px;bottom:-14px;content:"";height:4px;left:42%;position:absolute;width:17%;-webkit-box-shadow:0 2px 26px -1px #3c9cd8;-moz-box-shadow:0 2px 26px -1px #3c9cd8;box-shadow:0 2px 26px -1px #3c9cd8}.video-botonPlay{cursor:pointer;left:50%;position:absolute;transform:translate(-50%,-50%);top:50%;width:96px}.video-containText{padding-left:80px}.video-img{margin-right:10px;width:40px}.video-text{color:#3c9cd8;text-shadow:-1px 0 15px rgba(60,156,216,.6)}#convenios{padding:40px 0}.containerConvenios{max-width:1200px;margin:auto}.convenios-title{color:#348dc7;font-size:25px;font-weight:400;margin-bottom:40px;position:relative}@media(min-width:2187px){.input-footer-max{width:auto!important}}.convenios-title:after{background:#348dc7;border-radius:70px;bottom:-6px;content:"";height:4px;left:42%;position:absolute;width:17%;-webkit-box-shadow:0 2px 26px -1px #3c9cd8;-moz-box-shadow:0 2px 26px -1px #3c9cd8;box-shadow:0 2px 26px -1px #3c9cd8}.convenios-text{margin-bottom:40px;padding:0 110px}.convenios-titleInfo{color:#1d84c3;font-size:20px;font-weight:700}.convenios-textInfo{line-height:17px;margin:10px 0 25px;padding:0 50px}.convenios-button{color:#1d84c3;border:1px solid #1d84c3;border-radius:35px;font-size:18px;padding:7px 45px;transition:all .3s ease-in-out}.convenios-button:hover{background:#1d84c3;color:#fff}#footer{background:#1d84c3;padding:20px 0 0}.footer-contianerLogo{margin-top:30px;text-align:center}.footer-title{color:#fff;font-size:25px;font-weight:400;position:relative}.footer-title:after{background:#fff;border-radius:70px;bottom:-14px;content:"";height:4px;left:39%;position:absolute;width:21%}.footer-contianerTelefonos{margin-left:22%;margin-top:40px;position:relative}.footer-contianerNosotros{margin-left:20%}.footer-textTelefonos{color:#fff;line-height:20px;padding-left:30px}.footer-textTelefonosNal{font-weight:500}.footer-imgNosotros{position:absolute;top:5px}.footer-containerServicioCliente{border-left:1px solid #77b5db;border-right:1px solid #77b5db}.footer-menu{color:#fff;margin-left:25%;padding:18px 0 20px 0}.footer-menuNosotros{color:#fff;margin-top:35px}.footer-menuItem{color:#fff;font-weight:200}.footer-menuTitle{font-weight:600;font-size:15px}.footer-menuItem:active,.footer-menuItem:focus,.footer-menuItem:hover,.footer-menuItem:visited{color:#fff}.footer-menu>li,.footer-menuNosotros>li{font-size:13px}.footer-containerNewsletter{top:20%;padding:0 10%;position:absolute;width:100%}.footer-titleNewsLetter{color:#fff;font-weight:600;font-size:15px}.footer-menuText{color:#fff;font-weight:600}.containerPages{padding:30px}.rowAdjust{margin-left:0;margin-right:0;text-align:center}.rowAdjust div a i{color:#1cabe2}.rowAdjust div span i{color:gray}.headTableLeads{background-color:#1cabe2;color:#fff}.headTableLeads tr{text-align:center}.headTableWarranty{background-color:#1cabe2;color:#fff}.headTableWarranty tr{text-align:center}.tituloLeads{margin:30px 0}.tituloLeads .col-12{text-align:center}.leadTable tbody tr td{text-align:center}.warrantyTable tbody tr td{text-align:center}.containerleads{margin-bottom:70px}.tituloLeads h3{color:#1cabe2;font-weight:600;position:relative}.tituloLeads h3:after{position:absolute;content:" ";background-color:#1cabe2;height:5px;width:10%;left:50%;bottom:-10px;border-radius:20px;transform:translate(-50%)}.modal-header h4{color:#1cabe2;font-weight:600;position:relative}.containerPages{padding:30px}.buttonCreateUsers{background-color:#1d84c3;color:#fff;padding:10px 20px;border-radius:5px;margin-left:15px;font-weight:500}.containerUsers{margin-top:60px}.userTable tbody tr td,.userTable thead tr th{text-align:center}.wrapper{display:flex;align-items:stretch}#sidebar{min-width:200px;max-width:250px;min-height:100vh;background-color:#1d84c3;color:#fff;padding-top:10px}#sidebar ul{text-align:center;margin-top:30px}#sidebar h4{text-align:center}#sidebar ul li a{color:#fff;font-size:20px;font-weight:400}#sidebar.active{display:none}#sidebar ul li a:hover{transform:scale(1.5)}.tab-content.current{display:inherit}.nav-tabs{border-bottom:none}a[data-toggle=collapse]{position:relative}.dashboardContainer{margin-top:50px;text-align:center}#dashboardContent{width:100%}#dashboardContent button{background-color:#1d84c3;color:#fff}.navBarButton{display:block;background-color:#1d84c3!important;color:FFF;z-index:1;padding-right:10px;height:100%}.containerButtonNav{padding:0!important;margin:auto!important}.containerButtonNav button{background-color:#1d84c3;color:#fff;border:solid 1px}.navContainer{min-height:60px;max-height:100px;box-shadow:0 2px 9px gray;margin:0!important;background-color:#f5f4fe}.buttonNavheader{background-color:unset!important;border-style:none}.dashboardIconsContent{padding-top:20px}.dashboardIconsContent .mailIcon{text-align:right}.dashboardIconsContent .notificationIcon{text-align:center}.dashboardIconsContent .userIcon{text-align:left}.dashboardIconsContent>div.row div span i{font-size:30px;color:#1d84c3}.searchBar{position:relative}.searchBar button{position:absolute;right:0;height:100%;background-color:#1d84c3;color:#fff}.dashboardLogo{padding-top:5px}.dashboardLogo a{height:30px;max-height:40px}.dashboardSearch{padding-top:15px}.navbarSideIcons{list-style:none;padding:0;text-align:center;display:block;margin-top:30px}.navbarSideIcons li{margin-bottom:25px}.navbarSideIcons li a{color:#fff;font-size:27px}#sidebar ul li{position:relative;margin-bottom:25px}#sidebar ul li:after{position:absolute;content:"";height:2px;width:80%;background-color:rgba(255,255,255,.1);bottom:-5px;right:20px}.headerDashBoard{text-align:center;margin-bottom:50px}#calendarDashboard,#contactsDashboard,#homeDashboard,#mainDashboard,#modulesDashboard{margin-top:4%}.noticeContent{text-align:center}.noticeContent .card{margin:auto}.iconLeadsImg,.iconUserImg{width:50px}.modulesText{font-weight:600}.cardsProfiles .card{padding:10px}.cardsProfiles .col-6 .card{padding:10px;width:50%;margin:auto}.cardsProfiles .card .card-body a i{font-size:70px}.cardsProfile .card .card-header h5{text-align:center}.thankContainer{position:relative}.containerThankPage img{width:100%;margin:auto}.dialogThakPage{position:absolute;bottom:50%;left:50%;transform:translate(-25%)}.dialogThakPage p{position:absolute;bottom:50%;width:80%;left:50%;transform:translate(-50%,50%);font-weight:700;text-align:justify;font-size:1.5em}.table thead.headTableLeads th{vertical-align:middle!important}.capchaContetent{margin-bottom:15px}.table thead.headTableWarranty th{vertical-align:middle!important}.table thead.headTableProducts th{vertical-align:middle!important}.containerLogin{margin-top:50px;margin-bottom:50px}.card-header.row{margin:0}.loginText p{margin:0;font-size:20px;font-weight:600;transform:translateY(50%);color:#2aace0;text-align:left}.loginLogo{text-align:right}#viajesHeader{background-color:#3fcf64;color:#fff;padding:8px 0}#viajesHeader .row{width:100%}.buttonResponsiveViajes{display:none}.viajesListItems{padding:0;text-align:center}.viajesListItems ul{margin-top:1rem!important;padding:0}.viajesListItems li{display:inline-block;padding:0 2%}.viajesListItems li:not(:last-child){border-right:solid 1px}.viajesListItems li a,.viajesListItems li span{color:#fff;font-weight:500}.viajesHeaderButtonResponsive{display:none}.viajesWhatsappButton{position:relative;padding-top:1rem;text-align:center}.viajesWhatsappButton a{padding:13px 25px;background-color:#e3eef2;border-radius:20px;font-weight:500;font-size:12px}.viajesWhatsappButton a i{font-weight:700;font-size:18px;margin-left:4px}.viajesContactenosLink{padding-top:1rem;text-align:center}.viajesContactenosLink a{color:#fff;font-weight:500;float:left}.viajesSliderContent{position:absolute;bottom:15%;left:20%;text-align:center}.viajesSliderDescription,.viajesSliderTitle{font-size:25px;text-transform:uppercase;font-weight:500}.viajesSliderDescription p,.viajesSliderTitle p{line-height:1}.viajesSliderDescription,.viajesSliderTitle span{font-weight:800!important}.viajesSliderTitle p{margin-bottom:0}.viajesSliderButton p a{background-color:#3fcf64;padding:10px 45px;color:#fff;border-radius:20px;font-weight:600}.viajesSliderButton{margin-top:2rem}#conoceViajes{position:relative}.conoceViajesContent{position:absolute;top:10%;left:50%;text-align:center;transform:translate(-50%)}.conoceViajesTitle{color:#fff;font-size:2em;font-weight:700;margin-bottom:10rem;position:relative}.conoceViajesTitle::after{position:absolute;content:" ";width:60%;height:5px;bottom:-1em;left:50%;transform:translate(-50%);background-color:#fff;border-radius:20px}#bustour .row{width:100%;margin:0}.imagesBustour{padding:0}.conoceViajesTitle p{line-height:.5}.conoceViajesPlay{display:none}.conoceViajesPlay img{width:4em}.imagesBustour div.row div.col-sm-4{padding:0 3px}.imagesBustour div.row div.col-sm-4 img{height:100%;max-height:500px;width:100%}.busTourContent{text-align:center;padding:3em}.busTourMainTitle{color:#4900c0;font-size:3em;font-weight:800;margin:0;line-height:1;font-style:italic}.busTourSubtitle{font-size:2em;font-weight:700;font-style:italic;margin:0;line-height:1;color:#03aa07;position:relative}.busTourSubtitle:after{position:absolute;content:'';bottom:-15px;left:50%;transform:translate(-50%);height:5px;width:35%;border-radius:20px;background-color:#03aa07}.busTourText{margin-top:2em}.busTourText p{font-size:1em;font-weight:500;line-height:1;margin:0;font-style:italic}.busTourPrice{font-weight:800!important;font-size:1.5em!important}.busTourText p span{font-weight:700}.busTourButton p{position:relative}.busTourButton p a{position:absolute;left:50%;transform:translate(-50%);background-color:#fc0;padding:8px 35px;font-style:italic;border-radius:20px;text-transform:none;color:#6b5600;font-weight:800}.plansTitle{margin-bottom:3em}.plansMainTitle{color:#427c42;font-weight:500;margin-bottom:0}.plansSubtitle{position:relative;color:#00c600;font-weight:500}.plansSubtitle:after{position:absolute;content:' ';height:5px;width:70%;background-color:#00c600;left:50%;transform:translate(-50%);bottom:-20px;border-radius:20px}.plansSubtitle span{font-weight:800}#plans{margin-top:3em}#plans .row{width:100%}.plansTitle{margin-left:50%;transform:translate(-50%)}.plansTitle h3{text-align:center}.plansContent{padding:0 3%;text-align:center;margin:0}.plansContent section{padding-bottom:1em;box-shadow:1px 1px 10px -3px;border-radius:6px}.plansdate{margin-top:1em;margin-bottom:0}.plansdate p{font-weight:500;font-style:italic;font-size:16px;margin-bottom:0}.plansDescription{font-weight:700;color:#9d9d9d;font-style:italic;margin:0}.planPrice{font-size:2em;font-weight:800;color:#000;font-style:italic}.planButton{position:relative}.planButton a{background-color:#ffef02;color:#797979;border-radius:20px;max-width:300px;padding:8px 35PX;font-weight:600}.planButton a span{color:#000}#travelOffers{background-color:#f1f1f1;padding:2em 0;margin-top:4em}.travelOffersImg img{float:right}.travelOffersText{text-align:center}.travelOffersText p{margin-bottom:0}.travelMainText{text-transform:uppercase}.travelSecondText{font-weight:700;font-size:18px}.travelAnyText{font-weight:500;font-size:18px}.bustourMainContent,.travelOffersButton,.travelOffersText{display:flex;justify-content:center;align-content:center;flex-direction:column}.travelOffersButton p a{background-color:#001980;padding:7px 30px;border-radius:20px;color:#000;font-weight:800;vertical-align:middle}p.wantToMainTex{font-size:5em;font-weight:800;font-style:italic;color:#9000ff;margin:0}p.wantToSecondTex{font-size:20px;color:#560099;font-weight:700}#wantToTravel{position:relative}.wantToContent{position:absolute;top:50%;left:35%;transform:translate(-50%,-50%);text-align:center}.wantToButton{margin-top:6em}.wantToButton p a{background-color:#ffef02;padding:7px 50px;border-radius:20px;font-size:18px;color:#9000ff;font-weight:700}.buttonNavheader::before{position:relative;display:block;width:0;height:0;border-right:100px solid transparent;border-top:100px solid transparent;border-left:100px solid transparent;border-bottom:100px solid #f0ad4e}.dropdown-menu-dashboard{background-color:#f5f4fe;box-shadow:0 2px 3px grey;display:none;color:#fff;z-index:2;position:absolute;top:70px;right:3%;list-style:none;padding:0 30px}.dropdown-menu-dashboard li{padding:11px 0}.dropdown-menu-dashboard li a{color:#1d84c3}.no-padding-left{padding-left:0!important}.no-padding-right{padding-right:0!important}.containerLogoLibranza{background-color:#fff!important}.angucomplete-title{font-weight:700}.angucomplete-description{font-size:10px;color:#1d84c3;margin-bottom:10px;border-bottom:rgba(125,125,125,.3) solid 1px}.angucomplete-row{cursor:pointer;padding:5px}.angucomplete-row:hover{background-color:rgba(28,171,226,.4)}@media(min-width:1701px){.dialogThakPage p{font-size:2em}}@media(max-width:1700px){.conoce-TarjetaOportuya,.conoce-creditoLibranza,.conoce-creditoMotos,.conoce-seguros,.conoce-viajes{width:45%}.conoce-titleTarjeta{font-size:18px;line-height:20px;margin:10px 0}.conoce-tarjetasTexto{font-size:10px;margin-top:10px}.conoce-titleTarjetaMotos{margin:10px 0 20px 0}.conoce-titleTarjetaSeguros{margin:10px 0 45px 0}.conoce-titleTarjeta>strong,.conoce-titleTarjetaMotos>strong,.conoce-titleTarjetaSeguros>strong{font-size:20px}.conoce-tarjetasImg{width:32px}.conoce-containButton{right:8%}.conoce-button{font-size:10px}.oportuyaContentHeader{height:6em}.oportuyaHeaderImage img{transform:translateY(15%)}}@media(max-width:1500px){.sliderPrincipal-containTextBottom{top:60%}.oportuyaSliderContent{bottom:7em}.soatImageContainer div img{width:50%}.servicesPointCard p,.servicesPointContainer p{font-size:1.1em}}@media(max-width:1366px){.dialogThakPage p{font-size:1.3em}.conoce-containButton{right:8%}.back ul li{line-height:1}.conoce-button{padding:5px 10px}.descriptionContentCard{height:3em}.efectiveText{font-size:1.2em}.viajesWhatsappButton a{padding:13px 19px;font-size:10px}}@media(max-width:1300px){.header-textoItem{font-size:15px}.cardsProfiles .col-6 .card{width:70%}.cardsProfiles .card .card-body a i{font-size:4em}.dialogThakPage p{font-size:1.3em}.bestPricesImg img{padding:7% 0}.cardImage .back{max-width:100%;top:30px}.conoce-TarjetaOportuya,.conoce-creditoLibranza,.conoce-creditoMotos,.conoce-seguros,.conoce-viajes{width:50%}.conoce-titleTarjeta{font-size:15px;line-height:20px;margin:10px 0}.conoce-titleTarjetaMotos{font-size:17px;margin:10px 0 30px 0}.conoce-tarjetasImg{width:24px}.oportuyaSliderTitle p{font-size:2em}.oportuyaSliderButton p a,.oportuyaSliderDescription p{font-size:1em}.viajesListItems{padding:0}.viajesListItems li{padding:0 .5em}.servicesPointCard p,.servicesPointContainer p{font-size:1em}.travelOffersButtonAdvance{padding:0}}@media(max-width:1200px){.header-textoItem{font-size:14px}.planButton a{font-size:12px}.bestPricesImg img{padding:11% 0}.tarjetaLAst{margin:auto}.conoce-containTarjeta{margin-bottom:20px}.conoce-TarjetaOportuya,.conoce-creditoLibranza,.conoce-creditoMotos,.conoce-seguros,.conoce-viajes{width:35%}.conoce-tarjetasImg{width:48px}.conoce-titleTarjeta>strong,.conoce-titleTarjetaMotos>strong,.conoce-titleTarjetaSeguros>strong{font-size:25px}.conoce-titleTarjeta{font-size:25px;line-height:24px;margin:15px 0 50px 0}.conoce-tarjetasTexto{font-size:13px;margin-top:40px}.conoce-titleTarjetaMotos{font-size:25px;margin:10px 0 70px 0}.conoce-titleTarjetaSeguros{margin:10px 0 105px 0}.conoce-containButton{right:14%}.conoce-button{padding:7px 30px;font-size:15px}.oportuyaSliderContent{bottom:5em}.oportuyaSliderContent p{margin-bottom:0}.titleContentCard{font-size:1.2em}.descriptionRequirements{width:90%;margin:3em auto}.descriptionRequirements{width:unset}.requirementsList{width:unset}.dialogThakPage p{font-size:1.2em}.contentListFeatures div ul li{height:unset}.viajesWhatsappButton{padding-left:0;padding-right:0}.viajesListItems li{padding:0 .3em}.busTourButton p a{width:65%}.servicesPointCard p,.servicesPointContainer p{font-size:.9em}.serviceContainer{margin-left:40%}.travelOffersButtonAdvance p a{padding:7px 10px}}@media(max-width:991px){.mensajeFinal-text{font-size:17px}.mensajeFinal-containText{padding:0 10px}.slidePrev{display:none}.slideNext{display:none}.travelOffersButtonAdvance p a{padding:7px 30px}.cardsProfiles .col-6 .card{width:90%}.busTourButton p a{width:unset}.wantToContent{position:relative;top:unset;left:unset;transform:unset;text-align:center}p.wantToMainTex{font-size:3em}.wantToButton{margin-top:2em}.dialogThakPage p{font-size:1em;width:90%;transform:translate(-50%,60%)}.helperRow{display:none}.conoce-titleTarjeta{font-size:35px;line-height:35px;margin:20px 0 50px}.conoce-titleTarjetaMotos{font-size:25px;padding:0 40px;margin:25px 0 30px 0}.conoce-titleTarjetaSeguros{margin:20px 0 45px 0}.conoce-tarjetasTexto{font-size:15px;line-height:17px;margin-top:70px}#video{text-align:center}.video-botonPlay{position:inherit;transform:none;top:0;left:0}.footer-containerNewsletter{position:initial}.footer-menu{padding:45px 0}.footer-containerServicioCliente{border:none}.contentListFeatures{display:none}.contentListFeaturesResponsive{display:block}.buttonOportuyaSection{position:relative;float:right;margin-top:-69px;margin-right:2px;left:0;transform:translate(0,0)}.oportuyaContentImage img{margin-top:14em;position:relative;right:0}.soatImageContainer div img{width:100%}.textOportuyaHeader{width:100%;position:absolute;left:unset;right:10%;transform:translate(0);text-align:center}.header-menu:before{display:none}.header-menu button.navbar-toggler{margin-left:50%;transform:translate(-50%)}.toggleResponsive{background-color:transparent}.header-item{width:100%}.buttonResponsive{display:block;margin-right:0;position:fixed;top:90%;right:4%;z-index:999999;height:50px;width:50px;background:#ffc100;border-radius:100%;padding-left:13px}.innerButtonResponsive{top:13px}.innerButtonResponsive,.innerButtonResponsive1,.innerButtonResponsive2{background-color:#1cabe2;position:absolute;width:25px;height:4px;border-radius:5px;content:" ";transition-timing-function:ease;transition-duration:.2s;transition-property:transform,opacity}.innerButtonResponsive1{top:23px}.innerButtonResponsive2{top:32px}.buttonResponsive.open .innerButtonResponsive{transform:translate3d(0,10px,0) rotate(45deg)}.buttonResponsive.open .innerButtonResponsive1{transform:translate3d(0,0,0) rotate(-45deg)}.buttonResponsive.open .innerButtonResponsive2{transform:translate3d(0,-10px,0) rotate(135deg)}.headerImage{z-index:1}.header-containerLogo{text-align:center}.oportuyaSliderTitle{font-size:.7em}.oportuyaSliderButton{font-size:.7em}.bestPricesImg img{display:none}.buttonOportuyaSection a{margin-left:0;transform:unset}.steps p{width:100%}.stepContainer:after{display:none}.stepResponsive{margin-top:15px!important}.plansContent section{width:60%;margin:20px auto}.viajesSliderContent{bottom:10%;left:8%}.conoceViajesTitle p{line-height:1}.conoceViajesTitle{margin-bottom:5rem;font-size:1.5em}.imgSombraMenu{display:none}.sliderPrincipal-containTextBottom{left:33%}.tarjetaLAst{margin-left:25%}.conoce-TarjetaOportuya,.conoce-creditoLibranza,.conoce-creditoMotos,.conoce-seguros,.conoce-viajes{width:35%}.footer-containMenu{margin-bottom:50px}.conoce-containButton{right:30%}.footer-contianerTelefonos{margin-left:10%}.conoce-titleTarjeta{font-size:25px;line-height:35px;margin:10px 0 30px}.conoce-tarjetasTexto{margin-top:20px;font-size:13px}.conoce-titleTarjetaMotos{padding:0}.convenios-containInfo{margin-bottom:60px}.contentCards{position:relative;transform:translate(0,0);left:0}.beforeLine::after{display:none}.contentCards{height:90em}#oportuyaCards{margin-top:2em}.oportuyaTextResponsive{display:block}.oportuyaText{display:none}.offersDescription::before{display:none}.offersDescription>div+div{margin-top:8em}.offersPrice1{transform:translate(-9em,1.5em)}.offersPrice2{transform:translate(-16em,1.5em)}.slick-slider{width:100%;box-sizing:border-box}.slick-initialized .slick-list{overflow:hidden}.navBarHide{display:none}.header-item{height:10%;position:relative}.header-item::after{position:absolute;content:" ";width:100%;bottom:0;left:50%;transform:translate(-50%);height:2px;background-color:rgba(255,255,255,.2)}.formularioSimulador-containerFormulario{position:inherit!important;margin:auto}.header-textoItem{font-size:15px}.preHeader-item{padding:5px 23px 0 23px!important}.oportuyaCardsContent{height:unset!important}.side.back ul{width:70%;margin:auto}.cardImage .back{max-width:80%;top:50px}.back ul li{line-height:1;font-size:14px}.serviceContainer{margin-left:25%;transform:translate(-20%)}.preHeader-item{padding:5px 10px 0 10px!important}.publicHeader{text-align:center;background-color:#f5f4fe;font-weight:700;position:relative}.publicHeader *{margin:unset!important}.headerLogo{margin:10px 0!important}.headerText{margin-top:25px!important;position:relative}.headerText *{padding:0}.phoneCatalog:after{position:absolute;content:'';width:1px;background-color:#000;height:30px;top:0;right:0}.headerText a{position:absolute;top:50%;transform:translateY(-50%);left:1vw}.headerText span{position:absolute;top:50%;transform:translateY(-50%);left:0}.productsCatalog{width:47vw!important}.descCatalog{width:23vw!important}}@media(max-width:768px){.mensajeFinal-containText{position:initial;transform:none;top:0;margin-top:20px}.phoneCatalog:after{display:none}.preHeader-item:nth-child(3){display:none}.cardsProfiles .col-6 .card{width:100%}.conoceViajesTitle{font-size:1em;margin-bottom:3rem}.conoceViajesPlay img{width:2em}.conoceViajesTitle p{line-height:0}.viajesSliderContent{position:unset}.viajesContactenosLink a,.viajesListItems li a{font-size:12px}.dialogThakPage p{transform:translate(-50%,60%);font-size:.8em}.viajesHeaderButtonResponsive{display:block}.viajesHeaderButton{display:none}.viajesWhatsappButton{padding:0}.viajesWhatsappButton a{padding:0;position:fixed;width:50px;height:50px;bottom:50%;right:4%;background-color:#3fcf64;color:#fff;border-radius:50px;border:solid 1px;text-align:center;font-size:27px;box-shadow:2px 2px 3px #999;z-index:100}.viajesHeaderButtonResponsive .fa-whatsapp:before{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}.sliderPrincipal-button{padding:9px 35px;font-size:13px}.sliderPrincipal-textSlider{font-size:14px}.sliderPrincipal-containTextBottom{top:45%}.sliderPrincipal-containTextLeft{left:10%;top:30%}.conoce-containButton{right:20%}.requirementsContent::after{display:none}.oportuyaContentImage{display:none}.soatImageContainer{display:none}.responsiveButtonOportuya{display:block}.buttonOportuya{display:none}.buttonOportuyaSection{position:relative;float:unset;text-align:center;margin:0 0 2em 0!important;left:0;transform:translate(0,0)}.offersPrice1{transform:translate(-3em,1.5em)}.offersPrice2{transform:translate(-8em,1.5em)}.textOportuyaHeader{width:100%}.oportuyaContentHeader{height:auto}.oportuyaHeaderImage img{height:70%}.salePoint{display:none}.efectiveText{font-size:1em}.oportuyaSliderContent{position:relative;bottom:0;left:unset;padding-top:3em;margin-bottom:3em}.oportuyaSliderDescription{margin-bottom:40px}.oportuyaSliderContent br{display:none}.oportuyaSliderContent p{color:#000!important}.slideNext{top:20%}.slidePrev{top:20%}.preHeader-item{padding:5px 15px 0 15px!important;font-size:12px}.side.back ul{width:80%}.viajesListItems li a,.viajesListItems li span{font-size:14px}.busTourButton p a{width:60%}.textOportuyaHeader{margin-top:10px}.textOportuyaHeader{position:relative;right:unset}.oportuyaTextResponsive{margin-bottom:10px}.servicesPointContainer{margin-bottom:0}.servicesPointCard{margin-top:0}.publicHeader{text-align:center;background-color:#f5f4fe;font-weight:700;font-size:2.1vw!important}.publicHeader *{margin:unset!important}.headerLogo{margin:10px 0!important}.headerText{margin-top:10px!important}.phoneCatalog:after{display:none}.productsCatalog{width:45vw!important}.descCatalog{width:21vw!important}.containerLines{display:none}.container-sm-Lines{display:block!important}.container-sm-Lines ul{list-style:none;padding:0}.targetProductFooter{font-size:3vw!important}.productsImageContainer{height:25vw!important}.productsTitle{padding-left:6vw}.tabBody{font-size:2vw!important}.tabTitle{padding:5px 0 5px 25px!important}.tabTitle p{margin:0}}@media(max-width:576px){.travelOffersButtonAdvance p a{padding:7px 10px;font-size:12px}#requisitos-prestamo{text-align:center}.botonSolicitudContainer a{padding:1% 8%;font-size:1.2em}#solicitudAvances{text-align:center}.preHeader-item:nth-child(2){display:none}.imagesBustour div.row div.col-sm-4{text-align:center;margin:20px 0}.imagesBustour div.row div.col-sm-4 img{width:60%}.buttonResponsiveViajes{display:none;z-index:9}.viajesListItems li{display:inline}.viajesListItems li:not(:last-child){border-right:unset}.viajesListItems ul{display:block;float:left;margin-left:unset;transform:unset}.viajesListItems ul li{text-align:center;position:relative;margin-bottom:1em}.viajesListItems ul li:not(:first-child):after{position:absolute;content:' ';width:2px;background-color:rgba(255,255,255,.5);height:100%;border-radius:20px;bottom:0;left:-2px}.tarjetaLAst{margin-left:0}.offersPrice1{transform:translate(0,1.5em)}.offersPrice2{transform:translate(-1em,1.5em)}.viajesContactenosLink a{float:unset}.viajesHeaderButton{display:none}.viajesHeaderButtonResponsive{display:block}.buttonResponsiveViajes{position:relative;display:none;z-index:9}.buttonResponsiveViajes .innerButtonResponsive{top:13px}.buttonResponsiveViajes.open .innerButtonResponsive{transform:translate3d(0,10px,0) rotate(45deg)}.buttonResponsiveViajes.open .innerButtonResponsive1{transform:translate3d(0,0,0) rotate(-45deg)}.buttonResponsiveViajes.open .innerButtonResponsive2{transform:translate3d(0,-10px,0) rotate(135deg)}.buttonResponsiveViajes .innerButtonResponsive,.buttonResponsiveViajes .innerButtonResponsive1,.buttonResponsiveViajes .innerButtonResponsive2{background-color:#fff;position:absolute;width:25px;height:4px;border-radius:5px;content:" ";transition-timing-function:ease;transition-duration:.2s;transition-property:transform,opacity}.buttonResponsiveViajes .innerButtonResponsive1{top:23px}.buttonResponsiveViajes .innerButtonResponsive2{top:32px}.buttonResponsive{margin-right:0;position:fixed;top:90%;right:4%;z-index:999999;height:50px;width:50px;background:#ffc100;border-radius:100%;padding-left:13px}.side.back ul{width:100%}.buttonResponsiveViajes{margin-top:30px}.viajesContactenosLink{display:none}.offersTitle p{font-size:1.5em}.busTourButton p a{width:80%}.publicHeader{background-color:#f5f4fe;font-weight:700;font-size:2vh!important}.headerText{background:#fff;top:0}.headerText a,.headerText span{left:50%;transform:translateX(-50%) translateY(-50%);width:100%}.headerLogo{padding:10px!important}.productsCatalog{width:36vw!important}.descCatalog{width:16vw!important}.targetProductFooter{font-size:5vw!important}.productsImageContainer{height:50vw!important}.productsImageContainer{padding-bottom:3vw!important}.productsTitle{padding-left:10vw!important}.tabBody{padding:15px 0 15px 25px!important;font-size:3vw!important}.detailsPrice{font-size:2.4vw!important}.containerSlickMiniature{display:none}.specsContainer{margin-top:25px!important}}@media(max-width:500px){.conoceViajesContent{width:100%}.sliderPrincipal-textSlider{font-weight:500;color:#000;text-shadow:unset}.convenios-text{padding:0 20px}.sombraSliderPrincipal{display:none!important}.sliderPrincipal-containTextLeft{position:initial}.sliderPrincipal-containTextBottom{position:initial}.conoce-containButton{right:15%}.footer-contianerNosotros{margin-left:10%}.footer-menu{margin-left:20%}.busTourButton p a{width:100%}.container-itemsPreHeader{margin-bottom:30px;text-align:center}.assesorLogin{text-align:center}.assesorLogin a{position:relative;border:solid 1px;border-radius:20px;padding:5px 20px}}.cardFQA{margin:10px}.card-headerFQA{background:#fff}.btn-FAQ{background-color:#fff!important;white-space:normal;width:100%}.btn-FAQ:focus{box-shadow:unset}.titelFAQ{margin-top:30px}.downFAQ{padding:5px;font-size:20px;position:absolute;right:0}.rowFAQ{position:relative}.h5FAQ{width:90%;text-align:left}.cardUser{margin:10px}.hederUser{text-align:center}.iconUser{font-size:70px}.rowBrands{margin:0;width:100%}.rowBrands div{padding:5px}.headerAdmin{text-align:center;margin:50px;color:#1d84c3}.btnFilter{margin-left:3px}.gallery-box{margin-top:50px;text-align:center}.gallery-box *{margin:3px}.gallery-box a{color:#fff!important}.imgContainer{position:relative;width:200px;height:200px;cursor:move;margin:auto}.imgCatalog{width:100%;height:100%;margin:auto}.flowContainer{position:relative;width:200px;height:200px;margin:auto}.ulImages{list-style:none!important;width:100%}.closeProductsImages{color:#fff;position:absolute;top:0;right:0;text-shadow:2px 2px 2px #000;cursor:default}.labelDelete{font-size:unset}.textImage{margin-top:7px}.progress{width:220px;margin:auto}.publicHeader{background-color:#f5f4fe;font-weight:700;font-size:1.2vw;position:relative;width:100%}.headerLogo{padding:10px 0 10px 30px}.headerText{margin-top:25px!important;position:relative}.headerText *{padding:0;text-align:center}.phoneCatalog:after{position:absolute;content:'';width:1px;background-color:#000;height:30px;top:0;right:0}.catalogSlide{margin:10px 0;width:100%;padding:3% 10%;background-color:#ebebeb}.containerLines{padding:unset;padding-left:10px}.productsCatalog{width:48vw}.descCatalog{width:24vw}.productsMenu{list-style:none;background-color:#f5f4fe;padding:unset;margin-left:10px}.buttonLines{text-align:left;font-family:Barlow;font-weight:700;width:100%;background:0 0;border:unset;border-bottom:solid #aeadb2 1px}.buttonLines:focus{outline:unset}.nameLine{padding-left:20px}.nameFilter{padding-left:20px}.carretLines{position:absolute;font-size:31px;margin-left:5px;margin-top:-2px}.brandsCatalog{list-style:none;font-family:Barlow;font-weight:700;background:#dcdce0;padding:unset}.brandsName{border-bottom:solid #ccc 1px;padding-left:40px}.targetContainer{padding:10px}.tagentProduct{padding:5px}.targetProductBody{background-color:#f2f0f0;padding-top:20px;text-align:center;padding-bottom:10px}.targetProductFooter{background-color:#454545;border-radius:0 0 0 20px;padding:20px 0 20px 0;text-align:center;font-family:Barlow;font-weight:700;color:#fff;font-size:1.6vw}.targetProductFooter p{margin:0}.catalogContainer{width:100%;margin:0}.targetProductBody h3{color:red;font-family:Barlow;font-weight:700;font-size:15px}.targetProductBody p{color:#000;font-family:Barlow;font-weight:700;font-size:10px;margin:0;height:1vw}.productsImageContainer{text-align:center;height:150px;background-color:#f2f0f0;padding-bottom:1vw}.productsImageContainer img{width:95%;height:100%}.productBtn{background-color:#ffca05;position:absolute;font-family:Barlow;font-weight:700;margin-left:50%;transform:translateX(-53%) translateY(-60%);width:80%;border-radius:20px;color:#000}.productBtn:hover{color:#000}.btn-volver{margin:3vw}.btn-volver .fa-angle-left{margin-right:1vw}.priceLabel{color:#ffca05}.buttonBrands{text-align:left;font-family:Barlow;font-weight:700;width:100%;background:0 0;border:unset}.buttonBrands:focus{outline:unset}.container-sm-Lines{display:none;list-style:none}.productsTitle{padding-left:3vw;color:#abacac}.carretTitle{position:absolute;font-size:45px}.containerSlickMain{margin:auto}.containerSlickMiniature{margin:auto;padding:unset}.single-item{width:90%;margin:auto}.multiple-items{width:95%;margin:auto;padding:5%;background-color:#f0f2f1}.slideContainer{width:90%;margin:auto}.lineDetails{margin:unset;margin-left:3%;color:#abacac}.detailName h1{color:#fd0000;font-size:2vw;height:2vw}.detailName h2{font-size:2vw;height:2vw}.detailsPrice{width:90%;background:#454545;color:#fff;position:relative;text-align:center;font-size:2vw;padding:0}.containerPrice{width:90%;margin-top:1vw}.detailsPrice:before{content:"";background-color:#454545;z-index:-10;width:30px;height:100%;transform:skew(-20deg);left:-15px;position:absolute}.colorPrice{color:#fec905}.detailsPrice b{width:100%;position:absolute;transform:translate(-50%,50%)}.specsContainer{margin-top:50px}.TabSpecs{width:90%}.tabTitle{background-color:#ffc905;padding:10px 0 10px 50px;font-weight:700}.tabTitle p{margin:0}.tabBody{padding:30px 0 30px 50px;font-size:1.4vw;font-family:barlow}.tabBody pre{font-family:barlow}.resultadoPolitica{font-size:20px;font-weight:700}.caracteristicaPolitica{font-size:14px}.colourGreen{color:#3fcf64}.colourRed{color:#ec2d35}.container-button{position:fixed;bottom:70px;right:0;font-weight:700;z-index:999999}a:hover{color:#fff}.ingreso:hover{color:#27a1d1!important}.textCl{font-size:10px;color:#000047}.btnwpp{color:#fff;font-size:15px;padding:8px 10px 8px 28px;background-color:#1bd741;border-radius:15px 0 0 15px;position:relative}.btnwpp-img{position:absolute}.img-btnWpp{position:absolute;width:50px;left:-19px;top:-6px}
+@import url(https://fonts.googleapis.com/css?family=Barlow:200,300,400,500,600,700,800,900);
+
+#ex-global-content {
+    transition: all .5s ease-out
+}
+
+.ex-loader {
+    position        : fixed;
+    width           : 100%;
+    height          : 100%;
+    background-color: rgba(227, 238, 243, .8);
+    z-index         : 9999999999;
+    top             : 0
+}
+
+.ex-loader-blur {
+    filter        : blur(10px);
+    -webkit-filter: blur(10px);
+    z-index       : 9999999
+}
+
+#loader {
+    transition       : all .5 ease-out;
+    z-index          : 99999999;
+    top              : 40%;
+    left             : 50%;
+    margin-left      : -20px;
+    margin-top       : -20px;
+    position         : absolute;
+    margin           : 6em auto;
+    font-size        : 10px;
+    text-indent      : -9999em;
+    border-top       : 1.1em solid rgba(42, 172, 224, .5);
+    display          : block;
+    border-right     : 1.1em solid rgba(42, 172, 224, .2);
+    border-bottom    : 1.1em solid rgba(42, 172, 224, .2);
+    border-left      : 1.1em solid #2aace0;
+    -webkit-animation: load8 1.1s infinite linear;
+    animation        : load8 1.1s infinite linear
+}
+
+#loader,
+#loader::after {
+    border-radius: 50%;
+    width        : 40px;
+    height       : 40px
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0);
+        transform        : rotate(0)
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform        : rotate(360deg)
+    }
+}
+
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0);
+        transform        : rotate(0)
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform        : rotate(360deg)
+    }
+}
+
+body {
+    font-family: Barlow
+}
+
+a {
+    text-decoration: none
+}
+
+a:active,
+a:focus,
+a:hover,
+a:visited {
+    text-decoration: none !important
+}
+
+.textModalNumSolic {
+    color        : #4a4a4a;
+    font-size    : 13px;
+    margin-bottom: 20px
+}
+
+.resetCol {
+    padding: 0 !important
+}
+
+.resetRow {
+    margin: 0 !important
+}
+
+.borderLeftItems {
+    border-right: 1px solid #000
+}
+
+.container-itemsPreHeader {
+    padding-top: 10px
+}
+
+.preHeader-item {
+    color      : #000 !important;
+    font-size  : 13px;
+    font-weight: 500;
+    height     : 25px;
+    padding    : 5px 25px 0 25px !important
+}
+
+#mensajeFinal {
+    padding: 100px 0
+}
+
+.containMensajeFinal {
+    background   : #edf7fb;
+    padding      : 0 0 30px 0;
+    border-radius: 70px
+}
+
+.mensajeFinal-containImg {
+    padding: 0 25px
+}
+
+.mensajeFinal-img {
+    margin-top: -30px
+}
+
+.mensajeFinal-containText {
+    padding  : 0 40px;
+    position : absolute;
+    transform: translateY(-50%);
+    top      : 50%
+}
+
+.mensajeFinal-text {
+    color         : #368cae;
+    font-size     : 22px;
+    border-bottom : 1px solid;
+    padding-bottom: 20px
+}
+
+.mensajeFinal-text2 {
+    color    : #606060;
+    font-size: 20px
+}
+
+#header {
+    margin-top      : 10px;
+    position        : relative;
+    background-color: #f5f4fe
+}
+
+#header .row {
+    width : 100%;
+    margin: auto
+}
+
+#bustour .row,
+#header .row.resetRow,
+#travelOffers .row,
+#viajesHeader .row,
+.plansContent {
+    max-width: 1960px;
+    margin   : auto !important
+}
+
+.header-menu {
+    height : 100%;
+    padding: 0 !important
+}
+
+.header-containerItems {
+    height: 100%
+}
+
+.buttonResponsive {
+    display: none
+}
+
+.header-containerLogo {
+    background: #f5f4fe;
+    padding   : 5px 0 5px 30px
+}
+
+.header-menu {
+    width: 100%
+}
+
+.header-item {
+    position  : relative;
+    color     : #000 !important;
+    display   : block;
+    text-align: center;
+    width     : 25%
+}
+
+.header-textoItem {
+    color      : #fff;
+    display    : inline-block;
+    font-size  : 16px;
+    font-weight: 500;
+    left       : 50%;
+    position   : absolute;
+    top        : 50%;
+    transform  : translate(-50%, -50%);
+    width      : 100%;
+    z-index    : 3
+}
+
+.header-containerItemsResponsive {
+    display: none
+}
+
+.no_scroll {
+    overflow: hidden
+}
+
+.header-item1 {
+    background: #1d84c3
+}
+
+.header-item2 {
+    background: #ec2d35
+}
+
+.header-item3 {
+    background: #fdbf3c
+}
+
+.header-item4 {
+    background: #2aace0
+}
+
+.header-item5 {
+    background: #3fcf64
+}
+
+.header-item6 {
+    background: #3fcf64
+}
+
+.header-item7 {
+    background: #de005d
+}
+
+.header-menu:before {
+    background: #1d84c3;
+    content   : "";
+    height    : 72px;
+    position  : absolute;
+    top       : 0;
+    left      : -23px;
+    transform : skew(336deg);
+    width     : 40px;
+    z-index   : 2
+}
+
+.logoutButton {
+    position   : relative;
+    float      : right;
+    color      : #000 !important;
+    font-size  : 13px;
+    font-weight: 700 !important;
+    height     : 25px
+}
+
+.assesorLogin a {
+    position       : absolute;
+    right          : 20px;
+    top            : 11px;
+    text-decoration: none;
+    font-weight    : 500;
+    color          : #1d84c3
+}
+
+.assessorModule a {
+    background-color: #007bff;
+    color           : #fff;
+    font-weight     : 600;
+    padding         : 10px 20px;
+    border-radius   : 20px
+}
+
+.assessorModule p {
+    margin-top: 10%
+}
+
+.assessorHeader {
+    margin-top: 30px
+}
+
+.assessorProgress {
+    margin-top: 60px
+}
+
+.assessorHeader h3 {
+    width: 100%
+}
+
+.activeMenu:after {
+    background: url(../images/menu-idintifier.png) no-repeat center center;
+    bottom    : -35px;
+    content   : "";
+    height    : 40px;
+    position  : absolute;
+    width     : 40px;
+    z-index   : 2
+}
+
+.activeMenu:after {
+    left: 40%
+}
+
+.activeMenuOportuya:after {
+    left: 30%
+}
+
+#sliderPrincipal {
+    position: relative
+}
+
+.slidePrev {
+    background: #464645;
+    color     : #fff;
+    cursor    : pointer;
+    font-size : 30px;
+    height    : 60px;
+    display   : flex;
+    position  : absolute;
+    right     : 0;
+    transform : translate(0, -50%);
+    text-align: center;
+    top       : 50%;
+    width     : 60px;
+    z-index   : 2
+}
+
+.slideNext {
+    background: #464645;
+    color     : #fff;
+    cursor    : pointer;
+    font-size : 30px;
+    height    : 60px;
+    display   : flex;
+    position  : absolute;
+    left      : 0;
+    transform : translate(0, -50%);
+    text-align: center;
+    top       : 50%;
+    width     : 60px;
+    z-index   : 2
+}
+
+.sombraSliderPrincipal {
+    position: absolute;
+    bottom  : 0
+}
+
+.containImg {
+    position: relative
+}
+
+.sliderPrincipal-containTextLeft {
+    color     : #000;
+    position  : absolute;
+    left      : 18%;
+    top       : 47%;
+    text-align: -webkit-center
+}
+
+.sliderPrincipal-containTextBottom {
+    color     : #000;
+    position  : absolute;
+    left      : 40%;
+    top       : 70%;
+    text-align: -webkit-center;
+    font-size : 15px
+}
+
+.sliderPrincipal-textSlider {
+    font-size  : 21px;
+    font-weight: 400;
+    color      : #fff;
+    text-shadow: 1px 1px 2px #000
+}
+
+.sliderPrincipal-titleSlider {
+    color      : #fff;
+    font-size  : 36px;
+    text-shadow: 1px 1px 2px #000
+}
+
+.sliderPrincipal-button {
+    font-weight  : 600;
+    border-radius: 40px;
+    display      : inline-block;
+    color        : #fff;
+    font-size    : 18px;
+    padding      : 15px 40px
+}
+
+.sliderPrincipal-button:active,
+.sliderPrincipal-button:focus,
+.sliderPrincipal-button:hover,
+.sliderPrincipal-button:visited {
+    color: #fff
+}
+
+.oportuyaSliderContentAdvance {
+    background-color: rgba(0, 0, 0, .2) !important;
+    border-radius   : 20px !important;
+    padding         : 30px 19px !important
+}
+
+.oportuyaSliderButtonAdvance p a {
+    background-color: #fdbf3c !important;
+    box-shadow      : 2px 1px 12px 3px #f9e0e8 !important;
+    color           : #fff
+}
+
+.requirementsListAdvance {
+    margin-top   : 15px !important;
+    padding-right: 30px !important
+}
+
+.descriptionRequirementsAdvance {
+    margin-top: 15px !important;
+    padding   : 0 30px !important
+}
+
+.descriptionRequirementsAdvance {
+    min-height: 480px
+}
+
+.avanceSliderContent.oportuyaSliderContent p {
+    color      : #001980 !important;
+    font-weight: 700
+}
+
+#prestamos {
+    padding: 30px 0
+}
+
+#prestamos div h3 {
+    color: #009ade
+}
+
+#requisitos-prestamo {
+    background-color: #001980;
+    padding         : 15px 0
+}
+
+#requisitos-prestamo .requisitos-texto {
+    line-height: .8
+}
+
+#requisitos-prestamo .requisitos-texto h4 {
+    color        : #009ade;
+    font-weight  : 600;
+    margin-bottom: 0
+}
+
+.requisitos-texto {
+    padding: 1.3em 0 0 0
+}
+
+#requisitos-prestamo .requisitos-texto span {
+    color      : #fff;
+    font-weight: 600;
+    font-size  : 11px
+}
+
+.requisitos-items {
+    font-size  : .8em;
+    color      : #fff;
+    font-weight: 700
+}
+
+.requisitos-items .row .col-sm-4.col-lg-5 {
+    padding: 0
+}
+
+.requisitos-items .row .col-sm-8.col-lg-7 {
+    padding: 1.5em 0 0 0
+}
+
+.solicitudAvanceTitulo {
+    padding-top: 30px
+}
+
+.solicitudAvanceTitulo h3 {
+    color      : #001980;
+    font-weight: 700
+}
+
+.solicitudPasos {
+    padding: 15px
+}
+
+.solicitudPasos>div {
+    border-radius   : 20px;
+    padding         : 25px 35px;
+    background-color: #d9d6e2
+}
+
+.imageSolicitudPasos {
+    padding: 0
+}
+
+.tituloSolicitudPasos {
+    padding-top: 7%
+}
+
+.tituloSolicitudPasos span {
+    color      : #021780;
+    font-weight: 800
+}
+
+.descripcionSolicitudPasos {
+    color: #021780
+}
+
+.botonSolicitudContainer a {
+    position        : absolute;
+    left            : 50%;
+    transform       : translate(-50%);
+    background-color: #021780;
+    color           : #fff;
+    padding         : 1% 12%;
+    font-weight     : 800;
+    font-size       : 1.4em;
+    border-radius   : 31px
+}
+
+#solicitudPasosBoton {
+    margin-bottom: 70px
+}
+
+.oportuyaSliderContent {
+    position: absolute;
+    bottom  : 10em;
+    left    : 3em
+}
+
+.oportuyaSliderTitle p {
+    font-size  : 2.5em;
+    font-weight: 500
+}
+
+.oportuyaSliderContent p {
+    text-align : center;
+    line-height: 100%;
+    color      : #fff
+}
+
+.textTitleSliderPink {
+    color      : #e72665;
+    font-weight: 700 !important
+}
+
+.textTitleSliderBlue {
+    color      : #0a50ae;
+    font-weight: 700 !important
+}
+
+.oportuyaSliderTitle p:first-child {
+    margin-bottom: 0
+}
+
+.oportuyaSliderDescription p {
+    font-size: 13px
+}
+
+.textTarjeta {
+    color      : #332d74;
+    font-size  : 11px;
+    font-weight: 700
+}
+
+.oportuyaSliderButton p a {
+    font-weight     : 800;
+    background-color: #fff;
+    color           : #382989;
+    padding         : 12px 50px;
+    border-radius   : 50px;
+    font-size       : 1.2em;
+    box-shadow      : 2px 1px 12px 3px #f9e0e8
+}
+
+.oportuyaSliderButton.oportuyaSliderButtonAdvance p a {
+    background-color: #001980 !important;
+    color           : #fff !important;
+    box-shadow      : 2px 1px 12px 3px rgba(0, 25, 128, .5) !important
+}
+
+.containImg img {
+    margin: auto;
+    width : 100%
+}
+
+.contentCreditcards {
+    text-align: center
+}
+
+.contentCreditcards img {
+    margin-top: 40px
+}
+
+.contentCards {
+    position        : absolute;
+    transform       : translate(-50%, -50px);
+    left            : 50%;
+    background-color: #fff;
+    width           : 80%;
+    box-shadow      : 2px 1px 12px 3px rgba(0, 0, 0, .2);
+    border-radius   : 10px;
+    max-width       : 1300px;
+    margin          : auto
+}
+
+.contentCards p {
+    text-align: center
+}
+
+.titleContentCard {
+    font-weight: 700;
+    font-size  : 1.4em;
+    margin-top : 15px
+}
+
+.descriptionContentCard {
+    font-size: .7em;
+    color    : #a0a0a0
+}
+
+.buttonCard {
+    margin: 25px 0
+}
+
+.buttonCreditCard {
+    background-color: #e72665;
+    color           : #fff;
+    padding         : 6px 25px;
+    border-radius   : 20px;
+    font-weight     : 500;
+    font-size       : 1.1em
+}
+
+.beforeLine {
+    position: relative
+}
+
+.beforeLine::after {
+    position        : absolute;
+    content         : " ";
+    height          : 80%;
+    width           : 2px;
+    background-color: #d8d8d8;
+    transform       : translate(-50%, -110%);
+    left            : 100%
+}
+
+.checkIcon {
+    position : absolute;
+    transform: translate(50%)
+}
+
+.buttonCreditCard:hover {
+    -moz-transform   : scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform        : scale(1.1);
+    color            : #fff
+}
+
+#requirements {
+    margin-top   : 3em;
+    margin-bottom: 6em
+}
+
+.requirementsContent {
+    width : 80%;
+    margin: auto
+}
+
+.contentRequirements {
+    text-align: center
+}
+
+.titleRequirements {
+    font-size  : 1.5em;
+    font-weight: 700;
+    margin-top : 20px;
+    position   : relative
+}
+
+.titleRequirements::after {
+    content         : " ";
+    height          : 10px;
+    width           : 2em;
+    border-radius   : 20px;
+    position        : absolute;
+    background-color: #ffba00;
+    transform       : translate(-50%, 2em);
+    left            : 50%
+}
+
+.descriptionRequirements {
+    width     : 25em;
+    margin    : 3em auto;
+    text-align: justify
+}
+
+.buttonRequirements {
+    background-color: #ffd13f;
+    color           : #000;
+    font-weight     : 700;
+    padding         : .5em 2.5em;
+    border-radius   : 1.5em
+}
+
+.requirementsContent::after {
+    content         : " ";
+    height          : 27em;
+    width           : 2px;
+    left            : 50%;
+    position        : absolute;
+    background-color: #d8d8d8;
+    transform       : translate(-50%, 2em)
+}
+
+.requirementsList {
+    width     : 25em;
+    margin    : 3em auto;
+    text-align: justify
+}
+
+#oportuyaSection {
+    margin-bottom: 4em
+}
+
+.oportuyaContent {
+    width : 80%;
+    margin: auto
+}
+
+.oportuyaCardsContent {
+    width: 100%
+}
+
+.oportuyaContentHeader {
+    padding         : 20px 0;
+    background-color: #d5eaef;
+    border-radius   : 10px 10px 0 0
+}
+
+.oportuyaHeaderImage {
+    padding   : 0;
+    text-align: center
+}
+
+.textOportuyaHeader {
+    position  : absolute;
+    left      : 50%;
+    transform : translate(-50%);
+    text-align: center;
+    margin-top: 25px
+}
+
+.textOportuyaHeader>span {
+    font-size: .8em
+}
+
+.buttonOportuyaSection {
+    position     : relative;
+    margin-top   : 0 !important;
+    margin-bottom: 30px
+}
+
+.buttonOportuyaSection a {
+    background-color: #013485;
+    color           : #fff;
+    font-size       : 1.2em;
+    padding         : .5em 3.5em;
+    border-radius   : 25px;
+    font-weight     : 800;
+    margin-left     : 50%;
+    transform       : translate(-50%)
+}
+
+.contentFeatures {
+    padding-left: 4em
+}
+
+.oportuyaContentFeatures {
+    background-color: #edf7fb;
+    border-radius   : 0 0 10px 10px;
+    background-image: url(../images/fondoBarras.png)
+}
+
+.oportuyaContentFeatures div.col-md-8 div.row {
+    margin-top: 40px
+}
+
+.oportuyaContentImage img {
+    position: absolute;
+    bottom  : 0;
+    right   : -3em
+}
+
+.efectiveText {
+    color     : #2c3d5b;
+    font-size : 1.6em;
+    text-align: center
+}
+
+.efectiveText span {
+    font-size: 1.2em;
+    color    : #005daf
+}
+
+.bestPricesImg img {
+    padding: 4% 0
+}
+
+.featuresfirstText {
+    margin-top : 1.5em;
+    font-size  : 1.5em;
+    font-weight: 700
+}
+
+.contentFeatures>div>div.row+p {
+    font-weight  : 800;
+    font-size    : 1.2em;
+    margin-left  : 2em;
+    margin-bottom: 1em;
+    margin-top   : .5em
+}
+
+.contentListFeatures div ul li {
+    margin-bottom: .5em;
+    height       : 1.5em;
+    font-weight  : 500
+}
+
+.soatImageContainer {
+    margin: 4em 0 3em 0
+}
+
+.soatImageContainer div {
+    padding-left: 4em
+}
+
+.contentListFeaturesResponsive {
+    display: none
+}
+
+.responsiveButtonOportuya {
+    display: none
+}
+
+.oportuyaTextResponsive {
+    display: none
+}
+
+.cardImageContainer {
+    position: relative;
+    height  : 300px
+}
+
+.cardImageContainer .cardImage {
+    position       : absolute;
+    width          : 100%;
+    margin         : auto;
+    height         : 100%;
+    transform-style: preserve-3d;
+    transition     : all 1.5s ease-in-out
+}
+
+.cardImage .side {
+    backface-visibility        : hidden;
+    -webkit-backface-visibility: hidden;
+    height                     : 100%;
+    -webkit-overflow           : hidden;
+    overflow                   : hidden;
+    width                      : 100%
+}
+
+.cardImage .back {
+    position  : absolute;
+    text-align: center;
+    width     : 100%;
+    top       : 50px;
+    transform : rotateY(180deg) translate(50%);
+    max-width : 80%;
+    left      : 50%
+}
+
+.cardImage .back ul {
+    padding-left: 1em
+}
+
+.cardImage .back p {
+    font-size   : 12px;
+    text-align  : justify;
+    color       : gray;
+    padding-left: 5px
+}
+
+.cardImage .back p i {
+    font-size: 6px;
+    transform: translateY(-30%)
+}
+
+.back ul li {
+    text-align : justify;
+    font-size  : 13px;
+    line-height: 1.3;
+    font-weight: 500
+}
+
+.hrcards {
+    height       : 2px;
+    visibility   : hidden;
+    margin-bottom: -1px
+}
+
+.stepContainer {
+    position: relative
+}
+
+.stepContainer:after {
+    position        : absolute;
+    content         : ' ';
+    width           : 2px;
+    right           : 0;
+    top             : 0;
+    height          : 100%;
+    background-color: #c3cad0
+}
+
+.steps img {
+    margin-bottom: 20px
+}
+
+.steps p {
+    color        : #1c7fa8;
+    font-weight  : 800;
+    font-size    : 1.2em;
+    margin-bottom: 0;
+    width        : 75%;
+    margin       : auto
+}
+
+.steps p span {
+    color      : #012d60;
+    font-weight: 800
+}
+
+.servicesPointContainer {
+    position           : relative;
+    background-color   : #eb1f64;
+    background-image   : url(../images/imagenFondoPuntosServicios-05.png);
+    background-repeat  : no-repeat;
+    background-position: right;
+    margin-bottom      : 25px;
+    padding-top        : 50px;
+    padding-bottom     : 25px
+}
+
+.servicesPointContainer:before {
+    content    : '';
+    position   : absolute;
+    top        : 0;
+    right      : 0;
+    border-top : 25px solid #fff;
+    border-left: 25px solid #eb1f64;
+    width      : 0
+}
+
+.servicesPointCard {
+    position         : relative;
+    margin-top       : 25px;
+    background-image : url(../images/imagenFondoDescuentos.png);
+    background-repeat: no-repeat;
+    background-color : #0f8ac6;
+    padding-top      : 55px;
+    padding-bottom   : 50px
+}
+
+.servicesPointCard:before {
+    content      : '';
+    position     : absolute;
+    bottom       : 0;
+    left         : 0;
+    border-bottom: 25px solid #fff !important;
+    border-right : 25px solid #0f8ac6 !important;
+    width        : 0
+}
+
+#servicesPoint>div.row {
+    width : 100%;
+    margin: 0 0 50px 0
+}
+
+.servicesPointCard img,
+.servicesPointContainer img {
+    margin-bottom: 20px
+}
+
+.servicesPointCard p,
+.servicesPointContainer p {
+    color      : #fff;
+    line-height: 0;
+    font-weight: 500;
+    font-size  : 1.2em
+}
+
+.serviceContainer {
+    margin-left: 50%;
+    transform  : translate(-50%)
+}
+
+.fixedButton {
+    display          : none;
+    background-image : url(../images/fondoFlotante.png);
+    position         : fixed;
+    background-size  : 100% 100%;
+    background-repeat: no-repeat;
+    top              : 30%;
+    right            : 0;
+    width            : 160px;
+    text-align       : center;
+    z-index          : 9
+}
+
+.fixedButton div.row p {
+    margin     : 0;
+    line-height: 13px
+}
+
+.fixedButton>div.row div img {
+    width      : 2em;
+    margin-left: 10px;
+    margin-top : 20px
+}
+
+.fixedButton>div.row div.col-8 {
+    padding     : 0;
+    padding-left: 23px;
+    margin-top  : 10px
+}
+
+.fixedButton>div.row div.col-12 {
+    margin-bottom: 10px
+}
+
+.fixedButton>div.row div.col-12 a {
+    background-color: #fff;
+    font-size       : 12px;
+    border-radius   : 20px;
+    padding         : 4px 14px;
+    font-weight     : 700;
+    color           : #020202;
+    margin-left     : 20px
+}
+
+.fixedButton>div.row span {
+    color      : #fff;
+    font-size  : 12px;
+    z-index    : 9;
+    font-weight: 500
+}
+
+#offers {
+    background-color: #e3eef3;
+    padding-bottom  : 5em
+}
+
+.offers {
+    max-width: 1600px;
+    margin   : auto
+}
+
+.offersTitle {
+    position : relative;
+    left     : 50%;
+    transform: translate(-50%);
+    margin   : 2em 0
+}
+
+.offersTitle p {
+    font-size  : 2.5em;
+    font-weight: 700;
+    color      : #2d8cca
+}
+
+.offersTitle p::after {
+    content         : " ";
+    width           : 10em;
+    height          : 8px;
+    background-color: #2d8cca;
+    position        : absolute;
+    bottom          : 0;
+    right           : 50%;
+    transform       : translate(50%);
+    border-radius   : 21px
+}
+
+.offersDescription {
+    margin-top: 10em;
+    width     : 100%;
+    margin    : auto
+}
+
+.offersContent {
+    text-align: center
+}
+
+.offersPrice1 {
+    position : absolute;
+    top      : 0;
+    right    : 0;
+    transform: translate(-3em, 1.5em);
+    color    : #ffe002
+}
+
+.offersPrice1 span {
+    position   : absolute;
+    top        : 0;
+    right      : 50%;
+    transform  : translate(50%, 0);
+    font-size  : 2em;
+    font-weight: 700
+}
+
+.offersPrice2 {
+    position : absolute;
+    top      : 0;
+    right    : 0;
+    transform: translate(-9em, 1.5em);
+    color    : #ffe002
+}
+
+.offersPrice2 span {
+    position   : absolute;
+    top        : 0;
+    right      : 50%;
+    transform  : translate(50%, 0);
+    font-size  : 2em;
+    font-weight: 700
+}
+
+.offersDescription::before {
+    content         : " ";
+    width           : 2px;
+    height          : 25em;
+    background-color: #d8d8d8;
+    position        : absolute;
+    right           : 50%;
+    transform       : translate(50%)
+}
+
+.buttonOffers a {
+    transform       : translate(-50%);
+    left            : 50%;
+    padding         : .4em 2em;
+    background-color: #005caf;
+    color           : #fff;
+    font-weight     : 700;
+    border-radius   : 20px
+}
+
+.slick-slide img {
+    margin: auto
+}
+
+.imgOffer {
+    min-height: 280px
+}
+
+.offers div.row {
+    width: 100%
+}
+
+#conoce {
+    padding: 40px 0
+}
+
+.conoce-title {
+    color        : #348dc7;
+    font-size    : 22px;
+    font-weight  : 700;
+    line-height  : 20px;
+    margin-bottom: 60px;
+    position     : relative;
+    text-align   : center
+}
+
+.conoce-title:before {
+    background   : #348dc7;
+    border-radius: 70px;
+    bottom       : -14px;
+    content      : "";
+    height       : 4px;
+    left         : 45%;
+    position     : absolute;
+    width        : 10%
+}
+
+.conoce-TarjetaOportuya {
+    background: #1d84c3
+}
+
+.conoce-creditoMotos {
+    background: #ec2d35
+}
+
+.conoce-creditoLibranza {
+    background: #fdbf3c
+}
+
+.conoce-seguros {
+    background: #2aace0
+}
+
+.conoce-viajes {
+    background: #3fcf64
+}
+
+.conoce-titleTarjeta {
+    color      : #fff;
+    font-size  : 22px;
+    font-weight: 300;
+    margin     : 10px 0 20px 0
+}
+
+.conoce-tarjetasTexto {
+    color      : #fff;
+    font-size  : 12px;
+    font-weight: 300;
+    line-height: 13px;
+    margin-top : 20px
+}
+
+.conoce-titleTarjetaMotos {
+    color      : #fff;
+    font-size  : 22px;
+    font-weight: 300;
+    margin     : 10px 0 54px 0
+}
+
+.conoce-titleTarjetaSeguros {
+    color      : #fff;
+    font-size  : 22px;
+    font-weight: 300;
+    margin     : 10px 0 80px 0
+}
+
+.conoce-titleTarjeta>strong,
+.conoce-titleTarjetaMotos>strong,
+.conoce-titleTarjetaSeguros>strong {
+    font-size  : 25px;
+    font-weight: 500
+}
+
+.conoce-containTarjeta>img {
+    border-radius     : 5px;
+    -webkit-box-shadow: 0 0 31px -11px rgba(0, 0, 0, .75);
+    -moz-box-shadow   : 0 0 31px -11px rgba(0, 0, 0, .75);
+    box-shadow        : 0 0 31px -11px rgba(0, 0, 0, .75)
+}
+
+.conoce-TarjetaOportuya,
+.conoce-creditoLibranza,
+.conoce-creditoMotos,
+.conoce-seguros,
+.conoce-viajes {
+    border-radius: 5px 0 0 5px;
+    height       : 100%;
+    padding      : 0 5px;
+    position     : absolute;
+    width        : 35%
+}
+
+.conoce-containButton {
+    position: absolute;
+    right   : 15%;
+    top     : 85%
+}
+
+.conoce-button {
+    font-weight  : 600;
+    border-radius: 20px;
+    color        : #fff;
+    font-size    : 13px;
+    padding      : 5px 25px
+}
+
+.conoce-button:active,
+.conoce-button:focus,
+.conoce-button:hover,
+.conoce-button:visited {
+    color: #fff
+}
+
+.button-oportuya {
+    background: #1d84c3
+}
+
+.button-creditoMotos {
+    background: #ec2d35
+}
+
+.button-creditoLibranza {
+    background: #fdbf3c
+}
+
+.button-seguros {
+    background: #2aace0
+}
+
+.button-viajes {
+    background: #3fcf64
+}
+
+.libranzaSteplogo {
+    width: 72% !important
+}
+
+.form-container-logoLibranza {
+    background: #fff !important;
+    position  : relative
+}
+
+.form-container-logoLibranza:before {
+    background: #fff !important;
+    content   : "";
+    height    : 156px;
+    position  : absolute;
+    top       : 0;
+    right     : -32px;
+    transform : skew(338deg);
+    width     : 64px;
+    z-index   : 2
+}
+
+.container-libranza-forms {
+    background: #ffcf00 !important
+}
+
+.progreso>.barra_vacia_libranza {
+    background-color: #ffcf00 !important
+}
+
+.progreso>.puntos.listo.punto_listo_libranza+span {
+    background-color: #ffcf00 !important
+}
+
+.progreso>.puntos.listo.punto_listo_libranza+span+label {
+    color: #000
+}
+
+.btnStepLibranzaStep1:disabled {
+    background-color: #ffcf00 !important;
+    border-color    : #000 !important
+}
+
+.btnStepLibranzaStep1 {
+    background-color: #ffcf00 !important;
+    border-color    : #000 !important
+}
+
+.btnStepLibranza {
+    background-color: #ffcf00 !important;
+    border-color    : #000 !important
+}
+
+.forms-descStepLibranza {
+    background: #ffcf00 !important
+}
+
+.text-analyst-libranza {
+    color: #000 !important
+}
+
+#creditoLibranza-slider {
+    width : 100%;
+    margin: auto
+}
+
+#video {
+    background       : url(../images/video-fondo.jpg);
+    background-repeat: no-repeat;
+    background-size  : cover;
+    padding          : 50px 0 150px 0;
+    position         : relative
+}
+
+.video-title {
+    color        : #3c9cd8;
+    margin-bottom: 120px;
+    text-align   : center;
+    text-shadow  : -1px 0 15px rgba(60, 156, 216, .6);
+    position     : relative
+}
+
+.video-title:after {
+    background        : #3c9cd8;
+    border-radius     : 70px;
+    bottom            : -14px;
+    content           : "";
+    height            : 4px;
+    left              : 42%;
+    position          : absolute;
+    width             : 17%;
+    -webkit-box-shadow: 0 2px 26px -1px #3c9cd8;
+    -moz-box-shadow   : 0 2px 26px -1px #3c9cd8;
+    box-shadow        : 0 2px 26px -1px #3c9cd8
+}
+
+.video-botonPlay {
+    cursor   : pointer;
+    left     : 50%;
+    position : absolute;
+    transform: translate(-50%, -50%);
+    top      : 50%;
+    width    : 96px
+}
+
+.video-containText {
+    padding-left: 80px
+}
+
+.video-img {
+    margin-right: 10px;
+    width       : 40px
+}
+
+.video-text {
+    color      : #3c9cd8;
+    text-shadow: -1px 0 15px rgba(60, 156, 216, .6)
+}
+
+#convenios {
+    padding: 40px 0
+}
+
+.containerConvenios {
+    max-width: 1200px;
+    margin   : auto
+}
+
+.convenios-title {
+    color        : #348dc7;
+    font-size    : 25px;
+    font-weight  : 400;
+    margin-bottom: 40px;
+    position     : relative
+}
+
+@media(min-width:2187px) {
+    .input-footer-max {
+        width: auto !important
+    }
+}
+
+.convenios-title:after {
+    background        : #348dc7;
+    border-radius     : 70px;
+    bottom            : -6px;
+    content           : "";
+    height            : 4px;
+    left              : 42%;
+    position          : absolute;
+    width             : 17%;
+    -webkit-box-shadow: 0 2px 26px -1px #3c9cd8;
+    -moz-box-shadow   : 0 2px 26px -1px #3c9cd8;
+    box-shadow        : 0 2px 26px -1px #3c9cd8
+}
+
+.convenios-text {
+    margin-bottom: 40px;
+    padding      : 0 110px
+}
+
+.convenios-titleInfo {
+    color      : #1d84c3;
+    font-size  : 20px;
+    font-weight: 700
+}
+
+.convenios-textInfo {
+    line-height: 17px;
+    margin     : 10px 0 25px;
+    padding    : 0 50px
+}
+
+.convenios-button {
+    color        : #1d84c3;
+    border       : 1px solid #1d84c3;
+    border-radius: 35px;
+    font-size    : 18px;
+    padding      : 7px 45px;
+    transition   : all .3s ease-in-out
+}
+
+.convenios-button:hover {
+    background: #1d84c3;
+    color     : #fff
+}
+
+#footer {
+    background: #1d84c3;
+    padding   : 20px 0 0
+}
+
+.footer-contianerLogo {
+    margin-top: 30px;
+    text-align: center
+}
+
+.footer-title {
+    color      : #fff;
+    font-size  : 25px;
+    font-weight: 400;
+    position   : relative
+}
+
+.footer-title:after {
+    background   : #fff;
+    border-radius: 70px;
+    bottom       : -14px;
+    content      : "";
+    height       : 4px;
+    left         : 39%;
+    position     : absolute;
+    width        : 21%
+}
+
+.footer-contianerTelefonos {
+    margin-left: 22%;
+    margin-top : 40px;
+    position   : relative
+}
+
+.footer-contianerNosotros {
+    margin-left: 20%
+}
+
+.footer-textTelefonos {
+    color       : #fff;
+    line-height : 20px;
+    padding-left: 30px
+}
+
+.footer-textTelefonosNal {
+    font-weight: 500
+}
+
+.footer-imgNosotros {
+    position: absolute;
+    top     : 5px
+}
+
+.footer-containerServicioCliente {
+    border-left : 1px solid #77b5db;
+    border-right: 1px solid #77b5db
+}
+
+.footer-menu {
+    color      : #fff;
+    margin-left: 25%;
+    padding    : 18px 0 20px 0
+}
+
+.footer-menuNosotros {
+    color     : #fff;
+    margin-top: 35px
+}
+
+.footer-menuItem {
+    color      : #fff;
+    font-weight: 200
+}
+
+.footer-menuTitle {
+    font-weight: 600;
+    font-size  : 15px
+}
+
+.footer-menuItem:active,
+.footer-menuItem:focus,
+.footer-menuItem:hover,
+.footer-menuItem:visited {
+    color: #fff
+}
+
+.footer-menu>li,
+.footer-menuNosotros>li {
+    font-size: 13px
+}
+
+.footer-containerNewsletter {
+    top     : 20%;
+    padding : 0 10%;
+    position: absolute;
+    width   : 100%
+}
+
+.footer-titleNewsLetter {
+    color      : #fff;
+    font-weight: 600;
+    font-size  : 15px
+}
+
+.footer-menuText {
+    color      : #fff;
+    font-weight: 600
+}
+
+.containerPages {
+    padding: 30px
+}
+
+.rowAdjust {
+    margin-left : 0;
+    margin-right: 0;
+    text-align  : center
+}
+
+.rowAdjust div a i {
+    color: #1cabe2
+}
+
+.rowAdjust div span i {
+    color: gray
+}
+
+.headTableLeads {
+    background-color: #1cabe2;
+    color           : #fff
+}
+
+.headTableLeads tr {
+    text-align: center
+}
+
+.headTableWarranty {
+    background-color: #1cabe2;
+    color           : #fff
+}
+
+.headTableWarranty tr {
+    text-align: center
+}
+
+.tituloLeads {
+    margin: 30px 0
+}
+
+.tituloLeads .col-12 {
+    text-align: center
+}
+
+.leadTable tbody tr td {
+    text-align: center
+}
+
+.warrantyTable tbody tr td {
+    text-align: center
+}
+
+.containerleads {
+    margin-bottom: 70px
+}
+
+.tituloLeads h3 {
+    color      : #1cabe2;
+    font-weight: 600;
+    position   : relative
+}
+
+.tituloLeads h3:after {
+    position        : absolute;
+    content         : " ";
+    background-color: #1cabe2;
+    height          : 5px;
+    width           : 10%;
+    left            : 50%;
+    bottom          : -10px;
+    border-radius   : 20px;
+    transform       : translate(-50%)
+}
+
+.modal-header h4 {
+    color      : #1cabe2;
+    font-weight: 600;
+    position   : relative
+}
+
+.containerPages {
+    padding: 30px
+}
+
+.buttonCreateUsers {
+    background-color: #1d84c3;
+    color           : #fff;
+    padding         : 10px 20px;
+    border-radius   : 5px;
+    margin-left     : 15px;
+    font-weight     : 500
+}
+
+.containerUsers {
+    margin-top: 60px
+}
+
+.userTable tbody tr td,
+.userTable thead tr th {
+    text-align: center
+}
+
+.wrapper {
+    display    : flex;
+    align-items: stretch
+}
+
+#sidebar {
+    min-width       : 200px;
+    max-width       : 250px;
+    min-height      : 100vh;
+    background-color: #1d84c3;
+    color           : #fff;
+    padding-top     : 10px
+}
+
+#sidebar ul {
+    text-align: center;
+    margin-top: 30px
+}
+
+#sidebar h4 {
+    text-align: center
+}
+
+#sidebar ul li a {
+    color      : #fff;
+    font-size  : 20px;
+    font-weight: 400
+}
+
+#sidebar.active {
+    display: none
+}
+
+#sidebar ul li a:hover {
+    transform: scale(1.5)
+}
+
+.tab-content.current {
+    display: inherit
+}
+
+.nav-tabs {
+    border-bottom: none
+}
+
+a[data-toggle=collapse] {
+    position: relative
+}
+
+.dashboardContainer {
+    margin-top: 50px;
+    text-align: center
+}
+
+#dashboardContent {
+    width: 100%
+}
+
+#dashboardContent button {
+    background-color: #1d84c3;
+    color           : #fff
+}
+
+.navBarButton {
+    display         : block;
+    background-color: #1d84c3 !important;
+    color           : FFF;
+    z-index         : 1;
+    padding-right   : 10px;
+    height          : 100%
+}
+
+.containerButtonNav {
+    padding: 0 !important;
+    margin : auto !important
+}
+
+.containerButtonNav button {
+    background-color: #1d84c3;
+    color           : #fff;
+    border          : solid 1px
+}
+
+.navContainer {
+    min-height      : 60px;
+    max-height      : 100px;
+    box-shadow      : 0 2px 9px gray;
+    margin          : 0 !important;
+    background-color: #f5f4fe
+}
+
+.buttonNavheader {
+    background-color: unset !important;
+    border-style    : none
+}
+
+.dashboardIconsContent {
+    padding-top: 20px
+}
+
+.dashboardIconsContent .mailIcon {
+    text-align: right
+}
+
+.dashboardIconsContent .notificationIcon {
+    text-align: center
+}
+
+.dashboardIconsContent .userIcon {
+    text-align: left
+}
+
+.dashboardIconsContent>div.row div span i {
+    font-size: 30px;
+    color    : #1d84c3
+}
+
+.searchBar {
+    position: relative
+}
+
+.searchBar button {
+    position        : absolute;
+    right           : 0;
+    height          : 100%;
+    background-color: #1d84c3;
+    color           : #fff
+}
+
+.dashboardLogo {
+    padding-top: 5px
+}
+
+.dashboardLogo a {
+    height    : 30px;
+    max-height: 40px
+}
+
+.dashboardSearch {
+    padding-top: 15px
+}
+
+.navbarSideIcons {
+    list-style: none;
+    padding   : 0;
+    text-align: center;
+    display   : block;
+    margin-top: 30px
+}
+
+.navbarSideIcons li {
+    margin-bottom: 25px
+}
+
+.navbarSideIcons li a {
+    color    : #fff;
+    font-size: 27px
+}
+
+#sidebar ul li {
+    position     : relative;
+    margin-bottom: 25px
+}
+
+#sidebar ul li:after {
+    position        : absolute;
+    content         : "";
+    height          : 2px;
+    width           : 80%;
+    background-color: rgba(255, 255, 255, .1);
+    bottom          : -5px;
+    right           : 20px
+}
+
+.headerDashBoard {
+    text-align   : center;
+    margin-bottom: 50px
+}
+
+#calendarDashboard,
+#contactsDashboard,
+#homeDashboard,
+#mainDashboard,
+#modulesDashboard {
+    margin-top: 4%
+}
+
+.noticeContent {
+    text-align: center
+}
+
+.noticeContent .card {
+    margin: auto
+}
+
+.iconLeadsImg,
+.iconUserImg {
+    width: 50px
+}
+
+.modulesText {
+    font-weight: 600
+}
+
+.cardsProfiles .card {
+    padding: 10px
+}
+
+.cardsProfiles .col-6 .card {
+    padding: 10px;
+    width  : 50%;
+    margin : auto
+}
+
+.cardsProfiles .card .card-body a i {
+    font-size: 70px
+}
+
+.cardsProfile .card .card-header h5 {
+    text-align: center
+}
+
+.thankContainer {
+    position: relative
+}
+
+.containerThankPage img {
+    width : 100%;
+    margin: auto
+}
+
+.dialogThakPage {
+    position : absolute;
+    bottom   : 50%;
+    left     : 50%;
+    transform: translate(-25%)
+}
+
+.dialogThakPage p {
+    position   : absolute;
+    bottom     : 50%;
+    width      : 80%;
+    left       : 50%;
+    transform  : translate(-50%, 50%);
+    font-weight: 700;
+    text-align : justify;
+    font-size  : 1.5em
+}
+
+.table thead.headTableLeads th {
+    vertical-align: middle !important
+}
+
+.capchaContetent {
+    margin-bottom: 15px
+}
+
+.table thead.headTableWarranty th {
+    vertical-align: middle !important
+}
+
+.table thead.headTableProducts th {
+    vertical-align: middle !important
+}
+
+.containerLogin {
+    margin-top   : 50px;
+    margin-bottom: 50px
+}
+
+.card-header.row {
+    margin: 0
+}
+
+.loginText p {
+    margin     : 0;
+    font-size  : 20px;
+    font-weight: 600;
+    transform  : translateY(50%);
+    color      : #2aace0;
+    text-align : left
+}
+
+.loginLogo {
+    text-align: right
+}
+
+#viajesHeader {
+    background-color: #3fcf64;
+    color           : #fff;
+    padding         : 8px 0
+}
+
+#viajesHeader .row {
+    width: 100%
+}
+
+.buttonResponsiveViajes {
+    display: none
+}
+
+.viajesListItems {
+    padding   : 0;
+    text-align: center
+}
+
+.viajesListItems ul {
+    margin-top: 1rem !important;
+    padding   : 0
+}
+
+.viajesListItems li {
+    display: inline-block;
+    padding: 0 2%
+}
+
+.viajesListItems li:not(:last-child) {
+    border-right: solid 1px
+}
+
+.viajesListItems li a,
+.viajesListItems li span {
+    color      : #fff;
+    font-weight: 500
+}
+
+.viajesHeaderButtonResponsive {
+    display: none
+}
+
+.viajesWhatsappButton {
+    position   : relative;
+    padding-top: 1rem;
+    text-align : center
+}
+
+.viajesWhatsappButton a {
+    padding         : 13px 25px;
+    background-color: #e3eef2;
+    border-radius   : 20px;
+    font-weight     : 500;
+    font-size       : 12px
+}
+
+.viajesWhatsappButton a i {
+    font-weight: 700;
+    font-size  : 18px;
+    margin-left: 4px
+}
+
+.viajesContactenosLink {
+    padding-top: 1rem;
+    text-align : center
+}
+
+.viajesContactenosLink a {
+    color      : #fff;
+    font-weight: 500;
+    float      : left
+}
+
+.viajesSliderContent {
+    position  : absolute;
+    bottom    : 15%;
+    left      : 20%;
+    text-align: center
+}
+
+.viajesSliderDescription,
+.viajesSliderTitle {
+    font-size     : 25px;
+    text-transform: uppercase;
+    font-weight   : 500
+}
+
+.viajesSliderDescription p,
+.viajesSliderTitle p {
+    line-height: 1
+}
+
+.viajesSliderDescription,
+.viajesSliderTitle span {
+    font-weight: 800 !important
+}
+
+.viajesSliderTitle p {
+    margin-bottom: 0
+}
+
+.viajesSliderButton p a {
+    background-color: #3fcf64;
+    padding         : 10px 45px;
+    color           : #fff;
+    border-radius   : 20px;
+    font-weight     : 600
+}
+
+.viajesSliderButton {
+    margin-top: 2rem
+}
+
+#conoceViajes {
+    position: relative
+}
+
+.conoceViajesContent {
+    position  : absolute;
+    top       : 10%;
+    left      : 50%;
+    text-align: center;
+    transform : translate(-50%)
+}
+
+.conoceViajesTitle {
+    color        : #fff;
+    font-size    : 2em;
+    font-weight  : 700;
+    margin-bottom: 10rem;
+    position     : relative
+}
+
+.conoceViajesTitle::after {
+    position        : absolute;
+    content         : " ";
+    width           : 60%;
+    height          : 5px;
+    bottom          : -1em;
+    left            : 50%;
+    transform       : translate(-50%);
+    background-color: #fff;
+    border-radius   : 20px
+}
+
+#bustour .row {
+    width : 100%;
+    margin: 0
+}
+
+.imagesBustour {
+    padding: 0
+}
+
+.conoceViajesTitle p {
+    line-height: .5
+}
+
+.conoceViajesPlay {
+    display: none
+}
+
+.conoceViajesPlay img {
+    width: 4em
+}
+
+.imagesBustour div.row div.col-sm-4 {
+    padding: 0 3px
+}
+
+.imagesBustour div.row div.col-sm-4 img {
+    height    : 100%;
+    max-height: 500px;
+    width     : 100%
+}
+
+.busTourContent {
+    text-align: center;
+    padding   : 3em
+}
+
+.busTourMainTitle {
+    color      : #4900c0;
+    font-size  : 3em;
+    font-weight: 800;
+    margin     : 0;
+    line-height: 1;
+    font-style : italic
+}
+
+.busTourSubtitle {
+    font-size  : 2em;
+    font-weight: 700;
+    font-style : italic;
+    margin     : 0;
+    line-height: 1;
+    color      : #03aa07;
+    position   : relative
+}
+
+.busTourSubtitle:after {
+    position        : absolute;
+    content         : '';
+    bottom          : -15px;
+    left            : 50%;
+    transform       : translate(-50%);
+    height          : 5px;
+    width           : 35%;
+    border-radius   : 20px;
+    background-color: #03aa07
+}
+
+.busTourText {
+    margin-top: 2em
+}
+
+.busTourText p {
+    font-size  : 1em;
+    font-weight: 500;
+    line-height: 1;
+    margin     : 0;
+    font-style : italic
+}
+
+.busTourPrice {
+    font-weight: 800 !important;
+    font-size  : 1.5em !important
+}
+
+.busTourText p span {
+    font-weight: 700
+}
+
+.busTourButton p {
+    position: relative
+}
+
+.busTourButton p a {
+    position        : absolute;
+    left            : 50%;
+    transform       : translate(-50%);
+    background-color: #fc0;
+    padding         : 8px 35px;
+    font-style      : italic;
+    border-radius   : 20px;
+    text-transform  : none;
+    color           : #6b5600;
+    font-weight     : 800
+}
+
+.plansTitle {
+    margin-bottom: 3em
+}
+
+.plansMainTitle {
+    color        : #427c42;
+    font-weight  : 500;
+    margin-bottom: 0
+}
+
+.plansSubtitle {
+    position   : relative;
+    color      : #00c600;
+    font-weight: 500
+}
+
+.plansSubtitle:after {
+    position        : absolute;
+    content         : ' ';
+    height          : 5px;
+    width           : 70%;
+    background-color: #00c600;
+    left            : 50%;
+    transform       : translate(-50%);
+    bottom          : -20px;
+    border-radius   : 20px
+}
+
+.plansSubtitle span {
+    font-weight: 800
+}
+
+#plans {
+    margin-top: 3em
+}
+
+#plans .row {
+    width: 100%
+}
+
+.plansTitle {
+    margin-left: 50%;
+    transform  : translate(-50%)
+}
+
+.plansTitle h3 {
+    text-align: center
+}
+
+.plansContent {
+    padding   : 0 3%;
+    text-align: center;
+    margin    : 0
+}
+
+.plansContent section {
+    padding-bottom: 1em;
+    box-shadow    : 1px 1px 10px -3px;
+    border-radius : 6px
+}
+
+.plansdate {
+    margin-top   : 1em;
+    margin-bottom: 0
+}
+
+.plansdate p {
+    font-weight  : 500;
+    font-style   : italic;
+    font-size    : 16px;
+    margin-bottom: 0
+}
+
+.plansDescription {
+    font-weight: 700;
+    color      : #9d9d9d;
+    font-style : italic;
+    margin     : 0
+}
+
+.planPrice {
+    font-size  : 2em;
+    font-weight: 800;
+    color      : #000;
+    font-style : italic
+}
+
+.planButton {
+    position: relative
+}
+
+.planButton a {
+    background-color: #ffef02;
+    color           : #797979;
+    border-radius   : 20px;
+    max-width       : 300px;
+    padding         : 8px 35PX;
+    font-weight     : 600
+}
+
+.planButton a span {
+    color: #000
+}
+
+#travelOffers {
+    background-color: #f1f1f1;
+    padding         : 2em 0;
+    margin-top      : 4em
+}
+
+.travelOffersImg img {
+    float: right
+}
+
+.travelOffersText {
+    text-align: center
+}
+
+.travelOffersText p {
+    margin-bottom: 0
+}
+
+.travelMainText {
+    text-transform: uppercase
+}
+
+.travelSecondText {
+    font-weight: 700;
+    font-size  : 18px
+}
+
+.travelAnyText {
+    font-weight: 500;
+    font-size  : 18px
+}
+
+.bustourMainContent,
+.travelOffersButton,
+.travelOffersText {
+    display        : flex;
+    justify-content: center;
+    align-content  : center;
+    flex-direction : column
+}
+
+.travelOffersButton p a {
+    background-color: #001980;
+    padding         : 7px 30px;
+    border-radius   : 20px;
+    color           : #000;
+    font-weight     : 800;
+    vertical-align  : middle
+}
+
+p.wantToMainTex {
+    font-size  : 5em;
+    font-weight: 800;
+    font-style : italic;
+    color      : #9000ff;
+    margin     : 0
+}
+
+p.wantToSecondTex {
+    font-size  : 20px;
+    color      : #560099;
+    font-weight: 700
+}
+
+#wantToTravel {
+    position: relative
+}
+
+.wantToContent {
+    position  : absolute;
+    top       : 50%;
+    left      : 35%;
+    transform : translate(-50%, -50%);
+    text-align: center
+}
+
+.wantToButton {
+    margin-top: 6em
+}
+
+.wantToButton p a {
+    background-color: #ffef02;
+    padding         : 7px 50px;
+    border-radius   : 20px;
+    font-size       : 18px;
+    color           : #9000ff;
+    font-weight     : 700
+}
+
+.buttonNavheader::before {
+    position     : relative;
+    display      : block;
+    width        : 0;
+    height       : 0;
+    border-right : 100px solid transparent;
+    border-top   : 100px solid transparent;
+    border-left  : 100px solid transparent;
+    border-bottom: 100px solid #f0ad4e
+}
+
+.dropdown-menu-dashboard {
+    background-color: #f5f4fe;
+    box-shadow      : 0 2px 3px grey;
+    display         : none;
+    color           : #fff;
+    z-index         : 2;
+    position        : absolute;
+    top             : 70px;
+    right           : 3%;
+    list-style      : none;
+    padding         : 0 30px
+}
+
+.dropdown-menu-dashboard li {
+    padding: 11px 0
+}
+
+.dropdown-menu-dashboard li a {
+    color: #1d84c3
+}
+
+.no-padding-left {
+    padding-left: 0 !important
+}
+
+.no-padding-right {
+    padding-right: 0 !important
+}
+
+.containerLogoLibranza {
+    background-color: #fff !important
+}
+
+.angucomplete-title {
+    font-weight: 700
+}
+
+.angucomplete-description {
+    font-size    : 10px;
+    color        : #1d84c3;
+    margin-bottom: 10px;
+    border-bottom: rgba(125, 125, 125, .3) solid 1px
+}
+
+.angucomplete-row {
+    cursor : pointer;
+    padding: 5px
+}
+
+.angucomplete-row:hover {
+    background-color: rgba(28, 171, 226, .4)
+}
+
+@media(min-width:1701px) {
+    .dialogThakPage p {
+        font-size: 2em
+    }
+}
+
+@media(max-width:1700px) {
+
+    .conoce-TarjetaOportuya,
+    .conoce-creditoLibranza,
+    .conoce-creditoMotos,
+    .conoce-seguros,
+    .conoce-viajes {
+        width     : 40%;
+        max-height: 94%;
+    }
+
+    .conoce-titleTarjeta {
+        font-size  : 18px;
+        line-height: 20px;
+        margin     : 10px 0
+    }
+
+    .conoce-tarjetasTexto {
+        font-size : 10px;
+        margin-top: 10px
+    }
+
+    .conoce-titleTarjetaMotos {
+        margin: 10px 0 20px 0
+    }
+
+    .conoce-titleTarjetaSeguros {
+        margin: 10px 0 45px 0
+    }
+
+    .conoce-titleTarjeta>strong,
+    .conoce-titleTarjetaMotos>strong,
+    .conoce-titleTarjetaSeguros>strong {
+        font-size: 20px
+    }
+
+    .conoce-tarjetasImg {
+        width: 32px
+    }
+
+    .conoce-containButton {
+        right: 8%
+    }
+
+    .conoce-button {
+        font-size: 10px
+    }
+
+    .oportuyaContentHeader {
+        height: 6em
+    }
+
+    .oportuyaHeaderImage img {
+        transform: translateY(15%)
+    }
+}
+
+@media(max-width:1500px) {
+    .sliderPrincipal-containTextBottom {
+        top: 60%
+    }
+
+    .oportuyaSliderContent {
+        bottom: 7em
+    }
+
+    .soatImageContainer div img {
+        width: 50%
+    }
+
+    .servicesPointCard p,
+    .servicesPointContainer p {
+        font-size: 1.1em
+    }
+}
+
+@media(max-width:1366px) {
+    .dialogThakPage p {
+        font-size: 1.3em
+    }
+
+    .conoce-containButton {
+        right: 8%
+    }
+
+    .back ul li {
+        line-height: 1
+    }
+
+    .conoce-button {
+        padding: 5px 10px
+    }
+
+    .descriptionContentCard {
+        height: 3em
+    }
+
+    .efectiveText {
+        font-size: 1.2em
+    }
+
+    .viajesWhatsappButton a {
+        padding  : 13px 19px;
+        font-size: 10px
+    }
+}
+
+@media(max-width:1300px) {
+    .header-textoItem {
+        font-size: 15px
+    }
+
+    .cardsProfiles .col-6 .card {
+        width: 70%
+    }
+
+    .cardsProfiles .card .card-body a i {
+        font-size: 4em
+    }
+
+    .dialogThakPage p {
+        font-size: 1.3em
+    }
+
+    .bestPricesImg img {
+        padding: 7% 0
+    }
+
+    .cardImage .back {
+        max-width: 100%;
+        top      : 30px
+    }
+
+    .conoce-TarjetaOportuya,
+    .conoce-creditoLibranza,
+    .conoce-creditoMotos,
+    .conoce-seguros,
+    .conoce-viajes {
+        width: 50%
+    }
+
+    .conoce-titleTarjeta {
+        font-size  : 15px;
+        line-height: 20px;
+        margin     : 10px 0
+    }
+
+    .conoce-titleTarjetaMotos {
+        font-size: 17px;
+        margin   : 10px 0 30px 0
+    }
+
+    .conoce-tarjetasImg {
+        width: 24px
+    }
+
+    .oportuyaSliderTitle p {
+        font-size: 2em
+    }
+
+    .oportuyaSliderButton p a,
+    .oportuyaSliderDescription p {
+        font-size: 1em
+    }
+
+    .viajesListItems {
+        padding: 0
+    }
+
+    .viajesListItems li {
+        padding: 0 .5em
+    }
+
+    .servicesPointCard p,
+    .servicesPointContainer p {
+        font-size: 1em
+    }
+
+    .travelOffersButtonAdvance {
+        padding: 0
+    }
+}
+
+@media(max-width:1200px) {
+    .header-textoItem {
+        font-size: 14px
+    }
+
+    .planButton a {
+        font-size: 12px
+    }
+
+    .bestPricesImg img {
+        padding: 11% 0
+    }
+
+    .tarjetaLAst {
+        margin: auto
+    }
+
+    .conoce-containTarjeta {
+        margin-bottom: 20px
+    }
+
+    .conoce-TarjetaOportuya,
+    .conoce-creditoLibranza,
+    .conoce-creditoMotos,
+    .conoce-seguros,
+    .conoce-viajes {
+        width: 35%
+    }
+
+    .conoce-tarjetasImg {
+        width: 48px
+    }
+
+    .conoce-titleTarjeta>strong,
+    .conoce-titleTarjetaMotos>strong,
+    .conoce-titleTarjetaSeguros>strong {
+        font-size: 25px
+    }
+
+    .conoce-titleTarjeta {
+        font-size  : 25px;
+        line-height: 24px;
+        margin     : 15px 0 50px 0
+    }
+
+    .conoce-tarjetasTexto {
+        font-size : 13px;
+        margin-top: 40px
+    }
+
+    .conoce-titleTarjetaMotos {
+        font-size: 25px;
+        margin   : 10px 0 70px 0
+    }
+
+    .conoce-titleTarjetaSeguros {
+        margin: 10px 0 105px 0
+    }
+
+    .conoce-containButton {
+        right: 14%
+    }
+
+    .conoce-button {
+        padding  : 7px 30px;
+        font-size: 15px
+    }
+
+    .oportuyaSliderContent {
+        bottom: 5em
+    }
+
+    .oportuyaSliderContent p {
+        margin-bottom: 0
+    }
+
+    .titleContentCard {
+        font-size: 1.2em
+    }
+
+    .descriptionRequirements {
+        width : 90%;
+        margin: 3em auto
+    }
+
+    .descriptionRequirements {
+        width: unset
+    }
+
+    .requirementsList {
+        width: unset
+    }
+
+    .dialogThakPage p {
+        font-size: 1.2em
+    }
+
+    .contentListFeatures div ul li {
+        height: unset
+    }
+
+    .viajesWhatsappButton {
+        padding-left : 0;
+        padding-right: 0
+    }
+
+    .viajesListItems li {
+        padding: 0 .3em
+    }
+
+    .busTourButton p a {
+        width: 65%
+    }
+
+    .servicesPointCard p,
+    .servicesPointContainer p {
+        font-size: .9em
+    }
+
+    .serviceContainer {
+        margin-left: 40%
+    }
+
+    .travelOffersButtonAdvance p a {
+        padding: 7px 10px
+    }
+}
+
+@media(max-width:991px) {
+    .mensajeFinal-text {
+        font-size: 17px
+    }
+
+    .mensajeFinal-containText {
+        padding: 0 10px
+    }
+
+    .slidePrev {
+        display: none
+    }
+
+    .slideNext {
+        display: none
+    }
+
+    .travelOffersButtonAdvance p a {
+        padding: 7px 30px
+    }
+
+    .cardsProfiles .col-6 .card {
+        width: 90%
+    }
+
+    .busTourButton p a {
+        width: unset
+    }
+
+    .wantToContent {
+        position  : relative;
+        top       : unset;
+        left      : unset;
+        transform : unset;
+        text-align: center
+    }
+
+    p.wantToMainTex {
+        font-size: 3em
+    }
+
+    .wantToButton {
+        margin-top: 2em
+    }
+
+    .dialogThakPage p {
+        font-size: 1em;
+        width    : 90%;
+        transform: translate(-50%, 60%)
+    }
+
+    .helperRow {
+        display: none
+    }
+
+    .conoce-titleTarjeta {
+        font-size  : 35px;
+        line-height: 35px;
+        margin     : 20px 0 50px
+    }
+
+    .conoce-titleTarjetaMotos {
+        font-size: 25px;
+        padding  : 0 40px;
+        margin   : 25px 0 30px 0
+    }
+
+    .conoce-titleTarjetaSeguros {
+        margin: 20px 0 45px 0
+    }
+
+    .conoce-tarjetasTexto {
+        font-size  : 15px;
+        line-height: 17px;
+        margin-top : 70px
+    }
+
+    #video {
+        text-align: center
+    }
+
+    .video-botonPlay {
+        position : inherit;
+        transform: none;
+        top      : 0;
+        left     : 0
+    }
+
+    .footer-containerNewsletter {
+        position: initial
+    }
+
+    .footer-menu {
+        padding: 45px 0
+    }
+
+    .footer-containerServicioCliente {
+        border: none
+    }
+
+    .contentListFeatures {
+        display: none
+    }
+
+    .contentListFeaturesResponsive {
+        display: block
+    }
+
+    .buttonOportuyaSection {
+        position    : relative;
+        float       : right;
+        margin-top  : -69px;
+        margin-right: 2px;
+        left        : 0;
+        transform   : translate(0, 0)
+    }
+
+    .oportuyaContentImage img {
+        margin-top: 14em;
+        position  : relative;
+        right     : 0
+    }
+
+    .soatImageContainer div img {
+        width: 100%
+    }
+
+    .textOportuyaHeader {
+        width     : 100%;
+        position  : absolute;
+        left      : unset;
+        right     : 10%;
+        transform : translate(0);
+        text-align: center
+    }
+
+    .header-menu:before {
+        display: none
+    }
+
+    .header-menu button.navbar-toggler {
+        margin-left: 50%;
+        transform  : translate(-50%)
+    }
+
+    .toggleResponsive {
+        background-color: transparent
+    }
+
+    .header-item {
+        width: 100%
+    }
+
+    .buttonResponsive {
+        display      : block;
+        margin-right : 0;
+        position     : fixed;
+        top          : 90%;
+        right        : 4%;
+        z-index      : 999999;
+        height       : 50px;
+        width        : 50px;
+        background   : #ffc100;
+        border-radius: 100%;
+        padding-left : 13px
+    }
+
+    .innerButtonResponsive {
+        top: 13px
+    }
+
+    .innerButtonResponsive,
+    .innerButtonResponsive1,
+    .innerButtonResponsive2 {
+        background-color          : #1cabe2;
+        position                  : absolute;
+        width                     : 25px;
+        height                    : 4px;
+        border-radius             : 5px;
+        content                   : " ";
+        transition-timing-function: ease;
+        transition-duration       : .2s;
+        transition-property       : transform, opacity
+    }
+
+    .innerButtonResponsive1 {
+        top: 23px
+    }
+
+    .innerButtonResponsive2 {
+        top: 32px
+    }
+
+    .buttonResponsive.open .innerButtonResponsive {
+        transform: translate3d(0, 10px, 0) rotate(45deg)
+    }
+
+    .buttonResponsive.open .innerButtonResponsive1 {
+        transform: translate3d(0, 0, 0) rotate(-45deg)
+    }
+
+    .buttonResponsive.open .innerButtonResponsive2 {
+        transform: translate3d(0, -10px, 0) rotate(135deg)
+    }
+
+    .headerImage {
+        z-index: 1
+    }
+
+    .header-containerLogo {
+        text-align: center
+    }
+
+    .oportuyaSliderTitle {
+        font-size: .7em
+    }
+
+    .oportuyaSliderButton {
+        font-size: .7em
+    }
+
+    .bestPricesImg img {
+        display: none
+    }
+
+    .buttonOportuyaSection a {
+        margin-left: 0;
+        transform  : unset
+    }
+
+    .steps p {
+        width: 100%
+    }
+
+    .stepContainer:after {
+        display: none
+    }
+
+    .stepResponsive {
+        margin-top: 15px !important
+    }
+
+    .plansContent section {
+        width : 60%;
+        margin: 20px auto
+    }
+
+    .viajesSliderContent {
+        bottom: 10%;
+        left  : 8%
+    }
+
+    .conoceViajesTitle p {
+        line-height: 1
+    }
+
+    .conoceViajesTitle {
+        margin-bottom: 5rem;
+        font-size    : 1.5em
+    }
+
+    .imgSombraMenu {
+        display: none
+    }
+
+    .sliderPrincipal-containTextBottom {
+        left: 33%
+    }
+
+    .tarjetaLAst {
+        margin-left: 25%
+    }
+
+    .conoce-TarjetaOportuya,
+    .conoce-creditoLibranza,
+    .conoce-creditoMotos,
+    .conoce-seguros,
+    .conoce-viajes {
+        width: 35%
+    }
+
+    .footer-containMenu {
+        margin-bottom: 50px
+    }
+
+    .conoce-containButton {
+        right: 30%
+    }
+
+    .footer-contianerTelefonos {
+        margin-left: 10%
+    }
+
+    .conoce-titleTarjeta {
+        font-size  : 25px;
+        line-height: 35px;
+        margin     : 10px 0 30px
+    }
+
+    .conoce-tarjetasTexto {
+        margin-top: 20px;
+        font-size : 13px
+    }
+
+    .conoce-titleTarjetaMotos {
+        padding: 0
+    }
+
+    .convenios-containInfo {
+        margin-bottom: 60px
+    }
+
+    .contentCards {
+        position : relative;
+        transform: translate(0, 0);
+        left     : 0
+    }
+
+    .beforeLine::after {
+        display: none
+    }
+
+    .contentCards {
+        height: 90em
+    }
+
+    #oportuyaCards {
+        margin-top: 2em
+    }
+
+    .oportuyaTextResponsive {
+        display: block
+    }
+
+    .oportuyaText {
+        display: none
+    }
+
+    .offersDescription::before {
+        display: none
+    }
+
+    .offersDescription>div+div {
+        margin-top: 8em
+    }
+
+    .offersPrice1 {
+        transform: translate(-9em, 1.5em)
+    }
+
+    .offersPrice2 {
+        transform: translate(-16em, 1.5em)
+    }
+
+    .slick-slider {
+        width     : 100%;
+        box-sizing: border-box
+    }
+
+    .slick-initialized .slick-list {
+        overflow: hidden
+    }
+
+    .navBarHide {
+        display: none
+    }
+
+    .header-item {
+        height  : 10%;
+        position: relative
+    }
+
+    .header-item::after {
+        position        : absolute;
+        content         : " ";
+        width           : 100%;
+        bottom          : 0;
+        left            : 50%;
+        transform       : translate(-50%);
+        height          : 2px;
+        background-color: rgba(255, 255, 255, .2)
+    }
+
+    .formularioSimulador-containerFormulario {
+        position: inherit !important;
+        margin  : auto
+    }
+
+    .header-textoItem {
+        font-size: 15px
+    }
+
+    .preHeader-item {
+        padding: 5px 23px 0 23px !important
+    }
+
+    .oportuyaCardsContent {
+        height: unset !important
+    }
+
+    .side.back ul {
+        width : 70%;
+        margin: auto
+    }
+
+    .cardImage .back {
+        max-width: 80%;
+        top      : 50px
+    }
+
+    .back ul li {
+        line-height: 1;
+        font-size  : 14px
+    }
+
+    .serviceContainer {
+        margin-left: 25%;
+        transform  : translate(-20%)
+    }
+
+    .preHeader-item {
+        padding: 5px 10px 0 10px !important
+    }
+
+    .publicHeader {
+        text-align      : center;
+        background-color: #f5f4fe;
+        font-weight     : 700;
+        position        : relative
+    }
+
+    .publicHeader * {
+        margin: unset !important
+    }
+
+    .headerLogo {
+        margin: 10px 0 !important
+    }
+
+    .headerText {
+        margin-top: 25px !important;
+        position  : relative
+    }
+
+    .headerText * {
+        padding: 0
+    }
+
+    .phoneCatalog:after {
+        position        : absolute;
+        content         : '';
+        width           : 1px;
+        background-color: #000;
+        height          : 30px;
+        top             : 0;
+        right           : 0
+    }
+
+    .headerText a {
+        position : absolute;
+        top      : 50%;
+        transform: translateY(-50%);
+        left     : 1vw
+    }
+
+    .headerText span {
+        position : absolute;
+        top      : 50%;
+        transform: translateY(-50%);
+        left     : 0
+    }
+
+    .productsCatalog {
+        width: 47vw !important
+    }
+
+    .descCatalog {
+        width: 23vw !important
+    }
+}
+
+@media(max-width:768px) {
+    .mensajeFinal-containText {
+        position  : initial;
+        transform : none;
+        top       : 0;
+        margin-top: 20px
+    }
+
+    .phoneCatalog:after {
+        display: none
+    }
+
+    .preHeader-item:nth-child(3) {
+        display: none
+    }
+
+    .cardsProfiles .col-6 .card {
+        width: 100%
+    }
+
+    .conoceViajesTitle {
+        font-size    : 1em;
+        margin-bottom: 3rem
+    }
+
+    .conoceViajesPlay img {
+        width: 2em
+    }
+
+    .conoceViajesTitle p {
+        line-height: 0
+    }
+
+    .viajesSliderContent {
+        position: unset
+    }
+
+    .viajesContactenosLink a,
+    .viajesListItems li a {
+        font-size: 12px
+    }
+
+    .dialogThakPage p {
+        transform: translate(-50%, 60%);
+        font-size: .8em
+    }
+
+    .viajesHeaderButtonResponsive {
+        display: block
+    }
+
+    .viajesHeaderButton {
+        display: none
+    }
+
+    .viajesWhatsappButton {
+        padding: 0
+    }
+
+    .viajesWhatsappButton a {
+        padding         : 0;
+        position        : fixed;
+        width           : 50px;
+        height          : 50px;
+        bottom          : 50%;
+        right           : 4%;
+        background-color: #3fcf64;
+        color           : #fff;
+        border-radius   : 50px;
+        border          : solid 1px;
+        text-align      : center;
+        font-size       : 27px;
+        box-shadow      : 2px 2px 3px #999;
+        z-index         : 100
+    }
+
+    .viajesHeaderButtonResponsive .fa-whatsapp:before {
+        position : absolute;
+        left     : 50%;
+        top      : 50%;
+        transform: translate(-50%, -50%)
+    }
+
+    .sliderPrincipal-button {
+        padding  : 9px 35px;
+        font-size: 13px
+    }
+
+    .sliderPrincipal-textSlider {
+        font-size: 14px
+    }
+
+    .sliderPrincipal-containTextBottom {
+        top: 45%
+    }
+
+    .sliderPrincipal-containTextLeft {
+        left: 10%;
+        top : 30%
+    }
+
+    .conoce-containButton {
+        right: 20%
+    }
+
+    .requirementsContent::after {
+        display: none
+    }
+
+    .oportuyaContentImage {
+        display: none
+    }
+
+    .soatImageContainer {
+        display: none
+    }
+
+    .responsiveButtonOportuya {
+        display: block
+    }
+
+    .buttonOportuya {
+        display: none
+    }
+
+    .buttonOportuyaSection {
+        position  : relative;
+        float     : unset;
+        text-align: center;
+        margin    : 0 0 2em 0 !important;
+        left      : 0;
+        transform : translate(0, 0)
+    }
+
+    .offersPrice1 {
+        transform: translate(-3em, 1.5em)
+    }
+
+    .offersPrice2 {
+        transform: translate(-8em, 1.5em)
+    }
+
+    .textOportuyaHeader {
+        width: 100%
+    }
+
+    .oportuyaContentHeader {
+        height: auto
+    }
+
+    .oportuyaHeaderImage img {
+        height: 70%
+    }
+
+    .salePoint {
+        display: none
+    }
+
+    .efectiveText {
+        font-size: 1em
+    }
+
+    .oportuyaSliderContent {
+        position     : relative;
+        bottom       : 0;
+        left         : unset;
+        padding-top  : 3em;
+        margin-bottom: 3em
+    }
+
+    .oportuyaSliderDescription {
+        margin-bottom: 40px
+    }
+
+    .oportuyaSliderContent br {
+        display: none
+    }
+
+    .oportuyaSliderContent p {
+        color: #000 !important
+    }
+
+    .slideNext {
+        top: 20%
+    }
+
+    .slidePrev {
+        top: 20%
+    }
+
+    .preHeader-item {
+        padding  : 5px 15px 0 15px !important;
+        font-size: 12px
+    }
+
+    .side.back ul {
+        width: 80%
+    }
+
+    .viajesListItems li a,
+    .viajesListItems li span {
+        font-size: 14px
+    }
+
+    .busTourButton p a {
+        width: 60%
+    }
+
+    .textOportuyaHeader {
+        margin-top: 10px
+    }
+
+    .textOportuyaHeader {
+        position: relative;
+        right   : unset
+    }
+
+    .oportuyaTextResponsive {
+        margin-bottom: 10px
+    }
+
+    .servicesPointContainer {
+        margin-bottom: 0
+    }
+
+    .servicesPointCard {
+        margin-top: 0
+    }
+
+    .publicHeader {
+        text-align      : center;
+        background-color: #f5f4fe;
+        font-weight     : 700;
+        font-size       : 2.1vw !important
+    }
+
+    .publicHeader * {
+        margin: unset !important
+    }
+
+    .headerLogo {
+        margin: 10px 0 !important
+    }
+
+    .headerText {
+        margin-top: 10px !important
+    }
+
+    .phoneCatalog:after {
+        display: none
+    }
+
+    .productsCatalog {
+        width: 45vw !important
+    }
+
+    .descCatalog {
+        width: 21vw !important
+    }
+
+    .containerLines {
+        display: none
+    }
+
+    .container-sm-Lines {
+        display: block !important
+    }
+
+    .container-sm-Lines ul {
+        list-style: none;
+        padding   : 0
+    }
+
+    .targetProductFooter {
+        font-size: 3vw !important
+    }
+
+    .productsImageContainer {
+        height: 25vw !important
+    }
+
+    .productsTitle {
+        padding-left: 6vw
+    }
+
+    .tabBody {
+        font-size: 2vw !important
+    }
+
+    .tabTitle {
+        padding: 5px 0 5px 25px !important
+    }
+
+    .tabTitle p {
+        margin: 0
+    }
+}
+
+@media(max-width:576px) {
+    .travelOffersButtonAdvance p a {
+        padding  : 7px 10px;
+        font-size: 12px
+    }
+
+    #requisitos-prestamo {
+        text-align: center
+    }
+
+    .botonSolicitudContainer a {
+        padding  : 1% 8%;
+        font-size: 1.2em
+    }
+
+    #solicitudAvances {
+        text-align: center
+    }
+
+    .preHeader-item:nth-child(2) {
+        display: none
+    }
+
+    .imagesBustour div.row div.col-sm-4 {
+        text-align: center;
+        margin    : 20px 0
+    }
+
+    .imagesBustour div.row div.col-sm-4 img {
+        width: 60%
+    }
+
+    .buttonResponsiveViajes {
+        display: none;
+        z-index: 9
+    }
+
+    .viajesListItems li {
+        display: inline
+    }
+
+    .viajesListItems li:not(:last-child) {
+        border-right: unset
+    }
+
+    .viajesListItems ul {
+        display    : block;
+        float      : left;
+        margin-left: unset;
+        transform  : unset
+    }
+
+    .viajesListItems ul li {
+        text-align   : center;
+        position     : relative;
+        margin-bottom: 1em
+    }
+
+    .viajesListItems ul li:not(:first-child):after {
+        position        : absolute;
+        content         : ' ';
+        width           : 2px;
+        background-color: rgba(255, 255, 255, .5);
+        height          : 100%;
+        border-radius   : 20px;
+        bottom          : 0;
+        left            : -2px
+    }
+
+    .tarjetaLAst {
+        margin-left: 0
+    }
+
+    .offersPrice1 {
+        transform: translate(0, 1.5em)
+    }
+
+    .offersPrice2 {
+        transform: translate(-1em, 1.5em)
+    }
+
+    .viajesContactenosLink a {
+        float: unset
+    }
+
+    .viajesHeaderButton {
+        display: none
+    }
+
+    .viajesHeaderButtonResponsive {
+        display: block
+    }
+
+    .buttonResponsiveViajes {
+        position: relative;
+        display : none;
+        z-index : 9
+    }
+
+    .buttonResponsiveViajes .innerButtonResponsive {
+        top: 13px
+    }
+
+    .buttonResponsiveViajes.open .innerButtonResponsive {
+        transform: translate3d(0, 10px, 0) rotate(45deg)
+    }
+
+    .buttonResponsiveViajes.open .innerButtonResponsive1 {
+        transform: translate3d(0, 0, 0) rotate(-45deg)
+    }
+
+    .buttonResponsiveViajes.open .innerButtonResponsive2 {
+        transform: translate3d(0, -10px, 0) rotate(135deg)
+    }
+
+    .buttonResponsiveViajes .innerButtonResponsive,
+    .buttonResponsiveViajes .innerButtonResponsive1,
+    .buttonResponsiveViajes .innerButtonResponsive2 {
+        background-color          : #fff;
+        position                  : absolute;
+        width                     : 25px;
+        height                    : 4px;
+        border-radius             : 5px;
+        content                   : " ";
+        transition-timing-function: ease;
+        transition-duration       : .2s;
+        transition-property       : transform, opacity
+    }
+
+    .buttonResponsiveViajes .innerButtonResponsive1 {
+        top: 23px
+    }
+
+    .buttonResponsiveViajes .innerButtonResponsive2 {
+        top: 32px
+    }
+
+    .buttonResponsive {
+        margin-right : 0;
+        position     : fixed;
+        top          : 90%;
+        right        : 4%;
+        z-index      : 999999;
+        height       : 50px;
+        width        : 50px;
+        background   : #ffc100;
+        border-radius: 100%;
+        padding-left : 13px
+    }
+
+    .side.back ul {
+        width: 100%
+    }
+
+    .buttonResponsiveViajes {
+        margin-top: 30px
+    }
+
+    .viajesContactenosLink {
+        display: none
+    }
+
+    .offersTitle p {
+        font-size: 1.5em
+    }
+
+    .busTourButton p a {
+        width: 80%
+    }
+
+    .publicHeader {
+        background-color: #f5f4fe;
+        font-weight     : 700;
+        font-size       : 2vh !important
+    }
+
+    .headerText {
+        background: #fff;
+        top       : 0
+    }
+
+    .headerText a,
+    .headerText span {
+        left     : 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width    : 100%
+    }
+
+    .headerLogo {
+        padding: 10px !important
+    }
+
+    .productsCatalog {
+        width: 36vw !important
+    }
+
+    .descCatalog {
+        width: 16vw !important
+    }
+
+    .targetProductFooter {
+        font-size: 5vw !important
+    }
+
+    .productsImageContainer {
+        height: 50vw !important
+    }
+
+    .productsImageContainer {
+        padding-bottom: 3vw !important
+    }
+
+    .productsTitle {
+        padding-left: 10vw !important
+    }
+
+    .tabBody {
+        padding  : 15px 0 15px 25px !important;
+        font-size: 3vw !important
+    }
+
+    .detailsPrice {
+        font-size: 2.4vw !important
+    }
+
+    .containerSlickMiniature {
+        display: none
+    }
+
+    .specsContainer {
+        margin-top: 25px !important
+    }
+}
+
+@media(max-width:500px) {
+    .conoceViajesContent {
+        width: 100%
+    }
+
+    .sliderPrincipal-textSlider {
+        font-weight: 500;
+        color      : #000;
+        text-shadow: unset
+    }
+
+    .convenios-text {
+        padding: 0 20px
+    }
+
+    .sombraSliderPrincipal {
+        display: none !important
+    }
+
+    .sliderPrincipal-containTextLeft {
+        position: initial
+    }
+
+    .sliderPrincipal-containTextBottom {
+        position: initial
+    }
+
+    .conoce-containButton {
+        right: 15%
+    }
+
+    .footer-contianerNosotros {
+        margin-left: 10%
+    }
+
+    .footer-menu {
+        margin-left: 20%
+    }
+
+    .busTourButton p a {
+        width: 100%
+    }
+
+    .container-itemsPreHeader {
+        margin-bottom: 30px;
+        text-align   : center
+    }
+
+    .assesorLogin {
+        text-align: center
+    }
+
+    .assesorLogin a {
+        position     : relative;
+        border       : solid 1px;
+        border-radius: 20px;
+        padding      : 5px 20px
+    }
+}
+
+.cardFQA {
+    margin: 10px
+}
+
+.card-headerFQA {
+    background: #fff
+}
+
+.btn-FAQ {
+    background-color: #fff !important;
+    white-space     : normal;
+    width           : 100%
+}
+
+.btn-FAQ:focus {
+    box-shadow: unset
+}
+
+.titelFAQ {
+    margin-top: 30px
+}
+
+.downFAQ {
+    padding  : 5px;
+    font-size: 20px;
+    position : absolute;
+    right    : 0
+}
+
+.rowFAQ {
+    position: relative
+}
+
+.h5FAQ {
+    width     : 90%;
+    text-align: left
+}
+
+.cardUser {
+    margin: 10px
+}
+
+.hederUser {
+    text-align: center
+}
+
+.iconUser {
+    font-size: 70px
+}
+
+.rowBrands {
+    margin: 0;
+    width : 100%
+}
+
+.rowBrands div {
+    padding: 5px
+}
+
+.headerAdmin {
+    text-align: center;
+    margin    : 50px;
+    color     : #1d84c3
+}
+
+.btnFilter {
+    margin-left: 3px
+}
+
+.gallery-box {
+    margin-top: 50px;
+    text-align: center
+}
+
+.gallery-box * {
+    margin: 3px
+}
+
+.gallery-box a {
+    color: #fff !important
+}
+
+.imgContainer {
+    position: relative;
+    width   : 200px;
+    height  : 200px;
+    cursor  : move;
+    margin  : auto
+}
+
+.imgCatalog {
+    width : 100%;
+    height: 100%;
+    margin: auto
+}
+
+.flowContainer {
+    position: relative;
+    width   : 200px;
+    height  : 200px;
+    margin  : auto
+}
+
+.ulImages {
+    list-style: none !important;
+    width     : 100%
+}
+
+.closeProductsImages {
+    color      : #fff;
+    position   : absolute;
+    top        : 0;
+    right      : 0;
+    text-shadow: 2px 2px 2px #000;
+    cursor     : default
+}
+
+.labelDelete {
+    font-size: unset
+}
+
+.textImage {
+    margin-top: 7px
+}
+
+.progress {
+    width : 220px;
+    margin: auto
+}
+
+.publicHeader {
+    background-color: #f5f4fe;
+    font-weight     : 700;
+    font-size       : 1.2vw;
+    position        : relative;
+    width           : 100%
+}
+
+.headerLogo {
+    padding: 10px 0 10px 30px
+}
+
+.headerText {
+    margin-top: 25px !important;
+    position  : relative
+}
+
+.headerText * {
+    padding   : 0;
+    text-align: center
+}
+
+.phoneCatalog:after {
+    position        : absolute;
+    content         : '';
+    width           : 1px;
+    background-color: #000;
+    height          : 30px;
+    top             : 0;
+    right           : 0
+}
+
+.catalogSlide {
+    margin          : 10px 0;
+    width           : 100%;
+    padding         : 3% 10%;
+    background-color: #ebebeb
+}
+
+.containerLines {
+    padding     : unset;
+    padding-left: 10px
+}
+
+.productsCatalog {
+    width: 48vw
+}
+
+.descCatalog {
+    width: 24vw
+}
+
+.productsMenu {
+    list-style      : none;
+    background-color: #f5f4fe;
+    padding         : unset;
+    margin-left     : 10px
+}
+
+.buttonLines {
+    text-align   : left;
+    font-family  : Barlow;
+    font-weight  : 700;
+    width        : 100%;
+    background   : 0 0;
+    border       : unset;
+    border-bottom: solid #aeadb2 1px
+}
+
+.buttonLines:focus {
+    outline: unset
+}
+
+.nameLine {
+    padding-left: 20px
+}
+
+.nameFilter {
+    padding-left: 20px
+}
+
+.carretLines {
+    position   : absolute;
+    font-size  : 31px;
+    margin-left: 5px;
+    margin-top : -2px
+}
+
+.brandsCatalog {
+    list-style : none;
+    font-family: Barlow;
+    font-weight: 700;
+    background : #dcdce0;
+    padding    : unset
+}
+
+.brandsName {
+    border-bottom: solid #ccc 1px;
+    padding-left : 40px
+}
+
+.targetContainer {
+    padding: 10px
+}
+
+.tagentProduct {
+    padding: 5px
+}
+
+.targetProductBody {
+    background-color: #f2f0f0;
+    padding-top     : 20px;
+    text-align      : center;
+    padding-bottom  : 10px
+}
+
+.targetProductFooter {
+    background-color: #454545;
+    border-radius   : 0 0 0 20px;
+    padding         : 20px 0 20px 0;
+    text-align      : center;
+    font-family     : Barlow;
+    font-weight     : 700;
+    color           : #fff;
+    font-size       : 1.6vw
+}
+
+.targetProductFooter p {
+    margin: 0
+}
+
+.catalogContainer {
+    width : 100%;
+    margin: 0
+}
+
+.targetProductBody h3 {
+    color      : red;
+    font-family: Barlow;
+    font-weight: 700;
+    font-size  : 15px
+}
+
+.targetProductBody p {
+    color      : #000;
+    font-family: Barlow;
+    font-weight: 700;
+    font-size  : 10px;
+    margin     : 0;
+    height     : 1vw
+}
+
+.productsImageContainer {
+    text-align      : center;
+    height          : 150px;
+    background-color: #f2f0f0;
+    padding-bottom  : 1vw
+}
+
+.productsImageContainer img {
+    width : 95%;
+    height: 100%
+}
+
+.productBtn {
+    background-color: #ffca05;
+    position        : absolute;
+    font-family     : Barlow;
+    font-weight     : 700;
+    margin-left     : 50%;
+    transform       : translateX(-53%) translateY(-60%);
+    width           : 80%;
+    border-radius   : 20px;
+    color           : #000
+}
+
+.productBtn:hover {
+    color: #000
+}
+
+.btn-volver {
+    margin: 3vw
+}
+
+.btn-volver .fa-angle-left {
+    margin-right: 1vw
+}
+
+.priceLabel {
+    color: #ffca05
+}
+
+.buttonBrands {
+    text-align : left;
+    font-family: Barlow;
+    font-weight: 700;
+    width      : 100%;
+    background : 0 0;
+    border     : unset
+}
+
+.buttonBrands:focus {
+    outline: unset
+}
+
+.container-sm-Lines {
+    display   : none;
+    list-style: none
+}
+
+.productsTitle {
+    padding-left: 3vw;
+    color       : #abacac
+}
+
+.carretTitle {
+    position : absolute;
+    font-size: 45px
+}
+
+.containerSlickMain {
+    margin: auto
+}
+
+.containerSlickMiniature {
+    margin : auto;
+    padding: unset
+}
+
+.single-item {
+    width : 90%;
+    margin: auto
+}
+
+.multiple-items {
+    width           : 95%;
+    margin          : auto;
+    padding         : 5%;
+    background-color: #f0f2f1
+}
+
+.slideContainer {
+    width : 90%;
+    margin: auto
+}
+
+.lineDetails {
+    margin     : unset;
+    margin-left: 3%;
+    color      : #abacac
+}
+
+.detailName h1 {
+    color    : #fd0000;
+    font-size: 2vw;
+    height   : 2vw
+}
+
+.detailName h2 {
+    font-size: 2vw;
+    height   : 2vw
+}
+
+.detailsPrice {
+    width     : 90%;
+    background: #454545;
+    color     : #fff;
+    position  : relative;
+    text-align: center;
+    font-size : 2vw;
+    padding   : 0
+}
+
+.containerPrice {
+    width     : 90%;
+    margin-top: 1vw
+}
+
+.detailsPrice:before {
+    content         : "";
+    background-color: #454545;
+    z-index         : -10;
+    width           : 30px;
+    height          : 100%;
+    transform       : skew(-20deg);
+    left            : -15px;
+    position        : absolute
+}
+
+.colorPrice {
+    color: #fec905
+}
+
+.detailsPrice b {
+    width    : 100%;
+    position : absolute;
+    transform: translate(-50%, 50%)
+}
+
+.specsContainer {
+    margin-top: 50px
+}
+
+.TabSpecs {
+    width: 90%
+}
+
+.tabTitle {
+    background-color: #ffc905;
+    padding         : 10px 0 10px 50px;
+    font-weight     : 700
+}
+
+.tabTitle p {
+    margin: 0
+}
+
+.tabBody {
+    padding    : 30px 0 30px 50px;
+    font-size  : 1.4vw;
+    font-family: barlow
+}
+
+.tabBody pre {
+    font-family: barlow
+}
+
+.resultadoPolitica {
+    font-size  : 20px;
+    font-weight: 700
+}
+
+.caracteristicaPolitica {
+    font-size: 14px
+}
+
+.colourGreen {
+    color: #3fcf64
+}
+
+.colourRed {
+    color: #ec2d35
+}
+
+.container-button {
+    position   : fixed;
+    bottom     : 70px;
+    right      : 0;
+    font-weight: 700;
+    z-index    : 999999
+}
+
+a:hover {
+    color: #fff
+}
+
+.ingreso:hover {
+    color: #27a1d1 !important
+}
+
+.textCl {
+    font-size: 10px;
+    color    : #000047
+}
+
+.btnwpp {
+    color           : #fff;
+    font-size       : 15px;
+    padding         : 8px 10px 8px 28px;
+    background-color: #1bd741;
+    border-radius   : 15px 0 0 15px;
+    position        : relative
+}
+
+.btnwpp-img {
+    position: absolute
+}
+
+.img-btnWpp {
+    position: absolute;
+    width   : 50px;
+    left    : -19px;
+    top     : -6px
+}
