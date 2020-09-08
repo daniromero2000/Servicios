@@ -513,11 +513,13 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     cuotaIni = 1
                     break;
                 case '5':
-                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
+                    cuotaIni = 30000
+                    // cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
                     //periodo de gracia = 2%
                     break;
                 case '6':
-                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
+                    cuotaIni = 30000
+                    // cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
                     //periodo de gracia = 4%
                     break;
                 case '7':
