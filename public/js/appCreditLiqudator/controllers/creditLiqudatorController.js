@@ -390,11 +390,13 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[key][7] = []
             if ((typeProduct == 2 && $scope.liquidator[key][3].PLAZO < 11) || typeProduct != 2) {
 
-                $scope.numberOfFees.forEach(e => {
-                    if (e.CUOTA == $scope.liquidator[key][3].PLAZO) {
-                        factor = e.FACTOR;
-                    }
-                });
+                if (typeProduct != 3) {
+                    $scope.numberOfFees.forEach(e => {
+                        if (e.CUOTA == $scope.liquidator[key][3].PLAZO) {
+                            factor = e.FACTOR;
+                        }
+                    });
+                }
 
                 var iva = 0;
                 var aval = 0;
@@ -440,7 +442,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 $scope.liquidator[key][3].SEGURO = 3000;
                             } else {
                                 $scope.liquidator[key][3].MANEJO = 0;
-                                $scope.liquidator[key][3].SEGURO = 3000;
+                                $scope.liquidator[key][3].SEGURO = 0;
                             }
                         }
                     } else {
@@ -542,6 +544,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '20':
                     cuotaIni = 0
+                    break;
+                case '21':
+                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.08)
                     break;
                 default:
                     break;
