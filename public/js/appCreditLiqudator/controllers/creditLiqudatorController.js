@@ -72,7 +72,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.getProduct = function () {
             if (($scope.items.CODIGO != '') && (($scope.items.COD_PROCESO == 1) || ($scope.items.COD_PROCESO == 4))) {
-                $scope.items.CODIGO.toUpperCase();
+                $scope.items.CODIGO = $scope.items.CODIGO.toUpperCase();
                 $http({
                     method: 'GET',
                     url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
