@@ -389,7 +389,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var typeProduct = $scope.liquidator[key][0][0].type_product;
 
             $scope.liquidator[key][7] = []
-            if ((typeProduct == 2 && $scope.liquidator[key][3].PLAZO <= 11) || typeProduct != 2) {
+            if ((typeProduct == 2 && $scope.liquidator[key][3].PLAZO <= 12) || typeProduct != 2) {
 
                 if (typeProduct != 3) {
                     $scope.numberOfFees.forEach(e => {
