@@ -72,6 +72,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.getProduct = function () {
             if (($scope.items.CODIGO != '') && (($scope.items.COD_PROCESO == 1) || ($scope.items.COD_PROCESO == 4))) {
+                $scope.items.CODIGO.toUpperCase();
                 $http({
                     method: 'GET',
                     url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
@@ -423,7 +424,12 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
 
                 if ($scope.liquidator[key][3].PLAZO != null) {
-                    $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
+                    if (typeProduct != 3) {
+                        $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
+                    } else {
+                        $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI)))))
+                    }
+
                     if ($scope.zone == 'ALTA' || typeProduct == 3) {
                         $scope.liquidator[key][3].timelyPayment = 0;
                     } else {
