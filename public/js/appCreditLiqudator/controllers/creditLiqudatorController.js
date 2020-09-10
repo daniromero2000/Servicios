@@ -422,7 +422,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
                 });
 
-
                 if ($scope.liquidator[key][3].PLAZO != null) {
                     if (typeProduct != 3) {
                         $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
@@ -446,6 +445,14 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
                                 $scope.liquidator[key][3].MANEJO = 9900;
                                 $scope.liquidator[key][3].SEGURO = 3000;
+                            } else {
+                                $scope.liquidator[key][3].MANEJO = 0;
+                                $scope.liquidator[key][3].SEGURO = 0;
+                            }
+                        } else {
+                            if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                                $scope.liquidator[key][3].MANEJO = 9900;
+                                $scope.liquidator[key][3].SEGURO = 0;
                             } else {
                                 $scope.liquidator[key][3].MANEJO = 0;
                                 $scope.liquidator[key][3].SEGURO = 0;
@@ -522,13 +529,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '5':
                     cuotaIni = 30000
-                    // cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    //periodo de gracia = 2%
                     break;
                 case '6':
                     cuotaIni = 30000
-                    // cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    //periodo de gracia = 4%
                     break;
                 case '7':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
