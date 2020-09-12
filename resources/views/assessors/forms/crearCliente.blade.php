@@ -1188,12 +1188,15 @@
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
-                            {{-- <p class="textTnakYouModal">
+                            @if (auth()->user()->codeOportudata == '1088304125')
+                            <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
-                            exitosamente,
-                            <br>
-                            procede a ingresar los datos del negocio.
-                            </p> --}}
+                                exitosamente,
+                                <br>
+                                procede a ingresar los datos del negocio.
+                            </p>
+                            @endif
+
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
@@ -1247,9 +1250,11 @@
                         <div class="col-12 text-center">
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
-                            {{-- <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO'"
+                            @if (auth()->user()->codeOportudata == '1088304125')
+                            <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO'"
                                 href="/Administrator/creditLiquidator/@{{lead.CEDULA}}"
-                            class="btn bg-primary buttonBackCardExist">Crear negocio</a> --}}
+                                class="btn bg-primary buttonBackCardExist">Crear negocio</a>
+                            @endif
                         </div>
                     </div>
                 </div>

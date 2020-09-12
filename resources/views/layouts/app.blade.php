@@ -272,7 +272,8 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 								@if( Request::path() == 'digitalWarranty')
 								<span class="footer-textTelefonosNal"> Línea nacional: 01 8000 18 05 20</span> <br />
 								@else
-								<span class="footer-textTelefonosNal"> Línea nacional: 57 (1)484 2122 - 01 8000 18 05 20</span> <br />
+								<span class="footer-textTelefonosNal"> Línea nacional: 57 (1)484 2122 - 01 8000 18 05
+									20</span> <br />
 								@endif
 								<span class="footer-textHorario">Lunes a Viernes 8:00 am a 5:00 pm</span>
 							</p>
