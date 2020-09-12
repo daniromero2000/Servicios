@@ -452,10 +452,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         } else {
                             if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
                                 $scope.liquidator[key][3].MANEJO = 9900;
-                                $scope.liquidator[key][3].SEGURO = 0;
+                                $scope.liquidator[key][3].SEGURO = 3000;
                             } else {
                                 $scope.liquidator[key][3].MANEJO = 0;
-                                $scope.liquidator[key][3].SEGURO = 0;
+                                $scope.liquidator[key][3].SEGURO = 3000;
                             }
                         }
                     } else {
