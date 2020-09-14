@@ -242,6 +242,7 @@
                                             <option selected value> Seleccione </option>
                                             <option value="2">Cargo</option>
                                             <option value="3">Obsequio</option>
+                                            <option value="4">Combo</option>
                                         </select>
                                         <select ng-if="tab[0].length == 0" ng-model="items.COD_PROCESO" id="action"
                                             name="action" class="form-control" required>
