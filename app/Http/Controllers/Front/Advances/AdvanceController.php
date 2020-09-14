@@ -42,7 +42,7 @@ use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
-    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
+    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $analisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
     private $ubicaMailInterface, $policyInterface;
     private $userInterface, $datosClienteInterface;
@@ -98,7 +98,7 @@ class AdvanceController extends Controller
         $this->factoryInterface               = $factoryRequestRepositoryInterface;
         $this->assessorInterface              = $assessorRepositoryInterface;
         $this->fosygaTempInterface            = $fosygaTempRepositoryInterface;
-        $this->AnalisisInterface              = $analisisRepositoryInterface;
+        $this->analisisInterface              = $analisisRepositoryInterface;
         $this->registraduriaInterface         = $registraduriaRepositoryInterface;
         $this->confrontaResultInterface       = $confrontaResultRepositoryInterface;
         $this->confrontaSelectinterface       = $confrontaSelectRepositoryInterface;
@@ -113,26 +113,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $customer = $this->customerInterface->findCustomerById(80578594);
-        $consec = $customer->lastUbicaConsultation->consec;
-
-        $fosygaTemp = $customer->customerFosygaTemps->first();
-
-        if ($fosygaTemp) {
-            $analisisData['solicitud']  = 218265;
-            $analisisData['paz_cli']  = $fosygaTemp->paz_cli;
-            $analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
-        }
-
-
-        dd($this->AnalisisInterface->addAnalisis($analisisData));
-
-
-        $emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
-
-        $aprobo = $this->ubica->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
-
 
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
