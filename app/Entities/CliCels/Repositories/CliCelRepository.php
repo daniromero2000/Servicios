@@ -15,7 +15,7 @@ class CliCelRepository implements CliCelRepositoryInterface
 
     public function validateClicelFijoContado($clientInfo)
     {
-        if ($this->checkIfPhoneNumExists(trim($clientInfo['CEDULA']), trim($clientInfo['TELFIJO'])) == 0) {
+        if ($this->checkIfPhoneNumExists(trim($clientInfo['CEDULA']), trim($clientInfo->get('TELFIJO'))) == 0) {
             $data = [
                 'IDENTI'  => trim($clientInfo['CEDULA']),
                 'NUM'     => trim($clientInfo['TELFIJO']),
