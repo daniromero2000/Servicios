@@ -274,7 +274,7 @@ class assessorsController extends Controller
 		$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
 		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
 
-		$this->cliCelInterface->validateClicelFijoContado($request->input());
+		$this->cliCelInterface->validateClicelFijoContado($request);
 
 
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
@@ -359,7 +359,7 @@ class assessorsController extends Controller
 
 			unset($dataOportudata['tipoCliente']);
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			$this->cliCelInterface->validateClicelPhoneContado($request->input());
+			$this->cliCelInterface->validateClicelPhoneContado($request);
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 
 			return $dataOportudata;
@@ -487,7 +487,7 @@ class assessorsController extends Controller
 			];
 
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			$this->cliCelInterface->validateClicelPhoneCredit($request->input());
+			$this->cliCelInterface->validateClicelPhoneCredit($request);
 
 			return [
 				'identificationNumber'  => trim($request->get('CEDULA')),
