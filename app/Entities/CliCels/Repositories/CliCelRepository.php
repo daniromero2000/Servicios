@@ -13,6 +13,48 @@ class CliCelRepository implements CliCelRepositoryInterface
         $this->model = $cliCel;
     }
 
+    public function validateClicelFijoContado($clientInfo)
+    {
+        if ($this->checkIfPhoneNumExists(trim($clientInfo['CEDULA']), trim($clientInfo->get('TELFIJO'))) == 0) {
+            $data = [
+                'IDENTI'  => trim($clientInfo['CEDULA']),
+                'NUM'     => trim($clientInfo['TELFIJO']),
+                'TIPO'    => 'FIJO',
+                'CEL_VAL' => 0,
+                'FECHA'   => date("Y-m-d H:i:s")
+            ];
+            return $this->createCliCel($data);
+        }
+    }
+
+    public function validateClicelPhoneContado($clientInfo)
+    {
+        if ($this->checkIfPhoneNumExists(trim($clientInfo['CEDULA']), trim($clientInfo['CELULAR'])) == 0) {
+            $data = [
+                'IDENTI'  => trim($clientInfo['CEDULA']),
+                'NUM'     => trim($clientInfo['CELULAR']),
+                'TIPO'    => 'CEL',
+                'CEL_VAL' => 0,
+                'FECHA'   => date("Y-m-d H:i:s")
+            ];
+            return $this->createCliCel($data);
+        }
+    }
+
+    public function validateClicelPhoneCredit($clientInfo)
+    {
+        if ($clientInfo['CEL_VAL'] == 0 && $this->checkIfPhoneNumExists(trim($clientInfo['CEDULA']), trim($clientInfo['CELULAR'])) == 0) {
+            $data = [
+                'IDENTI'  => trim($clientInfo['CEDULA']),
+                'NUM'     => trim($clientInfo['CELULAR']),
+                'TIPO'    => 'CEL',
+                'CEL_VAL' => 0,
+                'FECHA'   => date("Y-m-d H:i:s")
+            ];
+            return $this->createCliCel($data);
+        }
+    }
+
     public function checkIfPhoneNumExists($identificationNumber, $num)
     {
         try {

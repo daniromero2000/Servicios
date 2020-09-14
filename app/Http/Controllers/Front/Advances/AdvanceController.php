@@ -37,18 +37,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
+use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
-    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
+    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $analisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
     private $ubicaMailInterface, $policyInterface;
     private $userInterface, $datosClienteInterface;
 
     public function __construct(
-
-    
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         IntentionRepositoryInterface $intentionRepositoryInterface,
@@ -77,7 +76,8 @@ class AdvanceController extends Controller
         UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
         UserRepositoryInterface $userRepositoryInterface,
         DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
-        PolicyRepositoryInterface $policyRepositoryInterface
+        PolicyRepositoryInterface $policyRepositoryInterface,
+        CliCelRepositoryInterface $cliCelRepositoryInterface
     ) {
         $this->leadInterface                  = $leadRepositoryInterface;
         $this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
@@ -98,7 +98,7 @@ class AdvanceController extends Controller
         $this->factoryInterface               = $factoryRequestRepositoryInterface;
         $this->assessorInterface              = $assessorRepositoryInterface;
         $this->fosygaTempInterface            = $fosygaTempRepositoryInterface;
-        $this->AnalisisInterface              = $analisisRepositoryInterface;
+        $this->analisisInterface              = $analisisRepositoryInterface;
         $this->registraduriaInterface         = $registraduriaRepositoryInterface;
         $this->confrontaResultInterface       = $confrontaResultRepositoryInterface;
         $this->confrontaSelectinterface       = $confrontaSelectRepositoryInterface;
@@ -108,10 +108,12 @@ class AdvanceController extends Controller
         $this->userInterface                  = $userRepositoryInterface;
         $this->datosClienteInterface          = $datosClienteRepositoryInterface;
         $this->policyInterface                = $policyRepositoryInterface;
+        $this->cliCelInterface = $cliCelRepositoryInterface;
     }
 
     public function index()
     {
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
