@@ -113,6 +113,27 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
+        $customer = $this->customerInterface->findCustomerById(80578594);
+        $consec = $customer->lastUbicaConsultation->consec;
+
+        $fosygaTemp = $customer->customerFosygaTemps->first();
+
+        if ($fosygaTemp) {
+            $analisisData['solicitud']  = 218265;
+            $analisisData['paz_cli']  = $fosygaTemp->paz_cli;
+            $analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
+        }
+
+
+        dd($this->AnalisisInterface->addAnalisis($analisisData));
+
+
+        $emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
+
+        $aprobo = $this->ubica->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
+
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

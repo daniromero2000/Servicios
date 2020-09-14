@@ -72,7 +72,7 @@ class OportuyaV2Controller extends Controller
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $listProductInterface, $confrontaSelectinterface;
 	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
-	private $userInterface;
+	private $userInterface, $analisisInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -1635,7 +1635,7 @@ class OportuyaV2Controller extends Controller
 			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
 		}
 
-		$this->AnalisisInterface->addAnalisis($analisisData);
+		$this->analisisInterface->addAnalisis($analisisData);
 
 		$infoLead           = (object) [];
 		if ($estadoSolic != 3) {
