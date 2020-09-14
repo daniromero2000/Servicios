@@ -275,7 +275,7 @@ class assessorsController extends Controller
 		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
 
 		$this->cliCelInterface->validateClicelFijoContado($request->input());
-		$this->cliCelInterface->validateClicelPhoneContado($request->input());
+
 
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
@@ -359,6 +359,7 @@ class assessorsController extends Controller
 
 			unset($dataOportudata['tipoCliente']);
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$this->cliCelInterface->validateClicelPhoneContado($request->input());
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 
 			return $dataOportudata;
