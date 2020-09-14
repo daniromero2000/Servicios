@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
+use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 
 class AdvanceController extends Controller
 {
@@ -47,8 +48,6 @@ class AdvanceController extends Controller
     private $userInterface, $datosClienteInterface;
 
     public function __construct(
-
-    
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         IntentionRepositoryInterface $intentionRepositoryInterface,
@@ -77,7 +76,8 @@ class AdvanceController extends Controller
         UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
         UserRepositoryInterface $userRepositoryInterface,
         DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
-        PolicyRepositoryInterface $policyRepositoryInterface
+        PolicyRepositoryInterface $policyRepositoryInterface,
+        CliCelRepositoryInterface $cliCelRepositoryInterface
     ) {
         $this->leadInterface                  = $leadRepositoryInterface;
         $this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
@@ -108,6 +108,7 @@ class AdvanceController extends Controller
         $this->userInterface                  = $userRepositoryInterface;
         $this->datosClienteInterface          = $datosClienteRepositoryInterface;
         $this->policyInterface                = $policyRepositoryInterface;
+        $this->cliCelInterface = $cliCelRepositoryInterface;
     }
 
     public function index()
