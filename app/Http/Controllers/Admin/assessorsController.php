@@ -274,16 +274,8 @@ class assessorsController extends Controller
 		$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
 		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
 
-		if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('TELFIJO'))) == 0) {
-			$data = [
-				'IDENTI'  => trim($request->get('CEDULA')),
-				'NUM'     => trim($request->get('TELFIJO')),
-				'TIPO'    => 'FIJO',
-				'CEL_VAL' => 0,
-				'FECHA'   => date("Y-m-d H:i:s")
-			];
-			$this->cliCelInterface->createCliCel($data);
-		}
+		$this->cliCelInterface->validateClicelFijoContado($request->input());
+		$this->cliCelInterface->validateClicelPhoneContado($request->input());
 
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
@@ -367,18 +359,6 @@ class assessorsController extends Controller
 
 			unset($dataOportudata['tipoCliente']);
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-
-			if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
-				$data = [
-					'IDENTI'  => trim($request->get('CEDULA')),
-					'NUM'     => trim($request->get('CELULAR')),
-					'TIPO'    => 'CEL',
-					'CEL_VAL' => 0,
-					'FECHA'   => date("Y-m-d H:i:s")
-				];
-				$this->cliCelInterface->createCliCel($data);
-			}
-
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 
 			return $dataOportudata;
@@ -506,17 +486,7 @@ class assessorsController extends Controller
 			];
 
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-
-			if ($request->get('CEL_VAL') == 0  && $this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
-				$data = [
-					'IDENTI'  => trim($request->get('CEDULA')),
-					'NUM'     => trim($request->get('CELULAR')),
-					'TIPO'    => 'CEL',
-					'CEL_VAL' => 1,
-					'FECHA'   => date("Y-m-d H:i:s")
-				];
-				$this->cliCelInterface->createCliCel($data);
-			}
+			$this->cliCelInterface->validateClicelPhoneCredit($request->input());
 
 			return [
 				'identificationNumber'  => trim($request->get('CEDULA')),
