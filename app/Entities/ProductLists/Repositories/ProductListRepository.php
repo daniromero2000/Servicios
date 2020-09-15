@@ -99,4 +99,13 @@ class ProductListRepository implements ProductListRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getProductListsForTheCatalog($zone)
+    {
+        try {
+            return $this->model->where('checked', 1)->where('zone', $zone)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

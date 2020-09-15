@@ -11,14 +11,8 @@ class AssessorQuotationDiscount extends Model
     protected $connection = 'oportudata';
 
     protected $fillable = [
-        'name',
-        'lastName',
-        'cedula',
-        'phone',
-        'email',
-        'product_id',
-        'product_price',
-        'termsAndConditions',
-        'assessor_id'
+        'type',
+        'value',
+        'assesor_quotations_value_id'
     ];
 }
