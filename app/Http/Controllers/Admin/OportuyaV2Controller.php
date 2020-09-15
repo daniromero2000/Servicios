@@ -985,6 +985,7 @@ class OportuyaV2Controller extends Controller
 
 		// 3.6 Tarjeta Black
 		$aprobado = false;
+		$blackCard = false;
 		if ($this->policyInterface->tipoAConHistorial($customerIntention)) {
 			$blackCard = $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($customer->CEDULA);
 			$aprobado = $blackCard;
