@@ -72,7 +72,7 @@ class OportuyaV2Controller extends Controller
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $listProductInterface, $confrontaSelectinterface;
 	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
-	private $userInterface;
+	private $userInterface, $analisisInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -152,10 +152,10 @@ class OportuyaV2Controller extends Controller
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
 		$this->analisisInterface                 = $analisisRepositoryInterface;
-		$this->listProductInterface				 = $listProductRepositoryInterface;
-		$this->productListInterface 		     = $productListRepositoryInterface;
-		$this->giveAwayInterface   				 = $listGiveAwayRepositoryInterface;
-		$this->factorInterface      			 = $factorRepositoryInterface;
+		$this->listProductInterface				       = $listProductRepositoryInterface;
+		$this->productListInterface 		         = $productListRepositoryInterface;
+		$this->giveAwayInterface   				       = $listGiveAwayRepositoryInterface;
+		$this->factorInterface      			       = $factorRepositoryInterface;
 		$this->confrontaSelectinterface          = $confrontaSelectRepositoryInterface;
 		$this->confrontaResultInterface          = $confrontaResultRepositoryInterface;
 		$this->toolInterface                     = $toolRepositoryInterface;
@@ -349,17 +349,7 @@ class OportuyaV2Controller extends Controller
 			];
 
 			$oportudataLead =	$this->customerInterface->updateOrCreateCustomer($dataOportudata);
-
-			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
-				$clienteCelular            = [];
-				$clienteCelular['IDENTI']  = $identificationNumber;
-				$clienteCelular['NUM']     = trim($request->get('telephone'));
-				$clienteCelular['TIPO']    = 'CEL';
-				$clienteCelular['CEL_VAL'] = 1;
-				$clienteCelular['FECHA']   = date("Y-m-d H:i:s");
-				$this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
-			}
-
+			$this->customerCellPhoneInterface->validateCellPhoneCreditFront($request);
 			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 
 			// Registraduria
@@ -1635,7 +1625,7 @@ class OportuyaV2Controller extends Controller
 			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
 		}
 
-		$this->AnalisisInterface->addAnalisis($analisisData);
+		$this->analisisInterface->addAnalisis($analisisData);
 
 		$infoLead           = (object) [];
 		if ($estadoSolic != 3) {

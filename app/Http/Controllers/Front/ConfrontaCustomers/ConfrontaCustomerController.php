@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Front\ConfrontaCustomers;
 
-use App\Entities\CliCels\CliCel;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +9,7 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
+use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use Illuminate\Support\Facades\DB;
 
 class ConfrontaCustomerController extends Controller
@@ -102,7 +102,7 @@ class ConfrontaCustomerController extends Controller
         $queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => $datas['CEDULA'], 'telefono' => $datas['CELULAR']]);
         if ($queryExistCel[0]->total == 0) {
             $dataCliCel = ['IDENTI' => $datas['CEDULA'], 'NUM' => $datas['CELULAR'], 'TIPO' => 'CEL', 'CEL_VAL' => '0', 'FECHA' => date("Y-m-d H:i:s")];
-            $customer = CliCel::create($dataCliCel);
+            $customer = CustomerCellPhone::create($dataCliCel);
         }
         $customer = $this->customerInterface->updateOrCreateCustomer($datas);
 
