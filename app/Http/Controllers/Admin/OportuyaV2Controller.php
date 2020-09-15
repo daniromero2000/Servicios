@@ -413,8 +413,6 @@ class OportuyaV2Controller extends Controller
 
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
 			$oportudataLead->update($dataLead);
-			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			return response()->json([true]);
 		}
@@ -463,6 +461,8 @@ class OportuyaV2Controller extends Controller
 				'TEL_REFFAM' => $request->get('TEL_REFFAM')
 			];
 
+			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 			$consultasLead = $this->execConsultasLead($oportudataLead, 'PASOAPASO', $dataDatosCliente);
 
 			if ($consultasLead['resp'] == 'confronta') {
@@ -1852,12 +1852,6 @@ class OportuyaV2Controller extends Controller
 		return $data;
 	}
 
-	/**
-	 * calculate the age through birth day
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 *
-	 */
 	private function calculateAge($fecha)
 	{
 		$time = strtotime($fecha);
@@ -1905,11 +1899,6 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
 	}
 
-	/**
-	 * Encrypt the identificationNumber
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 */
 	public function encrypt($string)
 	{
 		$string = utf8_encode($string);
@@ -1921,11 +1910,6 @@ class OportuyaV2Controller extends Controller
 		return response()->json($string);
 	}
 
-	/**
-	 * Decrypt the identificationNumber
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 */
 	public function decrypt($string)
 	{
 		$string = $string;
@@ -1943,3 +1927,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
+//1930
