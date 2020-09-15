@@ -23,20 +23,21 @@
       <tbody class="body-table">
         @foreach ($leads as $lead )
         <tr>
-          <td class="text-center"><a data-toggle="tooltip" title="Ver Lead" href="{{ route('digitalchannelleads.show', $lead->id) }}">{{ $lead->id }}</a></td>
+          <td class="text-center"><a data-toggle="tooltip" title="Ver Lead"
+              href="{{ route('digitalchannelleads.show', $lead->id) }}">{{ $lead->id }}</a></td>
           <td class="text-center">{{ date('M d, Y h:i a', strtotime($lead->created_at)) }}</td>
           <td class="text-center">{{ $lead->leadChannel->channel }}</td>
           <td class="text-center">{{ $lead->name }}</td>
           <td class="text-center">{{ $lead->lastName }}</td>
           <td class="text-center">{{ $lead->leadService->service }}</td>
-          <td class="text-center">{{ $lead->leadProduct->lead_product }}</td>
+          <td class="text-center">@if ( $lead->leadProduct) {{ $lead->leadProduct->lead_product }} @endif</td>
           <td class="text-center">{{ $lead->description }}</td>
           <td> @if($lead->leadStatuses) <span class="text-center badge"
               style="color: white ; background-color: {{$lead->leadStatuses->color }}"
               class="btn btn-info btn-block">{{ $lead->leadStatuses->status}}</span> @endif</td>
-          <td class="text-center">  @if ($lead->leadAssessor))
-             {{ $lead->leadAssessor->name }}
-          @endif  </td>
+          <td class="text-center"> @if ($lead->leadAssessor))
+            {{ $lead->leadAssessor->name }}
+            @endif </td>
 
         </tr>
         @endforeach

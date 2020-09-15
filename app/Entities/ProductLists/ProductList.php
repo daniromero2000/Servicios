@@ -28,6 +28,7 @@ class ProductList extends Model
         'percentage_credit_card_black',
         'bond_black',
         'apply_protection',
+        'apply_gift',
         'percentage_base_oportuya_customer',
         'priority',
         'percentage_public_price_promotion'

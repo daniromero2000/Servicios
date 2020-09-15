@@ -133,10 +133,20 @@
                                     </select>
                                 </div>
                                 <div class="form-group ">
+                                    <label>Desea incrementar la cuota inicial?
+                                        <input type="checkbox" ng-model="liquidator[key][3].checkInitialFee"
+                                            ng-click="refreshLiquidator(key)">
+                                    </label>
+                                </div>
+                                <div class="form-group ">
                                     <label for="initialFee">Cuota inicial</label>
                                     <input required type="text" class="form-control" id="initialFee"
-                                        ng-model="liquidator[key][3].CUOTAINI" ng-currency
-                                        aria-describedby="initialFee">
+                                        ng-model="liquidator[key][3].CUOTAINI" ng-currency aria-describedby="initialFee"
+                                        ng-blur="refreshLiquidator(key)">
+                                    <div ng-if="liquidator[key][3].initialFeeFeedback" class="text-danger small">
+                                        El monto minimo para la cuota inicial es de:
+                                        @{{liquidator[key][3].initialFeeFeedback | currency}}.
+                                    </div>
                                 </div>
                                 <div class="form-group ">
                                     <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
@@ -241,7 +251,7 @@
                                             name="action" class="form-control" required>
                                             <option selected value> Seleccione </option>
                                             <option value="2">Cargo</option>
-                                            <option value="3">Obsequio</option>
+                                            <option value="3" ng-if="tab[0][0].PRECIO >= 900000">Obsequio</option>
                                             <option value="4">Combo</option>
                                         </select>
                                         <select ng-if="tab[0].length == 0" ng-model="items.COD_PROCESO" id="action"

@@ -42,6 +42,16 @@
                             <select ng-model="productList.apply_protection" id="apply_protection" name="zone"
                                 class="form-control select2" required
                                 ng-options="protection.value as protection.text for protection in protections">
+                                <option selected value> Seleccione</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="apply_protection">Aplican Obsequios <span class="text-danger">*</span></label>
+                            <select ng-model="productList.apply_gift" id="apply_gift" name="apply_gift"
+                                class="form-control select2" required
+                                ng-options="protection.value as protection.text for protection in protections">
+                                <option selected value> Seleccione</option>
                             </select>
                         </div>
 
@@ -175,6 +185,14 @@
                         <div class="col-sm-6 col-12  form-group">
                             <label for="name">Aplica protección <span class="text-danger">*</span></label>
                             <select ng-model="productList.apply_protection" id="apply_protection_edt" name="zone"
+                                class="form-control select2" required
+                                ng-options="protection.value as protection.text for protection in protections">
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="apply_protection">Aplican Obsequios <span class="text-danger">*</span></label>
+                            <select ng-model="productList.apply_gift" id="apply_gift_edt" name="apply_gift_edt"
                                 class="form-control select2" required
                                 ng-options="protection.value as protection.text for protection in protections">
                             </select>

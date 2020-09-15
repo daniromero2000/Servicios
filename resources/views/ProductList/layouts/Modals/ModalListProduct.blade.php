@@ -57,6 +57,7 @@
                                 <option value="1"> Articulo o Cargo </option>
                                 <option value="2"> Seguro </option>
                                 <option value="3"> Garantía </option>
+                                <option value="4"> Obsequio </option>
                             </select>
                         </div>
                     </div>
@@ -197,6 +198,7 @@
                                 <option value="1"> Articulo o Cargo </option>
                                 <option value="2"> Seguro </option>
                                 <option value="3"> Garantía </option>
+                                <option value="4"> Obsequio </option>
                             </select>
                         </div>
                     </div>
