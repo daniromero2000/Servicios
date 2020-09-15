@@ -30,6 +30,8 @@ use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\CreditCards\Black;
+use App\Entities\CreditCards\Gray;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
@@ -37,7 +39,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
-use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
+
 
 class AdvanceController extends Controller
 {
@@ -76,8 +78,8 @@ class AdvanceController extends Controller
         UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
         UserRepositoryInterface $userRepositoryInterface,
         DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
-        PolicyRepositoryInterface $policyRepositoryInterface,
-        CliCelRepositoryInterface $cliCelRepositoryInterface
+        PolicyRepositoryInterface $policyRepositoryInterface
+
     ) {
         $this->leadInterface                  = $leadRepositoryInterface;
         $this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
@@ -108,7 +110,6 @@ class AdvanceController extends Controller
         $this->userInterface                  = $userRepositoryInterface;
         $this->datosClienteInterface          = $datosClienteRepositoryInterface;
         $this->policyInterface                = $policyRepositoryInterface;
-        $this->cliCelInterface = $cliCelRepositoryInterface;
     }
 
     public function index()

@@ -53,6 +53,8 @@ use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInt
 use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\CreditCards\Black;
+use App\Entities\CreditCards\Gray;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
@@ -982,37 +984,42 @@ class OportuyaV2Controller extends Controller
 		$customerIntention->save();
 
 		// 3.6 Tarjeta Black
-		$tarjeta = '';
 		$aprobado = false;
+		if ($this->policyInterface->tipoAConHistorial($customerIntention)) {
+			$blackCard = $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($customer->CEDULA);
+			$aprobado = $blackCard;
+		}
+
+		$tarjeta              = '';
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
-		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
-			$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($customer->CEDULA);
-			if ($aprobado == true) {
-				$tarjeta = "Tarjeta Black";
-				$quotaApprovedProduct = 1900000;
-				$quotaApprovedAdvance = 500000;
-			}
+
+		if ($blackCard) {
+			$tarjetaBlack         = new Black;
+			$tarjeta              = $tarjetaBlack->getName();
+			$quotaApprovedProduct = $tarjetaBlack->getQuotaApprovedProduct();
+			$quotaApprovedAdvance = $tarjetaBlack->getQuotaApprovedAdvance();
 		}
 
 		// 3.7 Tarjeta Gray
-		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false) {
-			if ($customer->ACTIVIDAD == 'PENSIONADO' || $customer->ACTIVIDAD == 'EMPLEADO') {
-				$aprobado = true;
-				$tarjeta = "Tarjeta Gray";
-				$quotaApprovedProduct = 1600000;
-				$quotaApprovedAdvance = 200000;
+		if ($this->policyInterface->tipoAConHistorial($customerIntention) && $blackCard == false) {
+			if ($this->policyInterface->pensionadoOEmpleado($customer)) {
+				$aprobado             = true;
+				$tarjetaGray          = new Gray;
+				$tarjeta              = $tarjetaGray->getName();
+				$quotaApprovedProduct = $tarjetaGray->getQuotaApprovedProduct();
+				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
 			}
 		}
 
-		if ($aprobado == true) {
+		if ($aprobado) {
 			$customerIntention->TARJETA = $tarjeta;
 			$customerIntention->save();
 		}
 
-		if ($aprobado == false && $perfilCrediticio == 'TIPO A') {
+		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-				if ($historialCrediticio == 1) {
+				if ($customerIntention->HISTORIAL_CREDITO == 1) {
 					$customerIntention->ID_DEF  = '17';
 				} else {
 					$customerIntention->ID_DEF =  '18';
