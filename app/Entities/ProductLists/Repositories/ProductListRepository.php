@@ -24,7 +24,8 @@ class ProductListRepository implements ProductListRepositoryInterface
         'bond_blue',
         'percentage_credit_card_black',
         'bond_black',
-        'apply_protection'
+        'apply_protection',
+        'apply_gift'
     ];
 
     public function __construct(
