@@ -47,10 +47,10 @@ use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
-
 
 class assessorsController extends Controller
 {
@@ -66,7 +66,7 @@ class assessorsController extends Controller
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
 	private $confrontaSelectinterface, $ubicaMailInterface, $ubicaCellPhoneInterfac, $confrontaResultInterface;
-	private $userInterface;
+	private $userInterface, $customerCellPhoneInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -107,7 +107,8 @@ class assessorsController extends Controller
 		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
 		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
 		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
-		UserRepositoryInterface $userRepositoryInterface
+		UserRepositoryInterface $userRepositoryInterface,
+		CustomerCellPhoneRepositoryInterface $customerCellPhoneInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -148,6 +149,7 @@ class assessorsController extends Controller
 		$this->ubicaCellPhoneInterfac          = $ubicaCellPhoneRepositoryInterface;
 		$this->confrontaResultInterface        = $confrontaResultRepositoryInterface;
 		$this->userInterface                   = $userRepositoryInterface;
+		$this->customerCellPhoneInterface = $customerCellPhoneInterface;
 		$this->middleware('auth');
 	}
 
@@ -274,8 +276,7 @@ class assessorsController extends Controller
 		$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
 		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
 
-		$this->cliCelInterface->validateClicelFijoContado($request);
-
+		$this->customerCellPhoneInterface->validateHomePhoneContado($request);
 
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
@@ -359,7 +360,7 @@ class assessorsController extends Controller
 
 			unset($dataOportudata['tipoCliente']);
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			$this->cliCelInterface->validateClicelPhoneContado($request);
+			$this->customerCellPhoneInterface->validateCellPhoneContado($request);
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 
 			return $dataOportudata;
@@ -487,7 +488,7 @@ class assessorsController extends Controller
 			];
 
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			$this->cliCelInterface->validateClicelPhoneCredit($request);
+			$this->customerCellPhoneInterface->validateCellPhoneCredit($request);
 
 			return [
 				'identificationNumber'  => trim($request->get('CEDULA')),
