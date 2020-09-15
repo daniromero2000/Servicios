@@ -172,6 +172,8 @@ use App\Entities\SummaryCredits\Repositories\SummaryCreditRepository;
 use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
 use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
 use App\Entities\AssessorQuotationValues\Repositories\AssessorQuotationValueRepository;
+use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuotationDiscountRepositoryInterface;
+use App\Entities\AssessorQuotationDiscounts\Repositories\AssessorQuotationDiscountRepository;
 use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustomerRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\PaymentTimeCustomerRepository;
 
@@ -182,6 +184,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PaymentTimeCustomerRepositoryInterface::class,
             PaymentTimeCustomerRepository::class
+        );
+
+        $this->app->bind(
+            AssessorQuotationDiscountRepositoryInterface::class,
+            AssessorQuotationDiscountRepository::class
         );
 
         $this->app->bind(

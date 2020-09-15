@@ -74,7 +74,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 { 'type': 'Otros' },
             ];
 
-
+        //Listado de Planes
         $scope.getPlans = function () {
             $http({
                 method: 'GET',
@@ -87,70 +87,105 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             });
         };
 
-
+        //Consultar Producto
         $scope.getProduct = function () {
-            if (($scope.items.sku != '') && (($scope.items.cod_proceso == 1) || ($scope.items.cod_proceso == 4))) {
-                $http({
-                    method: 'GET',
-                    url: '/api/liquidator/getProduct/' + $scope.items.sku,
-                }).then(function successCallback(response) {
-                    $scope.items.product_id = response.data.product[0].id;
-                    $scope.items.article = response.data.product[0].item;
-                    if (response.data.product[0].type_product == 1) {
-                        $scope.items.price = response.data.price.normal_public_price;
-                    } else {
-                        $scope.items.price = response.data.product[0].cash_cost;
-                    }
-                    $scope.items.list = response.data.price.list;
-                }, function errorCallback(response) {
-                    response.url = '/api/liquidator/getProduct/' + $scope.items.sku;
-                    showAlert("error", "El código ingresado no existe");
-                    $scope.addError(response, $scope.items.sku);
-                });
-            } else {
-                $http({
-                    method: 'GET',
-                    url: '/api/liquidator/getProduct/' + $scope.items.sku,
-                }).then(function successCallback(response) {
-                    var key = $scope.items.key;
-                    $scope.items.article = response.data.product[0].item;
-                    var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
-                    if ($scope.items.sku == 'AV10' || $scope.items.sku == 'AV12' || $scope.items.sku == 'AV15') {
+            $scope.items.sku = $scope.items.sku.toUpperCase();
+            switch ($scope.items.cod_proceso) {
+                case '1':
+                    $scope.calcPriceProduct($scope.items);
+                    break;
+                case '2':
+                    $http({
+                        method: 'GET',
+                        url: '/api/liquidator/getProduct/' + $scope.items.sku,
+                    }).then(function successCallback(response) {
+                        var key = $scope.items.key;
+
+                        //precio base
+                        var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
+                        $scope.items.article = response.data.product[0].item;
+
+                        //precio mas los cargos o combos
                         $scope.quotations[key][0].forEach(j => {
-                            if (j.cod_proceso == 2) {
+                            if (j.cod_proceso == 2 || j.cod_proceso == 4) {
                                 if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
                                     precio = precio + j.price;
                                 }
                             }
                         });
-                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(response.data.product[0].base_cost) / 100));
-                        $scope.items.price = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
-                    } else if ($scope.items.sku == 'GPG1' || $scope.items.sku == 'GPG2') {
-                        $scope.items.price = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
 
-                    } else {
-                        if ($scope.items.sku == 'IVAV') {
-                            var e = $scope.quotations[key][0];
-                            for (let i = 0; i < e.length; i++) {
-                                if ((e[i].cod_proceso == 2) && ((e[i].sku == 'AV10') || (e[i].sku == 'AV12') || (e[i].sku == 'AV15'))) {
-                                    $scope.items.price = Math.round(parseInt($scope.quotations[key][0][i].price) * (parseInt(response.data.product[0].base_cost) / 100));
-                                } else {
-                                    $scope.items.price = 0
-                                }
-                            }
+                        //Calculo del aval
+                        if ($scope.items.sku == 'AV10' || $scope.items.sku == 'AV12' || $scope.items.sku == 'AV15') {
+                            $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(response.data.product[0].base_cost) / 100));
+
+                            //Calculo del Retanqueo
+                        } else if ($scope.items.sku == 'GPG1' || $scope.items.sku == 'GPG2') {
+                            $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(response.data.product[0].base_cost) / 100));
                         } else {
-                            $scope.items.price = parseInt(response.data.product[0].base_cost);
-                        }
-                    }
 
-                    $scope.items.list = response.data.price.list;
-                }, function errorCallback(response) {
-                    showAlert("error", "El código ingresado no existe");
-                    response.url = '/api/liquidator/getProduct/' + $scope.items.sku;
-                    $scope.addError(response, $scope.items.sku);
-                });
+                            //Calculo del IVA aval
+                            if ($scope.items.sku == 'IVAV') {
+                                var e = $scope.quotations[key][0];
+                                for (let i = 0; i < e.length; i++) {
+                                    if ((e[i].cod_proceso == 2) && ((e[i].sku == 'AV10') || (e[i].sku == 'AV12') || (e[i].sku == 'AV15'))) {
+                                        $scope.items.price = Math.round(parseInt($scope.quotations[key][0][i].price) * (parseInt(response.data.product[0].base_cost) / 100));
+                                    } else {
+                                        $scope.items.price = 0
+                                    }
+                                }
+                                //Cargo comun
+                            } else {
+                                $scope.items.price = parseInt(response.data.product[0].base_cost);
+                            }
+                        }
+                        $scope.items.list = response.data.price.list;
+                    }, function errorCallback(response) {
+                        showAlert("error", "El código ingresado no existe");
+                        response.url = '/api/liquidator/getProduct/' + $scope.items.sku;
+                        $scope.addError(response, $scope.items.sku);
+                    });
+                    break;
+
+                case '4':
+                    $scope.calcPriceProduct($scope.items);
+                    break;
+                default:
+                    $http({
+                        method: 'GET',
+                        url: '/api/liquidator/getProduct/' + $scope.items.sku,
+                    }).then(function successCallback(response) {
+                        $scope.items.article = response.data.product[0].item;
+                        $scope.items.price = 0;
+                        $scope.items.list = response.data.price.list;
+                    }, function errorCallback(response) {
+                        showAlert("error", "El código ingresado no existe");
+                        response.url = '/api/liquidator/getProduct/' + $scope.items.sku;
+                        $scope.addError(response, $scope.items.sku);
+                    });
+                    break;
             }
         };
+
+        //Calculo del precio del producto
+        $scope.calcPriceProduct = function (item) {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getProduct/' + item.sku,
+            }).then(function successCallback(response) {
+                item.article = response.data.product[0].item;
+                if (response.data.product[0].type_product == 1) {
+                    item.price = response.data.price.normal_public_price;
+                } else {
+                    item.price = response.data.product[0].cash_cost;
+                }
+                item.list = response.data.price.list;
+                item.type_product = response.data.product[0].type_product;
+            }, function errorCallback(response) {
+                response.url = '/api/liquidator/getProduct/' + item.sku;
+                showAlert("error", "El código ingresado no existe");
+                $scope.addError(response, item.sku);
+            });
+        }
 
         $scope.listOfFees = function () {
             $http({
@@ -249,84 +284,102 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             }
         };
 
+
         $scope.addFee = function (key) {
             var factor = 1;
-            $scope.quotations[key][7] = []
-            $scope.numberOfFees.forEach(e => {
-                if (e.CUOTA == $scope.quotations[key][3].term) {
-                    factor = e.FACTOR;
-                }
-            });
-
             var iva = 0;
             var aval = 0;
             var totalAval = 0;
-            var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity);
-            var e = $scope.quotations[key][0];
-            for (let i = 0; i < e.length; i++) {
-                if (((e[i].sku == 'AV10') || (e[i].sku == 'AV12') || (e[i].sku == 'AV15')) && (e[i].cod_proceso == 2)) {
-                    aval = e[i].price;
-                }
-                if ((e[i].sku == 'IVAV') && (e[i].cod_proceso == 2)) {
-                    iva = e[i].price;
-                }
-            }
-            totalAval = Math.round(parseInt(aval) + parseInt(iva));
+            var typeProduct = $scope.quotations[key][0][0].type_product;
+            $scope.quotations[key][7] = []
 
-            $scope.quotations[key][0].forEach(j => {
-                if (j.cod_proceso == 2) {
-                    if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
-                        precio = precio + j.price;
+            if ((typeProduct == 2 && $scope.quotations[key][3].term <= 12) || typeProduct != 2) {
+                if (typeProduct != 3) {
+                    $scope.numberOfFees.forEach(e => {
+                        if (e.CUOTA == $scope.quotations[key][3].term) {
+                            factor = e.FACTOR;
+                        }
+                    });
+                }
+
+                var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity);
+
+                $scope.quotations[key][0].forEach(j => {
+                    if (j.cod_proceso == 2 || j.cod_proceso == 4) {
+                        if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
+                            precio = precio + j.price;
+                        }
                     }
+
+                    if (((j.sku == 'AV10') || (j.sku == 'AV12') || (j.sku == 'AV15')) && (j.cod_proceso == 2)) {
+                        aval = j.price;
+                    }
+
+                    if ((j.sku == 'IVAV') && (j.cod_proceso == 2)) {
+                        iva = j.price;
+                    }
+                });
+
+                totalAval = Math.round(parseInt(aval) + parseInt(iva));
+
+                if ($scope.quotations[key][3].term != null) {
+                    if (typeProduct != 3) {
+                        $scope.quotations[key][3].value_fee = Math.round(((((precio - parseInt($scope.quotations[key][2])) + (totalAval)) - (parseInt($scope.quotations[key][3].initial_fee))) * factor))
+                    } else {
+                        $scope.quotations[key][3].value_fee = Math.round(((((precio - parseInt($scope.quotations[key][2])) + (totalAval)) - (parseInt($scope.quotations[key][3].initial_fee))) / parseInt($scope.quotations[key][3].term)))
+                    }
+                    $scope.quotations[key][7].push({ 'term': $scope.quotations[key][3].term, 'value_fee': $scope.quotations[key][3].value_fee });
                 }
-            });
 
+                $scope.quotations[key][4] = []
+                $scope.quotations[key][4].aval = aval
+                $scope.quotations[key][4].iva_aval = iva
+                $scope.quotations[key][4].total_aval = totalAval
+                $scope.quotations[key][4].push({ 'aval': aval, 'iva_aval': iva, 'total_aval': totalAval });
 
-            if ($scope.quotations[key][3].term != null) {
-                $scope.quotations[key][3].value_fee = Math.round(((((precio - parseInt($scope.quotations[key][2])) + (totalAval)) - (parseInt($scope.quotations[key][3].initial_fee))) * factor))
-                $scope.quotations[key][7].push({ 'term': $scope.quotations[key][3].term, 'value_fee': $scope.quotations[key][3].value_fee });
-            }
+                $scope.quotations[key][5] = [];
+                $scope.quotations[key][5].total = Math.round((parseInt($scope.quotations[key][3].value_fee) * parseInt($scope.quotations[key][3].term)) + parseInt
+                    ($scope.quotations[key][3].initial_fee))
 
-            $scope.quotations[key][4] = []
-            $scope.quotations[key][4].aval = aval
-            $scope.quotations[key][4].iva_aval = iva
-            $scope.quotations[key][4].total_aval = totalAval
-            $scope.quotations[key][4].push({ 'aval': aval, 'iva_aval': iva, 'total_aval': totalAval });
+                if ($scope.quotations[key][3].check) {
+                    var div = 1.19
+                } else {
+                    var div = 1
+                }
 
-            $scope.quotations[key][5] = [];
-            $scope.quotations[key][5].total = Math.round((parseInt($scope.quotations[key][3].value_fee) * parseInt($scope.quotations[key][3].term)) + parseInt
-                ($scope.quotations[key][3].initial_fee))
-
-            if ($scope.quotations[key][3].check) {
-                var div = 1.19
+                $scope.quotations[key][5].subtotal = Math.round((parseInt($scope.quotations[key][5].total) / div))
+                $scope.quotations[key][5].iva = Math.round(parseInt($scope.quotations[key][5].total - parseInt($scope.quotations[key][5].subtotal)))
+                $scope.quotations[key][5].push({
+                    'total': $scope.quotations[key][5].total, 'iva': $scope.quotations[key][5].iva, 'subtotal': $scope.quotations[key][5].subtotal
+                });
             } else {
-                var div = 1
+                if ($scope.quotations[key][3].term) {
+                    showAlert("error", "El plazo ingresado no es valido para esta liquidación");
+                    $scope.quotations[key][3].term = ''
+                }
             }
-
-            $scope.quotations[key][5].subtotal = Math.round((parseInt($scope.quotations[key][5].total) / div))
-            $scope.quotations[key][5].iva = Math.round(parseInt($scope.quotations[key][5].total - parseInt($scope.quotations[key][5].subtotal)))
-            $scope.quotations[key][5].push({
-                'total': $scope.quotations[key][5].total, 'iva': $scope.quotations[key][5].iva, 'subtotal': $scope.quotations[key][5].subtotal
-            });
             $scope.loader = false;
-
         };
+
 
         $scope.sumDiscount = function (key) {
             var total = 0;
-            var product = 0;
             var precio = 0;
+            var product = 0;
+            var cuotaIni = 0
+
             if ($scope.quotations[key][0][0].price != 0) {
                 precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
             }
+
             $scope.quotations[key][0].forEach(j => {
-                if (j.cod_proceso == 2) {
+                if (j.cod_proceso == 2 || j.cod_proceso == 4) {
                     if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
                         precio = precio + j.price;
                     }
                 }
             });
-            var cuotaIni = 0
+
             product = precio;
             $scope.quotations[key][2] = 0
             $scope.quotations[key][1].forEach(e => {
@@ -335,20 +388,19 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 product = product - total;
                 total = 0;
             });
+
             switch ($scope.quotations[key][3].plan_id) {
                 case '1':
                     cuotaIni = 30000
                     break;
                 case '3':
-                    cuotaIni = 0
+                    cuotaIni = 1
                     break;
                 case '5':
-                    cuotaIni = Math.round((precio - parseInt($scope.quotations[key][2])) * 0.1)
-                    //periodo de gracia = 2%
+                    cuotaIni = 30000
                     break;
                 case '6':
-                    cuotaIni = Math.round((precio - parseInt($scope.quotations[key][2])) * 0.1)
-                    //periodo de gracia = 4%
+                    cuotaIni = 30000
                     break;
                 case '7':
                     cuotaIni = Math.round((precio - parseInt($scope.quotations[key][2])) * 0.1)
@@ -369,14 +421,18 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     cuotaIni = Math.round((precio - parseInt($scope.quotations[key][2])) * 0.05)
                     break;
                 case '20':
-                    cuotaIni = 0
+                    cuotaIni = 1
+                    break;
+                case '21':
+                    cuotaIni = Math.round((precio - parseInt($scope.quotations[key][2])) * 0.08)
                     break;
                 default:
                     break;
             }
             $scope.quotations[key][6] = []
+            $scope.quotations[key][3].initialFeeFeedback = false;
             $scope.quotations[key][3].initial_fee = cuotaIni;
-            $scope.quotations[key][6].push({ 'initial_fee': cuotaIni });
+            $scope.quotations[key][6].push({ 'initial_fee': $scope.quotations[key][3].initial_fee });
             $scope.updateCharges(key);
         };
 
@@ -398,13 +454,15 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                             url: '/api/liquidator/getProduct/' + product.sku,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
+
                             $scope.quotations[key][0].forEach(j => {
-                                if (j.cod_proceso == 2) {
+                                if (j.cod_proceso == 2 || j.cod_proceso == 4) {
                                     if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
                                         precio = precio + j.price;
                                     }
                                 }
                             });
+
                             item.key = key;
                             item.quantity = product.quantity;
                             item.cod_proceso = product.cod_proceso;
@@ -419,9 +477,11 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                         });
                     }
                 }
-            }
+            };
             $scope.updateIva(key);
-        };
+            $scope.updateChargesCotizador(key);
+        }
+
 
         $scope.updateIva = function (key) {
             var e = $scope.quotations[key][0];
@@ -463,6 +523,43 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 $scope.addFee(key);
             }, 3500);
         };
+
+        $scope.updateChargesCotizador = function (key) {
+            var e = $scope.quotations[key][0];
+            for (let i = 0; i < e.length; i++) {
+                var item = {};
+                if (((e[i].sku == 'GPG1') || (e[i].sku == 'GPG2'))) {
+                    if ((e[i].cod_proceso == 2)) {
+                        var product = e[i];
+                        $scope.quotations[key][0].splice(i, 1)
+                        $http({
+                            method: 'GET',
+                            url: '/api/liquidator/getProduct/' + product.sku,
+                        }).then(function successCallback(response) {
+                            var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
+                            $scope.quotations[key][0].forEach(j => {
+                                if (j.cod_proceso == 2 || j.cod_proceso == 4) {
+                                    if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
+                                        precio = precio + j.price;
+                                    }
+                                }
+                            });
+                            item.key = key;
+                            item.quantity = product.quantity;
+                            item.cod_proceso = product.cod_proceso;
+                            item.article = response.data.product[0].item;
+                            item.sku = response.data.product[0].sku;
+                            item.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(response.data.product[0].base_cost) / 100))
+                            item.list = response.data.price.list;
+                            $scope.quotations[key][0].push(item);
+                        }, function errorCallback(response) {
+                            response.url = '/api/liquidator/getProduct/' + product.sku;
+                            $scope.addError(response, product.sku);
+                        });
+                    }
+                }
+            };
+        }
 
         $scope.removeItem = function (key) {
             $scope.quotations.splice($scope.quotations.indexOf(key), 1);

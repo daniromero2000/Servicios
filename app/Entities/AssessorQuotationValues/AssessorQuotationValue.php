@@ -17,7 +17,6 @@ class AssessorQuotationValue extends Model
         'article',
         'price',
         'list',
-        'discount_id',
         'total_aval',
         'total',
         'iva',

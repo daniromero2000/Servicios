@@ -1,5 +1,9 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
+<link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
+<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
+<link rel="stylesheet"
+  href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 <style>
   .rotate {
     transition-duration: .2s, 1s;
@@ -100,7 +104,6 @@
     }
   }
 </style>
-<link rel="stylesheet" href="{{ asset('css/assessor/forms/ventaContado.css') }}">
 <link rel="stylesheet" href="{{ asset('css/assessor/forms/creacionCliente.css') }}">
 <link rel="stylesheet"
   href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
@@ -140,7 +143,6 @@
                 </div>
                 <div class="col-12">
                   <div class="container">
-
                     <form ng-submit="validateStep1()" name="clienteCredito" id="addCustomerStep1" ng-show="step == 1"
                       class="crearCliente-form">
                       <div class="row container-form">
@@ -214,7 +216,6 @@
                       </div>
                     </form>
                   </div>
-
                 </div>
                 <div class="col-md-12" ng-show="step == 2">
                   <div class="col-12 type-client">
@@ -228,7 +229,6 @@
                   <div class="card card-default">
                     <div class="card-header">
                       <h3 class="card-title">Cotización</h3>
-
                       <div style=" position: absolute; top: 6px; right: 18px; ">
                         <div class="ml-auto my-auto">
                           <button type="button" ng-click="addItem()" class="btn btn-primary btn-sm">Agregar
@@ -238,21 +238,16 @@
                     </div>
                     <div class="card-body ">
                       @include('assessorQuotations.layouts.quotations')
-
                       <div class="ml-auto my-auto">
                         <button type="button" ng-if="quotations[0]" ng-click="createLiquidator()"
                           class="btn btn-primary btn-sm">Crear
                           Cotización</button>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
@@ -265,7 +260,35 @@
             </div>
           </div>
         </div>
-
+        <div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1"
+          role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body " style="padding: 0">
+                <div class="row resetRow">
+                  <div class="col-12 text-center resetCol mt-4 ">
+                    <img style="width: 250px;" src="{{ asset('images/oportunidades.png')}}">
+                  </div>
+                </div>
+                <div class="row mt-2 resetRow">
+                  <div class="col-12 text-center">
+                    <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt=""
+                      style=" width: 11%;margin-top: 1%;margin-right: 0%;margin-bottom: 1%;" />
+                    <p class="">
+                      La cotización fue creada exitosamente,
+                      <br>
+                      Puedes proceder a hacer el proceso de consulta.
+                    </p>
+                  </div>
+                </div>
+                <div class="row mx-0 my-3 justify-content-center">
+                  <a href="/Administrator/assessorquotations" class="btn btn-primary mr-2">Terminar</a>
+                  <a href="/Administrator/crearCliente" class="btn btn-primary ">Consultar Cliente</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
