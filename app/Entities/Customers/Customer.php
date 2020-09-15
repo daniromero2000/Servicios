@@ -6,7 +6,6 @@ use App\codeUserVerificationOportudata;
 use App\Entities\CurrentCredits\PaymentTime;
 use App\Entities\CurrentCredits\CustomerType;
 use App\Entities\CurrentCredits\CurrentCredit;
-use App\Entities\CliCels\CliCel;
 use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
@@ -245,7 +244,7 @@ class Customer extends Model
 
     public function cliCell()
     {
-        return $this->hasOne(CliCel::class, 'Identi');
+        return $this->hasOne(CustomerCellPhone::class, 'Identi');
     }
 
     public function fosygaRuaf()

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\codeUserVerificationOportudata;
 use App\GARANTIA;
-use App\Entities\CliCels\cliCel;
+use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\Customers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -131,7 +131,7 @@ class WarrantyController extends Controller
         if (isset($request->phone)) {
             if (DB::connection('oportudata')->select("SELECT `NUM`, `IDENTI` FROM `CLI_CEL` WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $request->phone])) {
             } else {
-                $clienteCelular = new CliCel;
+                $clienteCelular = new CustomerCellPhone();
                 $clienteCelular->IDENTI = $request->identificationNumber;
                 $clienteCelular->NUM = $request->phone;
                 $clienteCelular->TIPO = 'FIJO';
@@ -150,7 +150,7 @@ class WarrantyController extends Controller
                     $firstphone = False; // the next is´t a first cellphone
                 }
             } else {
-                $warrantyPhone = new CliCel;
+                $warrantyPhone = new CustomerCellPhone();
                 $warrantyPhone->IDENTI = $request->identificationNumber;
                 $warrantyPhone->NUM = $cellPhone['number'];
                 $warrantyPhone->TIPO = 'CEL';
