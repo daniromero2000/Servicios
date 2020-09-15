@@ -38,7 +38,6 @@ use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRep
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
-use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
@@ -47,7 +46,6 @@ use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
-use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
@@ -61,10 +59,10 @@ class assessorsController extends Controller
 	private $commercialConsultationInterface, $customerProfessionInterface;
 	private $creditCardInterface, $cifinRealArrearsInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface;
-	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
+	private $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
-	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
+	private $cityInterface, $policyInterface, $OportuyaTurnInterface;
 	private $confrontaSelectinterface, $ubicaMailInterface, $ubicaCellPhoneInterfac, $confrontaResultInterface;
 	private $userInterface, $customerCellPhoneInterface;
 
@@ -97,7 +95,6 @@ class assessorsController extends Controller
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
 		CityRepositoryInterface $cityRepositoryInterface,
-		CliCelRepositoryInterface $cliCelRepositoryInterface,
 		PolicyRepositoryInterface $policyRepositoryInterface,
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
@@ -138,7 +135,6 @@ class assessorsController extends Controller
 		$this->ubicaInterface                  = $ubicaRepositoryInterface;
 		$this->ruafInterface                   = $ruafRepositoryInterface;
 		$this->cityInterface                   = $cityRepositoryInterface;
-		$this->cliCelInterface                 = $cliCelRepositoryInterface;
 		$this->policyInterface                 = $policyRepositoryInterface;
 		$this->OportuyaTurnInterface           = $oportuyaTurnRepositoryInterface;
 		$this->datosClienteInterface           = $datosClienteRepositoryInterface;
@@ -149,7 +145,7 @@ class assessorsController extends Controller
 		$this->ubicaCellPhoneInterfac          = $ubicaCellPhoneRepositoryInterface;
 		$this->confrontaResultInterface        = $confrontaResultRepositoryInterface;
 		$this->userInterface                   = $userRepositoryInterface;
-		$this->customerCellPhoneInterface = $customerCellPhoneInterface;
+		$this->customerCellPhoneInterface      = $customerCellPhoneInterface;
 		$this->middleware('auth');
 	}
 

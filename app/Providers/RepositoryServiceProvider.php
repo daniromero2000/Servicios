@@ -132,8 +132,6 @@ use App\Entities\Brands\Repositories\BrandRepository;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
 use App\Entities\Products\Repositories\ProductRepository;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
-use App\Entities\CliCels\Repositories\CliCelRepository;
-use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 use App\Entities\Policies\Repositories\PolicyRepository;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\OportuyaTurnRepository;
@@ -260,11 +258,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PolicyRepositoryInterface::class,
             PolicyRepository::class
-        );
-
-        $this->app->bind(
-            CLiCelRepositoryInterface::class,
-            CliCelRepository::class
         );
 
         $this->app->bind(
