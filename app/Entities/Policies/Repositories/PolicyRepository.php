@@ -189,4 +189,14 @@ class PolicyRepository implements PolicyRepositoryInterface
 
         return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'arreas' => $arreas];
     }
+
+    public function tipoAConHistorial($customerIntention)
+    {
+        return ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerIntention->HISTORIAL_CREDITO == 1);
+    }
+
+    public function pensionadoOEmpleado($customer)
+    {
+        return ($customer->ACTIVIDAD == 'PENSIONADO' || $customer->ACTIVIDAD == 'EMPLEADO');
+    }
 }

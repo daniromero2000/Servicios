@@ -46,6 +46,8 @@ use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\CreditCards\Black;
+use App\Entities\CreditCards\Gray;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
@@ -253,6 +255,7 @@ class assessorsController extends Controller
 	{
 		$assessorCode = $this->userInterface->getAssessorCode();
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+		$this->customerCellPhoneInterface->validateHomePhoneContado($request);
 		$sucursal     = trim($request->get('CIUD_UBI'));
 
 		if ($assessorData->SUCURSAL != 1) {
@@ -271,8 +274,6 @@ class assessorsController extends Controller
 
 		$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
 		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
-
-		$this->customerCellPhoneInterface->validateHomePhoneContado($request);
 
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
@@ -709,37 +710,42 @@ class assessorsController extends Controller
 		$customerIntention->save();
 
 		// 3.6 Tarjeta Black
+		$aprobado = false;
+		if ($this->policyInterface->tipoAConHistorial($customerIntention)) {
+			$blackCard = $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($customer->CEDULA);
+			$aprobado = $blackCard;
+		}
+
 		$tarjeta              = '';
-		$aprobado             = false;
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
-		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
-			$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($customer->CEDULA);
-			if ($aprobado == true) {
-				$tarjeta              = "Tarjeta Black";
-				$quotaApprovedProduct = 1900000;
-				$quotaApprovedAdvance = 500000;
-			}
+
+		if ($blackCard) {
+			$tarjetaBlack         = new Black;
+			$tarjeta              = $tarjetaBlack->getName();
+			$quotaApprovedProduct = $tarjetaBlack->getQuotaApprovedProduct();
+			$quotaApprovedAdvance = $tarjetaBlack->getQuotaApprovedAdvance();
 		}
 
 		// 3.7 Tarjeta Gray
-		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false) {
-			if ($customer->ACTIVIDAD == 'PENSIONADO' || $customer->ACTIVIDAD == 'EMPLEADO') {
+		if ($this->policyInterface->tipoAConHistorial($customerIntention) && $blackCard == false) {
+			if ($this->policyInterface->pensionadoOEmpleado($customer)) {
 				$aprobado             = true;
-				$tarjeta              = "Tarjeta Gray";
-				$quotaApprovedProduct = 1600000;
-				$quotaApprovedAdvance = 200000;
+				$tarjetaGray          = new Gray;
+				$tarjeta              = $tarjetaGray->getName();
+				$quotaApprovedProduct = $tarjetaGray->getQuotaApprovedProduct();
+				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
 			}
 		}
 
-		if ($aprobado == true) {
+		if ($aprobado) {
 			$customerIntention->TARJETA = $tarjeta;
 			$customerIntention->save();
 		}
 
-		if ($aprobado == false && $perfilCrediticio == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
+		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-				if ($historialCrediticio == 1) {
+				if ($customerIntention->HISTORIAL_CREDITO == 1) {
 					$customerIntention->ID_DEF  = '17';
 				} else {
 					$customerIntention->ID_DEF =  '18';

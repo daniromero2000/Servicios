@@ -16,4 +16,8 @@ interface PolicyRepositoryInterface
     public function validateTipoEspecial($perfilCrediticio, $actividad, $statusAfiliationCustomer);
 
     public function validateCustomerArreas($respValorMoraFinanciero, $respValorMoraReal, $customerStatusDenied, $idDef);
+
+    public function tipoAConHistorial($customerIntention);
+
+    public function pensionadoOEmpleado($customer);
 }
