@@ -10,4 +10,6 @@ interface AssessorQuotationRepositoryInterface
   public function listAssessorQuotations($from, $to);
 
   public function createAssessorQuotations($data): AssessorQuotation;
+
+  public function updateAssessorQuotations($data): AssessorQuotation;
 }

@@ -35,4 +35,13 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
             dd($e);
         }
     }
+
+    public function updateAssessorQuotations($data): AssessorQuotation
+    {
+        try {
+            return $this->model->updateOrCreate(['id' => $data['id']], $data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

@@ -262,6 +262,23 @@ class ListProductRepository implements ListProductRepositoryInterface
         return $data;
     }
 
+    public function getPriceProductForCatalogo($product_id, $zone)
+    {
+        $data = [];
+        $listPrices = $this->getPriceProductForAllCurrentList($product_id);
+        if ($zone == 'MEDIA' || $zone == 'BAJA') {
+            $list = $this->productListInterface->getProductListsForTheCatalog('VOLANTE');
+            if (!empty($list->toArray())) {
+                $data[$list[0]->name] = $listPrices[$list[0]->name];
+                return $data;
+            }
+        }
+
+        $list = $this->productListInterface->getProductListsForTheCatalog($zone);
+        $data[$list[0]->name] = $listPrices[$list[0]->name];
+        return $data;
+    }
+
     public function getPriceProductForZoneEspecifiedPrices($product_id, $zone, $prices = [])
     {
         $listPrices = $this->getPriceProductForZone($product_id, $zone);

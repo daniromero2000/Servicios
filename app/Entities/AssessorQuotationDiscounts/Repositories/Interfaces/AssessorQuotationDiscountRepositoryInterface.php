@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 interface AssessorQuotationDiscountRepositoryInterface
 {
   public function listAssessorQuotationDiscounts($from, $to);
+
+  public function createAssessorQuotationDiscounts($data): AssessorQuotationDiscount;
 }
