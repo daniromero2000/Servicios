@@ -111,7 +111,6 @@ Route::group(['prefix' => '/assessor/'], function () {
         Route::put('decisionCreditCard/{identificationNumber}', 'Admin\assessorsController@decisionCreditCard');
         Route::put('decisionTraditionalCredit/{identificationNumber}', 'Admin\assessorsController@decisionTraditionalCredit');
         Route::get('desistCredit/{identificationNumber}', 'Admin\assessorsController@desistCredit');
-        Route::post('validateFormConfronta', 'Admin\assessorsController@validateFormConfronta');
     });
     Route::get('/LaPipa/assesor', function () {
         return view('assessors.convenios.pipa');

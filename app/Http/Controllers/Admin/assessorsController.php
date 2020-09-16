@@ -1191,37 +1191,6 @@ class assessorsController extends Controller
 		return $aprobo;
 	}
 
-	public function validateFormConfronta(Request $request)
-	{
-		$confronta = $request->confronta;
-		foreach ($confronta as $pregunta) {
-			$cedula       = $pregunta['cedula'];
-			$cuestionario = $pregunta['cuestionario'];
-			$consec       = $pregunta['consec'];
-		}
-
-		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
-		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
-		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
-
-		$customerIntention  = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
-		$policyCredit       = $this->intentionInterface->defineConfrontaCardValues($customerIntention->TARJETA);
-		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
-		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
-		$leadInfo           = $request->leadInfo;
-		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
-		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
-
-		return response()->json([
-			'data'            => true,
-			'quota'           => $solicCredit['quotaApprovedProduct'],
-			'numSolic'        => $solicCredit['infoLead']->numSolic,
-			'textPreaprobado' => 2,
-			'quotaAdvance'    => $solicCredit['quotaApprovedAdvance'],
-			'estado'          => ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO"
-		]);
-	}
 
 	public function decisionTraditionalCredit(Request $request, $identificationNumber)
 	{
