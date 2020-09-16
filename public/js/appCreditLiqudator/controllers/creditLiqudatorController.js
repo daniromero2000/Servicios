@@ -661,7 +661,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
                 }
             };
-            $scope.updateIva(key);
+            $timeout(() => {
+                $scope.updateIva(key);
+            }, 500);
         }
 
         $scope.updateIva = function (key) {
@@ -705,7 +707,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     });
                 }
             }
-            $scope.loader = true;
             $timeout(() => {
                 $scope.addFee(key);
             }, 3500);
@@ -750,7 +751,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
                 }
             };
-            $scope.updateCharges(key);
+            $scope.loader = true;
+            $timeout(() => {
+                $scope.updateCharges(key);
+            }, 500);
         }
 
         $scope.removeItem = function (key) {
