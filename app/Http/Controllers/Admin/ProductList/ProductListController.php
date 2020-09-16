@@ -6,8 +6,6 @@ use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInter
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Profiles;
-
 
 class ProductListController extends Controller
 {

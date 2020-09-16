@@ -14,7 +14,6 @@
         </nav>
     </div>
     <div class="card-body" ng-if="key != 0">
-
         <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in liquidator">
             <div class="tab-pane mb-4 border-0" id="nav-general@{{key}}" role="tabpanel"
                 aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabItem  == key }">
@@ -251,7 +250,9 @@
                                             name="action" class="form-control" required>
                                             <option selected value> Seleccione </option>
                                             <option value="2">Cargo</option>
-                                            <option value="3" ng-if="tab[0][0].PRECIO >= 900000">Obsequio</option>
+                                            <option value="3"
+                                                ng-if="tab[0][0].PRECIO >= 900000 && liquidator[key][3].apply_gift == 1">
+                                                Obsequio</option>
                                             <option value="4">Combo</option>
                                         </select>
                                         <select ng-if="tab[0].length == 0" ng-model="items.COD_PROCESO" id="action"
@@ -261,41 +262,46 @@
                                             <option value="4">Combo</option>
                                         </select>
                                     </div>
-                                    <div class="col-4 form-group">
-                                        <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
-                                        <input required type="text" class="form-control" ng-model="items.CODIGO"
-                                            ng-blur="getProduct()" id="codeProduct" name="codeProduct">
-                                    </div>
-                                    <div class="col-8 form-group">
-                                        <label for="nameProduct">Nombre</label>
-                                        <input required type="text" ng-model="items.ARTICULO" readonly id="nameProduct"
-                                            name="nameProduct" class="form-control">
-                                    </div>
-                                    <div class="col-4 form-group">
-                                        <label for="quanty">Cantidad <span class="text-danger">*</span></label>
-                                        <input required type="text" class="form-control" ng-model="items.CANTIDAD"
-                                            id="quanty" name="quanty">
-                                    </div>
-                                    <div class="col-8 form-group">
-                                        <label for="value">Valor</label>
-                                        <input required type="text" ng-model="items.PRECIO " ng-currency
-                                            ng-disabled="(items.COD_PROCESO == 1) || (items.COD_PROCESO == 4) || (items.COD_PROCESO == 2 && (items.CODIGO == 'IVAV' || items.CODIGO == 'AV10' || items.CODIGO == 'AV12' || items.CODIGO == 'AV15'))"
-                                            id="value" name="value" class="form-control">
-                                    </div>
-                                    <div class="col-4 form-group">
-                                        <label for="list">Lista <span class="text-danger">*</span></label>
-                                        <input required type="text" class="form-control" readonly ng-model="items.LISTA"
-                                            id="list" name="list">
-                                    </div>
-                                    <div class="col-4 form-group">
-                                        <label for="selection">Seleccion <span class="text-danger">*</span></label>
-                                        <input required type="text" class="form-control" ng-model="items.SELECCION"
-                                            id="selection" name="selection">
-                                    </div>
                                 </div>
-                                <div class="text-right mt-2">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Agregar</button>
+                                <div ng-if="items.COD_PROCESO">
+                                    <div class=" row pl-0 pr-0">
+                                        <div class="col-4 form-group">
+                                            <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
+                                            <input required type="text" class="form-control" ng-model="items.CODIGO"
+                                                ng-blur="getProduct()" id="codeProduct" name="codeProduct">
+                                        </div>
+                                        <div class="col-8 form-group">
+                                            <label for="nameProduct">Nombre</label>
+                                            <input required type="text" ng-model="items.ARTICULO" readonly
+                                                id="nameProduct" name="nameProduct" class="form-control">
+                                        </div>
+                                        <div class="col-4 form-group">
+                                            <label for="quanty">Cantidad <span class="text-danger">*</span></label>
+                                            <input required type="text" class="form-control" ng-model="items.CANTIDAD"
+                                                id="quanty" name="quanty">
+                                        </div>
+                                        <div class="col-8 form-group">
+                                            <label for="value">Valor</label>
+                                            <input required type="text" ng-model="items.PRECIO " ng-currency
+                                                ng-disabled="(items.COD_PROCESO == 1) || (items.COD_PROCESO == 4) || (items.COD_PROCESO == 2 && (items.CODIGO == 'IVAV' || items.CODIGO == 'AV10' || items.CODIGO == 'AV12' || items.CODIGO == 'AV15'))"
+                                                id="value" name="value" class="form-control">
+                                        </div>
+                                        <div class="col-4 form-group">
+                                            <label for="list">Lista <span class="text-danger">*</span></label>
+                                            <input required type="text" class="form-control" readonly
+                                                ng-model="items.LISTA" id="list" name="list">
+                                        </div>
+                                        <div class="col-4 form-group">
+                                            <label for="selection">Seleccion <span class="text-danger">*</span></label>
+                                            <input required type="text" class="form-control" ng-model="items.SELECCION"
+                                                id="selection" name="selection">
+                                        </div>
+                                    </div>
+                                    <div class="text-right mt-2">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

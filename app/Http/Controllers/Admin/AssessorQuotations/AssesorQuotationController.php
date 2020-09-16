@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\AssessorQuotations;
 
 use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuotationDiscountRepositoryInterface;
-use App\Entities\AssessorQuotations\AssessorQuotation;
 use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
 use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
 use App\Entities\AssessorQuotationValues\AssessorQuotationValue;
@@ -39,11 +38,14 @@ class AssesorQuotationController extends Controller
         $listCount = $list->count();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
 
+        if (request()->has('q')) {
+            $list = $this->assessorQuotationRepositoryInterface->searchQuotations(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'));
+        }
 
         return view('assessorQuotations.list', [
             'assessorQuotations' => $list,
             'listCount'          => $listCount,
-            'headers'            => ['Sucursal', 'Solicitud', 'Fecha de solicitud', 'Estado', 'Cliente',  'Tipo de Cliente', 'Subtipo de Cliente', 'Analista',  'Fecha de analisis',  'Fecha de asignación', 'Calificación del cliente', 'Total',  'Prioridad'],
+            'headers'            => ['Cedula', 'Nombre', 'Apellidos', 'Celular', 'Monto', 'Fecha', 'Opciones'],
             'skip'               => $skip,
             'optionsRoutes'      => (request()->segment(2)),
         ]);
