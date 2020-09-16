@@ -197,7 +197,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             $scope.items.PRECIO_P = $scope.items.PRECIO;
 
                             //Calculo del Retanqueo
-                        } else if ($scope.items.CODIGO == 'GPG1' || $scope.items.CODIGO == 'GPG2') {
+                        } else if ($scope.items.CODIGO == 'GPG1' || $scope.items.CODIGO == 'GPG2' || $scope.items.CODIGO == 'EPG1' || $scope.items.CODIGO == 'EPG2') {
                             $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
                             $scope.items.PRECIO_P = $scope.items.PRECIO;
                         } else {
@@ -483,7 +483,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 $scope.liquidator[key][3].SEGURO = 3000;
                             } else {
                                 $scope.liquidator[key][3].MANEJO = 0;
-                                $scope.liquidator[key][3].SEGURO = 0;
+                                $scope.liquidator[key][3].SEGURO = 3000;
                             }
                         } else {
                             if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
@@ -715,7 +715,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var e = $scope.liquidator[key][0];
             for (let i = 0; i < e.length; i++) {
                 var item = {};
-                if (((e[i].CODIGO == 'GPG1') || (e[i].CODIGO == 'GPG2'))) {
+                if (((e[i].CODIGO == 'GPG1') || (e[i].CODIGO == 'GPG2') || e[i].CODIGO == 'EPG1' || e[i].CODIGO == 'EPG2')) {
                     if ((e[i].COD_PROCESO == 2)) {
                         var product = e[i];
                         $scope.liquidator[key][0].splice(i, 1)
@@ -862,6 +862,4 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
             popupWinindow.document.close();
         }
-
-
     });
