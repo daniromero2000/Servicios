@@ -76,7 +76,7 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`ORIGEN`, sb.`SOLICITUD`, sb.`ASESOR_DIG`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb,  TB_INTENCIONES as ti
         LEFT JOIN  productsv2 ON `ti`.product_id = productsv2.id
         WHERE sb.`CLIENTE` = cf.`CEDULA`
@@ -84,12 +84,12 @@ class LeadsController extends Controller
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB >= 1
         AND sb.STATE = 'A'
-AND sb.ASESOR_DIG is null
+        AND sb.ASESOR_DIG is null
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
-          AND ti.deleted_at is null
-         AND (ti.ASESOR = 998877
-       OR ti.ASESOR =  1088315168
+        AND ti.deleted_at is null
+        AND (ti.ASESOR = 998877
+        OR ti.ASESOR =  1088315168
         OR ti.ASESOR =  1088308622)
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);

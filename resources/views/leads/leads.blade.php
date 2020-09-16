@@ -110,7 +110,6 @@
                             <tr>
                                 <th scope="col">Cedula</th>
                                 <th scope="col">Sucursal / N° solicitud</th>
-                                <th scope="col">Asesor</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Teléfono</th>
                                 <th scope="col">Tarjeta</th>
@@ -126,7 +125,6 @@
                             <tr ng-repeat="lead in leads">
                                 <td>@{{ lead.CEDULA }}</td>
                                 <td>@{{ lead.SUCURSAL }} - @{{ lead.SOLICITUD }}</td>
-                                <td>@{{ lead.nameAsesor }}</td>
                                 <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
                                 <td>@{{ lead.TARJETA }}</td>
