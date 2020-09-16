@@ -76,11 +76,10 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
-        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
+        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb,  TB_INTENCIONES as ti
         LEFT JOIN  productsv2 ON `ti`.product_id = productsv2.id
         WHERE sb.`CLIENTE` = cf.`CEDULA`
-        AND tar.`CLIENTE` = cf.`CEDULA`
         AND sb.ESTADO = 19
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB >= 1
