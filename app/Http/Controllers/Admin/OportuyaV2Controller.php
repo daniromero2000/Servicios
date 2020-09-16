@@ -1014,6 +1014,8 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
+		// Hasta aca esta igual en Assessors y OportuyaV2
+
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($customerIntention->HISTORIAL_CREDITO == 1) {
@@ -1733,4 +1735,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1737
+//1738

@@ -739,6 +739,8 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
+		// Hasta aca esta igual en Assessors y OportuyaV2
+
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($customerIntention->HISTORIAL_CREDITO == 1) {
