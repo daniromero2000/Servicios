@@ -116,7 +116,6 @@
                                 <th scope="col">Tarjeta</th>
                                 <th scope="col">Origen</th>
                                 <th scope="col">Ciudad</th>
-                                <th scope="col">Cupo Producto/Avance</th>
                                 <th scope="col">Producto ID</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col" style="width: 10%;">Fecha registro</th>
@@ -134,9 +133,6 @@
                                 <td>@{{ lead.ORIGEN }} <span
                                         ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
-                                <td>
-                                    $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
-                                </td>
                                <td ng-if="lead.sku != null">@{{ lead.sku }}</td>
                                 <td ng-if="lead.sku == null"> Sin Producto</td>
                                 <td>@{{ lead.name }}</td>
