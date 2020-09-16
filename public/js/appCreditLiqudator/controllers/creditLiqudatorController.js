@@ -661,9 +661,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
                 }
             };
-            $timeout(() => {
-                $scope.updateIva(key);
-            }, 500);
+            $scope.updateIva(key);
         }
 
         $scope.updateIva = function (key) {
