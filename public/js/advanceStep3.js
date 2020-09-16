@@ -202,7 +202,7 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 			};
 			$http({
 				method: 'POST',
-				url: '/assessor/api/validateFormConfronta',
+				url: '/api/oportuya/validateFormConfronta',
 				data: $scope.infoConfronta,
 			}).then(function successCallback(response) {
 				if (response.data.data == true) {

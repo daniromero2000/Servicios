@@ -729,7 +729,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			};
 			$http({
 				method: 'POST',
-				url: '/assessor/api/validateFormConfronta',
+				url: '/api/oportuya/validateFormConfronta',
 				data: $scope.infoConfronta,
 			}).then(function successCallback(response) {
 				if (response.data.data == true) {
@@ -745,7 +745,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					}, 1800);
 				}
 			}, function errorCallback(response) {
-				response.url = '/assessor/api/validateFormConfronta';
+				response.url = '/api/oportuya/validateFormConfronta';
 				response.datos = $scope.infoConfronta;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
