@@ -499,7 +499,7 @@ class assessorsController extends Controller
 
 	public function execConsultasleadAsesores($identificationNumber)
 	{
-		$oportudataLead         = $this->customerInterface->findCustomerById($identificationNumber);
+		$oportudataLead         = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
 		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
