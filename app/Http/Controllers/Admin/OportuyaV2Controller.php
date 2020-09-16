@@ -1440,12 +1440,11 @@ class OportuyaV2Controller extends Controller
 	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
-		$numSolic = $factoryRequest->SOLICITUD;
 
 		if (!empty($data)) {
 			$dataDatosCliente = [
 				'identificationNumber' => $customer->CEDULA,
-				'numSolic'             => $numSolic,
+				'numSolic'             => $factoryRequest->SOLICITUD,
 				'NOM_REFPER'           => $data['NOM_REFPER'],
 				'TEL_REFPER'           => $data['TEL_REFPER'],
 				'NOM_REFFAM'           => $data['NOM_REFFAM'],
@@ -1454,7 +1453,7 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$dataDatosCliente = [
 				'identificationNumber' => $customer->CEDULA,
-				'numSolic'             => $numSolic,
+				'numSolic'             => $factoryRequest->SOLICITUD,
 				'NOM_REFPER'           => 'NA',
 				'TEL_REFPER'           => 'NA',
 				'NOM_REFFAM'           => 'NA',
@@ -1466,7 +1465,7 @@ class OportuyaV2Controller extends Controller
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
 		$analisisData = [
-			'solicitud'      => $numSolic,
+			'solicitud' => $factoryRequest->SOLICITUD,
 		];
 
 		if ($fosygaTemp) {
@@ -1481,7 +1480,7 @@ class OportuyaV2Controller extends Controller
 			$infoLead = $this->getInfoLeadCreate($customer->CEDULA);
 		}
 
-		$infoLead->numSolic = $numSolic;
+		$infoLead->numSolic = $factoryRequest->SOLICITUD;
 
 		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
@@ -1490,7 +1489,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
-			$this->creditCardInterface->createCreditCard($numSolic, $customer->CEDULA, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+			$this->creditCardInterface->createCreditCard($factoryRequest->SOLICITUD, $customer->CEDULA, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} elseif ($estadoSolic == 1) {
 			$estadoResult = "PREAPROBADO";
 		} else {
@@ -1501,7 +1500,16 @@ class OportuyaV2Controller extends Controller
 				$scoreLead = $respScoreLead->score;
 			}
 
-			$this->addTurnosOportuya($customer, $scoreLead, $numSolic);
+			$sucursal = $factoryRequest->SUCURSAL;
+
+			$turnData = [
+				'SOLICITUD' => $factoryRequest->SOLICITUD,
+				'CEDULA'    => $customer->CEDULA,
+				'SUC'       => $sucursal,
+				'SCORE'     => $scoreLead,
+			];
+
+			$this->OportuyaTurnInterface->addOportuyaTurn($turnData);
 		}
 
 		$customer->ESTADO = $estadoResult;
@@ -1512,7 +1520,7 @@ class OportuyaV2Controller extends Controller
 			$infoLead = $this->getInfoLeadCreate($customer->CEDULA);
 		}
 
-		$infoLead->numSolic = $numSolic;
+		$infoLead->numSolic = $factoryRequest->SOLICITUD;
 		$infoLead->ESTADO = $factoryRequest->ESTADO;
 
 		return [
@@ -1580,27 +1588,6 @@ class OportuyaV2Controller extends Controller
 		];
 
 		$this->turnInterface->addTurn($turnData);
-
-		return "true";
-	}
-
-	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
-	{
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorCode = $this->userInterface->getAssessorCode();
-		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
-
-		$turnData = [
-			'SOLICITUD' => $numSolic,
-			'CEDULA'    => $customer->CEDULA,
-			'SUC'       => $sucursal,
-			'SCORE'     => $scoreLead,
-		];
-
-		$this->OportuyaTurnInterface->addOportuyaTurn($turnData);
 
 		return "true";
 	}

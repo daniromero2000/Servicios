@@ -1243,15 +1243,15 @@ class assessorsController extends Controller
 	{
 		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
+		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
 
 		if (!empty($data)) {
 			$data['identificationNumber'] = $identificationNumber;
-			$data['numSolic']             = $numSolic;
+			$data['numSolic']             = $factoryRequest->SOLICITUD;
 		} else {
 			$dataDatosCliente = [
 				'identificationNumber' => $identificationNumber,
-				'numSolic'             => $numSolic,
+				'numSolic'             => $factoryRequest->SOLICITUD,
 				'NOM_REFPER'           => 'NA',
 				'TEL_REFPER'           => 'NA',
 				'NOM_REFFAM'           => 'NA',
@@ -1263,7 +1263,7 @@ class assessorsController extends Controller
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
 		$analisisData = [
-			'solicitud'      => $numSolic,
+			'solicitud'      => $factoryRequest->SOLICITUD,
 		];
 
 		if ($fosygaTemp) {
@@ -1278,7 +1278,7 @@ class assessorsController extends Controller
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 
-		$infoLead->numSolic = $numSolic;
+		$infoLead->numSolic = $factoryRequest->SOLICITUD;
 		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
@@ -1290,7 +1290,7 @@ class assessorsController extends Controller
 			if ($existCard == true) {
 			} else {
 				$this->creditCardInterface->createCreditCard(
-					$numSolic,
+					$factoryRequest->SOLICITUD,
 					$identificationNumber,
 					$policyCredit['quotaApprovedProduct'],
 					$policyCredit['quotaApprovedAdvance'],
@@ -1301,7 +1301,7 @@ class assessorsController extends Controller
 		} elseif ($estadoSolic == 1) {
 			$debtor         = new DebtorInsurance();
 			$debtor->CEDULA = $identificationNumber;
-			$debtor->SOLIC  = $numSolic;
+			$debtor->SOLIC  = $factoryRequest->SOLICITUD;
 			$debtor->save();
 			$estadoResult = "PREAPROBADO";
 		} else {
@@ -1312,7 +1312,14 @@ class assessorsController extends Controller
 				$scoreLead = $respScoreLead->score;
 			}
 
-			$this->addTurnosOportuya($customer, $scoreLead, $numSolic);
+			$turnData = [
+				'SOLICITUD' => $factoryRequest->SOLICITUD,
+				'CEDULA'    => $customer->CEDULA,
+				'SUC'       => $factoryRequest->SUCURSAL,
+				'SCORE'     => $scoreLead,
+			];
+
+			$this->OportuyaTurnInterface->addOportuyaTurn($turnData);
 		}
 		$customer->ESTADO = $estadoResult;
 		$customer->save();
@@ -1320,7 +1327,7 @@ class assessorsController extends Controller
 		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
-		$infoLead->numSolic = $numSolic;
+		$infoLead->numSolic = $factoryRequest->SOLICITUD;
 
 		return [
 			'estadoCliente'        => $estadoResult,
@@ -1352,33 +1359,12 @@ class assessorsController extends Controller
 			'SOLICITUD_WEB' => $intentionId
 		];
 
-		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData)->SOLICITUD;
-		$this->codebtorInterface->createCodebtor($customerFactoryRequest);
-		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
-		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
+		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData);
+		$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
+		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
+		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
 		$factoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
 		return $customerFactoryRequest;
-	}
-
-	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
-	{
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorCode = $this->userInterface->getAssessorCode();
-		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
-
-		$turnData = [
-			'SOLICITUD' => $numSolic,
-			'CEDULA'    => $customer->CEDULA,
-			'SUC'       => $sucursal,
-			'SCORE'     => $scoreLead,
-		];
-
-		$this->OportuyaTurnInterface->addOportuyaTurn($turnData);
-
-		return "true";
 	}
 
 	public function getFormVentaContado()
@@ -1560,4 +1546,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1563
+//15
