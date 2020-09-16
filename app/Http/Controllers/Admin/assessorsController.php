@@ -761,7 +761,7 @@ class assessorsController extends Controller
 		// 2. WS Fosyga
 		$fuenteFallo = "false";
 		$statusAfiliationCustomer = true;
-		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultationPolicy($identificationNumber);
+		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultationPolicy($customer->CEDULA);
 		if (!empty($getDataFosyga)) {
 			if ($getDataFosyga->fuenteFallo == 'SI') {
 				$fuenteFallo = "true";
