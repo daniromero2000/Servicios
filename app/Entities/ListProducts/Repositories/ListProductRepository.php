@@ -65,6 +65,14 @@ class ListProductRepository implements ListProductRepositoryInterface
         }
     }
 
+    public function findListProductBySkuAndType($sku, $type)
+    {
+        try {
+            return $this->model->where('sku', $sku)->where('type_product', $type)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 
     public function updateListProduct($data)
     {
@@ -214,7 +222,8 @@ class ListProductRepository implements ListProductRepositoryInterface
                 'percentage_black_public_price'       => $percentageBlackPublicPrice,
                 'black_bond_price'                    => $blackBondPrice * 12,
                 'black_bond_on_price'                 => $blackBondOnPrice * 12,
-                'zone'                                => $productList['zone']
+                'zone'                                => $productList['zone'],
+                'apply_gift'                          => $productList['apply_gift']
             ];
         }
 
