@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\AssessorQuotations;
 
+use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuotationDiscountRepositoryInterface;
 use App\Entities\AssessorQuotations\AssessorQuotation;
 use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
 use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
@@ -14,15 +15,18 @@ use Carbon\Carbon;
 class AssesorQuotationController extends Controller
 {
     private $assessorQuotationRepositoryInterface, $toolInterface, $assessorQuotationValueInterface;
+    private $quotationDiscountInterface;
 
     public function __construct(
         AssessorQuotationValueRepositoryInterface $assessorQuotationValueRepositoryInterface,
+        AssessorQuotationDiscountRepositoryInterface $assessorQuotationDiscountRepositoryInterface,
         AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface
     ) {
-        $this->assessorQuotationValueInterface = $assessorQuotationValueRepositoryInterface;
+        $this->assessorQuotationValueInterface      = $assessorQuotationValueRepositoryInterface;
         $this->assessorQuotationRepositoryInterface = $assessorQuotationRepositoryInterface;
-        $this->toolsInterface = $toolRepositoryInterface;
+        $this->quotationDiscountInterface           = $assessorQuotationDiscountRepositoryInterface;
+        $this->toolsInterface                       = $toolRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -62,10 +66,9 @@ class AssesorQuotationController extends Controller
             'phone'              => $quotations[1]['CELULAR'],
             'email'              => $quotations[1]['EMAIL'],
             'termsAndConditions' => 1,
-            'assessor_id'        => auth()->user()->codeOportudata
+            'assessor_id'        => auth()->user()->id
         ];
-        $list = $this->assessorQuotationRepositoryInterface->createAssessorQuotations($customer);
-
+        $customerQuotation = $this->assessorQuotationRepositoryInterface->createAssessorQuotations($customer);
 
         foreach ($quotations[0] as $key => $value) {
             $items2[$key] = $quotations[0][$key];
@@ -74,7 +77,6 @@ class AssesorQuotationController extends Controller
         foreach ($items2 as $id => $value) {
             $products[]       = $items2[$id][0][0];
             $discounts[]      = $items2[$id][1];
-            // $totalDiscounts[] = $items2[$id][2];
             $aval[]           = $items2[$id][4][0];
             $total[]          = $items2[$id][5][0];
             $feeInitial[]     = $items2[$id][6][0];
@@ -82,12 +84,11 @@ class AssesorQuotationController extends Controller
             $plans[]          = $items2[$id][8][0];
         }
 
-
         $sumTotal = 0;
         $assessorQuotationValue = [];
         foreach ($products as $key => $value) {
             $assessorQuotationValue = new AssessorQuotationValue();
-            $assessorQuotationValue->fill(['assesor_quotation_id' => $list->id]);
+            $assessorQuotationValue->fill(['assesor_quotation_id' => $customerQuotation->id]);
             $assessorQuotationValue->fill($products[$key]);
             $assessorQuotationValue->fill($aval[$key]);
             $assessorQuotationValue->fill($total[$key]);
@@ -95,24 +96,20 @@ class AssesorQuotationController extends Controller
             $assessorQuotationValue->fill($fees[$key]);
             $assessorQuotationValue->fill($plans[$key]);
             $assessorQuotationValue->save();
-
-            // $sumTotal = $sumTotal + $total[$key]['TOTAL'];
-            // foreach ($discounts[$key] as $key2 => $value2) {
-            //     $position = $key2 + 1;
-            //     $data->fill(['discount' . $position => $discounts[$key][$key2]['value']]);
-            // }
+            foreach ($discounts[$key] as $key2 => $value2) {
+                unset($discounts[$key][$key2]['key']);
+                $discounts[$key][$key2]['assesor_quotations_value_id']  = $assessorQuotationValue->id;
+                $assessorQuotationDiscountValue  = $this->quotationDiscountInterface->createAssessorQuotationDiscounts($discounts[$key][$key2]);
+            }
+            $sumTotal = $sumTotal + $total[$key]['total'];
         }
 
-        dd($assessorQuotationValue);
+        $data = [
+            'id'      => $customerQuotation->id,
+            'total'   => $sumTotal,
+        ];
 
-        // $user  = auth()->user()->codeOportudata;
-
-        // $factoryRequest = $quotations[1][0];
-        // $factoryRequest['GRAN_TOTAL'] = $sumTotal;
-        // $factoryRequest['id_asesor'] = $user;
-        // $factoryRequest['SOLICITUD_WEB']  = 1;
-        // $customerFactoryRequest = $this->factoryInterface->updateFactoryRequest($factoryRequest);
-
+        $customerQuotation = $this->assessorQuotationRepositoryInterface->updateAssessorQuotations($data);
 
         return response()->json(true);
     }

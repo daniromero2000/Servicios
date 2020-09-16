@@ -26,4 +26,13 @@ class AssessorQuotationDiscountRepository implements AssessorQuotationDiscountRe
             dd($e);
         }
     }
+
+    public function createAssessorQuotationDiscounts($data): AssessorQuotationDiscount
+    {
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

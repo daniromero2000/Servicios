@@ -16,6 +16,7 @@ class AssessorQuotation extends Model
         'cedula',
         'phone',
         'email',
+        'total',
         'termsAndConditions',
         'assessor_id'
     ];
