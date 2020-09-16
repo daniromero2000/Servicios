@@ -20,7 +20,7 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
     public function listAssessorQuotations($from, $to)
     {
         try {
-            return $this->model->whereBetween('created_at', [$from, $to])
+            return $this->model->whereBetween('created_at', [$from, $to])->where('assessor_id', auth()->user()->id)
                 ->get();
         } catch (QueryException $e) {
             dd($e);

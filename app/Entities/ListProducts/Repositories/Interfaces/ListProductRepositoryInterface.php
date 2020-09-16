@@ -12,6 +12,8 @@ interface ListProductRepositoryInterface
 
     public function findListProductBySku($sku);
 
+    public function findListProductBySkuAndType($sku, $type);
+
     public function updateListProduct($data);
 
     public function deleteListProduct($id);
