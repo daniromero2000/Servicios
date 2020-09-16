@@ -1053,7 +1053,11 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 4.6 Tipo 5 Especial
-		$customerIntention->TIPO_5_ESPECiAL = $this->policyInterface->validateTipoEspecial($customerIntention->PERFIL_CREDITICIO, $customer->ACTIVIDAD, $statusAfiliationCustomer);
+		$customerIntention->TIPO_5_ESPECiAL = $this->policyInterface->validateTipoEspecial(
+			$customerIntention->PERFIL_CREDITICIO,
+			$customer->ACTIVIDAD,
+			$statusAfiliationCustomer
+		);
 		$customerIntention->save();
 
 		if ($customerStatusDenied == true) {
