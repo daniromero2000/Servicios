@@ -1191,7 +1191,6 @@ class assessorsController extends Controller
 		return $aprobo;
 	}
 
-
 	public function decisionTraditionalCredit(Request $request, $identificationNumber)
 	{
 		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
