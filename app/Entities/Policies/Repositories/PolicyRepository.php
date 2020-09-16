@@ -149,13 +149,13 @@ class PolicyRepository implements PolicyRepositoryInterface
     }
 
 
-    public function validaOccularInspection($customer, $tipoCliente, $perfilCrediticio)
+    public function validaOccularInspection($customer, $customerIntention)
     {
         $ocular = 0;
         // 4.7 Inspecciones Oculares
-        if ($tipoCliente == 'NUEVO') {
+        if ($customerIntention->TIPO_CLIENTE == 'NUEVO') {
             if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-                if ($perfilCrediticio == 'TIPO C' || $perfilCrediticio == 'TIPO D' || $perfilCrediticio == 'TIPO 5') {
+                if ($customerIntention->PERFIL_CREDITICIO == 'TIPO C' || $customerIntention->PERFIL_CREDITICIO == 'TIPO D' || $customerIntention->PERFIL_CREDITICIO == 'TIPO 5') {
                     $ocular = 1;
                 }
             }
@@ -171,7 +171,7 @@ class PolicyRepository implements PolicyRepositoryInterface
             $tipo5Especial = 1;
         }
 
-        return      $tipo5Especial;
+        return $tipo5Especial;
     }
 
     public function validateCustomerArreas($respValorMoraFinanciero, $respValorMoraReal, $customerStatusDenied, $idDef)

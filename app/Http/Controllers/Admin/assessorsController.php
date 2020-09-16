@@ -641,13 +641,12 @@ class assessorsController extends Controller
 			$perfilCrediticio                     = $perfilCrediticio['perfilCrediticio'];
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 
-			if ($perfilCrediticio == 'TIPO 7') {
+			if ($customerIntention->PERFIL_CREDITICIO == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
 				$customerIntention->ID_DEF            = $idDef;
 				$customerIntention->ESTADO_INTENCION  = '1';
 				$customerIntention->CREDIT_DECISION   = 'Negado';
-				$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -690,11 +689,9 @@ class assessorsController extends Controller
 		}
 
 		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
+		$customerIntention->TIPO_CLIENTE = 'NUEVO';
 
-		$tipoCliente                     = 'NUEVO';
-		$customerIntention->TIPO_CLIENTE = $tipoCliente;
-
-		$edad                    = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $tipoCliente, $idDef);
+		$edad                    = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $customerIntention->TIPO_CLIENTE, $idDef);
 		$customerStatusDenied    = $edad['customerStatusDenied'];
 		$idDef                   = $edad['idDef'];
 		$customerIntention->EDAD = $edad['edad'];
@@ -704,8 +701,7 @@ class assessorsController extends Controller
 		$idDef                           = $labor['idDef'];
 		$customerIntention->TIEMPO_LABOR = $labor['labor'];
 
-		$ocular  = $this->policyInterface->validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
-		$customerIntention->INSPECCION_OCULAR = $ocular;
+		$customerIntention->INSPECCION_OCULAR = $this->policyInterface->validaOccularInspection($customer, $customerIntention);
 		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
 		$customerIntention->save();
 
@@ -778,8 +774,7 @@ class assessorsController extends Controller
 		}
 
 		// 4.6 Tipo 5 Especial
-		$tipo5Especial = $this->policyInterface->validateTipoEspecial($perfilCrediticio, $customer->ACTIVIDAD, $statusAfiliationCustomer);
-		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
+		$customerIntention->TIPO_5_ESPECiAL = $this->policyInterface->validateTipoEspecial($customerIntention->PERFIL_CREDITICIO, $customer->ACTIVIDAD, $statusAfiliationCustomer);
 		$customerIntention->save();
 
 		if ($customerStatusDenied == true) {
@@ -803,9 +798,9 @@ class assessorsController extends Controller
 			return ['resp' =>  "-2"];
 		}
 
-		if ($perfilCrediticio == 'TIPO A') {
+		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($statusAfiliationCustomer == true) {
-				if ($tipoCliente == 'OPORTUNIDADES') {
+				if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
 					$customerIntention->TARJETA =  $tarjeta;
@@ -854,7 +849,7 @@ class assessorsController extends Controller
 				}
 
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-					if ($historialCrediticio == 1) {
+					if ($customerIntention->HISTORIAL_CREDITO == 1) {
 						$customer->ESTADO           = 'PREAPROBADO';
 						$customerIntention->TARJETA = $tarjeta;
 						$customerIntention->ID_DEF  = '17';
@@ -889,8 +884,8 @@ class assessorsController extends Controller
 			}
 		}
 
-		if ($perfilCrediticio == 'TIPO B') {
-			if ($tipoCliente == 'OPORTUNIDADES') {
+		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
+			if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
@@ -909,8 +904,8 @@ class assessorsController extends Controller
 			}
 		}
 
-		if ($perfilCrediticio == 'TIPO C') {
-			if ($tipoCliente == 'OPORTUNIDADES') {
+		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO C') {
+			if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
@@ -929,8 +924,8 @@ class assessorsController extends Controller
 			}
 		}
 
-		if ($perfilCrediticio == 'TIPO D') {
-			if ($tipoCliente == 'OPORTUNIDADES' && $customerScore >= 275) {
+		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO D') {
+			if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES' && $customerScore >= 275) {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
@@ -950,8 +945,8 @@ class assessorsController extends Controller
 			}
 		}
 
-		if ($perfilCrediticio == 'TIPO 5') {
-			if ($tipo5Especial == 1) {
+		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO 5') {
+			if ($customerIntention->TIPO_5_ESPECiAL == 1) {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
@@ -960,7 +955,7 @@ class assessorsController extends Controller
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
-			if ($tipoCliente == 'OPORTUNIDADES') {
+			if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
@@ -1594,4 +1589,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1597
+//1592
