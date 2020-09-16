@@ -224,28 +224,29 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
-                        response.url = '/api/liquidator/getProduct/' + $scope.items.CODIGO;
-                        $scope.addError(response, $scope.items.CODIGO);
                     });
                     break;
 
-                case '4':
-                    $scope.calcPriceProduct($scope.items);
-                    break;
-                default:
+                case '3':
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
+                        url: '/api/liquidator/getGift/' + $scope.items.CODIGO,
                     }).then(function successCallback(response) {
                         $scope.items.ARTICULO = response.data.product[0].item;
                         $scope.items.PRECIO = 0;
                         $scope.items.PRECIO_P = 0;
                         $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
-                        showAlert("error", "El código ingresado no existe");
-                        response.url = '/api/liquidator/getProduct/' + $scope.items.CODIGO;
-                        $scope.addError(response, $scope.items.CODIGO);
+                        showAlert("error", "El código no es un obsequio");
                     });
+                    break;
+
+                case '4':
+                    $scope.calcPriceProduct($scope.items);
+                    break;
+
+                default:
+
                     break;
             }
         };
@@ -256,6 +257,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 method: 'GET',
                 url: '/api/liquidator/getProduct/' + item.CODIGO,
             }).then(function successCallback(response) {
+                $scope.liquidator[item.key][3].apply_gift = response.data.price.apply_gift;
                 item.ARTICULO = response.data.product[0].item;
                 if (response.data.product[0].type_product == 1) {
                     if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
@@ -289,12 +291,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 item.LISTA = response.data.price.list;
                 item.type_product = response.data.product[0].type_product;
             }, function errorCallback(response) {
-                response.url = '/api/liquidator/getProduct/' + item.CODIGO;
                 showAlert("error", "El código ingresado no existe");
-                $scope.addError(response, item.CODIGO);
             });
         }
-
 
         //Listado de porcentajes de descuento
         $scope.listDiscount = function () {
@@ -302,8 +301,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.listValue.push({ 'value': i });
             }
         };
-
-
 
         $scope.addProduct = function (key) {
             $scope.items.key = key;

@@ -20,4 +20,18 @@ class AssessorQuotation extends Model
         'termsAndConditions',
         'assessor_id'
     ];
+
+
+    protected $searchable = [
+        'columns' => [
+            'assesor_quotations.cedula'   => 10,
+            'assesor_quotations.name'     => 10,
+            'assesor_quotations.lastName' => 10
+        ],
+    ];
+
+    public function searchQuotations($term)
+    {
+        return self::search($term);
+    }
 }
