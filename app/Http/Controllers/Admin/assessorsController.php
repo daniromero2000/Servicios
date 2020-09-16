@@ -1136,7 +1136,7 @@ class assessorsController extends Controller
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data, $intention->id);
+		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "", $data, $intention->id);
 	}
 
 	public function validateConsultaUbica($customer)
@@ -1236,21 +1236,20 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		return $this->addSolicCredit($identificationNumber, $policyCredit, 1, "", $data, $intention->id);
+		return $this->addSolicCredit($customer, $policyCredit, 1, "", $data, $intention->id);
 	}
 
-	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data, $intentionId)
+	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data, $intentionId)
 	{
-		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$this->webServiceInterface->execMigrateCustomer($customer->CEDULA);
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
 
 		if (!empty($data)) {
-			$data['identificationNumber'] = $identificationNumber;
+			$data['identificationNumber'] = $customer->CEDULA;
 			$data['numSolic']             = $factoryRequest->SOLICITUD;
 		} else {
 			$dataDatosCliente = [
-				'identificationNumber' => $identificationNumber,
+				'identificationNumber' => $customer->CEDULA,
 				'numSolic'             => $factoryRequest->SOLICITUD,
 				'NOM_REFPER'           => 'NA',
 				'TEL_REFPER'           => 'NA',
@@ -1275,7 +1274,7 @@ class assessorsController extends Controller
 
 		$infoLead        = (object) [];
 		if ($estadoSolic != 3) {
-			$infoLead = $this->getInfoLeadCreate($identificationNumber);
+			$infoLead = $this->getInfoLeadCreate($customer->CEDULA);
 		}
 
 		$infoLead->numSolic = $factoryRequest->SOLICITUD;
@@ -1286,12 +1285,12 @@ class assessorsController extends Controller
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
-			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
+			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($customer->CEDULA);
 			if ($existCard == true) {
 			} else {
 				$this->creditCardInterface->createCreditCard(
 					$factoryRequest->SOLICITUD,
-					$identificationNumber,
+					$customer->CEDULA,
 					$policyCredit['quotaApprovedProduct'],
 					$policyCredit['quotaApprovedAdvance'],
 					$infoLead->SUC,
@@ -1300,7 +1299,7 @@ class assessorsController extends Controller
 			}
 		} elseif ($estadoSolic == 1) {
 			$debtor         = new DebtorInsurance();
-			$debtor->CEDULA = $identificationNumber;
+			$debtor->CEDULA = $customer->CEDULA;
 			$debtor->SOLIC  = $factoryRequest->SOLICITUD;
 			$debtor->save();
 			$estadoResult = "PREAPROBADO";
@@ -1325,7 +1324,7 @@ class assessorsController extends Controller
 		$customer->save();
 		$infoLead = (object) [];
 		if ($estadoSolic != 3) {
-			$infoLead = $this->getInfoLeadCreate($identificationNumber);
+			$infoLead = $this->getInfoLeadCreate($customer->CEDULA);
 		}
 		$infoLead->numSolic = $factoryRequest->SOLICITUD;
 
@@ -1546,4 +1545,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//15
+//1549
