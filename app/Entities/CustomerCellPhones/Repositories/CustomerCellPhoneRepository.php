@@ -58,7 +58,7 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
 
     public function validateCellPhoneCreditFront($clientInfo)
     {
-        if ($clientInfo['CEL_VAL'] == 0 && empty($this->checkIfExists($$clientInfo->get('identificationNumber'), $clientInfo->get('telephone')))) {
+        if ($clientInfo['CEL_VAL'] == 0 && empty($this->checkIfExists($clientInfo->get('identificationNumber'), $clientInfo->get('telephone')))) {
             $data = [
                 'IDENTI'  => trim($clientInfo['identificationNumber']),
                 'NUM'     => trim($clientInfo['telephone']),
