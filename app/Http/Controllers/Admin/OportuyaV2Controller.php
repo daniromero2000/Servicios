@@ -184,6 +184,7 @@ class OportuyaV2Controller extends Controller
 		$cities = $this->subsidiaryInterface->getSubsidiaryForCities();
 		return view('oportuya.getSubsidiary', compact('cities'));
 	}
+
 	public function catalog($zone)
 	{
 		$list = $this->productRepo->listFrontProducts('id');
@@ -1469,8 +1470,8 @@ class OportuyaV2Controller extends Controller
 		];
 
 		if ($fosygaTemp) {
-			$analisisData['paz_cli']  = $fosygaTemp->paz_cli;
-			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
+			$analisisData['paz_cli']     = $fosygaTemp->paz_cli;
+			$analisisData['fos_cliente'] = $fosygaTemp->fos_cliente;
 		}
 
 		$this->analisisInterface->addAnalisis($analisisData);
@@ -1500,12 +1501,10 @@ class OportuyaV2Controller extends Controller
 				$scoreLead = $respScoreLead->score;
 			}
 
-			$sucursal = $factoryRequest->SUCURSAL;
-
 			$turnData = [
 				'SOLICITUD' => $factoryRequest->SOLICITUD,
 				'CEDULA'    => $customer->CEDULA,
-				'SUC'       => $sucursal,
+				'SUC'       => $factoryRequest->SUCURSAL,
 				'SCORE'     => $scoreLead,
 			];
 

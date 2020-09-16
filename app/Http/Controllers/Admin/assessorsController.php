@@ -499,7 +499,7 @@ class assessorsController extends Controller
 
 	public function execConsultasleadAsesores($identificationNumber)
 	{
-		$oportudataLead         = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
+		$oportudataLead         = $this->customerInterface->findCustomerById($identificationNumber);
 		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -568,7 +568,7 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			$policyCredit = $this->validatePolicyCredit_new($oportudataLead);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -581,9 +581,8 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function validatePolicyCredit_new($identificationNumber)
+	private function validatePolicyCredit_new($customer)
 	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
 		$assessorCode          = $this->userInterface->getAssessorCode();
@@ -1262,7 +1261,7 @@ class assessorsController extends Controller
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
 		$analisisData = [
-			'solicitud'      => $factoryRequest->SOLICITUD,
+			'solicitud' => $factoryRequest->SOLICITUD,
 		];
 
 		if ($fosygaTemp) {
