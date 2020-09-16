@@ -11,7 +11,7 @@ interface PolicyRepositoryInterface
 
     public function validateLabourTime($customer, $customerStatusDenied, $idDef);
 
-    public function validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
+    public function validaOccularInspection($customer, $customerIntention);
 
     public function validateTipoEspecial($perfilCrediticio, $actividad, $statusAfiliationCustomer);
 
