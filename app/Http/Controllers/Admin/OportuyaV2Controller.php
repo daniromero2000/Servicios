@@ -584,7 +584,6 @@ class OportuyaV2Controller extends Controller
 		return $this->webServiceInterface->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
-
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -1827,11 +1826,6 @@ class OportuyaV2Controller extends Controller
 		return $data;
 	}
 
-	/**
-	 * Get data from step two form
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 */
 	public function getDataStep3($identificationNumber)
 	{
 		$data = [];
@@ -1861,11 +1855,6 @@ class OportuyaV2Controller extends Controller
 		return $age;
 	}
 
-	/**
-	 * Send a city array,digital analist image and name to step1 view
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 */
 	public function step1()
 	{
 		$digitalAnalyst = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
@@ -1873,11 +1862,6 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.step1', ['digitalAnalyst' => $digitalAnalyst[0]]);
 	}
 
-	/**
-	 * Return step2 view with identificationNumber decrypt
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 */
 	public function step2($string)
 	{
 		$identificactionNumber = $this->decrypt($string);
@@ -1885,12 +1869,6 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.step2', ['identificactionNumber' => $identificactionNumber]);
 	}
 
-
-	/**
-	 * Return step3 view with identificationNumber decrypt
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 */
 	public function step3($string)
 	{
 		$identificactionNumber = $this->decrypt($string);
@@ -1926,4 +1904,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1925
+//1907

@@ -1392,7 +1392,6 @@ class assessorsController extends Controller
 		return $customerFactoryRequest;
 	}
 
-
 	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
 	{
 		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
@@ -1593,4 +1592,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1592
+//1595
