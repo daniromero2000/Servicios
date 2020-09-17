@@ -1429,12 +1429,9 @@ class OportuyaV2Controller extends Controller
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
 		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
-		$sucursal          = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
+
 
 		$requestData = [
 			'AVANCE_W'      => $quotaApprovedAdvance,
@@ -1443,7 +1440,7 @@ class OportuyaV2Controller extends Controller
 			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
 			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
-			'SUCURSAL'      => $sucursal,
+			'SUCURSAL'      => $customer->SUC,
 			'ESTADO'        => $estado,
 			'SOLICITUD_WEB' => $customerIntention->id
 
@@ -1453,35 +1450,6 @@ class OportuyaV2Controller extends Controller
 		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
 		$factoryRequest->states()->attach($estado, ['usuario' => $customer->USUARIO_ACTUALIZACIONe]);
 		return $customerFactoryRequest;
-	}
-
-	private function addTurnos($identificationNumber, $numSolic)
-	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$respScoreLead  = $customer->latestCifinScore->score;
-		$scoreLead      = 0;
-
-		if (!empty($respScoreLead)) {
-			$scoreLead = $respScoreLead->score;
-		}
-
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
-
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
-
-		$turnData = [
-			'SOLICITUD' => $numSolic,
-			'CEDULA'    => $customer->CEDULA,
-			'SUC'       => $sucursal,
-			'SCORE'     => $scoreLead,
-		];
-
-		$this->turnInterface->addTurn($turnData);
-
-		return "true";
 	}
 
 	private function getInfoLeadCreate($identificationNumber)
@@ -1626,4 +1594,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1634
+//1600

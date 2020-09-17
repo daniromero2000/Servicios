@@ -1367,11 +1367,7 @@ class assessorsController extends Controller
 
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado, $intentionId)
 	{
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
 
 		$requestData = [
 			'AVANCE_W'      => $quotaApprovedAdvance,
@@ -1380,7 +1376,7 @@ class assessorsController extends Controller
 			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
 			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
-			'SUCURSAL'      => $sucursal,
+			'SUCURSAL'      => $customer->SUC,
 			'ESTADO'        => $estado,
 			'SOLICITUD_WEB' => $intentionId
 		];
@@ -1572,4 +1568,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1577
+//1575
