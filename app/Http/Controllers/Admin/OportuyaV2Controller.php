@@ -1347,16 +1347,10 @@ class OportuyaV2Controller extends Controller
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 
 		if (!empty($data)) {
-			$dataDatosCliente = [
-				'identificationNumber' => $customer->CEDULA,
-				'numSolic'             => $factoryRequest->SOLICITUD,
-				'NOM_REFPER'           => $data['NOM_REFPER'],
-				'TEL_REFPER'           => $data['TEL_REFPER'],
-				'NOM_REFFAM'           => $data['NOM_REFFAM'],
-				'TEL_REFFAM'           => $data['TEL_REFFAM']
-			];
+			$data['identificationNumber'] = $customer->CEDULA;
+			$data['numSolic']             = $factoryRequest->SOLICITUD;
 		} else {
-			$dataDatosCliente = [
+			$data = [
 				'identificationNumber' => $customer->CEDULA,
 				'numSolic'             => $factoryRequest->SOLICITUD,
 				'NOM_REFPER'           => 'NA',
@@ -1366,7 +1360,7 @@ class OportuyaV2Controller extends Controller
 			];
 		}
 
-		$this->datosClienteInterface->addDatosCliente($dataDatosCliente);
+		$this->datosClienteInterface->addDatosCliente($data);
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
 		$analisisData = [

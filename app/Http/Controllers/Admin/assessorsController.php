@@ -1277,7 +1277,7 @@ class assessorsController extends Controller
 			$data['identificationNumber'] = $customer->CEDULA;
 			$data['numSolic']             = $factoryRequest->SOLICITUD;
 		} else {
-			$dataDatosCliente = [
+			$data = [
 				'identificationNumber' => $customer->CEDULA,
 				'numSolic'             => $factoryRequest->SOLICITUD,
 				'NOM_REFPER'           => 'NA',
