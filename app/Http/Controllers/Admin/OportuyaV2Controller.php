@@ -35,7 +35,6 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use App\Entities\Products\Transformations\ProductTransformable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -55,19 +54,17 @@ use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
-	use ProductTransformable;
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
-	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
-	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
-	private $ubicaInterface, $datosClienteInterface;
+	private $intentionInterface, $extintFinancialCifinInterface, $userInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
+	private $ubicaInterface, $datosClienteInterface, $analisisInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface,  $confrontaSelectinterface;
 	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
-	private $userInterface, $analisisInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -271,13 +268,13 @@ class OportuyaV2Controller extends Controller
 			if ($request->get('productId') == 0) {
 				$data = [
 					'CEDULA' => $identificationNumber,
-					'ASESOR' => 	$assessorCode
+					'ASESOR' => $oportudataLead->USUARIO_ACTUALIZACION
 				];
 			} else {
 				$data = [
-					'CEDULA' => $identificationNumber,
+					'CEDULA'     => $identificationNumber,
 					'product_id' => $request->get('productId'),
-					'ASESOR' => 	$assessorCode
+					'ASESOR'     => $oportudataLead->USUARIO_ACTUALIZACION
 				];
 			}
 
@@ -806,9 +803,9 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied  = false;
 		$idDef                 = "";
-		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
@@ -1431,10 +1428,9 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
-		$assessorCode      = $this->userInterface->getAssessorCode();
 		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
 		$sucursal          = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorData      = $this->assessorInterface->findAssessorById($assessorCode);
+		$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
@@ -1444,8 +1440,8 @@ class OportuyaV2Controller extends Controller
 			'AVANCE_W'      => $quotaApprovedAdvance,
 			'PRODUC_W'      => $quotaApprovedProduct,
 			'CLIENTE'       => $customer->CEDULA,
-			'CODASESOR'     => $assessorCode,
-			'id_asesor'     => $assessorCode,
+			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
+			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
 			'SUCURSAL'      => $sucursal,
 			'ESTADO'        => $estado,
@@ -1455,7 +1451,7 @@ class OportuyaV2Controller extends Controller
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
 		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
-		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
+		$factoryRequest->states()->attach($estado, ['usuario' => $customer->USUARIO_ACTUALIZACIONe]);
 		return $customerFactoryRequest;
 	}
 
@@ -1470,8 +1466,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorCode = $this->userInterface->getAssessorCode();
-		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+		$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
@@ -1631,4 +1626,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1645
+//1634
