@@ -1159,9 +1159,7 @@ class OportuyaV2Controller extends Controller
 
 	public function deniedLeadForFecExp($identificationNumber, $typeDenied)
 	{
-
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$identificationNumber = (string) $identificationNumber;
 		$data = [
 			'CEDULA'           => $identificationNumber,
@@ -1169,18 +1167,12 @@ class OportuyaV2Controller extends Controller
 			'ESTADO_INTENCION' => 1
 		];
 
-		if ($lastIntention == "true") {
-			$this->intentionInterface->createIntention($data);
-		} else {
-			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-			$dataIntention->ESTADO_INTENCION = 1;
-			$dataIntention->ID_DEF           = $typeDenied;
-			$dataIntention->save();
-		}
-
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->ESTADO = 'NEGADO';
-		$customer->save();
+		$customerIntention                   = $this->intentionInterface->checkIfHasIntention($data,  $this->daysToIncrement);
+		$customerIntention->ESTADO_INTENCION = 1;
+		$customerIntention->ID_DEF           = $typeDenied;
+		$customerIntention->save();
+		$customerIntention->customer->ESTADO = 'NEGADO';
+		$customerIntention->customer->save();
 		return "true";
 	}
 

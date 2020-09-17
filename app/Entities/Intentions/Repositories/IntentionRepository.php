@@ -81,7 +81,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     public function findLatestCustomerIntentionByCedula($CEDULA): Intention
     {
         try {
-            return $this->model
+            return $this->model->with('customer')
                 ->where('CEDULA', $CEDULA)->latest('FECHA_INTENCION')->first();
         } catch (QueryException $e) {
             dd($e);
