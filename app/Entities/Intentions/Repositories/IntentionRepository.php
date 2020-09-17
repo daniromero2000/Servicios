@@ -43,15 +43,14 @@ class IntentionRepository implements IntentionRepositoryInterface
         $this->model = $intention;
     }
 
-    public function checkIfHasIntention($cedula, $days)
+    public function checkIfHasIntention($intentionData, $days)
     {
-        $lastIntention = $this->validateDateIntention($cedula, $days);
+        $lastIntention = $this->validateDateIntention($intentionData['CEDULA'], $days);
 
         if ($lastIntention == "true") {
-            $intentionData     = ['CEDULA' => $cedula];
             $customerIntention = $this->createIntention($intentionData);
         } else {
-            $customerIntention = $this->findLatestCustomerIntentionByCedula($cedula);
+            $customerIntention = $this->findLatestCustomerIntentionByCedula($intentionData['CEDULA']);
         }
 
         return $customerIntention;

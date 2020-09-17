@@ -765,10 +765,13 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
+		$intentionData             = [
+			'CEDULA' => $customer->CEDULA,
+			'ASESOR' => $this->userInterface->getAssessorCode()
+		];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$customerIntention         = $this->intentionInterface->checkIfHasIntention($customer->CEDULA,  $this->daysToIncrement);
-		$customerIntention->ASESOR = $this->userInterface->getAssessorCode();
-		$customerIntention->save();
+		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
+		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
 		//3.1 Estado de documento
 		$estadoCliente = "PREAPROBADO";

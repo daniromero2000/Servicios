@@ -585,10 +585,13 @@ class assessorsController extends Controller
 	{
 		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 
+		$intentionData             = [
+			'CEDULA' => $customer->CEDULA,
+			'ASESOR' => $this->userInterface->getAssessorCode()
+		];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$customerIntention         = $this->intentionInterface->checkIfHasIntention($customer->CEDULA,  $this->daysToIncrement);
-		$customerIntention->ASESOR = $this->userInterface->getAssessorCode();
-		$customerIntention->save();
+		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
+		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
 		//3.1 Estado de documento
 		$estadoCliente = "PREAPROBADO";
