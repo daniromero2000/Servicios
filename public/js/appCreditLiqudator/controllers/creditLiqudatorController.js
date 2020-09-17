@@ -30,18 +30,18 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.totalDiscount = 0;
         $scope.loader = false;
         $scope.viewProductImg = false;
-
         $scope.typeDiscount =
             [
                 { 'type': 'Por traslado' },
                 { 'type': 'Otros' },
             ];
-
         $scope.tabItems =
             [
                 { 'value': 1 },
                 { 'value': 2 }
             ];
+
+        // $scope.liquidator[key][0][0] = 
 
         //Item del liquidador
         $scope.addItem = function () {
@@ -365,7 +365,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                     $scope.discount.value = 10;
                                     $scope.liquidator[$scope.items.key][1].push($scope.discount);
                                 }
-
                             }
                             $scope.discount = {};
                         }
@@ -436,7 +435,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         }
                     });
                 }
-
                 var precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD);
 
                 $scope.liquidator[key][0].forEach(j => {
@@ -598,18 +596,17 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 default:
                     break;
             }
+
             $scope.liquidator[key][6] = []
             $scope.liquidator[key][3].initialFeeFeedback = false;
 
             if ($scope.liquidator[key][3].checkInitialFee == undefined || $scope.liquidator[key][3].checkInitialFee == false) {
                 $scope.liquidator[key][3].CUOTAINI = cuotaIni;
             } else {
-
                 if ($scope.liquidator[key][3].CUOTAINI < cuotaIni) {
                     $scope.liquidator[key][3].CUOTAINI = cuotaIni;
                     $scope.liquidator[key][3].initialFeeFeedback = cuotaIni;
                 }
-
             }
 
             $scope.liquidator[key][6].push({ 'CUOTAINI': $scope.liquidator[key][3].CUOTAINI });
@@ -731,6 +728,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                     }
                                 }
                             });
+
                             item.key = key;
                             item.CANTIDAD = product.CANTIDAD;
                             item.COD_PROCESO = product.COD_PROCESO;
