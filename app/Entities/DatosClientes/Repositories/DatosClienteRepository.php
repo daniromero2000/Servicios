@@ -16,7 +16,6 @@ class DatosClienteRepository implements DatosClienteRepositoryInterface
     public function addDatosCliente($customer, $factoryRequest, $data)
     {
         try {
-
             if (!empty($data)) {
                 $data['identificationNumber'] = $customer->CEDULA;
                 $data['numSolic']             = $factoryRequest->SOLICITUD;
