@@ -43,14 +43,21 @@ class IntentionRepository implements IntentionRepositoryInterface
         $this->model = $intention;
     }
 
+    public function checkIfHasIntention($intentionData, $days)
+    {
+        $lastIntention = $this->validateDateIntention($intentionData['CEDULA'], $days);
+
+        if ($lastIntention == "true") {
+            $customerIntention = $this->createIntention($intentionData);
+        } else {
+            $customerIntention = $this->findLatestCustomerIntentionByCedula($intentionData['CEDULA']);
+        }
+
+        return $customerIntention;
+    }
+
     public function createIntention($data): Intention
     {
-        $authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-        if (Auth::user()) {
-            $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-        }
-        $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-        $data['ASESOR'] = $assessorCode;
         try {
             $dataIntention = new DataIntentionsRequest();
             $intention = $this->model->create($data);
@@ -74,7 +81,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     public function findLatestCustomerIntentionByCedula($CEDULA): Intention
     {
         try {
-            return $this->model
+            return $this->model->with('customer')
                 ->where('CEDULA', $CEDULA)->latest('FECHA_INTENCION')->first();
         } catch (QueryException $e) {
             dd($e);

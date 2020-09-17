@@ -503,8 +503,6 @@ class assessorsController extends Controller
 		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention          = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
-		$assessorCode           = $this->userInterface->getAssessorCode();
 		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
@@ -513,22 +511,20 @@ class assessorsController extends Controller
 
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
+				'ASESOR'           => $oportudataLead->USUARIO_ACTUALIZACION,
 				'ESTADO_INTENCION' => 1,
+				'CREDIT_DECISION'  => 'Negado',
 				'ID_DEF'           => 2
 			];
 
-			if ($lastIntention == "true") {
-				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
-			} else {
-				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-				$dataIntention->ASESOR = $assessorCode;
-				$dataIntention->ESTADO_INTENCION = 1;
-				$dataIntention->ID_DEF = 2;
-				$dataIntention->CREDIT_DECISION = 'Negado';
-				$dataIntention->save();
-			}
+			$customerIntention                   = $this->intentionInterface->checkIfHasIntention($dataIntention,  $this->daysToIncrement);
+			$customerIntention->ASESOR           = $dataIntention['ASESOR'];
+			$customerIntention->ESTADO_INTENCION = $dataIntention['ESTADO_INTENCION'];
+			$customerIntention->ID_DEF           = $dataIntention['ID_DEF'];
+			$customerIntention->CREDIT_DECISION  = $dataIntention['CREDIT_DECISION'];
+			$customerIntention->save();
 
-			return ['resp' => $consultasRegistraduria, 'infoLead' => $dataIntention->definition];
+			return ['resp' => $consultasRegistraduria, 'infoLead' => $customerIntention->definition];
 		}
 
 		if ($consultasRegistraduria == "-3") {
@@ -542,18 +538,19 @@ class assessorsController extends Controller
 			$oportudataLead->save();
 
 			$dataIntention = [
-				'CEDULA' => $identificationNumber,
-				'ESTADO_INTENCION' => 3
+				'CEDULA'           => $identificationNumber,
+				'ASESOR'           => $oportudataLead->USUARIO_ACTUALIZACION,
+				'ESTADO_INTENCION' => 3,
+				'CREDIT_DECISION'  => 'Sin Comercial',
+				'ID_DEF'           => 5
 			];
 
-			if ($lastIntention == "true") {
-				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
-			} else {
-				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-				$dataIntention->ASESOR = $assessorCode;
-				$dataIntention->ESTADO_INTENCION = 3;
-				$dataIntention->save();
-			}
+			$customerIntention                   = $this->intentionInterface->checkIfHasIntention($dataIntention,  $this->daysToIncrement);
+			$customerIntention->ASESOR           = $dataIntention['ASESOR'];
+			$customerIntention->ESTADO_INTENCION = $dataIntention['ESTADO_INTENCION'];
+			$customerIntention->ID_DEF           = $dataIntention['ID_DEF'];
+			$customerIntention->CREDIT_DECISION  = $dataIntention['CREDIT_DECISION'];
+			$customerIntention->save();
 
 			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
@@ -583,23 +580,18 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		$customer         = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
 
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
-		$assessorCode          = $this->userInterface->getAssessorCode();
+		$intentionData             = [
+			'CEDULA' => $customer->CEDULA,
+			'ASESOR' => $customer->USUARIO_ACTUALIZACION
+		];
+		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
+		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
-		if ($lastIntention == "true") {
-			$intentionData     = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $assessorCode];
-			$customerIntention = $this->intentionInterface->createIntention($intentionData);
-		} else {
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
-			$customerIntention->ASESOR = $assessorCode;
-			$customerIntention->save();
-		}
-
-		$estadoCliente = "PREAPROBADO";
 		//3.1 Estado de documento
+		$estadoCliente = "PREAPROBADO";
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
 		if (!empty($getDataRegistraduria)) {
 			if ($getDataRegistraduria->fuenteFallo == 'SI') {
@@ -626,13 +618,14 @@ class assessorsController extends Controller
 			$customerScore  = $lastCifinScore->score;
 		} else {
 			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied  = false;
 		$idDef                 = "";
-		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
@@ -1139,7 +1132,7 @@ class assessorsController extends Controller
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
-		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "", $data, $intention->id);
+		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
 	public function validateConsultaUbica($customer)
@@ -1215,7 +1208,7 @@ class assessorsController extends Controller
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
-		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
+		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 
 		return response()->json([
 			'data'            => true,
@@ -1272,13 +1265,13 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		return $this->addSolicCredit($customer, $policyCredit, 1, "", $data, $intention->id);
+		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
 	}
 
-	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data, $intentionId)
+	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
 		$this->webServiceInterface->execMigrateCustomer($customer->CEDULA);
-		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
+		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 
 		if (!empty($data)) {
 			$data['identificationNumber'] = $customer->CEDULA;
@@ -1373,25 +1366,20 @@ class assessorsController extends Controller
 		];
 	}
 
-	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado, $intentionId)
+	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
-		$assessorCode = $this->userInterface->getAssessorCode();
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
+		$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
 		$requestData = [
 			'AVANCE_W'      => $quotaApprovedAdvance,
 			'PRODUC_W'      => $quotaApprovedProduct,
 			'CLIENTE'       => $customer->CEDULA,
-			'CODASESOR'     => $assessorCode,
-			'id_asesor'     => $assessorCode,
+			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
+			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
-			'SUCURSAL'      => $sucursal,
+			'SUCURSAL'      => $customer->SUC,
 			'ESTADO'        => $estado,
-			'SOLICITUD_WEB' => $intentionId
+			'SOLICITUD_WEB' => $customer->latestIntention->id
 		];
 
 		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData);
@@ -1581,4 +1569,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1583
+//1572

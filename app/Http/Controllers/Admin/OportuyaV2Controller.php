@@ -35,7 +35,6 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use App\Entities\Products\Transformations\ProductTransformable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -52,22 +51,22 @@ use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
+use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
-	use ProductTransformable;
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
-	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
-	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
-	private $ubicaInterface, $datosClienteInterface;
+	private $intentionInterface, $extintFinancialCifinInterface, $userInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $secondCodebtorInterface;
+	private $ubicaInterface, $datosClienteInterface, $analisisInterface, $codebtorInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface,  $confrontaSelectinterface;
 	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
-	private $userInterface, $analisisInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -106,7 +105,9 @@ class OportuyaV2Controller extends Controller
 		ToolRepositoryInterface $toolRepositoryInterface,
 		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
 		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
-		UserRepositoryInterface $userRepositoryInterface
+		UserRepositoryInterface $userRepositoryInterface,
+		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
+		CodebtorRepositoryInterface $codebtorRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -145,6 +146,8 @@ class OportuyaV2Controller extends Controller
 		$this->ubicaMailInterface                = $ubicaEmailRepositoryInterface;
 		$this->ubicaCellPhoneInterfac            = $ubicaCellPhoneRepositoryInterface;
 		$this->userInterface                     = $userRepositoryInterface;
+		$this->secondCodebtorInterface           = $secondCodebtorRepositoryInterface;
+		$this->codebtorInterface                 = $codebtorRepositoryInterface;
 	}
 
 	public function index()
@@ -271,11 +274,13 @@ class OportuyaV2Controller extends Controller
 			if ($request->get('productId') == 0) {
 				$data = [
 					'CEDULA' => $identificationNumber,
+					'ASESOR' => $oportudataLead->USUARIO_ACTUALIZACION
 				];
 			} else {
 				$data = [
-					'CEDULA' => $identificationNumber,
-					'product_id' => $request->get('productId')
+					'CEDULA'     => $identificationNumber,
+					'product_id' => $request->get('productId'),
+					'ASESOR'     => $oportudataLead->USUARIO_ACTUALIZACION
 				];
 			}
 
@@ -765,21 +770,16 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
-		$assessorCode          = $this->userInterface->getAssessorCode();
+		$intentionData             = [
+			'CEDULA' => $customer->CEDULA,
+			'ASESOR' => $this->userInterface->getAssessorCode()
+		];
+		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
+		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
-		if ($lastIntention == "true") {
-			$intentionData     = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $assessorCode];
-			$customerIntention = $this->intentionInterface->createIntention($intentionData);
-		} else {
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
-			$customerIntention->ASESOR = $assessorCode;
-			$customerIntention->save();
-		}
-
-		$estadoCliente = "PREAPROBADO";
 		//3.1 Estado de documento
+		$estadoCliente = "PREAPROBADO";
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($customer->CEDULA);
 		if (!empty($getDataRegistraduria)) {
 			if ($getDataRegistraduria->fuenteFallo == 'SI') {
@@ -805,13 +805,14 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		} else {
 			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied  = false;
 		$idDef                 = "";
-		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
@@ -1164,28 +1165,22 @@ class OportuyaV2Controller extends Controller
 
 	public function deniedLeadForFecExp($identificationNumber, $typeDenied)
 	{
-
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$identificationNumber = (string) $identificationNumber;
 		$data = [
 			'CEDULA'           => $identificationNumber,
+			'ASESOR'           => 998877,
 			'ID_DEF'           => $typeDenied,
 			'ESTADO_INTENCION' => 1
 		];
 
-		if ($lastIntention == "true") {
-			$this->intentionInterface->createIntention($data);
-		} else {
-			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-			$dataIntention->ESTADO_INTENCION = 1;
-			$dataIntention->ID_DEF           = $typeDenied;
-			$dataIntention->save();
-		}
-
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->ESTADO = 'NEGADO';
-		$customer->save();
+		$customerIntention                   = $this->intentionInterface->checkIfHasIntention($data,  $this->daysToIncrement);
+		$customerIntention->ESTADO_INTENCION = $data['ESTADO_INTENCION'];
+		$customerIntention->ID_DEF           = $data['ID_DEF'];
+		$customerIntention->ASESOR           = $data['ASESOR'];
+		$customerIntention->save();
+		$customerIntention->customer->ESTADO = 'NEGADO';
+		$customerIntention->customer->save();
 		return "true";
 	}
 
@@ -1262,7 +1257,7 @@ class OportuyaV2Controller extends Controller
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
-		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
+		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 
 		return response()->json([
 			'data'            => true,
@@ -1344,10 +1339,10 @@ class OportuyaV2Controller extends Controller
 				$estadoSolic = 19;
 			}
 		}
-		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data);
+		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
-	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data)
+	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 
@@ -1442,62 +1437,26 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
-		$assessorCode      = $this->userInterface->getAssessorCode();
-		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
-		$sucursal          = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorData      = $this->assessorInterface->findAssessorById($assessorCode);
-
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
+		$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
 		$requestData = [
 			'AVANCE_W'      => $quotaApprovedAdvance,
 			'PRODUC_W'      => $quotaApprovedProduct,
 			'CLIENTE'       => $customer->CEDULA,
-			'CODASESOR'     => $assessorCode,
-			'id_asesor'     => $assessorCode,
+			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
+			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
-			'SUCURSAL'      => $sucursal,
+			'SUCURSAL'      => $customer->SUC,
 			'ESTADO'        => $estado,
-			'SOLICITUD_WEB' => $customerIntention->id
-
+			'SOLICITUD_WEB' => $customer->latestIntention->id
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
+		$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
+		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
 		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
-		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
+		$factoryRequest->states()->attach($estado, ['usuario' => $customer->USUARIO_ACTUALIZACIONe]);
 		return $customerFactoryRequest;
-	}
-
-	private function addTurnos($identificationNumber, $numSolic)
-	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$respScoreLead  = $customer->latestCifinScore->score;
-		$scoreLead      = 0;
-
-		if (!empty($respScoreLead)) {
-			$scoreLead = $respScoreLead->score;
-		}
-
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$assessorCode = $this->userInterface->getAssessorCode();
-		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-
-		if ($assessorData->SUCURSAL != 1) {
-			$sucursal = trim($assessorData->SUCURSAL);
-		}
-
-		$turnData = [
-			'SOLICITUD' => $numSolic,
-			'CEDULA'    => $customer->CEDULA,
-			'SUC'       => $sucursal,
-			'SCORE'     => $scoreLead,
-		];
-
-		$this->turnInterface->addTurn($turnData);
-
-		return "true";
 	}
 
 	private function getInfoLeadCreate($identificationNumber)
@@ -1642,4 +1601,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1738
+//1596
