@@ -610,7 +610,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }
 
             $scope.liquidator[key][6].push({ 'CUOTAINI': $scope.liquidator[key][3].CUOTAINI });
-            $scope.updateChargesLiquidator(key);
+            $timeout(() => {
+                $scope.updateChargesLiquidator(key);
+            }, 500);
+
         };
 
         $scope.refreshLiquidator = function (key) {
@@ -658,7 +661,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
                 }
             };
-            $scope.updateIva(key);
+            $timeout(() => {
+                $scope.updateIva(key);
+            }, 500);
         }
 
         $scope.updateIva = function (key) {
