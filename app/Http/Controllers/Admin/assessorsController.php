@@ -583,7 +583,7 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-			$customer         = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer         = $this->customerInterface->findCustomerById($customer->CEDULA);
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
@@ -1214,7 +1214,8 @@ class assessorsController extends Controller
 		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
-		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
+		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
+		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
 
 		return response()->json([
 			'data'            => true,
@@ -1580,4 +1581,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1549
+//1583
