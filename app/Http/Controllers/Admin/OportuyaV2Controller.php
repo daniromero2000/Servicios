@@ -271,11 +271,13 @@ class OportuyaV2Controller extends Controller
 			if ($request->get('productId') == 0) {
 				$data = [
 					'CEDULA' => $identificationNumber,
+					'ASESOR' => 	$assessorCode
 				];
 			} else {
 				$data = [
 					'CEDULA' => $identificationNumber,
-					'product_id' => $request->get('productId')
+					'product_id' => $request->get('productId'),
+					'ASESOR' => 	$assessorCode
 				];
 			}
 
