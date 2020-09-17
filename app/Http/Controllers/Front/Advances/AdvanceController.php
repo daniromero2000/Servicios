@@ -126,4 +126,3 @@ class AdvanceController extends Controller
         return redirect()->route('thankYouPageAvance');
     }
 }
-$oportudataLead->USUARIO_ACTUALIZACION
