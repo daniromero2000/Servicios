@@ -799,6 +799,7 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		} else {
 			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		}
