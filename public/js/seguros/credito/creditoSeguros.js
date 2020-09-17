@@ -341,7 +341,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			};
 			$http({
 				method: 'POST',
-				url: '/api/oportuya/validateFormConfronta',
+				url: '/assessor/api/validateFormConfronta',
 				data: $scope.infoConfronta,
 			}).then(function successCallback(response) {
 				if (response.data.data == true) {
