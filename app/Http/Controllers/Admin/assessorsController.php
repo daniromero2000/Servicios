@@ -1379,7 +1379,7 @@ class assessorsController extends Controller
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
 			'SUCURSAL'      => $customer->SUC,
 			'ESTADO'        => $estado,
-			'SOLICITUD_WEB' => $intentionId
+			'SOLICITUD_WEB' => $customer->latestIntention->id
 		];
 
 		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData);
@@ -1569,4 +1569,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1571
+//1572

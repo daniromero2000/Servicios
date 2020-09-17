@@ -1429,7 +1429,6 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
-		$customerIntention = $customer->latestIntention;;
 		$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
 		$requestData = [
@@ -1441,8 +1440,7 @@ class OportuyaV2Controller extends Controller
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
 			'SUCURSAL'      => $customer->SUC,
 			'ESTADO'        => $estado,
-			'SOLICITUD_WEB' => $customerIntention->id
-
+			'SOLICITUD_WEB' => $customer->latestIntention->id
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
@@ -1593,4 +1591,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1597
+//1596
