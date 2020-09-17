@@ -51,6 +51,8 @@ use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
+use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -61,8 +63,8 @@ class OportuyaV2Controller extends Controller
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $intentionInterface, $extintFinancialCifinInterface, $userInterface;
-	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
-	private $ubicaInterface, $datosClienteInterface, $analisisInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $secondCodebtorInterface;
+	private $ubicaInterface, $datosClienteInterface, $analisisInterface, $codebtorInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface,  $confrontaSelectinterface;
 	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
 
@@ -103,7 +105,9 @@ class OportuyaV2Controller extends Controller
 		ToolRepositoryInterface $toolRepositoryInterface,
 		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
 		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
-		UserRepositoryInterface $userRepositoryInterface
+		UserRepositoryInterface $userRepositoryInterface,
+		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
+		CodebtorRepositoryInterface $codebtorRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -142,6 +146,8 @@ class OportuyaV2Controller extends Controller
 		$this->ubicaMailInterface                = $ubicaEmailRepositoryInterface;
 		$this->ubicaCellPhoneInterfac            = $ubicaCellPhoneRepositoryInterface;
 		$this->userInterface                     = $userRepositoryInterface;
+		$this->secondCodebtorInterface           = $secondCodebtorRepositoryInterface;
+		$this->codebtorInterface                 = $codebtorRepositoryInterface;
 	}
 
 	public function index()
