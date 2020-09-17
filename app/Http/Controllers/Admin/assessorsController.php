@@ -583,7 +583,7 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-			$customer         = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer         = $this->customerInterface->findCustomerById($customer->CEDULA);
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);

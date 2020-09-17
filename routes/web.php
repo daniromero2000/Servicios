@@ -122,18 +122,18 @@ Route::group(['prefix' => '/assessor/'], function () {
 Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 // All resource routes
-
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
-Route::get('credito-electrodomesticos/catalogo', 'Admin\OportuyaV2Controller@getSubsidiaryCustomer');
-Route::get('/credito-electrodomesticos/catalogo/{zona}', 'Admin\OportuyaV2Controller@catalog')->name('catalogo.zona');
-Route::get('credito-electrodomesticos/catalogo/{product}/{zona}', 'Admin\OportuyaV2Controller@product');
 Route::resource('libranza', 'Admin\LibranzaController');
 Route::resource('leads', 'Admin\LeadsController');
 Route::get('/view-products', function () {
     return view('oportuya.viewProducts');
 });
 
+//Catalogo de clientes
+Route::get('/credito-electrodomesticos/catalogo', 'Front\Catalog\CatalogController@getSubsidiaryCustomer');
+Route::get('/credito-electrodomesticos/catalogo/{zona}', 'Front\Catalog\CatalogController@catalog')->name('catalogo.zona');
+Route::get('/credito-electrodomesticos/catalogo/{product}/{zona}', 'Front\Catalog\CatalogController@product');
 
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
