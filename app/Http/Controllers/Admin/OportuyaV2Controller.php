@@ -1428,10 +1428,8 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
-		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
+		$customerIntention = $customer->latestIntention;;
 		$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
-
-
 
 		$requestData = [
 			'AVANCE_W'      => $quotaApprovedAdvance,
@@ -1594,4 +1592,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1600
+//1597
