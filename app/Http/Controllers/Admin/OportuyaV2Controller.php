@@ -1257,7 +1257,7 @@ class OportuyaV2Controller extends Controller
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
-		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
+		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 
 		return response()->json([
 			'data'            => true,
@@ -1339,10 +1339,10 @@ class OportuyaV2Controller extends Controller
 				$estadoSolic = 19;
 			}
 		}
-		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data);
+		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
-	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data)
+	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 

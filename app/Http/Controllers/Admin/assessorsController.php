@@ -1132,7 +1132,7 @@ class assessorsController extends Controller
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
-		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "", $data, $intention->id);
+		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
 	public function validateConsultaUbica($customer)
@@ -1208,7 +1208,7 @@ class assessorsController extends Controller
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
-		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
+		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 
 		return response()->json([
 			'data'            => true,
@@ -1265,13 +1265,13 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		return $this->addSolicCredit($customer, $policyCredit, 1, "", $data, $intention->id);
+		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
 	}
 
-	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $tipoCreacion, $data, $intentionId)
+	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
 		$this->webServiceInterface->execMigrateCustomer($customer->CEDULA);
-		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
+		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 
 		if (!empty($data)) {
 			$data['identificationNumber'] = $customer->CEDULA;
@@ -1366,7 +1366,7 @@ class assessorsController extends Controller
 		];
 	}
 
-	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado, $intentionId)
+	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
 		$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
