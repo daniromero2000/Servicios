@@ -503,7 +503,6 @@ class assessorsController extends Controller
 		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention          = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$assessorCode           = $this->userInterface->getAssessorCode();
 		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
@@ -513,22 +512,20 @@ class assessorsController extends Controller
 
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
+				'ASESOR'           => $assessorCode,
 				'ESTADO_INTENCION' => 1,
+				'CREDIT_DECISION'  => 'Negado',
 				'ID_DEF'           => 2
 			];
 
-			if ($lastIntention == "true") {
-				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
-			} else {
-				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-				$dataIntention->ASESOR = $assessorCode;
-				$dataIntention->ESTADO_INTENCION = 1;
-				$dataIntention->ID_DEF = 2;
-				$dataIntention->CREDIT_DECISION = 'Negado';
-				$dataIntention->save();
-			}
+			$customerIntention                   = $this->intentionInterface->checkIfHasIntention($dataIntention,  $this->daysToIncrement);
+			$customerIntention->ASESOR           = $dataIntention['ASESOR'];
+			$customerIntention->ESTADO_INTENCION = $dataIntention['ESTADO_INTENCION'];
+			$customerIntention->ID_DEF           = $dataIntention['ID_DEF'];
+			$customerIntention->CREDIT_DECISION  = $dataIntention['CREDIT_DECISION'];
+			$customerIntention->save();
 
-			return ['resp' => $consultasRegistraduria, 'infoLead' => $dataIntention->definition];
+			return ['resp' => $consultasRegistraduria, 'infoLead' => $customerIntention->definition];
 		}
 
 		if ($consultasRegistraduria == "-3") {
@@ -542,18 +539,17 @@ class assessorsController extends Controller
 			$oportudataLead->save();
 
 			$dataIntention = [
-				'CEDULA' => $identificationNumber,
-				'ESTADO_INTENCION' => 3
+				'CEDULA'           => $identificationNumber,
+				'ASESOR'           => $assessorCode,
+				'ESTADO_INTENCION' => 3,
+				'CREDIT_DECISION'  => 'Sin Comercial'
 			];
 
-			if ($lastIntention == "true") {
-				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
-			} else {
-				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-				$dataIntention->ASESOR = $assessorCode;
-				$dataIntention->ESTADO_INTENCION = 3;
-				$dataIntention->save();
-			}
+			$customerIntention = $this->intentionInterface->checkIfHasIntention($dataIntention,  $this->daysToIncrement);
+			$customerIntention->ASESOR = $dataIntention['ASESOR'];
+			$customerIntention->ESTADO_INTENCION = $dataIntention['ESTADO_INTENCION'];
+			$customerIntention->CREDIT_DECISION  = $dataIntention['CREDIT_DECISION'];
+			$customerIntention->save();
 
 			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
