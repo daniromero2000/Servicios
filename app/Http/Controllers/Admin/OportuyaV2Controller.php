@@ -1169,13 +1169,15 @@ class OportuyaV2Controller extends Controller
 		$identificationNumber = (string) $identificationNumber;
 		$data = [
 			'CEDULA'           => $identificationNumber,
+			'ASESOR'           => 998877,
 			'ID_DEF'           => $typeDenied,
 			'ESTADO_INTENCION' => 1
 		];
 
 		$customerIntention                   = $this->intentionInterface->checkIfHasIntention($data,  $this->daysToIncrement);
-		$customerIntention->ESTADO_INTENCION = 1;
-		$customerIntention->ID_DEF           = $typeDenied;
+		$customerIntention->ESTADO_INTENCION = $data['ESTADO_INTENCION'];
+		$customerIntention->ID_DEF           = $data['ID_DEF'];
+		$customerIntention->ASESOR           = $data['ASESOR'];
 		$customerIntention->save();
 		$customerIntention->customer->ESTADO = 'NEGADO';
 		$customerIntention->customer->save();
