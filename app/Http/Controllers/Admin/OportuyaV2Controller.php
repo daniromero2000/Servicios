@@ -1444,6 +1444,8 @@ class OportuyaV2Controller extends Controller
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
+		$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
+		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
 		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
 		$factoryRequest->states()->attach($estado, ['usuario' => $customer->USUARIO_ACTUALIZACIONe]);
 		return $customerFactoryRequest;
