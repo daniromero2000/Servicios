@@ -43,14 +43,22 @@ class IntentionRepository implements IntentionRepositoryInterface
         $this->model = $intention;
     }
 
+    public function checkIfHasIntention($cedula, $days)
+    {
+        $lastIntention = $this->validateDateIntention($cedula, $days);
+
+        if ($lastIntention == "true") {
+            $intentionData     = ['CEDULA' => $cedula];
+            $customerIntention = $this->createIntention($intentionData);
+        } else {
+            $customerIntention = $this->findLatestCustomerIntentionByCedula($cedula);
+        }
+
+        return $customerIntention;
+    }
+
     public function createIntention($data): Intention
     {
-        $authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-        if (Auth::user()) {
-            $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-        }
-        $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-        $data['ASESOR'] = $assessorCode;
         try {
             $dataIntention = new DataIntentionsRequest();
             $intention = $this->model->create($data);

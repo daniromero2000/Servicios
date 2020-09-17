@@ -583,23 +583,15 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		$customer         = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
-		$assessorCode          = $this->userInterface->getAssessorCode();
+		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$customerIntention         = $this->intentionInterface->checkIfHasIntention($customer->CEDULA,  $this->daysToIncrement);
+		$customerIntention->ASESOR = $this->userInterface->getAssessorCode();
+		$customerIntention->save();
 
-		if ($lastIntention == "true") {
-			$intentionData     = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $assessorCode];
-			$customerIntention = $this->intentionInterface->createIntention($intentionData);
-		} else {
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
-			$customerIntention->ASESOR = $assessorCode;
-			$customerIntention->save();
-		}
-
-		$estadoCliente = "PREAPROBADO";
 		//3.1 Estado de documento
+		$estadoCliente = "PREAPROBADO";
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
 		if (!empty($getDataRegistraduria)) {
 			if ($getDataRegistraduria->fuenteFallo == 'SI') {

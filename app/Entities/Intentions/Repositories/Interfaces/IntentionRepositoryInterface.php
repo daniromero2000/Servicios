@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface IntentionRepositoryInterface
 {
+  public function checkIfHasIntention($cedula, $days);
+
   public function createIntention($data): Intention;
 
   public function updateOrCreateIntention($data);
