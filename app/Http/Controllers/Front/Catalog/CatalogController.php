@@ -66,15 +66,21 @@ class CatalogController extends Controller
 			$dataProduct[$key]     = $this->productRepo->findProductBySlug($products[$key]->slug);
 			$productCatalog[$key]  = $dataProduct[$key];
 			$productListSku[$key]  = $this->listProductInterface->findListProductBySku($products[$key]->sku);
+
+			$semana[$key] = $productCatalog[$key]->months / 4;
+			$factor[$key] = $this->factorInterface->findFactorsOportudata($productCatalog[$key]->months);
+			$pays[$key] = $factor[$key]->FACTOR / $semana[$key];
+
+
 			if (!empty($productListSku[$key]->toArray())) {
 				$dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
 				foreach ($dataProduct[$key] as $key2 => $value2) {
 					$productList   = $value2;
 				}
 				$products[$key]['price_old'] =  $productList['normal_public_price'];
-				$products[$key]['price_new'] =  $productList['black_public_price'];
-				$products[$key]['discount']  =  round($productList['percentage_black_public_price'], 0, PHP_ROUND_HALF_UP);
-				$products[$key]['pays']      =  round($products[$key]['price_new'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+				$products[$key]['price_new'] =  round($productList['black_public_price'], -1, PHP_ROUND_HALF_UP);
+				$products[$key]['discount']  =  round($productList['percentage_black_public_price'], -1, PHP_ROUND_HALF_UP);
+				$products[$key]['pays'] 	 =  round($products[$key]['price_new'] * $pays[$key], -1, PHP_ROUND_HALF_UP);
 			}
 		}
 		return view('oportuya.catalog', [
