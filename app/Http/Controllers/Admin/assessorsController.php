@@ -1272,22 +1272,7 @@ class assessorsController extends Controller
 	{
 		$this->webServiceInterface->execMigrateCustomer($customer->CEDULA);
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
-
-		if (!empty($data)) {
-			$data['identificationNumber'] = $customer->CEDULA;
-			$data['numSolic']             = $factoryRequest->SOLICITUD;
-		} else {
-			$dataDatosCliente = [
-				'identificationNumber' => $customer->CEDULA,
-				'numSolic'             => $factoryRequest->SOLICITUD,
-				'NOM_REFPER'           => 'NA',
-				'TEL_REFPER'           => 'NA',
-				'NOM_REFFAM'           => 'NA',
-				'TEL_REFFAM'           => 'NA'
-			];
-		}
-
-		$this->datosClienteInterface->addDatosCliente($data);
+		$this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
 		$analisisData = [

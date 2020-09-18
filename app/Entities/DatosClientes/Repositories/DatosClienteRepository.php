@@ -13,9 +13,23 @@ class DatosClienteRepository implements DatosClienteRepositoryInterface
         $this->model = $datosCliente;
     }
 
-    public function addDatosCliente($data)
+    public function addDatosCliente($customer, $factoryRequest, $data)
     {
         try {
+            if (!empty($data)) {
+                $data['identificationNumber'] = $customer->CEDULA;
+                $data['numSolic']             = $factoryRequest->SOLICITUD;
+            } else {
+                $data = [
+                    'identificationNumber' => $customer->CEDULA,
+                    'numSolic'             => $factoryRequest->SOLICITUD,
+                    'NOM_REFPER'           => 'NA',
+                    'TEL_REFPER'           => 'NA',
+                    'NOM_REFFAM'           => 'NA',
+                    'TEL_REFFAM'           => 'NA'
+                ];
+            }
+
             $datosCliente             = new DatosCliente();
             $datosCliente->CEDULA     = (isset($data['identificationNumber']) && $data['identificationNumber'] != '') ? $data['identificationNumber'] : 'NA';
             $datosCliente->SOLICITUD  = (isset($data['numSolic']) && $data['numSolic'] != '') ? $data['numSolic'] : 'NA';
