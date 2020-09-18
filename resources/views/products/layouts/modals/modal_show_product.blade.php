@@ -1,8 +1,7 @@
 <!--AddCommunityLead modal-->
 <div class="modal fade" id="showProduct{{ $product->id }}" tabindex="-1" role="dialog"
     aria-labelledby="productCreateModalLabel">
-    <div class="modal-dialog" style=" max-width: 1400px !important; margin: auto;
-}" role="document">
+    <div class="modal-dialog" style=" max-width: 1400px !important; margin: auto;" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{$product->name}}</h5>
