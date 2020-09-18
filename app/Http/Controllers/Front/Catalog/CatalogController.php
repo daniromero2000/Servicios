@@ -95,7 +95,7 @@ class CatalogController extends Controller
 			$productCatalog['price_old'] =  $productList['normal_public_price'];
 			$productCatalog['price_new'] =  $productList['black_public_price'];
 			$productCatalog['discount']  =  round($productList['percentage_black_public_price'], 0, PHP_ROUND_HALF_UP);
-			$productCatalog['pays']      = round($productCatalog['price_new'] / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
+			$productCatalog['pays']      =  round($productCatalog['price_new'] / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
 		}
 
 		$images 		= $productCatalog->images()->get(['src']);

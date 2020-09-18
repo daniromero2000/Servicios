@@ -1001,10 +1001,40 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        {{-- <div class="col-12" >
+                            <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
+                            <div class="row my-4">
+                                    <div class="col-12 text-center my-4">
+                                        <span>hola</span>
+                                    <div class="decisionCredit-option"
+                                        ng-class="{'decisionCredit-selected': decisionCredit == 2}"
+                                        ng-click="changeDesicionCredit(2)">
+                                        <p>Crédito Tradicional</p>
+                                        <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
+                                        <p class="mb-0">
+                                            Preaprobado <br>
+                                            * <span
+                                                style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()"
+                                        ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                    <button class="btn btn-danger" ng-click="desistCredit()"
+                                        ng-disabled="disabledDecisionCredit">Desistir</button>
+                                </div>
+                            </div>
+                        </div> --}}
+
                         <div class="col-12" ng-if="resp.resp == '-2'">
                             <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
                             <div class="row my-4">
-                                <div class="col-12 text-center my-4">
+                                    <div class="col-12 text-center my-4">
                                     <div class="decisionCredit-option"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 2}"
                                         ng-click="changeDesicionCredit(2)">

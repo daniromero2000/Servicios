@@ -66,6 +66,8 @@
                                             </option>
                                             <option value="15" @if ($product->months == 15) selected @endif> 15 meses
                                             </option>
+                                            <option value="18" @if ($product->months == 18) selected @endif> 18 meses
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
