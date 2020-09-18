@@ -1251,7 +1251,7 @@
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
                             @if (auth()->user()->codeOportudata == '1088304125')
-                            <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO'"
+                            <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO' || estadoCliente == 'APROBADO'"
                                 href="/Administrator/creditLiquidator/@{{lead.CEDULA}}"
                                 class="btn bg-primary buttonBackCardExist">Crear negocio</a>
                             @endif
