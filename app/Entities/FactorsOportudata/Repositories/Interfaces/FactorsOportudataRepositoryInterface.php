@@ -7,4 +7,7 @@ interface FactorsOportudataRepositoryInterface
     public function listFactorsOportudata();
 
     public function updateFactorsOportudata($data);
+
+    public function findFactorsOportudata($id);
+
 }

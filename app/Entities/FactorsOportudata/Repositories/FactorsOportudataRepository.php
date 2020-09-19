@@ -29,6 +29,15 @@ class FactorsOportudataRepository implements FactorsOportudataRepositoryInterfac
         }
     }
 
+     public function findFactorsOportudata($id)
+     {
+        try {
+            return $this->model->findOrFail($id);
+        } catch (QueryException $e) {
+            throw $e;
+        }
+     }
+
     public function updateFactorsOportudata($data)
     {
         try {

@@ -12,7 +12,7 @@ class Product extends Model
 {
     use SearchableTrait;
 
-    protected $table = 'productsv2';
+    protected $table = 'products';
 
     protected $searchable = [
         'columns' => [

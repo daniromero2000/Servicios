@@ -55,6 +55,7 @@
                                             <option value=""> Seleccione</option>
                                             <option value="12"> 12 meses</option>
                                             <option value="15"> 15 meses</option>
+                                            <option value="18"> 18 meses</option>
                                         </select>
                                     </div>
                                 </div>

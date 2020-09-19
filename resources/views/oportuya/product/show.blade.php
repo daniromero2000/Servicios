@@ -21,18 +21,6 @@
 @endsection()
 
 @section('content')
-@php
-$images = $product->images()->get(['src']);
-$imagenes = [];
-$productImages =[];
-array_push($productImages, $product->cover);
-foreach ( $images as $key => $value) {
-array_push($productImages, $images[$key]->src );
-}
-foreach ( $productImages as $key => $value) {
-array_push($imagenes, [$productImages[$key], $key]);
-}
-@endphp
 
 <div class="my-3 padding-reset" style="max-width: 1300px;margin: 0px auto; margin-bottom: 5% !important;">
     <div class="row mr-0 justify-content-center">
