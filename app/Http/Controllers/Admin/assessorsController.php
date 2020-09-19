@@ -735,12 +735,8 @@ class assessorsController extends Controller
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {
 					$idDef     = 26;
-					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->save();
 				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
 					$idDef     = 25;
-					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->save();
 				} else {
 					//'Aprobado con tarjeta no apto'
 				}
@@ -751,12 +747,8 @@ class assessorsController extends Controller
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {
 					$idDef     = 26;
-					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->save();
 				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
 					$idDef     = 25;
-					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->save();
 				} else {
 					//'No Aprobado con tarjeta no apto'
 				}
@@ -764,38 +756,6 @@ class assessorsController extends Controller
 				//'No Aprobado sin tarjeta'
 			}
 		}
-
-
-
-		// if ($aprobado) {
-		// 	if ($customer->creditCard) {
-		// 		if ($customer->creditCard->ESTADO == 'B') {
-		// 			dd('Aprobado con bloqueo');
-		// 		} elseif ($perfil == 'Tipo A' || $perfil == 'Tipo B') {
-		// 			dd('Aprobado con tarjeta Tipo A o Tipo B');
-		// 		} else {
-		// 			dd('Aprobado con tarjeta no apto');
-		// 		}
-		// 	} else {
-		// 		dd('Aprobado sin tarjeta');
-		// 	}
-		// } else {
-		// 	if ($customer->creditCard) {
-		// 		if ($customer->creditCard->ESTADO == 'B') {
-		// 			dd('No Aprobado con bloqueo');
-		// 		} elseif ($perfil == 'Tipo A' || $perfil == 'Tipo B') {
-		// 			dd('No aprobado con tarjeta Tipo A o Tipo B');
-		// 		} else {
-		// 			dd('No Aprobado con tarjeta no apto');
-		// 		}
-		// 	} else {
-		// 		dd('No Aprobado sin tarjeta');
-		// 	}
-		// }
-		// dd('Sin Definir');
-
-
-
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -877,7 +837,8 @@ class assessorsController extends Controller
 						'quotaApprovedProduct' => $quotaApprovedProduct,
 						'quotaApprovedAdvance' => $quotaApprovedAdvance,
 						'estadoCliente'        => $estadoCliente,
-						'fuenteFallo'          => $fuenteFallo
+						'fuenteFallo'          => $fuenteFallo,
+						'ID_DEF'               => $idDef
 					];
 				}
 
@@ -897,7 +858,8 @@ class assessorsController extends Controller
 						'quotaApprovedProduct' => $quotaApprovedProduct,
 						'quotaApprovedAdvance' => $quotaApprovedAdvance,
 						'estadoCliente'        => $estadoCliente,
-						'fuenteFallo'          => $fuenteFallo
+						'fuenteFallo'          => $fuenteFallo,
+						'ID_DEF'               => $idDef
 					];
 				}
 
@@ -917,7 +879,8 @@ class assessorsController extends Controller
 						'quotaApprovedProduct' => $quotaApprovedProduct,
 						'quotaApprovedAdvance' => $quotaApprovedAdvance,
 						'estadoCliente'        => $estadoCliente,
-						'fuenteFallo'          => $fuenteFallo
+						'fuenteFallo'          => $fuenteFallo,
+						'ID_DEF'               => $idDef
 					];
 				}
 
@@ -938,7 +901,8 @@ class assessorsController extends Controller
 							'quotaApprovedProduct' => $quotaApprovedProduct,
 							'quotaApprovedAdvance' => $quotaApprovedAdvance,
 							'estadoCliente'        => $estadoCliente,
-							'fuenteFallo'          => $fuenteFallo
+							'fuenteFallo'          => $fuenteFallo,
+							'ID_DEF'               => $idDef
 						];
 					} else {
 						$customer->ESTADO = 'PREAPROBADO';
@@ -973,7 +937,7 @@ class assessorsController extends Controller
 				}
 				$customerIntention->ESTADO_INTENCION  = '2';
 				$customerIntention->save();
-				return ['resp' => "-2"];
+				return ['resp' => "-2", 'ID_DEF' => $idDef];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
@@ -985,7 +949,7 @@ class assessorsController extends Controller
 				}
 				$customerIntention->ESTADO_INTENCION  = '2';
 				$customerIntention->save();
-				return ['resp' => "-2"];
+				return ['resp' => "-2", 'ID_DEF' => $idDef];
 			}
 		}
 
