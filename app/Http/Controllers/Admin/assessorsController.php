@@ -729,12 +729,73 @@ class assessorsController extends Controller
 			}
 		}
 
+		// Hasta aca esta igual en Assessors y OportuyaV2
+
 		if ($aprobado) {
-			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->save();
+			if ($customer->creditCard) {
+				if ($customer->creditCard->ESTADO == 'B') {
+					$idDef     = 26;
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->save();
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
+					$idDef     = 25;
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->save();
+				} else {
+					//'Aprobado con tarjeta no apto'
+				}
+			} else {
+				//'Aprobado sin tarjeta'
+			}
+		} else {
+			if ($customer->creditCard) {
+				if ($customer->creditCard->ESTADO == 'B') {
+					$idDef     = 26;
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->save();
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
+					$idDef     = 25;
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->save();
+				} else {
+					//'No Aprobado con tarjeta no apto'
+				}
+			} else {
+				//'No Aprobado sin tarjeta'
+			}
 		}
 
-		// Hasta aca esta igual en Assessors y OportuyaV2
+
+
+		// if ($aprobado) {
+		// 	if ($customer->creditCard) {
+		// 		if ($customer->creditCard->ESTADO == 'B') {
+		// 			dd('Aprobado con bloqueo');
+		// 		} elseif ($perfil == 'Tipo A' || $perfil == 'Tipo B') {
+		// 			dd('Aprobado con tarjeta Tipo A o Tipo B');
+		// 		} else {
+		// 			dd('Aprobado con tarjeta no apto');
+		// 		}
+		// 	} else {
+		// 		dd('Aprobado sin tarjeta');
+		// 	}
+		// } else {
+		// 	if ($customer->creditCard) {
+		// 		if ($customer->creditCard->ESTADO == 'B') {
+		// 			dd('No Aprobado con bloqueo');
+		// 		} elseif ($perfil == 'Tipo A' || $perfil == 'Tipo B') {
+		// 			dd('No aprobado con tarjeta Tipo A o Tipo B');
+		// 		} else {
+		// 			dd('No Aprobado con tarjeta no apto');
+		// 		}
+		// 	} else {
+		// 		dd('No Aprobado sin tarjeta');
+		// 	}
+		// }
+		// dd('Sin Definir');
+
+
+
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -804,7 +865,11 @@ class assessorsController extends Controller
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
 					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  '14';
+					if ($idDef == 25  || $idDef == 26) {
+						$customerIntention->ID_DEF =  $idDef;
+					} else {
+						$customerIntention->ID_DEF =  '14';
+					}
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customerIntention->save();
 					return [
@@ -819,7 +884,11 @@ class assessorsController extends Controller
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->ID_DEF  = '15';
+					if ($idDef == 25  || $idDef == 26) {
+						$customerIntention->ID_DEF =  $idDef;
+					} else {
+						$customerIntention->ID_DEF  = '15';
+					}
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
@@ -835,7 +904,11 @@ class assessorsController extends Controller
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->ID_DEF  = '16';
+					if ($idDef == 25  || $idDef == 26) {
+						$customerIntention->ID_DEF =  $idDef;
+					} else {
+						$customerIntention->ID_DEF  = '16';
+					}
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
@@ -852,7 +925,11 @@ class assessorsController extends Controller
 					if ($customerIntention->HISTORIAL_CREDITO == 1) {
 						$customer->ESTADO           = 'PREAPROBADO';
 						$customerIntention->TARJETA = $tarjeta;
-						$customerIntention->ID_DEF  = '17';
+						if ($idDef == 25  || $idDef == 26) {
+							$customerIntention->ID_DEF =  $idDef;
+						} else {
+							$customerIntention->ID_DEF  = '17';
+						}
 						$customerIntention->ESTADO_INTENCION  = '2';
 						$customer->save();
 						$customerIntention->save();
@@ -889,7 +966,11 @@ class assessorsController extends Controller
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '19';
+				if ($idDef == 25  || $idDef == 26) {
+					$customerIntention->ID_DEF =  $idDef;
+				} else {
+					$customerIntention->ID_DEF =  '19';
+				}
 				$customerIntention->ESTADO_INTENCION  = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
@@ -897,7 +978,11 @@ class assessorsController extends Controller
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '20';
+				if ($idDef == 25  || $idDef == 26) {
+					$customerIntention->ID_DEF =  $idDef;
+				} else {
+					$customerIntention->ID_DEF =  '20';
+				}
 				$customerIntention->ESTADO_INTENCION  = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
