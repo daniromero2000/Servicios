@@ -581,11 +581,7 @@ class assessorsController extends Controller
 	private function validatePolicyCredit_new($customer)
 	{
 		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
-
-		$intentionData             = [
-			'CEDULA' => $customer->CEDULA,
-			'ASESOR' => $customer->USUARIO_ACTUALIZACION
-		];
+		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
 		$customerIntention->ASESOR = $intentionData['ASESOR'];
@@ -1661,4 +1657,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1572
+//1660

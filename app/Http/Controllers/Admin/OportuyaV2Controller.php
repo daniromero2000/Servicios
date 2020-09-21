@@ -865,11 +865,7 @@ class OportuyaV2Controller extends Controller
 	private function validatePolicyCredit_new($customer)
 	{
 		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
-
-		$intentionData             = [
-			'CEDULA' => $customer->CEDULA,
-			'ASESOR' => $this->userInterface->getAssessorCode()
-		];
+		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
 		$customerIntention->ASESOR = $intentionData['ASESOR'];
@@ -1581,4 +1577,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1596
+//1580
