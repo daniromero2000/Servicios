@@ -825,6 +825,8 @@
                         <div class="col-12" ng-if="resp.resp == 'true'">
                             <h2 class="decisionCredit-title text-center">Selecciona una opción</h2>
                             <div class="row my-4">
+                            {{-- @{{resp}} --}}
+
                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.ID_DEF == 26">
                                     <button class="decisionCredit-option" ng-disabled="resp.ID_DEF == 26" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
                                         <p >Tarjeta</p>

@@ -627,6 +627,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		};
+		// $scope.execConsultasLead(40438607);
 
 		$scope.desistCredit = function () {
 			var opcion = confirm("Desea desistir la solicitud de crédito ?");
