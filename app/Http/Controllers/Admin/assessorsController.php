@@ -1410,6 +1410,7 @@ class assessorsController extends Controller
 		}
 
 		$infoLead->numSolic = $factoryRequest->SOLICITUD;
+
 		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
