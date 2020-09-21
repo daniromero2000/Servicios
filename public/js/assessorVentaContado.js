@@ -585,7 +585,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 800);
 
 				$scope.resp = response.data;
-				$scope.resp.ID_DEF = 25;
 				if ($scope.resp.resp == "true" || $scope.resp.resp == "-2") {
 					$('#decisionCredit').modal('show');
 					$scope.step++;
@@ -628,7 +627,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		};
-		$scope.execConsultasLead(1088304125);
 
 		$scope.desistCredit = function () {
 			var opcion = confirm("Desea desistir la solicitud de crédito ?");
