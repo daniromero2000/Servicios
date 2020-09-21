@@ -1068,16 +1068,29 @@
                                 El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
-                        <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO'">
+                        <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO' && resp.policy.ID_DEF == '25'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                <b>La solicitud</b> está siendo revisada <br>
-                                por el área de fábrica de créditos.
+                              Su intención ha sido aprobada.
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                Proceda a ingresar el negocio en OPORTUDATA <br>
+                                El número de solicitud es 
+                                <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
+
+                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO' && resp.policy.ID_DEF != '25'">
+                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+                             <p class="textTnakYouModal">
+                                 <b>La solicitud</b> está siendo revisada <br>
+                                 por el área de fábrica de créditos.
+                             </p>
+                             <p class="textModalNumSolic text-center">
+                                 El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                             </p>
+                         </div>
+
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'SIN COMERCIAL'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
