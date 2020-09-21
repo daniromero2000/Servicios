@@ -281,7 +281,6 @@ class CreditLiquidatorController extends Controller
 
     public function getLists()
     {
-<<<<<<< HEAD
         return $this->ProductListRepository->getCurrentProductListsForZone(auth()->user()->Assessor->subsidiary->ZONA);
     }
 
@@ -302,10 +301,6 @@ class CreditLiquidatorController extends Controller
     {
         $productListSku  = $this->listProductInterface->findListProductBySkuAndType($code, 4);
         $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
-=======
-        $productListSku     = $this->listProductInterface->findListProductBySku($code);
-        $dataProduct        = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
->>>>>>> master
         foreach ($dataProduct as $key => $value) {
             $dataProduct[$key]['list'] = $key;
             $dataProduct =  $dataProduct[$key];
