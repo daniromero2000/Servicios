@@ -280,19 +280,7 @@ class CreditLiquidatorController extends Controller
 
     public function getProduct($code)
     {
-        $productListSku  = $this->listProductInterface->findListProductBySku($code);
-        $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
-        foreach ($dataProduct as $key => $value) {
-            $dataProduct[$key]['list'] = $key;
-            $dataProduct =  $dataProduct[$key];
-        }
-
-        return ['price' => $dataProduct, 'product' => $productListSku, 'zone' =>  auth()->user()->Assessor->subsidiary->ZONA];
-    }
-
-    public function getGift($code)
-    {
-        $productListSku  = $this->listProductInterface->findListProductBySkuAndType($code, 4);
+        $productListSku = $this->listProductInterface->findListProductBySku($code);
         $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
         foreach ($dataProduct as $key => $value) {
             $dataProduct[$key]['list'] = $key;
