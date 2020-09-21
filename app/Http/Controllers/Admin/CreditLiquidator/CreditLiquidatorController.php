@@ -18,6 +18,7 @@ use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryI
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
+use App\Entities\ProductLists\Repositories\ProductListRepository;
 use App\Entities\CreditBusiness\CreditBusines;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Http\Controllers\Controller;
@@ -278,10 +279,17 @@ class CreditLiquidatorController extends Controller
         return $this->factorsInterface->listFactorsOportudata();
     }
 
-    public function getProduct($code)
+    public function getLists()
     {
+        
+        return $this->ProductListRepository->getCurrentProductListsForZone(auth()->user()->Assessor->subsidiary->ZONA);
+    }
+
+    public function getProduct($code, $list)
+    {
+        //  auth()->user()->Assessor->subsidiary->ZONA,
         $productListSku  = $this->listProductInterface->findListProductBySku($code);
-        $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
+        $dataProduct     = $this->listProductInterface->getPriceProductForList($productListSku[0]->id, $list);
         foreach ($dataProduct as $key => $value) {
             $dataProduct[$key]['list'] = $key;
             $dataProduct =  $dataProduct[$key];

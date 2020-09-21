@@ -24,6 +24,8 @@ interface ListProductRepositoryInterface
 
     public function getPriceProductForZone($product_id, $zone);
 
+    public function getPriceProductForList($product_id, $list);
+
     public function getPriceProductForZoneEspecifiedPrices($product_id, $zone, $prices = []);
 
     public function getPriceProductForCatalogo($product_id, $zone);

@@ -271,6 +271,15 @@ class ListProductRepository implements ListProductRepositoryInterface
         return $data;
     }
 
+    public function getPriceProductForList($product_id, $list)
+    {
+        $data = [];
+        $listPrices = $this->getPriceProductForAllCurrentList($product_id);
+        $list = $this->productListInterface->getCurrentProductListsForName($list);
+        $data[$list[0]->name] = $listPrices[$list[0]->name];
+        return $data;
+    }
+
     public function getPriceProductForCatalogo($product_id, $zone)
     {
         $data = [];

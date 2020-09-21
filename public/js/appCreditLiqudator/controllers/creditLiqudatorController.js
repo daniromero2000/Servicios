@@ -32,7 +32,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.viewProductImg = false;
         $scope.typeDiscount =
             [
-                { 'type': 'Por traslado' },
                 { 'type': 'Otros' },
             ];
         $scope.tabItems =
@@ -61,6 +60,19 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.addError(response, $scope.lead.CEDULA);
             });
         };
+
+        // //Traer listas
+        // $scope.getPlans = function () {
+        //     $http({
+        //         method: 'GET',
+        //         url: '/api/liquidator/getPlans',
+        //     }).then(function successCallback(response) {
+        //         $scope.plans = response.data
+        //     }, function errorCallback(response) {
+        //         response.url = '/api/liquidator/getPlans';
+        //         $scope.addError(response, $scope.lead.CEDULA);
+        //     });
+        // };
 
         //Listado de cuotas
         $scope.listOfFees = function () {

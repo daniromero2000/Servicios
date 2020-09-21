@@ -100,6 +100,16 @@ class ProductListRepository implements ProductListRepositoryInterface
         }
     }
 
+    public function getCurrentProductListsForName($list)
+    {
+       $dateNow = date("Y-m-d");
+        try {
+            return $this->model->where('name',  $list)->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getProductListsForTheCatalog($zone)
     {
         try {
