@@ -109,6 +109,7 @@ Route::group(['prefix' => '/assessor/'], function () {
         Route::post('ventaContado/addVentaContado', 'Admin\assessorsController@store');
         Route::get('execConsultasLead/{identificationNumber}', 'Admin\assessorsController@execConsultasleadAsesores');
         Route::put('decisionCreditCard/{identificationNumber}', 'Admin\assessorsController@decisionCreditCard');
+        Route::put('decisionHasCreditCard/{identificationNumber}', 'Admin\assessorsController@decisionHasCreditCard');
         Route::put('decisionTraditionalCredit/{identificationNumber}', 'Admin\assessorsController@decisionTraditionalCredit');
         Route::get('desistCredit/{identificationNumber}', 'Admin\assessorsController@desistCredit');
         Route::post('validateFormConfronta', 'Admin\assessorsController@validateFormConfronta');
