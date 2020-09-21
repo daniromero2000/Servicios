@@ -825,8 +825,8 @@
                         <div class="col-12" ng-if="resp.resp == 'true'">
                             <h2 class="decisionCredit-title text-center">Selecciona una opción</h2>
                             <div class="row my-4">
-                                <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.ID_DEF == 26">
-                                    <button class="decisionCredit-option" ng-disabled="resp.ID_DEF == 26" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
+                                <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF == 26">
+                                    <button class="decisionCredit-option" ng-disabled="resp.policy.ID_DEF == 26" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
                                         <p >Tarjeta</p>
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
                                         <p class="mb-2" >
@@ -834,7 +834,7 @@
                                         </p>
                                     </button>
                                 </div>
-                                <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.ID_DEF == 25">
+                                <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF == '25'">
                                     <button class="decisionCredit-option"  ng-class="{'decisionCredit-selected': decisionCredit == 3}" ng-click="changeDesicionCredit(3)" style=" border: 0; ">
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
                                         <p class="my-2 small">
@@ -844,7 +844,7 @@
                                         <a type="button" class="btn btn-default text-dark">Click aquí</a>
                                     </button>
                                 </div>
-                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.ID_DEF != 25 && resp.ID_DEF != 26">
+                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF != 25 && resp.policy.ID_DEF != 26">
                                      <button class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
                                          <p>@{{ resp.infoLead.TARJETA }}</p>
                                          <i class="fas fa-credit-card decisionCredit-option-icon"></i>

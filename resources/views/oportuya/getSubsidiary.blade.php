@@ -54,9 +54,17 @@
                             <label for="my-select">Selecciona tu ciudad</label>
                             <select id="my-select" class="custom-select" name="city">
                                 <option value="">Selecciona</option>
-                                @foreach ($cities as $city)
-                                <option value="{{$city->ZONA}}">{{$city->CIUDAD}}</option>
-                                @endforeach
+                                <option value="MEDIA">ACACIAS</option>
+                                <option value="BAJA">ARMENIA</option>
+                                <option value="MEDIA">GARZÓN</option>
+                                <option value="BAJA">MANIZALES</option>
+                                <option value="MEDIA">MARIQUITA</option>
+                                <option value="BAJA">LA DORADA</option>
+                                <option value="BAJA">PEREIRA</option>
+                                <option value="ALTA">PUERTO LÓPEZ</option>
+                                <option value="MEDIA">VILLAVICENCIO</option>
+                                <option value="MEDIA">VILLANUEVA</option>
+                                <option value="MEDIA">YOPAL</option>
                             </select>
                         </div>
                         <div>
