@@ -281,7 +281,6 @@ class CreditLiquidatorController extends Controller
 
     public function getLists()
     {
-        
         return $this->ProductListRepository->getCurrentProductListsForZone(auth()->user()->Assessor->subsidiary->ZONA);
     }
 
