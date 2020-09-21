@@ -697,7 +697,6 @@ class assessorsController extends Controller
 
 		$customerIntention->INSPECCION_OCULAR = $this->policyInterface->validaOccularInspection($customer, $customerIntention);
 		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
-		$customerIntention->save();
 
 		// 3.6 Tarjeta Black
 		$aprobado = false;
@@ -796,7 +795,6 @@ class assessorsController extends Controller
 			$customer->ACTIVIDAD,
 			$statusAfiliationCustomer
 		);
-		$customerIntention->save();
 
 		if ($customerStatusDenied == true) {
 			$customer->ESTADO          = 'NEGADO';
@@ -1022,6 +1020,8 @@ class assessorsController extends Controller
 				return ['resp' =>  "-2"];
 			}
 		}
+		$customerIntention->save();
+		$customer->save();
 		return ['resp' => "true"];
 	}
 
