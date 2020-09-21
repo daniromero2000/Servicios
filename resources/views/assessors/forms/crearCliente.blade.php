@@ -827,34 +827,34 @@
                             <div class="row my-4">
                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF == 26">
                                     <button class="decisionCredit-option" ng-disabled="resp.policy.ID_DEF == 26" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
-                                        <p >Tarjeta</p>
+                                        <p>Tarjeta</p>
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
-                                        <p class="mb-2" >
+                                        <p class="mb-2">
                                             Tarjeta Bloqueda
                                         </p>
                                     </button>
                                 </div>
                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF == '25'">
-                                    <button class="decisionCredit-option"  ng-class="{'decisionCredit-selected': decisionCredit == 3}" ng-click="changeDesicionCredit(3)" style=" border: 0; ">
+                                    <button class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 3}" ng-click="changeDesicionCredit(3)" style=" border: 0; ">
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
                                         <p class="my-2 small">
-                                        Ya cuentas con una tarjeta. <br>
+                                            Ya cuentas con una tarjeta. <br>
                                             puedes continuar con tu tarjeta
                                         </p>
                                         <a type="button" class="btn btn-default text-dark">Click aquí</a>
                                     </button>
                                 </div>
-                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF != 25 && resp.policy.ID_DEF != 26">
-                                     <button class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
-                                         <p>@{{ resp.infoLead.TARJETA }}</p>
-                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
-                                         <p class="mb-0">
-                                             Cupo Compras : $ @{{ resp.quotaApprovedProduct | number:0 }} <br>
-                                             Cupo Avance : $ @{{ resp.quotaApprovedAdvance | number:0 }}
-                                         </p>
-                                         <a type="button" class="btn btn-default text-dark">Click aquí</a>
-                                     </button>
-                                 </div>
+                                <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.policy.ID_DEF != 25 && resp.policy.ID_DEF != 26">
+                                    <button class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)" style=" border: 0; ">
+                                        <p>@{{ resp.infoLead.TARJETA }}</p>
+                                        <i class="fas fa-credit-card decisionCredit-option-icon"></i>
+                                        <p class="mb-0">
+                                            Cupo Compras : $ @{{ resp.quotaApprovedProduct | number:0 }} <br>
+                                            Cupo Avance : $ @{{ resp.quotaApprovedAdvance | number:0 }}
+                                        </p>
+                                        <a type="button" class="btn btn-default text-dark">Click aquí</a>
+                                    </button>
+                                </div>
                                 <div class="col-12 col-sm-6 text-center my-4">
                                     <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 2}" ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
@@ -1042,21 +1042,21 @@
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
-                            @if (auth()->user()->codeOportudata == '1088304125')
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
                                 <br>
                                 procede a ingresar los datos del negocio.
                             </p>
-                            @endif
-
+                            @else
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
                                 <br>
                                 procede en <strong>OPORTUDATA</strong> a ingresar los datos del negocio.
                             </p>
+                            @endif
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">
                             <img src="{{ asset('images/asessors/openIcon.jpg') }}" class="iconThankYouModal" />
@@ -1065,31 +1065,50 @@
                                 <b>Solicitud aprobada</b> para tarjeta
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> <br>
+                                Procede a hacer la preactivacion de la tarjeta
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO' && resp.policy.ID_DEF == '25'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                              Su intención ha sido aprobada.
+                                Su intención ha sido aprobada.
                             </p>
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
+                            <p class="textTnakYouModal">
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
+                                exitosamente,
+                                <br>
+                                procede a ingresar los datos del negocio.
+                            </p>
+                            @else
                             <p class="textModalNumSolic text-center">
                                 Proceda a ingresar el negocio en OPORTUDATA <br>
-                                El número de solicitud es 
+                                El número de solicitud es
                                 <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
+                            @endif
                         </div>
 
-                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO' && resp.policy.ID_DEF != '25'">
-                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
-                             <p class="textTnakYouModal">
-                                 <b>La solicitud</b> está siendo revisada <br>
-                                 por el área de fábrica de créditos.
-                             </p>
-                             <p class="textModalNumSolic text-center">
-                                 El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
-                             </p>
-                         </div>
+                        <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO' && resp.policy.ID_DEF != '25'">
+                            <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
+                            <p class="textTnakYouModal">
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
+                                exitosamente,
+                                <br>
+                                procede a ingresar los datos del negocio.
+                            </p>
+                            @else
+                            <p class="textTnakYouModal">
+                                <b>La solicitud</b> está siendo revisada <br>
+                                por el área de fábrica de créditos.
+                            </p>
+                            <p class="textModalNumSolic text-center">
+                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                            </p>
+                            @endif
+                        </div>
 
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'SIN COMERCIAL'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
@@ -1114,7 +1133,7 @@
                         <div class="col-12 text-center">
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
-                            @if (auth()->user()->codeOportudata == '1088304125')
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
                             <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO' || estadoCliente == 'APROBADO'" href="/Administrator/creditLiquidator/@{{lead.CEDULA}}" class="btn bg-primary buttonBackCardExist">Crear negocio</a>
                             @endif
                         </div>

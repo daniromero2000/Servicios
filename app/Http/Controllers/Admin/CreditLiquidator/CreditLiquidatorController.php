@@ -171,16 +171,16 @@ class CreditLiquidatorController extends Controller
     public function store(Request $request)
     {
         $liquidation = $request->input();
-        $items = [];
-        $items2 = [];
-        $products = [];
-        $discounts = [];
+        $items          = [];
+        $items2         = [];
+        $products       = [];
+        $discounts      = [];
         $totalDiscounts = [];
-        $aval = [];
-        $total = [];
-        $feeInitial = [];
-        $fees = [];
-        $plans = [];
+        $aval           = [];
+        $total          = [];
+        $feeInitial     = [];
+        $fees           = [];
+        $plans          = [];
 
         foreach ($liquidation[0] as $key => $value) {
             $items2[$key] = $liquidation[0][$key];
@@ -235,20 +235,20 @@ class CreditLiquidatorController extends Controller
         }
         $user  = auth()->user()->codeOportudata;
         $super2 = [];
-        $factoryRequest = $liquidation[1][0];
-        $factoryRequest += $liquidation[1][1];
-        $factoryRequest['GRAN_TOTAL'] = $sumTotal;
-        $factoryRequest['id_asesor'] = $user;
-        $factoryRequest['SOLICITUD_WEB']  = 1;
-        $customerFactoryRequest = $this->factoryInterface->updateFactoryRequest($factoryRequest);
+        $factoryRequest                  = $liquidation[1][0];
+        $factoryRequest                  += $liquidation[1][1];
+        $factoryRequest['GRAN_TOTAL']    = $sumTotal;
+        $factoryRequest['id_asesor']     = $user;
+        $factoryRequest['SOLICITUD_WEB'] = 1;
+        $this->factoryInterface->updateFactoryRequest($factoryRequest);
 
         foreach ($products2 as $key => $value) {
             foreach ($products2[$key] as $key2 => $value) {
                 $position = $key2 + 1;
-                $products2[$key][$key2]['CONSEC']  = $products2[$key][$key2]['key'] + 1;
-                $products2[$key][$key2]['CONSEC2']  = $position;
-                $products2[$key][$key2]['COD_ARTIC']  = $products2[$key][$key2]['CODIGO'];
-                $products2[$key][$key2]['SOLICITUD']  = $products2[$key][$key2]['SOLICITUD'];
+                $products2[$key][$key2]['CONSEC']       = $products2[$key][$key2]['key'] + 1;
+                $products2[$key][$key2]['CONSEC2']      = $position;
+                $products2[$key][$key2]['COD_ARTIC']    = $products2[$key][$key2]['CODIGO'];
+                $products2[$key][$key2]['SOLICITUD']    = $products2[$key][$key2]['SOLICITUD'];
                 unset($products2[$key][$key2]['key']);
                 unset($products2[$key][$key2]['CODIGO']);
                 $super2 = new CreditBusinesDetail();
@@ -280,8 +280,8 @@ class CreditLiquidatorController extends Controller
 
     public function getProduct($code)
     {
-        $productListSku = $this->listProductInterface->findListProductBySku($code);
-        $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
+        $productListSku     = $this->listProductInterface->findListProductBySku($code);
+        $dataProduct        = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
         foreach ($dataProduct as $key => $value) {
             $dataProduct[$key]['list'] = $key;
             $dataProduct =  $dataProduct[$key];

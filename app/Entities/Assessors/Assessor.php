@@ -7,8 +7,9 @@ use App\User;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Assessor extends \Eloquent implements AuthenticatableContract
+class Assessor extends Model implements AuthenticatableContract
 {
     use Authenticatable;
 
