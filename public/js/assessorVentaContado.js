@@ -655,8 +655,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.creditCard();
 			} else if ($scope.decisionCredit == 2) {
 				$scope.traditionalCredit();
-			} else ($scope.decisionCredit == 3){
-				$scope.creditCard();
+			} else {
+				$scope.hasCreditCard();
 			}
 		};
 
@@ -710,7 +710,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			showLoader();
 			$http({
 				method: 'PUT',
-				url: '/assessor/api/decisionCreditCard/' + $scope.lead.CEDULA,
+				url: '/assessor/api/decisionHasCreditCard/' + $scope.lead.CEDULA,
 				data: $scope.decisionCreditCardData
 			}).then(function successCallback(response) {
 				if (response.data.resp == 'true') {
@@ -737,7 +737,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1000);
 				hideLoader();
 			}, function errorCallback(response) {
-				response.url = '/assessor/api/decisionCreditCard/' + $scope.lead.CEDULA,
+					response.url = '/assessor/api/decisionHasCreditCard/' + $scope.lead.CEDULA,
 					response.datos = $scope.decisionCreditCardData;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
