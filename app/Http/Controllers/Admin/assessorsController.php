@@ -729,12 +729,33 @@ class assessorsController extends Controller
 			}
 		}
 
-		if ($aprobado) {
-			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->save();
-		}
-
 		// Hasta aca esta igual en Assessors y OportuyaV2
+
+		if ($aprobado) {
+			if ($customer->creditCard) {
+				if ($customer->creditCard->ESTADO == 'B') {
+					$idDef     = 26;
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
+					$idDef     = 25;
+				} else {
+					//'Aprobado con tarjeta no apto'
+				}
+			} else {
+				//'Aprobado sin tarjeta'
+			}
+		} else {
+			if ($customer->creditCard) {
+				if ($customer->creditCard->ESTADO == 'B') {
+					$idDef     = 26;
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
+					$idDef     = 25;
+				} else {
+					//'No Aprobado con tarjeta no apto'
+				}
+			} else {
+				//'No Aprobado sin tarjeta'
+			}
+		}
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -804,7 +825,11 @@ class assessorsController extends Controller
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
 					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  '14';
+					if ($idDef == 25  || $idDef == 26) {
+						$customerIntention->ID_DEF =  $idDef;
+					} else {
+						$customerIntention->ID_DEF =  '14';
+					}
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customerIntention->save();
 					return [
@@ -812,14 +837,19 @@ class assessorsController extends Controller
 						'quotaApprovedProduct' => $quotaApprovedProduct,
 						'quotaApprovedAdvance' => $quotaApprovedAdvance,
 						'estadoCliente'        => $estadoCliente,
-						'fuenteFallo'          => $fuenteFallo
+						'fuenteFallo'          => $fuenteFallo,
+						'ID_DEF'               => $idDef
 					];
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->ID_DEF  = '15';
+					if ($idDef == 25  || $idDef == 26) {
+						$customerIntention->ID_DEF =  $idDef;
+					} else {
+						$customerIntention->ID_DEF  = '15';
+					}
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
@@ -828,14 +858,19 @@ class assessorsController extends Controller
 						'quotaApprovedProduct' => $quotaApprovedProduct,
 						'quotaApprovedAdvance' => $quotaApprovedAdvance,
 						'estadoCliente'        => $estadoCliente,
-						'fuenteFallo'          => $fuenteFallo
+						'fuenteFallo'          => $fuenteFallo,
+						'ID_DEF'               => $idDef
 					];
 				}
 
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->ID_DEF  = '16';
+					if ($idDef == 25  || $idDef == 26) {
+						$customerIntention->ID_DEF =  $idDef;
+					} else {
+						$customerIntention->ID_DEF  = '16';
+					}
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
@@ -844,7 +879,8 @@ class assessorsController extends Controller
 						'quotaApprovedProduct' => $quotaApprovedProduct,
 						'quotaApprovedAdvance' => $quotaApprovedAdvance,
 						'estadoCliente'        => $estadoCliente,
-						'fuenteFallo'          => $fuenteFallo
+						'fuenteFallo'          => $fuenteFallo,
+						'ID_DEF'               => $idDef
 					];
 				}
 
@@ -852,7 +888,11 @@ class assessorsController extends Controller
 					if ($customerIntention->HISTORIAL_CREDITO == 1) {
 						$customer->ESTADO           = 'PREAPROBADO';
 						$customerIntention->TARJETA = $tarjeta;
-						$customerIntention->ID_DEF  = '17';
+						if ($idDef == 25  || $idDef == 26) {
+							$customerIntention->ID_DEF =  $idDef;
+						} else {
+							$customerIntention->ID_DEF  = '17';
+						}
 						$customerIntention->ESTADO_INTENCION  = '2';
 						$customer->save();
 						$customerIntention->save();
@@ -861,7 +901,8 @@ class assessorsController extends Controller
 							'quotaApprovedProduct' => $quotaApprovedProduct,
 							'quotaApprovedAdvance' => $quotaApprovedAdvance,
 							'estadoCliente'        => $estadoCliente,
-							'fuenteFallo'          => $fuenteFallo
+							'fuenteFallo'          => $fuenteFallo,
+							'ID_DEF'               => $idDef
 						];
 					} else {
 						$customer->ESTADO = 'PREAPROBADO';
@@ -889,18 +930,26 @@ class assessorsController extends Controller
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '19';
+				if ($idDef == 25  || $idDef == 26) {
+					$customerIntention->ID_DEF =  $idDef;
+				} else {
+					$customerIntention->ID_DEF =  '19';
+				}
 				$customerIntention->ESTADO_INTENCION  = '2';
 				$customerIntention->save();
-				return ['resp' => "-2"];
+				return ['resp' => "-2", 'ID_DEF' => $idDef];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '20';
+				if ($idDef == 25  || $idDef == 26) {
+					$customerIntention->ID_DEF =  $idDef;
+				} else {
+					$customerIntention->ID_DEF =  '20';
+				}
 				$customerIntention->ESTADO_INTENCION  = '2';
 				$customerIntention->save();
-				return ['resp' => "-2"];
+				return ['resp' => "-2", 'ID_DEF' => $idDef];
 			}
 		}
 
@@ -1271,7 +1320,12 @@ class assessorsController extends Controller
 	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
 		$this->webServiceInterface->execMigrateCustomer($customer->CEDULA);
-		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		$factoryRequest = $this->addSolicFab(
+			$customer,
+			$policyCredit['quotaApprovedProduct'],
+			$policyCredit['quotaApprovedAdvance'],
+			$estadoSolic
+		);
 		$this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
