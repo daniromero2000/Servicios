@@ -21,4 +21,6 @@ interface ProductListRepositoryInterface
     public function getCurrentProductListsForName($list);
 
     public function getProductListsForTheCatalog($zone);
+
+    public function getCurrentProductListsForZoneAndSubsidiary($zone, $subsidiary);
 }

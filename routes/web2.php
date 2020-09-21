@@ -233,7 +233,7 @@ Route::namespace('Admin')->group(function () {
         Route::resource('/Administrator/creditLiquidator', 'CreditLiquidatorController');
         Route::get('/api/liquidator/getTerms/{term}', 'CreditLiquidatorController@getDate');
         Route::get('/api/liquidator/getPlans', 'CreditLiquidatorController@getPlans');
-        Route::get('/api/liquidator/getLists/{zone}', 'CreditLiquidatorController@getLists');
+        Route::get('/api/liquidator/getLists', 'CreditLiquidatorController@getLists');
         Route::get('/api/liquidator/getFactors', 'CreditLiquidatorController@getFactors');
         Route::get('/api/liquidator/validationLead/{identificationNumber}', 'CreditLiquidatorController@validationLead');
         Route::get('/api/liquidator/getProduct/{id}/{list}', 'CreditLiquidatorController@getProduct');

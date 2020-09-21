@@ -4,6 +4,7 @@ namespace App\Entities\ProductLists\Repositories;
 
 use App\Entities\ProductLists\ProductList;
 use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 
@@ -95,6 +96,19 @@ class ProductListRepository implements ProductListRepositoryInterface
         $dateNow = date("Y-m-d");
         try {
             return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function getCurrentProductListsForZoneAndSubsidiary($zone, $subsidiary)
+    {
+        $dateNow = date("Y-m-d");
+        try {
+            return
+            $this->model->whereHas('sudsidiaries', function (Builder $query) use ($subsidiary) {
+                $query->where('product_list_subsidiary.codigo', $subsidiary);
+            })->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get(['id','name']);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
