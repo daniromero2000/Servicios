@@ -1109,7 +1109,6 @@ class assessorsController extends Controller
 		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
-		$intention->save();
 		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
@@ -1133,8 +1132,11 @@ class assessorsController extends Controller
 				$estadoSolic = 3;
 			}
 		} else {
+			$intention->ID_DEF = '27';
 			$estadoSolic = 19;
 		}
+
+		$intention->save();
 
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
