@@ -1114,13 +1114,12 @@ class assessorsController extends Controller
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
-		$estadoSolic = 3;
 		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
 		$resultUbica = $this->validateConsultaUbica($customer);
 		$dataLead               = $request['lead'];
-
+		$estadoSolic = 3;
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
 			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $lastName);
@@ -1177,6 +1176,60 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
+		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
+		$debtor = new DebtorInsuranceOportuya;
+		$debtor->CEDULA = $identificationNumber;
+		$debtor->save();
+		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
+	}
+
+	public function decisionHasCreditCard(Request $request, $identificationNumber)
+	{
+		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
+		$intention = $customer->latestIntention;
+		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$intention->ESTADO_INTENCION = 4;
+		$intention->save();
+		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$dataLead               = $request['lead'];
+
+		$dataPolicy = $request['policyResult'];
+		$policyCredit = [
+			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
+			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],
+			'resp' => 'true'
+		];
+
+		$data = [
+			'NOM_REFPER' => (isset($dataLead['NOM_REFPER']) && $dataLead['NOM_REFPER'] != '') ? $dataLead['NOM_REFPER'] : '',
+			'DIR_REFPER' => (isset($dataLead['DIR_REFPER']) && $dataLead['DIR_REFPER'] != '') ? $dataLead['DIR_REFPER'] : '',
+			'TEL_REFPER' => (isset($dataLead['TEL_REFPER']) && $dataLead['TEL_REFPER'] != '') ? $dataLead['TEL_REFPER'] : '',
+			'NOM_REFPE2' => (isset($dataLead['NOM_REFPE2']) && $dataLead['NOM_REFPE2'] != '') ? $dataLead['NOM_REFPE2'] : '',
+			'DIR_REFPE2' => (isset($dataLead['DIR_REFPE2']) && $dataLead['DIR_REFPE2'] != '') ? $dataLead['DIR_REFPE2'] : '',
+			'TEL_REFPE2' => (isset($dataLead['TEL_REFPE2']) && $dataLead['TEL_REFPE2'] != '') ? $dataLead['TEL_REFPE2'] : '',
+			'NOM_REFFAM' => (isset($dataLead['NOM_REFFAM']) && $dataLead['NOM_REFFAM'] != '') ? $dataLead['NOM_REFFAM'] : '',
+			'DIR_REFFAM' => (isset($dataLead['DIR_REFFAM']) && $dataLead['DIR_REFFAM'] != '') ? $dataLead['DIR_REFFAM'] : '',
+			'TEL_REFFAM' => (isset($dataLead['TEL_REFFAM']) && $dataLead['TEL_REFFAM'] != '') ? $dataLead['TEL_REFFAM'] : '',
+			'PARENTESCO' => (isset($dataLead['PARENTESCO']) && $dataLead['PARENTESCO'] != '') ? $dataLead['PARENTESCO'] : '',
+			'NOM_REFFA2' => (isset($dataLead['NOM_REFFA2']) && $dataLead['NOM_REFFA2'] != '') ? $dataLead['NOM_REFFA2'] : '',
+			'DIR_REFFA2' => (isset($dataLead['DIR_REFFA2']) && $dataLead['DIR_REFFA2'] != '') ? $dataLead['DIR_REFFA2'] : '',
+			'TEL_REFFA2' => (isset($dataLead['TEL_REFFA2']) && $dataLead['TEL_REFFA2'] != '') ? $dataLead['TEL_REFFA2'] : '',
+			'PARENTESC2' => (isset($dataLead['PARENTESC2']) && $dataLead['PARENTESC2'] != '') ? $dataLead['PARENTESC2'] : '',
+			'BAR_REFPER' => '',
+			'CIU_REFPER' => '',
+			'BAR_REFPE2' => '',
+			'CIU_REFPE2' => '',
+			'BAR_REFFAM' => '',
+			'BAR_REFFA2' => '',
+			'CON_CLI1'   => '',
+			'CON_CLI2'   => '',
+			'CON_CLI3'   => '',
+			'CON_CLI4'   => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
+		];
+
+		$estadoSolic = 1;
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
