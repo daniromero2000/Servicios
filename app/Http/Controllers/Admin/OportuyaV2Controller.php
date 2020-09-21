@@ -1058,6 +1058,7 @@ class OportuyaV2Controller extends Controller
 			$customer->ESTADO          = 'NEGADO';
 			$customerIntention->ID_DEF = $idDef;
 			$customerIntention->ESTADO_INTENCION  = '1';
+			$customerIntention->CREDIT_DECISION = 'Negado';
 			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "false"];
