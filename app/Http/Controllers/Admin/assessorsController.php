@@ -1304,7 +1304,22 @@ class assessorsController extends Controller
 		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
 		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$dataDatosCliente = [
+			'NOM_REFPER' => $leadInfo['NOM_REFPER'],
+			'DIR_REFPER' => $leadInfo['DIR_REFPER'],
+			'TEL_REFPER' => $leadInfo['TEL_REFPER'],
+			'NOM_REFPE2' => $leadInfo['NOM_REFPE2'],
+			'DIR_REFPE2' => $leadInfo['DIR_REFPE2'],
+			'TEL_REFPE2' => $leadInfo['TEL_REFPE2'],
+			'NOM_REFFAM' => $leadInfo['NOM_REFFAM'],
+			'TEL_REFFAM' => $leadInfo['TEL_REFFAM'],
+			'DIR_REFFAM' => $leadInfo['DIR_REFFAM'],
+			'PARENTESCO' => $leadInfo['PARENTESCO'],
+			'NOM_REFFA2' => $leadInfo['NOM_REFFA2'],
+			'DIR_REFFA2' => $leadInfo['DIR_REFFA2'],
+			'TEL_REFFA2' => $leadInfo['TEL_REFFA2'],
+			'PARENTESC2' => $leadInfo['PARENTESC2'],
+		];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
 		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 

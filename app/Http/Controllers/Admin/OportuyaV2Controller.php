@@ -1320,7 +1320,12 @@ class OportuyaV2Controller extends Controller
 		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
 		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$dataDatosCliente = [
+			'NOM_REFPER' => $leadInfo['NOM_REFPER'],
+			'TEL_REFPER' => $leadInfo['TEL_REFPER'],
+			'NOM_REFFAM' => $leadInfo['NOM_REFFAM'],
+			'TEL_REFFAM' => $leadInfo['TEL_REFFAM']
+		];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
 		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 
