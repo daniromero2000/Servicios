@@ -864,7 +864,7 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
@@ -892,6 +892,7 @@ class OportuyaV2Controller extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		if ($customer->latestCifinScore) {
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
@@ -902,7 +903,6 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
-		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied  = false;
 		$idDef                 = "";
 		if (empty($customer)) {
