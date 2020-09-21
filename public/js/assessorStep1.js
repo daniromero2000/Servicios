@@ -137,6 +137,8 @@ angular.module('appAssessorStep1', [])
 			$scope.leadInfo.assessor = assessor;
 		}, function errorCallback(response) {
 			hideLoader();
+				response.url = '/api/oportuya/getContactData/' + $scope.leadInfo.identificationNumber;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 			console.log(response);
 		});
 	};
@@ -169,6 +171,8 @@ angular.module('appAssessorStep1', [])
 				}
 			  }, function errorCallback(response) {
 				  console.log(response);
+					  response.url = '/oportuyaV2';
+					  $scope.addError(response, $scope.leadInfo.identificationNumber);
 			  });
 		}else{
 			alert('Los correos no coinciden');
@@ -186,6 +190,39 @@ angular.module('appAssessorStep1', [])
 			}
 		}, function errorCallback(response) {
 		    
+		});
+	};
+
+	$scope.addError = function (response, cedula = '') {
+		var arrayData = {
+			url: response.url,
+			mensaje: response.data.message,
+			archivo: response.data.file,
+			linea: response.data.line,
+			cedula: cedula,
+			datos: (response.datos) ? response.datos : []
+		}
+
+		var data = {
+			status: response.status,
+			data: angular.toJson(arrayData)
+		}
+		$http({
+			method: 'POST',
+			url: '/Administrator/appError',
+			data: data,
+		}).then(function successCallback(response) {
+			setTimeout(() => {
+				$('#congratulations').modal('hide');
+				$('#proccess').modal('hide');
+				$('#confirmCodeVerification').modal('hide');
+				$('#validationLead').modal('hide');
+				$('#decisionCredit').modal('hide');
+				$('#error').modal('show');
+			}, 100);
+			$scope.numError = response.data.id;
+		}, function errorCallback(response) {
+			console.log(response);
 		});
 	};
 
