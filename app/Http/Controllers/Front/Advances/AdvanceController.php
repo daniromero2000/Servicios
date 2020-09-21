@@ -41,12 +41,13 @@ use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInt
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 
 
+
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $analisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
-    private $ubicaMailInterface, $policyInterface;
+    private $ubicaMailInterface, $policyInterface, $UpToDateFinancialCifinInterface;
     private $userInterface, $datosClienteInterface;
 
     public function __construct(
@@ -79,7 +80,6 @@ class AdvanceController extends Controller
         UserRepositoryInterface $userRepositoryInterface,
         DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
         PolicyRepositoryInterface $policyRepositoryInterface
-
     ) {
         $this->leadInterface                  = $leadRepositoryInterface;
         $this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
@@ -87,7 +87,7 @@ class AdvanceController extends Controller
         $this->customerInterface              = $customerRepositoryInterface;
         $this->CifinFinancialArrearsInterface = $CifinFinancialArrearRepositoryInterface;
         $this->cifinRealArrearsInterface      = $cifinRealArrearRepositoryInterface;
-        $this->upToDate                       = $UpToDateFinancialCifinRepositoryInterface;
+        $this->UpToDateFinancialCifinInterface                       = $UpToDateFinancialCifinRepositoryInterface;
         $this->extint                         = $extintFinancialCifinRepositoryInterface;
         $this->real                           = $upToDateRealCifinsRepositoryInterface;
         $this->extintreal                     = $extintRealCifinRepositoryInterface;
@@ -114,6 +114,7 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
