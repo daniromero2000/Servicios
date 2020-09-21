@@ -836,11 +836,10 @@
                                 </div>
                                 <div class="col-12 col-sm-6 text-center my-4" ng-if="resp.ID_DEF == 25">
                                     <button class="decisionCredit-option"  ng-class="{'decisionCredit-selected': decisionCredit == 3}" ng-click="changeDesicionCredit(3)" style=" border: 0; ">
-                                        <p>@{{ resp.infoLead.TARJETA }}</p>
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
-                                        <p class="mb-0">
-                                            Cupo Compras : $ @{{ resp.quotaApprovedProduct | number:0 }} <br>
-                                            Cupo Avance : $ @{{ resp.quotaApprovedAdvance | number:0 }}
+                                        <p class="my-2 small">
+                                        Ya cuentas con una tarjeta. <br>
+                                            puedes continuar con tu tarjeta
                                         </p>
                                         <a type="button" class="btn btn-default text-dark">Click aquí</a>
                                     </button>
