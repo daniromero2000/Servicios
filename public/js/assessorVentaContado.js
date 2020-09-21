@@ -735,7 +735,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1000);
 				hideLoader();
 			}, function errorCallback(response) {
-					response.url = '/assessor/api/decisionHasCreditCard/' + $scope.lead.CEDULA,
+				response.url = '/assessor/api/decisionHasCreditCard/' + $scope.lead.CEDULA,
 					response.datos = $scope.decisionCreditCardData;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
