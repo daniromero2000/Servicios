@@ -1344,7 +1344,12 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
-		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		$factoryRequest = $this->addSolicFab(
+			$customer,
+			$policyCredit['quotaApprovedProduct'],
+			$policyCredit['quotaApprovedAdvance'],
+			$estadoSolic
+		);
 		$this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
