@@ -1191,8 +1191,8 @@ class assessorsController extends Controller
 
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
-			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
-			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
 			'resp' => 'true'
 		];
 
