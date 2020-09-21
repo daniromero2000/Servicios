@@ -770,6 +770,8 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
+		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
+
 		$intentionData             = [
 			'CEDULA' => $customer->CEDULA,
 			'ASESOR' => $this->userInterface->getAssessorCode()
