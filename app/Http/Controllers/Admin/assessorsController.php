@@ -580,7 +580,7 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
@@ -609,6 +609,7 @@ class assessorsController extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		if ($customer->latestCifinScore) {
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
@@ -619,7 +620,6 @@ class assessorsController extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
-		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied  = false;
 		$idDef                 = "";
 		if (empty($customer)) {
@@ -730,7 +730,7 @@ class assessorsController extends Controller
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {
 					$idDef     = 26;
-				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 					$idDef     = 25;
 				} else {
 					//'Aprobado con tarjeta no apto'
@@ -742,7 +742,7 @@ class assessorsController extends Controller
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {
 					$idDef     = 26;
-				} elseif ($customerIntention->PERFIL_CREDITICIO == 'Tipo A' || $customerIntention->PERFIL_CREDITICIO == 'Tipo B') {
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 					$idDef     = 25;
 				} else {
 					//'No Aprobado con tarjeta no apto'
@@ -1191,8 +1191,8 @@ class assessorsController extends Controller
 
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
-			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
-			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
 			'resp' => 'true'
 		];
 
@@ -1304,7 +1304,22 @@ class assessorsController extends Controller
 		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
 		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$dataDatosCliente = [
+			'NOM_REFPER' => $leadInfo['NOM_REFPER'],
+			'DIR_REFPER' => $leadInfo['DIR_REFPER'],
+			'TEL_REFPER' => $leadInfo['TEL_REFPER'],
+			'NOM_REFPE2' => $leadInfo['NOM_REFPE2'],
+			'DIR_REFPE2' => $leadInfo['DIR_REFPE2'],
+			'TEL_REFPE2' => $leadInfo['TEL_REFPE2'],
+			'NOM_REFFAM' => $leadInfo['NOM_REFFAM'],
+			'TEL_REFFAM' => $leadInfo['TEL_REFFAM'],
+			'DIR_REFFAM' => $leadInfo['DIR_REFFAM'],
+			'PARENTESCO' => $leadInfo['PARENTESCO'],
+			'NOM_REFFA2' => $leadInfo['NOM_REFFA2'],
+			'DIR_REFFA2' => $leadInfo['DIR_REFFA2'],
+			'TEL_REFFA2' => $leadInfo['TEL_REFFA2'],
+			'PARENTESC2' => $leadInfo['PARENTESC2'],
+		];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
 		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 

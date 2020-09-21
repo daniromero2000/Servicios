@@ -627,7 +627,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		};
-		// $scope.execConsultasLead(40438607);
+
+		$scope.estadoCliente = "PREAPROBADO";
+		$('#congratulations').modal('show');
 
 		$scope.desistCredit = function () {
 			var opcion = confirm("Desea desistir la solicitud de crédito ?");
@@ -736,7 +738,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1000);
 				hideLoader();
 			}, function errorCallback(response) {
-					response.url = '/assessor/api/decisionHasCreditCard/' + $scope.lead.CEDULA,
+				response.url = '/assessor/api/decisionHasCreditCard/' + $scope.lead.CEDULA,
 					response.datos = $scope.decisionCreditCardData;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);

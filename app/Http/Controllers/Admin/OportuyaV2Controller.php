@@ -864,7 +864,7 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
+		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
 		$this->daysToIncrement     = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
@@ -892,6 +892,7 @@ class OportuyaV2Controller extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		if ($customer->latestCifinScore) {
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
@@ -902,7 +903,6 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
-		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied  = false;
 		$idDef                 = "";
 		if (empty($customer)) {
@@ -1320,7 +1320,12 @@ class OportuyaV2Controller extends Controller
 		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
 		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$dataDatosCliente = [
+			'NOM_REFPER' => $leadInfo['NOM_REFPER'],
+			'TEL_REFPER' => $leadInfo['TEL_REFPER'],
+			'NOM_REFFAM' => $leadInfo['NOM_REFFAM'],
+			'TEL_REFFAM' => $leadInfo['TEL_REFFAM']
+		];
 		$customer = $this->customerInterface->findCustomerById($leadInfo['identificationNumber']);
 		$solicCredit = $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $dataDatosCliente);
 
