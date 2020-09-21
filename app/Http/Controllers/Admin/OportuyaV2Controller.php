@@ -884,7 +884,6 @@ class OportuyaV2Controller extends Controller
 
 		$customerIntention->INSPECCION_OCULAR = $this->policyInterface->validaOccularInspection($customer, $customerIntention);
 		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
-		$customerIntention->save();
 
 		// 3.6 Tarjeta Black
 		$aprobado = false;
@@ -914,11 +913,6 @@ class OportuyaV2Controller extends Controller
 				$quotaApprovedProduct = $tarjetaGray->getQuotaApprovedProduct();
 				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
 			}
-		}
-
-		if ($aprobado) {
-			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->save();
 		}
 
 		// Hasta aca esta igual en Assessors y OportuyaV2
@@ -967,7 +961,6 @@ class OportuyaV2Controller extends Controller
 			$customer->ACTIVIDAD,
 			$statusAfiliationCustomer
 		);
-		$customerIntention->save();
 
 		if ($customerStatusDenied == true) {
 			$customer->ESTADO          = 'NEGADO';
@@ -1159,7 +1152,8 @@ class OportuyaV2Controller extends Controller
 				return ['resp' =>  "-2"];
 			}
 		}
-
+		$customerIntention->save();
+		$customer->save();
 		return ['resp' => "true"];
 	}
 
