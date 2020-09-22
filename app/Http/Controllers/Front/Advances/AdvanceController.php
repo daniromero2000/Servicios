@@ -39,11 +39,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
+use App\Entities\Policies\PolicyTrait;
 
 
 
 class AdvanceController extends Controller
 {
+    use PolicyTrait;
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $analisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
@@ -114,7 +116,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
