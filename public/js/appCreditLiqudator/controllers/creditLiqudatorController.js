@@ -32,7 +32,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.viewProductImg = false;
         $scope.typeDiscount =
             [
-                { 'type': 'Por traslado' },
                 { 'type': 'Otros' },
             ];
         $scope.tabItems =
