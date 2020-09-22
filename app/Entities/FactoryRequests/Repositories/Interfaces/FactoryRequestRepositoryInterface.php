@@ -8,7 +8,7 @@ use Illuminate\Support\Collection as Support;
 
 interface FactoryRequestRepositoryInterface
 {
-  public function addFactoryRequest($data);
+  public function addFactoryRequest($data): FactoryRequest;
 
   public function updateFactoryRequest($data);
 

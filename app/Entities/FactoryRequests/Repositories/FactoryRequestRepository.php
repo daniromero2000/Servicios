@@ -30,7 +30,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $this->model = $factoryRequest;
     }
 
-    public function addFactoryRequest($data)
+    public function addFactoryRequest($data): FactoryRequest
     {
         $data['FECHASOL']      = date("Y-m-d H:i:s");
         $data['FTP']           = 0;

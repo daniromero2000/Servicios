@@ -53,9 +53,12 @@ use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositor
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
+use App\Entities\Policies\PolicyTrait;
 
 class OportuyaV2Controller extends Controller
 {
+
+	use PolicyTrait;
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -845,19 +848,24 @@ class OportuyaV2Controller extends Controller
 				if ($confronta == 1) {
 					$form = $this->toolInterface->getFormConfronta($customer->CEDULA);
 					if (empty($form)) {
+						$lastIntention->save();
 						$estadoSolic = 3;
 					} else {
+						$lastIntention->save();
 						return [
 							'form' => $form,
 							'resp' => 'confronta'
 						];
 					}
 				} else {
+					$lastIntention->save();
 					$estadoSolic = 3;
 				}
 			} else {
+				$lastIntention->ID_DEF = '27';
 				$estadoSolic = 19;
 			}
+			$lastIntention->save();
 		}
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
@@ -1058,6 +1066,7 @@ class OportuyaV2Controller extends Controller
 			$customer->ESTADO          = 'NEGADO';
 			$customerIntention->ID_DEF = $idDef;
 			$customerIntention->ESTADO_INTENCION  = '1';
+			$customerIntention->CREDIT_DECISION = 'Negado';
 			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "false"];
@@ -1341,12 +1350,24 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
-		$factoryRequest = $this->addSolicFab(
+
+		$factoryRequest =  $this->addSolicFab(
 			$customer,
 			$policyCredit['quotaApprovedProduct'],
 			$policyCredit['quotaApprovedAdvance'],
 			$estadoSolic
 		);
+
+
+		// $factoryRequest = $this->addSolicFab(
+		// 	$customer,
+		// 	$policyCredit['quotaApprovedProduct'],
+		// 	$policyCredit['quotaApprovedAdvance'],
+		// 	$estadoSolic
+		// );
+
+
+
 		$this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
@@ -1416,29 +1437,28 @@ class OportuyaV2Controller extends Controller
 		];
 	}
 
-	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
-	{
-		$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
+	// private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
+	// {
+	// 	$assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
-		$requestData = [
-			'AVANCE_W'      => $quotaApprovedAdvance,
-			'PRODUC_W'      => $quotaApprovedProduct,
-			'CLIENTE'       => $customer->CEDULA,
-			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
-			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
-			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
-			'SUCURSAL'      => $customer->SUC,
-			'ESTADO'        => $estado,
-			'SOLICITUD_WEB' => $customer->latestIntention->id
-		];
+	// 	$requestData = [
+	// 		'AVANCE_W'      => $quotaApprovedAdvance,
+	// 		'PRODUC_W'      => $quotaApprovedProduct,
+	// 		'CLIENTE'       => $customer->CEDULA,
+	// 		'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
+	// 		'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
+	// 		'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
+	// 		'SUCURSAL'      => $customer->SUC,
+	// 		'ESTADO'        => $estado,
+	// 		'SOLICITUD_WEB' => $customer->latestIntention->id
+	// 	];
 
-		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
-		$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
-		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
-		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
-		$factoryRequest->states()->attach($estado, ['usuario' => $customer->USUARIO_ACTUALIZACIONe]);
-		return $customerFactoryRequest;
-	}
+	// 	$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
+	// 	$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
+	// 	$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
+	// 	$customerFactoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
+	// 	return $customerFactoryRequest;
+	// }
 
 	private function getInfoLeadCreate($identificationNumber)
 	{
@@ -1582,4 +1602,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1580
+//1591

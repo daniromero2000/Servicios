@@ -20,13 +20,13 @@
 <div ng-app="asessorVentaContadoApp" ng-controller="realizarAnalisisCtrl" class="containerleads container" ng-cloak>
     <div class="row d-flex justify-content-center">
         <div class="col-12 text-center">
-            <h2 class="headerAdmin title-filter ng-scope">Resumen análisis política</h2>
+            <h2 class="headerAdmin title-filter ng-scope">Resumen Análisis Política</h2>
         </div>
         <div class="col-10 col-sm-4">
             <form name="simular" ng-submit="getInfoLead()">
                 <div class="row">
                     <div class="col-12 form-group">
-                        <label class="label-reset ventaContado-label">Número de identificación</label>
+                        <label class="label-reset ventaContado-label">Ingrese Número de identificación</label>
                         <input required class="form-control" ng-model="lead.cedula" validation-pattern="number">
                     </div>
                     <div class="col-12 text-center">
@@ -45,7 +45,7 @@
                 <div class="col-12 col-sm-12 col-md-10 d-flex justify-content-center align-items-stretch">
                     <div class="card bg-light containerCardCustomer shadow-lg">
                         <div class="card-header border-bottom-0 " style="color: #007bff;">
-                            Resultado Politica
+                            Resultado Política
                         </div>
                         <h2 class="customerNameCardAnalicts pl-3 ml-1"><b>@{{ infoLead.NOMBRES }}
                                 @{{ infoLead.APELLIDOS }}</b></h2>
