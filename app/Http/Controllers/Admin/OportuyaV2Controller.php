@@ -861,8 +861,8 @@ class OportuyaV2Controller extends Controller
 			} else {
 				$lastIntention->ID_DEF = '27';
 				$estadoSolic = 19;
-				$lastIntention->save();
 			}
+			$lastIntention->save();
 		}
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
