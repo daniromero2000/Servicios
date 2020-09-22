@@ -1,8 +1,9 @@
-{{-- <div class="button-absolute">
+@if(auth()->user()->Assessor)
+@if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138') <div class="button-absolute">
+
     <input type="checkbox" id="btn-mas">
     <div class="redes" data-toggle="tooltip" data-placement="top" title="Crear liquidación">
-        <a href="" data-toggle="modal" data-target="#exampleModal" class="icon-facebook"> <i
-                class="fas fa-user-clock"></i></a>
+        <a href="" data-toggle="modal" data-target="#exampleModal" class="icon-facebook"> <i class="fas fa-user-clock"></i></a>
     </div>
     <div class="btn-mas">
         <label for="btn-mas" class="icon-mas2"> <i class="fas fa-bars"></i></label>
@@ -22,8 +23,7 @@
                 <form action="/Administrator/creditLiquidator" method="GET">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Numero de cédula </label>
-                        <input type="text" class="form-control" name="customer"
-                            validation-pattern="IdentificationNumber" required>
+                        <input type="text" class="form-control" name="customer" validation-pattern="IdentificationNumber" required>
                         <small class="form-text text-muted">Por favor ingresa el numero de cédula del cliente al
                             que se le desea crear una liquidación.</small>
                     </div>
@@ -35,4 +35,6 @@
 
         </div>
     </div>
-</div> --}}
+</div>
+@endif
+@endif
