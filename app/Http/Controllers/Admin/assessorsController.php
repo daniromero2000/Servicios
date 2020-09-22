@@ -51,9 +51,12 @@ use App\Entities\CreditCards\Gray;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\Policies\PolicyTrait;
 
 class assessorsController extends Controller
 {
+	use PolicyTrait;
+
 	private $kinshipInterface, $subsidiaryInterface, $ubicaInterface;
 	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
 	private $daysToIncrement, $consultationValidityInterface, $AnalisisInterface;
@@ -1387,12 +1390,22 @@ class assessorsController extends Controller
 	private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
 	{
 		$this->webServiceInterface->execMigrateCustomer($customer->CEDULA);
+
 		$factoryRequest = $this->addSolicFab(
 			$customer,
 			$policyCredit['quotaApprovedProduct'],
 			$policyCredit['quotaApprovedAdvance'],
 			$estadoSolic
 		);
+
+
+		// $factoryRequest = $this->addSolicFab(
+		// 	$customer,
+		// 	$policyCredit['quotaApprovedProduct'],
+		// 	$policyCredit['quotaApprovedAdvance'],
+		// 	$estadoSolic
+		// );
+
 		$this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
 		$fosygaTemp = $customer->customerFosygaTemps->first();
 
@@ -1473,28 +1486,28 @@ class assessorsController extends Controller
 		];
 	}
 
-	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
-	{
-		$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
+	// private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
+	// {
+	// 	$assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
-		$requestData = [
-			'AVANCE_W'      => $quotaApprovedAdvance,
-			'PRODUC_W'      => $quotaApprovedProduct,
-			'CLIENTE'       => $customer->CEDULA,
-			'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
-			'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
-			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
-			'SUCURSAL'      => $customer->SUC,
-			'ESTADO'        => $estado,
-			'SOLICITUD_WEB' => $customer->latestIntention->id
-		];
+	// 	$requestData = [
+	// 		'AVANCE_W'      => $quotaApprovedAdvance,
+	// 		'PRODUC_W'      => $quotaApprovedProduct,
+	// 		'CLIENTE'       => $customer->CEDULA,
+	// 		'CODASESOR'     => $customer->USUARIO_ACTUALIZACION,
+	// 		'id_asesor'     => $customer->USUARIO_ACTUALIZACION,
+	// 		'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
+	// 		'SUCURSAL'      => $customer->SUC,
+	// 		'ESTADO'        => $estado,
+	// 		'SOLICITUD_WEB' => $customer->latestIntention->id
+	// 	];
 
-		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData);
-		$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
-		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
-		$customerFactoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
-		return $customerFactoryRequest;
-	}
+	// 	$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData);
+	// 	$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
+	// 	$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
+	// 	$customerFactoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
+	// 	return $customerFactoryRequest;
+	// }
 
 	public function getFormVentaContado()
 	{
