@@ -1121,8 +1121,10 @@ class assessorsController extends Controller
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($identificationNumber);
 				if (empty($form)) {
+					$intention->save();
 					$estadoSolic = 3;
 				} else {
+					$intention->save();
 					return [
 						'form' => $form,
 						'resp' => 'confronta'
