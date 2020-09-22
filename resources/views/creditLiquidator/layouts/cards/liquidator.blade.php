@@ -122,6 +122,12 @@
                     <div class="col-lg-6 col-xl-4">
                         <div class="card">
                             <div class="card-body">
+                                  <div class="form-group ">
+                                            <label>Aplica IVA?
+                                                <input type="checkbox" ng-model="liquidator[key][3].check"
+                                                    ng-click="refreshLiquidator(key)">
+                                            </label>
+                                        </div>
                                 <div class="form-group ">
                                     <label for="name">Plan <span class="text-danger">*</span></label>
                                     <select ng-model="liquidator[key][3].COD_PLAN" id="plan" ng-blur="createPlan(key)"
@@ -167,13 +173,7 @@
                                     <div class="card-header text-muted border-bottom-0">
                                     </div>
                                     <div class="card-body pt-0">
-                                        <div class="form-group ">
-                                            <label>Aplica IVA?
-                                                <input type="checkbox" ng-model="liquidator[key][3].check"
-                                                    ng-click="sumDiscount(key)">
-                                            </label>
-                                        </div>
-                                        <div class="row mx-0">
+                                                                              <div class="row mx-0">
                                             <div class="col-12">
                                                 <ul class="ml-4 mb-0 fa-ul text-muted mx-auto"
                                                     style=" max-width: 280px; padding: 0px 20px;">

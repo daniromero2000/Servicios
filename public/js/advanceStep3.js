@@ -140,6 +140,8 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 				$scope.leadInfo.otherRevenue = ($scope.leadInfo.otherRevenue != 0 && $scope.leadInfo.otherRevenue != '') ? $scope.leadInfo.otherRevenue : '';
 			}, function errorCallback(response) {
 				hideLoader();
+				response.url = '/api/oportuya/getDataStep3/' + $scope.leadInfo.identificationNumber;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -192,6 +194,8 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 				}
 			}, function errorCallback(response) {
 				hideLoader();
+				response.url = '/oportuyaV2';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -217,6 +221,11 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 						$('#congratulations').modal('show');
 					}, 1800);
 				}
+			}, function errorCallback(response) {
+				hideLoader();
+				response.url = '/api/oportuya/validateFormConfronta';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
+				console.log(response);
 			});
 		};
 
@@ -231,6 +240,8 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 					window.location = "/OP_gracias_FRM";
 				}
 			}, function errorCallback(response) {
+				response.url = '/oportuyaV2';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};

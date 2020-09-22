@@ -21,6 +21,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.productPrices = [];
         $scope.code = '';
         $scope.zone = '';
+        $scope.listSearch = '';
         $scope.tabs = 1;
         $scope.tasaea = 0;
         $scope.tabItem = 0;
@@ -179,6 +180,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         //Consultar Producto
         $scope.getProduct = function () {
+
+            console.log($scope.items);
             $scope.items.CODIGO = $scope.items.CODIGO.toUpperCase();
             switch ($scope.items.COD_PROCESO) {
                 case '1':
@@ -347,46 +350,73 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.createItemLiquidator = function () {
             $scope.items.SOLICITUD = $scope.request.SOLICITUD;
-            $scope.liquidator[$scope.items.key][0].push($scope.items);
+            var key = $scope.items.key;
+            $scope.liquidator[key][0].push($scope.items);
             if ($scope.discount.length != '') {
                 if ($scope.discount.type) {
                     if ($scope.items.COD_PROCESO == 1 || $scope.items.COD_PROCESO == 4) {
-                        $scope.liquidator[$scope.items.key][1] = [];
-                        $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                        $scope.liquidator[key][1] = [];
+                        $scope.liquidator[key][1].push($scope.discount);
                         $scope.discount = {};
                         if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') && $scope.lead.latest_intention.TARJETA != 'Crédito Tradicional') {
-                            $scope.discount.key = $scope.items.key
+                            $scope.discount.key = key
                             $scope.discount.type = 'Cliente Oportuya';
                             if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
                                 if ($scope.zone == 'ALTA') {
                                     $scope.discount.value = 5;
-                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                                    $scope.liquidator[key][1].push($scope.discount);
                                 } else {
                                     $scope.discount.value = 10;
-                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                                    $scope.liquidator[key][1].push($scope.discount);
                                     $scope.discount = {};
-                                    $scope.discount.key = $scope.items.key
+                                    $scope.discount.key = key
                                     $scope.discount.type = 'Tarjeta Black';
                                     $scope.discount.value = 5;
-                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                                    $scope.liquidator[key][1].push($scope.discount);
                                 }
                             } else {
                                 if ($scope.zone == 'ALTA') {
                                     $scope.discount.value = 3;
-                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                                    $scope.liquidator[key][1].push($scope.discount);
                                 } else {
                                     $scope.discount.value = 10;
-                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                                    $scope.liquidator[key][1].push($scope.discount);
                                 }
                             }
                             $scope.discount = {};
                         }
-                        $scope.sumDiscount($scope.items.key);
+                        $scope.sumDiscount(key);
                     }
                 }
             }
-            $("#addItem" + $scope.items.key).modal("hide");
+            $("#addItem" + key).modal("hide");
             showAlert("success", "Producto ingresado correctamente");
+
+            //Insertar IVAV automatico
+            if ($scope.items.CODIGO == 'AV10' || $scope.items.CODIGO == 'AV12' || $scope.items.CODIGO == 'AV15') {
+                var list = $scope.items.LISTA;
+                $scope.items = {};
+                $scope.items.key = key
+                $scope.items.COD_PROCESO = '2';
+                $scope.items.LISTA = list;
+                $scope.items.CODIGO = 'IVAV';
+                $scope.items.CANTIDAD = '1';
+                $scope.items.SELECCION = '01';
+                $scope.items.ARTICULO = "IVA AVAL 19 %";
+
+                //Calculo del IVA AVAL
+                var e = $scope.liquidator[key][0];
+                for (let i = 0; i < e.length; i++) {
+                    if ((e[i].COD_PROCESO == 2) && ((e[i].CODIGO == 'AV10') || (e[i].CODIGO == 'AV12') || (e[i].CODIGO == 'AV15'))) {
+                        $scope.items.PRECIO = parseInt($scope.liquidator[key][0][i].PRECIO) * (parseInt(19) / 100);
+                        $scope.items.PRECIO_P = $scope.items.PRECIO;
+                    } else {
+                        $scope.items.PRECIO = 0
+                        $scope.items.PRECIO_P = 0
+                    }
+                }
+                $scope.liquidator[key][0].push($scope.items);
+            }
             $scope.items = {};
         };
 
@@ -545,16 +575,25 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.sumDiscount = function (key) {
+
             var total = 0;
             var precio = 0;
             var product = 0;
             var cuotaIni = 0
+            var hasRetanqueoIva = 0;
+            var hasRetanqueo = 0;
 
             if ($scope.liquidator[key][0][0].PRECIO != 0) {
                 precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)
             }
 
             $scope.liquidator[key][0].forEach(j => {
+                if (j.CODIGO == 'GPG1' || j.CODIGO == 'GPG2') {
+                    hasRetanqueoIva = 1
+                }
+                if (j.CODIGO == 'EPG1' || j.CODIGO == 'EPG2') {
+                    hasRetanqueo = 1
+                }
                 if (j.COD_PROCESO == 4) {
                     precio = precio + parseInt(parseInt(j.PRECIO) * parseInt(j.CANTIDAD));
                 }
@@ -577,9 +616,81 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     cuotaIni = 1
                     break;
                 case '5':
+
+                    if ($scope.liquidator[key][3].check && hasRetanqueoIva == 0) {
+                        var list = $scope.liquidator[key][0][0].LISTA;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.COD_PROCESO = '2';
+                        $scope.items.LISTA = list;
+                        $scope.items.CODIGO = 'GPG2';
+                        $scope.items.CANTIDAD = '1';
+                        $scope.items.SELECCION = '01';
+                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 2 MES";
+
+                        //Calculo Retanqueo
+                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(4) / 100));
+                        $scope.items.PRECIO_P = $scope.items.PRECIO;
+                        $scope.liquidator[key][0].push($scope.items);
+                        $scope.items = {};
+
+                    } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo == 0) {
+                        var list = $scope.liquidator[key][0][0].LISTA;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.COD_PROCESO = '2';
+                        $scope.items.LISTA = list;
+                        $scope.items.CODIGO = 'EPG2';
+                        $scope.items.CANTIDAD = '1';
+                        $scope.items.SELECCION = '01';
+                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 2 MESES EXCLUIDO";
+
+                        //Calculo Retanqueo
+                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(4) / 100));
+                        $scope.items.PRECIO_P = $scope.items.PRECIO;
+                        $scope.liquidator[key][0].push($scope.items);
+                        $scope.items = {};
+                    }
+
                     cuotaIni = 30000
                     break;
                 case '6':
+
+                    if ($scope.liquidator[key][3].check && hasRetanqueoIva == 0) {
+                        var list = $scope.liquidator[key][0][0].LISTA;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.COD_PROCESO = '2';
+                        $scope.items.LISTA = list;
+                        $scope.items.CODIGO = 'GPG1';
+                        $scope.items.CANTIDAD = '1';
+                        $scope.items.SELECCION = '01';
+                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 1 MES";
+
+                        //Calculo Retanqueo
+                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(2) / 100));
+                        $scope.items.PRECIO_P = $scope.items.PRECIO;
+                        $scope.liquidator[key][0].push($scope.items);
+                        $scope.items = {};
+
+                    } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo == 0) {
+                        var list = $scope.liquidator[key][0][0].LISTA;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.COD_PROCESO = '2';
+                        $scope.items.LISTA = list;
+                        $scope.items.CODIGO = 'EPG1';
+                        $scope.items.CANTIDAD = '1';
+                        $scope.items.SELECCION = '01';
+                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 1 MESES EXCLUIDO";
+
+                        //Calculo Retanqueo
+                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(2) / 100));
+                        $scope.items.PRECIO_P = $scope.items.PRECIO;
+                        $scope.liquidator[key][0].push($scope.items);
+                        $scope.items = {};
+                    }
+
                     cuotaIni = 30000
                     break;
                 case '7':
@@ -822,7 +933,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.getDataPriceProduct = function () {
             $http({
                 method: 'GET',
-                url: '/api/liquidator/getProduct/' + $scope.code
+                url: '/api/liquidator/getProduct/' + $scope.code + '/' + $scope.listSearch
             }).then(function successCallback(response) {
                 if (response.data != false) {
                     $scope.productPrices = response.data;
@@ -830,7 +941,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.getImgProduct();
                 }
             }, function errorCallback(response) {
-
+                showAlert("error", "El código ingresado no existe");
             });
         };
 
