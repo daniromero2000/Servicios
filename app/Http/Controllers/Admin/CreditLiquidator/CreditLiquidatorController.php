@@ -18,6 +18,7 @@ use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryI
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
+use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
 use App\Entities\CreditBusiness\CreditBusines;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Http\Controllers\Controller;
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\Auth;
 class CreditLiquidatorController extends Controller
 {
     private $customerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
-    private $creditBusinesDetailInterface, $creditBusinesInterface;
+    private $creditBusinesDetailInterface, $creditBusinesInterface ,$productListInterface;
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
@@ -43,7 +44,8 @@ class CreditLiquidatorController extends Controller
         PlanRepositoryInterface $planRepositoryInterface,
         FactorsOportudataRepositoryInterface $factorsOportudataRepositoryInterface,
         CreditBusinesDetailRepositoryInterface $creditBusinesDetailRepositoryInterface,
-        CreditBusinesRepositoryInterface $creditBusinesRepositoryInterface
+        CreditBusinesRepositoryInterface $creditBusinesRepositoryInterface,
+        ProductListRepositoryInterface $productListRepositoryInterface
     ) {
         $this->customerInterface            = $CustomerRepositoryInterface;
         $this->toolsInterface               = $toolRepositoryInterface;
@@ -59,7 +61,7 @@ class CreditLiquidatorController extends Controller
         $this->creditCardInterface          = $creditCardRepositoryInterface;
         $this->creditBusinesDetailInterface = $creditBusinesDetailRepositoryInterface;
         $this->creditBusinesInterface       = $creditBusinesRepositoryInterface;
-
+        $this->productListInterface         = $productListRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -278,10 +280,28 @@ class CreditLiquidatorController extends Controller
         return $this->factorsInterface->listFactorsOportudata();
     }
 
-    public function getProduct($code)
+    public function getLists()
     {
-        $productListSku     = $this->listProductInterface->findListProductBySku($code);
-        $dataProduct        = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
+        return $this->productListInterface->getCurrentProductListsForZoneAndSubsidiary(auth()->user()->Assessor->subsidiary->ZONA, auth()->user()->Assessor->subsidiary->CODIGO);
+    }
+
+    public function getProduct($code, $list)
+    {
+        //  auth()->user()->Assessor->subsidiary->ZONA,
+        $productListSku  = $this->listProductInterface->findListProductBySku($code);
+        $dataProduct     = $this->listProductInterface->getPriceProductForList($productListSku[0]->id, $list);
+        foreach ($dataProduct as $key => $value) {
+            $dataProduct[$key]['list'] = $key;
+            $dataProduct =  $dataProduct[$key];
+        }
+
+        return ['price' => $dataProduct, 'product' => $productListSku, 'zone' =>  auth()->user()->Assessor->subsidiary->ZONA];
+    }
+
+    public function getGift($code)
+    {
+        $productListSku  = $this->listProductInterface->findListProductBySkuAndType($code, 4);
+        $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
         foreach ($dataProduct as $key => $value) {
             $dataProduct[$key]['list'] = $key;
             $dataProduct =  $dataProduct[$key];

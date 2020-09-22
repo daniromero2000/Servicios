@@ -98,7 +98,7 @@ class CatalogController extends Controller
 		$productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
 		$semana = $productCatalog->months / 4;
 		$factor = $this->factorInterface->findFactorsOportudata($productCatalog->months);
-		$pays = $factor->FACTOR / $semana;
+		$pays = $factor->FACTOR / round($semana, 0, PHP_ROUND_HALF_UP);
 
 		if (!empty($productListSku->toArray())) {
 			$dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);

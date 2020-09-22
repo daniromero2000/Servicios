@@ -10,6 +10,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.infoLiquidator = {};
         $scope.img = [];
         $scope.plans = [];
+        $scope.lists = [];
         $scope.request = [];
         $scope.listTags = [];
         $scope.listValue = [];
@@ -57,6 +58,19 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.plans = response.data
             }, function errorCallback(response) {
                 response.url = '/api/liquidator/getPlans';
+                $scope.addError(response, $scope.lead.CEDULA);
+            });
+        };
+
+        //Traer listas
+        $scope.getList = function () {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getLists',
+            }).then(function successCallback(response) {
+                $scope.lists = response.data
+            }, function errorCallback(response) {
+                response.url = '/api/liquidator/getLists';
                 $scope.addError(response, $scope.lead.CEDULA);
             });
         };
@@ -173,7 +187,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 case '2':
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
+                        url: '/api/liquidator/getProduct/' + $scope.items.CODIGO + '/' + $scope.items.LISTA,
                     }).then(function successCallback(response) {
                         var key = $scope.items.key;
 
@@ -220,7 +234,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 $scope.items.PRECIO_P = $scope.items.PRECIO;
                             }
                         }
-                        $scope.items.LISTA = response.data.price.list;
+                        // $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
                     });
@@ -234,7 +248,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.items.ARTICULO = response.data.product[0].item;
                         $scope.items.PRECIO = 0;
                         $scope.items.PRECIO_P = 0;
-                        $scope.items.LISTA = response.data.price.list;
+                        // $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código no es un obsequio");
                     });
@@ -254,7 +268,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.calcPriceProduct = function (item) {
             $http({
                 method: 'GET',
-                url: '/api/liquidator/getProduct/' + item.CODIGO,
+                url: '/api/liquidator/getProduct/' + item.CODIGO + '/' + item.LISTA,
             }).then(function successCallback(response) {
                 $scope.liquidator[item.key][3].apply_gift = response.data.price.apply_gift;
                 item.ARTICULO = response.data.product[0].item;
@@ -287,7 +301,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO = response.data.product[0].cash_cost;
                     item.PRECIO_P = item.PRECIO;
                 }
-                item.LISTA = response.data.price.list;
+                // item.LISTA = response.data.price.list;
                 item.type_product = response.data.product[0].type_product;
             }, function errorCallback(response) {
                 showAlert("error", "El código ingresado no existe");
@@ -630,7 +644,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][0].splice(i, 1)
                         $http({
                             method: 'GET',
-                            url: '/api/liquidator/getProduct/' + product.CODIGO,
+                            url: '/api/liquidator/getProduct/' + product.CODIGO + '/' + product.LISTA,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)
 
@@ -650,7 +664,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             item.CODIGO = response.data.product[0].sku;
                             item.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100))
                             item.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                            item.LISTA = response.data.price.list;
+                            item.LISTA = product.LISTA;
                             item.SOLICITUD = $scope.request.SOLICITUD;
                             $scope.liquidator[key][0].push(item);
                         }, function errorCallback(response) {
@@ -673,7 +687,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.liquidator[key][0].splice(i, 1)
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getProduct/' + product.CODIGO,
+                        url: '/api/liquidator/getProduct/' + product.CODIGO + '/' + product.LISTA,
                     }).then(function successCallback(response) {
                         var item = {}
                         item.key = key;
@@ -696,8 +710,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 item.PRECIO_P = 0
                             }
                         }
-
-                        item.LISTA = response.data.price.list;
+                        item.LISTA = product.LISTA;
                         item.SOLICITUD = $scope.request.SOLICITUD;
                         $scope.liquidator[key][0].push(item);
                     }, function errorCallback(response) {
@@ -722,7 +735,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][0].splice(i, 1)
                         $http({
                             method: 'GET',
-                            url: '/api/liquidator/getProduct/' + product.CODIGO,
+                            url: '/api/liquidator/getProduct/' + product.CODIGO + '/' + product.LISTA,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)
                             $scope.liquidator[key][0].forEach(j => {
@@ -741,7 +754,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             item.CODIGO = response.data.product[0].sku;
                             item.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100))
                             item.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                            item.LISTA = response.data.price.list;
+                            item.LISTA = product.LISTA;
                             item.SOLICITUD = $scope.request.SOLICITUD;
                             $scope.liquidator[key][0].push(item);
                         }, function errorCallback(response) {
@@ -856,6 +869,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.listDiscount();
         $scope.listOfFees();
         $scope.getFactor();
+        $scope.getList();
 
         $scope.printToCart = function (printSectionId) {
             var innerContents = document.getElementById(printSectionId).innerHTML;
