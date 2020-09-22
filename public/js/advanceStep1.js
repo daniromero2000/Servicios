@@ -32,83 +32,83 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 		};
 
 		$scope.typesDocuments = [{
-				'value': '',
-				'label': 'Seleccione...'
-			},
-			{
-				'value': "1",
-				'label': 'Cédula de ciudadanía'
-			},
-			{
-				'value': "2",
-				'label': 'NIT'
-			},
-			{
-				'value': "3",
-				'label': 'Cédula de extranjería'
-			},
-			{
-				'value': "4",
-				'label': 'Tarjeta de Identidad'
-			},
-			{
-				'value': "5",
-				'label': 'Pasaporte'
-			},
-			{
-				'value': "6",
-				'label': 'Tarjeta seguro social extranjero'
-			},
-			{
-				'value': "7",
-				'label': 'Sociedad extranjera sin NIT en Colombia'
-			},
-			{
-				'value': "8",
-				'label': 'Fidecoismo'
-			},
-			{
-				'value': "9",
-				'label': 'Registro Civil'
-			},
-			{
-				'value': "10",
-				'label': 'Carnet Diplomático'
-			}
+			'value': '',
+			'label': 'Seleccione...'
+		},
+		{
+			'value': "1",
+			'label': 'Cédula de ciudadanía'
+		},
+		{
+			'value': "2",
+			'label': 'NIT'
+		},
+		{
+			'value': "3",
+			'label': 'Cédula de extranjería'
+		},
+		{
+			'value': "4",
+			'label': 'Tarjeta de Identidad'
+		},
+		{
+			'value': "5",
+			'label': 'Pasaporte'
+		},
+		{
+			'value': "6",
+			'label': 'Tarjeta seguro social extranjero'
+		},
+		{
+			'value': "7",
+			'label': 'Sociedad extranjera sin NIT en Colombia'
+		},
+		{
+			'value': "8",
+			'label': 'Fidecoismo'
+		},
+		{
+			'value': "9",
+			'label': 'Registro Civil'
+		},
+		{
+			'value': "10",
+			'label': 'Carnet Diplomático'
+		}
 		];
 
 		$scope.occupations = [{
-				'value': '',
-				'label': 'Seleccione...'
-			},
-			{
-				'value': 'EMPLEADO',
-				'label': 'Empleado'
-			},
-			{
-				'value': 'SOLDADO-MILITAR-POLICÍA',
-				'label': 'Soldado - Militar - Policía'
-			},
-			{
-				'value': 'PRESTACIÓN DE SERVICIOS',
-				'label': 'Prestación de Servicios'
-			},
-			{
-				'value': 'INDEPENDIENTE CERTIFICADO',
-				'label': 'Independiente Certificado - (Con cámara de comercio)'
-			},
-			{
-				'value': 'NO CERTIFICADO',
-				'label': 'No Certificado'
-			},
-			{
-				'value': 'RENTISTA',
-				'label': 'Administrador de bienes propios'
-			},
-			{
-				'value': 'PENSIONADO',
-				'label': 'Pensionado'
-			}
+			'value': '',
+			'label': 'Seleccione...'
+		},
+		{
+			'value': 'EMPLEADO',
+			'label': 'Empleado'
+		},
+		{
+			'value': 'SOLDADO-MILITAR-POLICÍA',
+			'label': 'Soldado - Militar - Policía'
+		},
+		{
+			'value': 'PRESTACIÓN DE SERVICIOS',
+			'label': 'Prestación de Servicios'
+		},
+		{
+			'value': 'INDEPENDIENTE CERTIFICADO',
+			'label': 'Independiente Certificado - (Con cámara de comercio)'
+		},
+		{
+			'value': 'NO CERTIFICADO',
+			'label': 'No Certificado'
+		},
+		{
+			'value': 'RENTISTA',
+			'label': 'Administrador de bienes propios'
+		},
+		{
+			'value': 'PENSIONADO',
+			'label': 'Pensionado'
+		}
 		];
 
 		$scope.cities = {};
@@ -125,6 +125,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				$scope.cities = response.data;
 			}, function errorCallback(response) {
 				hideLoader();
+				response.url = '/api/oportuya/getDataStep1/';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -154,22 +156,26 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 					$scope.leadInfo.telephone = response.data.resp.NUM;
 				}
 			}, function errorCallback(response) {
+				response.url = '/api/oportuya/getNumLead/' + $scope.leadInfo.identificationNumber;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
 
-		$scope.checkIfExistNum = function(){
+		$scope.checkIfExistNum = function () {
 			$http({
 				method: 'GET',
-				url: '/api/checkIfExistNum/'+$scope.leadInfo.telephone,
+				url: '/api/checkIfExistNum/' + $scope.leadInfo.telephone,
 			}).then(function successCallback(response) {
-				if(response.data >= 1){
+				if (response.data >= 1) {
 					alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
 					$scope.leadInfo.telephone = "";
-				}else{
+				} else {
 					console.log("Validado!!!");
 				}
 			}, function errorCallback(response) {
+				response.url = '/api/checkIfExistNum/' + $scope.leadInfo.telephone;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -204,6 +210,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 					}
 				}, function errorCallback(response) {
 					hideLoader();
+					response.url = '/api/oportuya/validationLead/' + $scope.leadInfo.identificationNumber;
+					$scope.addError(response, $scope.leadInfo.identificationNumber);
 					console.log(response);
 				});
 			} else {
@@ -220,6 +228,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				hideLoader();
 				window.location = "/OPN_gracias_denied";
 			}, function errorCallback(response) {
+				response.url = '/api/oportuya/deniedLeadForFecExp/' + $scope.leadInfo.identificationNumber + '/' + typeDenied;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				hideLoader();
 				console.log(response);
 			});
@@ -264,10 +274,12 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 					}
 				}
 
-				if(response.data == -1){
+				if (response.data == -1) {
 					$scope.saveStep1();
 				}
 			}, function errorCallback(response) {
+				response.url = '/api/oportudata/getCodeVerification/' + $scope.leadInfo.identificationNumber + '/' + $scope.leadInfo.telephone + '/SOLICITUD';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				hideLoader();
 				console.log(response);
 			});
@@ -293,6 +305,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}
 			}, function errorCallback(response) {
 				hideLoader();
+				response.url = '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.leadInfo.identificationNumber;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -326,6 +340,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				setTimeout(function () {
 					$('#proccess').modal('hide');
 				}, 800);
+				response.url = '/oportuyaV2';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 			});
 		};
 
@@ -337,6 +353,39 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				if (response.data != false) {
 					window.location = "/avance/step2/" + response.data;
 				}
+			}, function errorCallback(response) {
+				console.log(response);
+			});
+		};
+
+		$scope.addError = function (response, cedula = '') {
+			var arrayData = {
+				url: response.url,
+				mensaje: response.data.message,
+				archivo: response.data.file,
+				linea: response.data.line,
+				cedula: cedula,
+				datos: (response.datos) ? response.datos : []
+			}
+
+			var data = {
+				status: response.status,
+				data: angular.toJson(arrayData)
+			}
+			$http({
+				method: 'POST',
+				url: '/Administrator/appError',
+				data: data,
+			}).then(function successCallback(response) {
+				setTimeout(() => {
+					$('#congratulations').modal('hide');
+					$('#proccess').modal('hide');
+					$('#confirmCodeVerification').modal('hide');
+					$('#validationLead').modal('hide');
+					$('#decisionCredit').modal('hide');
+					$('#error').modal('show');
+				}, 100);
+				$scope.numError = response.data.id;
 			}, function errorCallback(response) {
 				console.log(response);
 			});

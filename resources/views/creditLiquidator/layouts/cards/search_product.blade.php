@@ -1,8 +1,21 @@
-<div class="row">
-    <div class="col-12 col-sm-8 col-lg-5 mx-auto px-3">
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-5">
         <label for="product">Buscar producto</label>
-        <input required type="text" class="form-control" ng-model="code" ng-blur="getDataPriceProduct()"
-            id="codeProduct" name="codeProduct">
+        <input required type="text" class="form-control" ng-model="code" id="codeProduct" name="codeProduct">
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <label for="name">Selecciona lista<span class="text-danger">*</span></label>
+            <select ng-model="listSearch" id="listSearch" name="listSearch" class="form-control" required>
+                <option selected value> Selecciona </option>
+                <option ng-repeat="list in lists" value="@{{list.name}}">
+                    @{{list.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-12 col-sm-2 my-auto">
+        <button type="button" ng-click="getDataPriceProduct()" ng-disabled="code == '' || listSearch == ''" class="btn btn-primary">Buscar</button>
+
     </div>
 </div>
 
@@ -13,13 +26,11 @@
                 <div class="card-header">
                     <h3 class="card-title">@{{productPrices.price.list}} </h3>
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus color-black"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus color-black"></i>
                         </button>
                     </div>
                 </div>
                 <div class="card-body p-0" style="display: block;">
-
                     <div class="card bg-light">
                         <div class="card-header text-muted border-bottom-0">
                             @{{ productPrices.product[0].item }}
