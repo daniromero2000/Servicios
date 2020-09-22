@@ -53,9 +53,12 @@ use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositor
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
+use App\Entities\Policies\PolicyTrait;
 
 class OportuyaV2Controller extends Controller
 {
+
+	use PolicyTrait;
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -1588,4 +1591,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1588
+//1591

@@ -1492,8 +1492,7 @@ class assessorsController extends Controller
 		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData);
 		$this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
 		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
-		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
-		$factoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
+		$customerFactoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
 		return $customerFactoryRequest;
 	}
 
@@ -1676,4 +1675,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1678
+//1679
