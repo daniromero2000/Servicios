@@ -1228,7 +1228,6 @@ class assessorsController extends Controller
 		];
 
 		$estadoSolic = 1;
-		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
@@ -1675,4 +1674,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1660
+//1678
