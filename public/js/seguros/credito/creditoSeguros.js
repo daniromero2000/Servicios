@@ -287,7 +287,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		$scope.execConsultasLead = function (identificationNumber) {
 			$http({
 				method: 'GET',
-				url: '/api/oportuya/execConsultasLead/' + identificationNumber + '/' + $scope.datosCliente.NOM_REFPER + '/' + $scope.datosCliente.TEL_REFPER + '/' + $scope.datosCliente.NOM_REFFAM + '/' + $scope.datosCliente.TEL_REFFAM,
+				url: '/api/oportuya/execConsultasLead/' + identificationNumber,
 			}).then(function successCallback(response) {
 				if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 					$scope.totalErrorData++;
