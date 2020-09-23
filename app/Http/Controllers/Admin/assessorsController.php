@@ -502,19 +502,19 @@ class assessorsController extends Controller
 
 	public function execConsultasleadAsesores($identificationNumber)
 	{
-		$oportudataLead         = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
+		$customer               = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
+		$dateExpIdentification  = explode("-", $customer->FEC_EXP);
 		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
+		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($customer, $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
-			$oportudataLead->ESTADO = "NEGADO";
-			$oportudataLead->save();
+			$customer->ESTADO = "NEGADO";
+			$customer->save();
 
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
-				'ASESOR'           => $oportudataLead->USUARIO_ACTUALIZACION,
+				'ASESOR'           => $customer->USUARIO_ACTUALIZACION,
 				'ESTADO_INTENCION' => 1,
 				'CREDIT_DECISION'  => 'Negado',
 				'ID_DEF'           => 2
@@ -534,15 +534,15 @@ class assessorsController extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($oportudataLead, $this->daysToIncrement);
+		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
 
 		if ($consultaComercial == 0) {
-			$oportudataLead->ESTADO = "SIN COMERCIAL";
-			$oportudataLead->save();
+			$customer->ESTADO = "SIN COMERCIAL";
+			$customer->save();
 
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
-				'ASESOR'           => $oportudataLead->USUARIO_ACTUALIZACION,
+				'ASESOR'           => $customer->USUARIO_ACTUALIZACION,
 				'ESTADO_INTENCION' => 3,
 				'CREDIT_DECISION'  => 'Sin Comercial',
 				'ID_DEF'           => 5
@@ -561,14 +561,14 @@ class assessorsController extends Controller
 				'resp'                 => -5
 			];
 		} else {
-			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
+			$this->fosygaInterface->doFosygaConsult($customer, $this->daysToIncrement);
 
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($oportudataLead);
+			$policyCredit = $this->validatePolicyAssessors($customer);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -581,7 +581,7 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function validatePolicyCredit_new($customer)
+	private function validatePolicyAssessors($customer)
 	{
 		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
@@ -1121,7 +1121,6 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
