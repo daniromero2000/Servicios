@@ -1135,16 +1135,7 @@ class assessorsController extends Controller
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->ESTADO_INTENCION = 4;
 		$intention->save();
-		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dataLead               = $request['lead'];
-
-		$dataPolicy = $request['policyResult'];
-		$policyCredit = [
-			'quotaApprovedProduct' => 0,
-			'quotaApprovedAdvance' => 0,
-			'resp' => 'true'
-		];
-
+		$dataLead = $request['lead'];
 		$data = [
 			'NOM_REFPER' => (isset($dataLead['NOM_REFPER']) && $dataLead['NOM_REFPER'] != '') ? $dataLead['NOM_REFPER'] : '',
 			'DIR_REFPER' => (isset($dataLead['DIR_REFPER']) && $dataLead['DIR_REFPER'] != '') ? $dataLead['DIR_REFPER'] : '',
@@ -1178,6 +1169,7 @@ class assessorsController extends Controller
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
+		$policyCredit = ['quotaApprovedProduct' => 0, 'quotaApprovedAdvance' => 0, 'resp' => 'true'];
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
