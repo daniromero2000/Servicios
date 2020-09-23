@@ -797,6 +797,7 @@ class OportuyaV2Controller extends Controller
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$consultaComercial     = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
+			$customerIntention = $customer->latestIntention;
 		$estadoSolic           = 3;
 
 		if ($consultaComercial == 0) {
@@ -848,24 +849,24 @@ class OportuyaV2Controller extends Controller
 				if ($confronta == 1) {
 					$form = $this->toolInterface->getFormConfronta($customer->CEDULA);
 					if (empty($form)) {
-						$lastIntention->save();
+						$customerIntention->save();
 						$estadoSolic = 3;
 					} else {
-						$lastIntention->save();
+						$customerIntention->save();
 						return [
 							'form' => $form,
 							'resp' => 'confronta'
 						];
 					}
 				} else {
-					$lastIntention->save();
+					$customerIntention->save();
 					$estadoSolic = 3;
 				}
 			} else {
-				$lastIntention->ID_DEF = '27';
+				$customerIntention->ID_DEF = '27';
 				$estadoSolic = 19;
 			}
-			$lastIntention->save();
+			$customerIntention->save();
 		}
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}

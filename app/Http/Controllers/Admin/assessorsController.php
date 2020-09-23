@@ -1078,8 +1078,8 @@ class assessorsController extends Controller
 	public function decisionCreditCard(Request $request, $identificationNumber)
 	{
 		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
-		$intention = $customer->latestIntention;
-		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$customerIntention = $customer->latestIntention;
+		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$estadoSolic = 3;
 
@@ -1093,25 +1093,25 @@ class assessorsController extends Controller
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 				if (empty($form)) {
-					$intention->save();
+					$customerIntention->save();
 					$estadoSolic = 3;
 				} else {
-					$intention->save();
+					$customerIntention->save();
 					return [
 						'form' => $form,
 						'resp' => 'confronta'
 					];
 				}
 			} else {
-				$intention->save();
+				$customerIntention->save();
 				$estadoSolic = 3;
 			}
 		} else {
-			$intention->ID_DEF = '27';
+			$customerIntention->ID_DEF = '27';
 			$estadoSolic = 19;
 		}
 
-		$intention->save();
+		$customerIntention->save();
 
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
