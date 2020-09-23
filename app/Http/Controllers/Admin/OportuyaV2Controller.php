@@ -456,11 +456,6 @@ class OportuyaV2Controller extends Controller
 
 	public function validationLead($identificationNumber)
 	{
-		$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
-		if ($existCard == true) {
-			return -1; // Tiene tarjeta
-		}
-
 		$empleado = $this->employeeInterface->checkCustomerIsEmployee($identificationNumber);
 		if ($empleado == true) {
 			return -2; // Es empleado
@@ -480,6 +475,11 @@ class OportuyaV2Controller extends Controller
 		$existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
 		if ($existDefault == true) {
 			return -4; // Esta Castigado
+		}
+
+		$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
+		if ($existCard == true) {
+			return -1; // Tiene tarjeta
 		}
 
 		return response()->json(true);

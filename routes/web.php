@@ -305,8 +305,9 @@ Route::post('/profileAssessor', 'Admin\UserController@addAssessorProfile')->midd
 Route::get('/getAssessors', 'Admin\UserController@getAllAssessor');
 
 // Administrator
+Route::resource('/api/appError', 'Admin\AppErrors\AppErrorController');
+
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
-    Route::resource('appError', 'Admin\AppErrors\AppErrorController');
     Route::get('/crearCliente', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
     Route::resource('/temporaryCustomer', 'Admin\TemporaryCustomer\TemporaryCustomerController', [
         'only' => ['store', 'destroy']

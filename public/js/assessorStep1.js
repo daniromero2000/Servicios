@@ -209,7 +209,7 @@ angular.module('appAssessorStep1', [])
 			}
 			$http({
 				method: 'POST',
-				url: '/Administrator/appError',
+				url: '/api/appError',
 				data: data,
 			}).then(function successCallback(response) {
 				setTimeout(() => {

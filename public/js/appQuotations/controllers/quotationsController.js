@@ -593,7 +593,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             }
             $http({
                 method: 'POST',
-                url: '/Administrator/appError',
+                url: '/api/appError',
                 data: data,
             }).then(function successCallback(response) {
                 setTimeout(() => {
