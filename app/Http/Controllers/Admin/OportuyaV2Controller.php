@@ -762,7 +762,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$customer = $intencion->customer;
-		$this->validatePolicyCredit_new($customer);
+		$this->validatePolicyAdvanceOportuya($customer);
 
 		$queryDataLead = DB::connection('oportudata')->select('SELECT inten.`FECHA_INTENCION`, inten.`TIEMPO_LABOR`, cf.`TIPO_DOC`, cf.`CEDULA`, CONCAT(cf.NOMBRES," " ,cf.APELLIDOS) as NOMBRES, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`, cf.`FEC_EXP`, cf.`SUC`, inten.`ZONA_RIESGO`, cfs.`score`, inten.`PERFIL_CREDITICIO`, cf.`FEC_NAC`, cf.`EDAD`, cf.`ACTIVIDAD`, cf.`EDAD_INDP`, cf.`ANTIG`, cf.`SUELDO`, cf.`SUELDOIND`, cf.`OTROS_ING`, cf.`SUELDOIND`, inten.`TIPO_CLIENTE`, inten.`TARJETA`, inten.`TIPO_5_ESPECIAL`, inten.`HISTORIAL_CREDITO`, inten.`INSPECCION_OCULAR`, cf.`TIPOV`, cf.`DIRECCION`, cf.`CELULAR`
 		FROM `CLIENTE_FAB` as cf
@@ -797,7 +797,7 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	public function execConsultasLead($customer, $tipoCreacion, $data = [])
+	public function execConsultasLead($customer, $data = [])
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$consultaComercial     = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
@@ -828,7 +828,7 @@ class OportuyaV2Controller extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($customer);
+			$policyCredit = $this->validatePolicyAdvanceOportuya($customer);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($customer->CEDULA);
 
@@ -849,7 +849,7 @@ class OportuyaV2Controller extends Controller
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
-	private function validatePolicyCredit_new($customer)
+	private function validatePolicyAdvanceOportuya($customer)
 	{
 		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
