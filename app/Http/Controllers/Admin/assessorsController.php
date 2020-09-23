@@ -265,7 +265,7 @@ class assessorsController extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$customer  = new Customer;
+		$leadOportudata  = new Customer;
 		$usuarioCreacion = $assessorCode;
 		$clienteWeb      = 1;
 		$getExistLead    = Customer::find($request->CEDULA);
@@ -359,7 +359,7 @@ class assessorsController extends Controller
 			];
 
 			unset($dataOportudata['tipoCliente']);
-			$customer->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$this->customerCellPhoneInterface->validateCellPhoneContado($request);
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 
@@ -487,7 +487,7 @@ class assessorsController extends Controller
 				'USUARIO_ACTUALIZACION' => $assessorCode
 			];
 
-			$customer->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$this->customerCellPhoneInterface->validateCellPhoneCredit($request);
 
 			return [
@@ -502,19 +502,19 @@ class assessorsController extends Controller
 
 	public function execConsultasleadAsesores($identificationNumber)
 	{
-		$customer               = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$dateExpIdentification  = explode("-", $customer->FEC_EXP);
+		$oportudataLead         = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
+		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($customer, $this->daysToIncrement);
+		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
-			$customer->ESTADO = "NEGADO";
-			$customer->save();
+			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->save();
 
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
-				'ASESOR'           => $customer->USUARIO_ACTUALIZACION,
+				'ASESOR'           => $oportudataLead->USUARIO_ACTUALIZACION,
 				'ESTADO_INTENCION' => 1,
 				'CREDIT_DECISION'  => 'Negado',
 				'ID_DEF'           => 2
@@ -534,15 +534,15 @@ class assessorsController extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
+		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($oportudataLead, $this->daysToIncrement);
 
 		if ($consultaComercial == 0) {
-			$customer->ESTADO = "SIN COMERCIAL";
-			$customer->save();
+			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->save();
 
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
-				'ASESOR'           => $customer->USUARIO_ACTUALIZACION,
+				'ASESOR'           => $oportudataLead->USUARIO_ACTUALIZACION,
 				'ESTADO_INTENCION' => 3,
 				'CREDIT_DECISION'  => 'Sin Comercial',
 				'ID_DEF'           => 5
@@ -561,14 +561,14 @@ class assessorsController extends Controller
 				'resp'                 => -5
 			];
 		} else {
-			$this->fosygaInterface->doFosygaConsult($customer, $this->daysToIncrement);
+			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyAssessors($customer);
+			$policyCredit = $this->validatePolicyCredit_new($oportudataLead);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -581,7 +581,7 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function validatePolicyAssessors($customer)
+	private function validatePolicyCredit_new($customer)
 	{
 		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
@@ -1075,54 +1075,6 @@ class assessorsController extends Controller
 		return "1";
 	}
 
-	public function decisionTraditionalCredit(Request $request, $identificationNumber)
-	{
-		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->SUBTIPO     = "NUEVO";
-		$customer->save();
-		$intention = $customer->latestIntention;
-		$intention->CREDIT_DECISION = 'Tradicional';
-		$intention->save();
-
-		$policyCredit = [
-			'quotaApprovedProduct' => 0,
-			'quotaApprovedAdvance' => 0,
-			'resp'                 => 'true'
-		];
-
-		$data = [
-			'NOM_REFPER' => (isset($request['NOM_REFPER']) && $request['NOM_REFPER'] != '') ? $request['NOM_REFPER'] : '',
-			'DIR_REFPER' => (isset($request['DIR_REFPER']) && $request['DIR_REFPER'] != '') ? $request['DIR_REFPER'] : '',
-			'TEL_REFPER' => (isset($request['TEL_REFPER']) && $request['TEL_REFPER'] != '') ? $request['TEL_REFPER'] : '',
-			'NOM_REFPE2' => (isset($request['NOM_REFPE2']) && $request['NOM_REFPE2'] != '') ? $request['NOM_REFPE2'] : '',
-			'DIR_REFPE2' => (isset($request['DIR_REFPE2']) && $request['DIR_REFPE2'] != '') ? $request['DIR_REFPE2'] : '',
-			'TEL_REFPE2' => (isset($request['TEL_REFPE2']) && $request['TEL_REFPE2'] != '') ? $request['TEL_REFPE2'] : '',
-			'NOM_REFFAM' => (isset($request['NOM_REFFAM']) && $request['NOM_REFFAM'] != '') ? $request['NOM_REFFAM'] : '',
-			'DIR_REFFAM' => (isset($request['DIR_REFFAM']) && $request['DIR_REFFAM'] != '') ? $request['DIR_REFFAM'] : '',
-			'TEL_REFFAM' => (isset($request['TEL_REFFAM']) && $request['TEL_REFFAM'] != '') ? $request['TEL_REFFAM'] : '',
-			'PARENTESCO' => (isset($request['PARENTESCO']) && $request['PARENTESCO'] != '') ? $request['PARENTESCO'] : '',
-			'NOM_REFFA2' => (isset($request['NOM_REFFA2']) && $request['NOM_REFFA2'] != '') ? $request['NOM_REFFA2'] : '',
-			'DIR_REFFA2' => (isset($request['DIR_REFFA2']) && $request['DIR_REFFA2'] != '') ? $request['DIR_REFFA2'] : '',
-			'TEL_REFFA2' => (isset($request['TEL_REFFA2']) && $request['TEL_REFFA2'] != '') ? $request['TEL_REFFA2'] : '',
-			'PARENTESC2' => (isset($request['PARENTESC2']) && $request['PARENTESC2'] != '') ? $request['PARENTESC2'] : '',
-			'BAR_REFPER' => '',
-			'CIU_REFPER' => '',
-			'BAR_REFPE2' => '',
-			'CIU_REFPE2' => '',
-			'BAR_REFFAM' => '',
-			'BAR_REFFA2' => '',
-			'CON_CLI1'   => '',
-			'CON_CLI2'   => '',
-			'CON_CLI3'   => '',
-			'CON_CLI4'   => '',
-			'EDIT_RFCLI' => '',
-			'EDIT_RFCL2' => ''
-		];
-
-		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
-	}
-
 	public function decisionCreditCard(Request $request, $identificationNumber)
 	{
 		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
@@ -1169,6 +1121,7 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
+		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
@@ -1274,6 +1227,54 @@ class assessorsController extends Controller
 			'quotaAdvance'    => $solicCredit['quotaApprovedAdvance'],
 			'estado'          => ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO"
 		]);
+	}
+
+	public function decisionTraditionalCredit(Request $request, $identificationNumber)
+	{
+		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer->TIPOCLIENTE = "NUEVO";
+		$customer->SUBTIPO     = "NUEVO";
+		$customer->save();
+		$intention = $customer->latestIntention;
+		$intention->CREDIT_DECISION = 'Tradicional';
+		$intention->save();
+
+		$policyCredit = [
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
+			'resp'                 => 'true'
+		];
+
+		$data = [
+			'NOM_REFPER' => (isset($request['NOM_REFPER']) && $request['NOM_REFPER'] != '') ? $request['NOM_REFPER'] : '',
+			'DIR_REFPER' => (isset($request['DIR_REFPER']) && $request['DIR_REFPER'] != '') ? $request['DIR_REFPER'] : '',
+			'TEL_REFPER' => (isset($request['TEL_REFPER']) && $request['TEL_REFPER'] != '') ? $request['TEL_REFPER'] : '',
+			'NOM_REFPE2' => (isset($request['NOM_REFPE2']) && $request['NOM_REFPE2'] != '') ? $request['NOM_REFPE2'] : '',
+			'DIR_REFPE2' => (isset($request['DIR_REFPE2']) && $request['DIR_REFPE2'] != '') ? $request['DIR_REFPE2'] : '',
+			'TEL_REFPE2' => (isset($request['TEL_REFPE2']) && $request['TEL_REFPE2'] != '') ? $request['TEL_REFPE2'] : '',
+			'NOM_REFFAM' => (isset($request['NOM_REFFAM']) && $request['NOM_REFFAM'] != '') ? $request['NOM_REFFAM'] : '',
+			'DIR_REFFAM' => (isset($request['DIR_REFFAM']) && $request['DIR_REFFAM'] != '') ? $request['DIR_REFFAM'] : '',
+			'TEL_REFFAM' => (isset($request['TEL_REFFAM']) && $request['TEL_REFFAM'] != '') ? $request['TEL_REFFAM'] : '',
+			'PARENTESCO' => (isset($request['PARENTESCO']) && $request['PARENTESCO'] != '') ? $request['PARENTESCO'] : '',
+			'NOM_REFFA2' => (isset($request['NOM_REFFA2']) && $request['NOM_REFFA2'] != '') ? $request['NOM_REFFA2'] : '',
+			'DIR_REFFA2' => (isset($request['DIR_REFFA2']) && $request['DIR_REFFA2'] != '') ? $request['DIR_REFFA2'] : '',
+			'TEL_REFFA2' => (isset($request['TEL_REFFA2']) && $request['TEL_REFFA2'] != '') ? $request['TEL_REFFA2'] : '',
+			'PARENTESC2' => (isset($request['PARENTESC2']) && $request['PARENTESC2'] != '') ? $request['PARENTESC2'] : '',
+			'BAR_REFPER' => '',
+			'CIU_REFPER' => '',
+			'BAR_REFPE2' => '',
+			'CIU_REFPE2' => '',
+			'BAR_REFFAM' => '',
+			'BAR_REFFA2' => '',
+			'CON_CLI1'   => '',
+			'CON_CLI2'   => '',
+			'CON_CLI3'   => '',
+			'CON_CLI4'   => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
+		];
+
+		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
 	}
 
 	public function getFormVentaContado()
