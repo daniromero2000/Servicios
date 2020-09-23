@@ -265,7 +265,7 @@ class assessorsController extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$leadOportudata  = new Customer;
+		$customer  = new Customer;
 		$usuarioCreacion = $assessorCode;
 		$clienteWeb      = 1;
 		$getExistLead    = Customer::find($request->CEDULA);
@@ -359,7 +359,7 @@ class assessorsController extends Controller
 			];
 
 			unset($dataOportudata['tipoCliente']);
-			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$customer->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$this->customerCellPhoneInterface->validateCellPhoneContado($request);
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 
@@ -487,7 +487,7 @@ class assessorsController extends Controller
 				'USUARIO_ACTUALIZACION' => $assessorCode
 			];
 
-			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$customer->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$this->customerCellPhoneInterface->validateCellPhoneCredit($request);
 
 			return [
