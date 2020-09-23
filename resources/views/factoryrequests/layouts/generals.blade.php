@@ -19,8 +19,7 @@
             <th class="text-center" scope="col">Cliente</th>
             <th class="text-center" scope="col">Codeudores</th>
             <th class="text-center" scope="col">Gran Total</th>
-            <th class="text-center" scope="col">Crédito</th>
-            <th class="text-center" scope="col">Avance</th>
+            <th class="text-center" scope="col">Intención</th>
             <th class="text-center" scope="col">Estado</th>
           </tr>
         </thead>
@@ -34,8 +33,7 @@
             <td class="text-center">
               {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
             <td class="text-center">${{  number_format($factoryRequest->GRAN_TOTAL) }}</td>
-            <td class="text-center">{{ $factoryRequest->PRODUC_W }}</td>
-            <td class="text-center">{{ $factoryRequest->AVANCE_W }}</td>
+            <td class="text-center">${{  number_format($factoryRequest->SOLICITUD_WEB) }}</td>
             <td class="text-center"><span class="badge badge-primary">
                 {{ $factoryRequest->factoryRequestStatus->name }}</span></td>
           </tr>
