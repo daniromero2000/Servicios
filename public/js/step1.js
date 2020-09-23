@@ -156,24 +156,26 @@ angular.module('appStep1', ['moment-picker'])
 		$scope.getNumCel = function () {
 			$scope.leadInfo.CEL_VAL = 0;
 			$scope.leadInfo.telephone = '';
-			$http({
-				method: 'GET',
-				url: '/api/oportuya/getNumLead/' + $scope.leadInfo.identificationNumber,
-			}).then(function successCallback(response) {
-				if (typeof response.data.resp == 'number') {
+			if ($scope.leadInfo.identificationNumber != '') {
+				$http({
+					method: 'GET',
+					url: '/api/oportuya/getNumLead/' + $scope.leadInfo.identificationNumber,
+				}).then(function successCallback(response) {
+					if (typeof response.data.resp == 'number') {
 
-				} else {
-					var num = response.data.resp.NUM.substring(0, 6);
-					var telephone = response.data.resp.NUM.replace(num, "******");
-					$scope.leadInfo.CEL_VAL = response.data.resp.CEL_VAL;
-					$scope.telephone = telephone;
-					$scope.leadInfo.telephone = response.data.resp.NUM;
-				}
-			}, function errorCallback(response) {
-				response.url = '/api/oportuya/getNumLead/' + $scope.leadInfo.identificationNumber;
-				$scope.addError(response, $scope.leadInfo.identificationNumber);
-				console.log(response);
-			});
+					} else {
+						var num = response.data.resp.NUM.substring(0, 6);
+						var telephone = response.data.resp.NUM.replace(num, "******");
+						$scope.leadInfo.CEL_VAL = response.data.resp.CEL_VAL;
+						$scope.telephone = telephone;
+						$scope.leadInfo.telephone = response.data.resp.NUM;
+					}
+				}, function errorCallback(response) {
+					response.url = '/api/oportuya/getNumLead/' + $scope.leadInfo.identificationNumber;
+					$scope.addError(response, $scope.leadInfo.identificationNumber);
+					console.log(response);
+				});
+			}
 		};
 
 		$scope.checkIfExistNum = function () {
