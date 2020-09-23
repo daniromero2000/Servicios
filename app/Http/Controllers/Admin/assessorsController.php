@@ -1075,6 +1075,54 @@ class assessorsController extends Controller
 		return "1";
 	}
 
+	public function decisionTraditionalCredit(Request $request, $identificationNumber)
+	{
+		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer->TIPOCLIENTE = "NUEVO";
+		$customer->SUBTIPO     = "NUEVO";
+		$customer->save();
+		$intention = $customer->latestIntention;
+		$intention->CREDIT_DECISION = 'Tradicional';
+		$intention->save();
+
+		$policyCredit = [
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
+			'resp'                 => 'true'
+		];
+
+		$data = [
+			'NOM_REFPER' => (isset($request['NOM_REFPER']) && $request['NOM_REFPER'] != '') ? $request['NOM_REFPER'] : '',
+			'DIR_REFPER' => (isset($request['DIR_REFPER']) && $request['DIR_REFPER'] != '') ? $request['DIR_REFPER'] : '',
+			'TEL_REFPER' => (isset($request['TEL_REFPER']) && $request['TEL_REFPER'] != '') ? $request['TEL_REFPER'] : '',
+			'NOM_REFPE2' => (isset($request['NOM_REFPE2']) && $request['NOM_REFPE2'] != '') ? $request['NOM_REFPE2'] : '',
+			'DIR_REFPE2' => (isset($request['DIR_REFPE2']) && $request['DIR_REFPE2'] != '') ? $request['DIR_REFPE2'] : '',
+			'TEL_REFPE2' => (isset($request['TEL_REFPE2']) && $request['TEL_REFPE2'] != '') ? $request['TEL_REFPE2'] : '',
+			'NOM_REFFAM' => (isset($request['NOM_REFFAM']) && $request['NOM_REFFAM'] != '') ? $request['NOM_REFFAM'] : '',
+			'DIR_REFFAM' => (isset($request['DIR_REFFAM']) && $request['DIR_REFFAM'] != '') ? $request['DIR_REFFAM'] : '',
+			'TEL_REFFAM' => (isset($request['TEL_REFFAM']) && $request['TEL_REFFAM'] != '') ? $request['TEL_REFFAM'] : '',
+			'PARENTESCO' => (isset($request['PARENTESCO']) && $request['PARENTESCO'] != '') ? $request['PARENTESCO'] : '',
+			'NOM_REFFA2' => (isset($request['NOM_REFFA2']) && $request['NOM_REFFA2'] != '') ? $request['NOM_REFFA2'] : '',
+			'DIR_REFFA2' => (isset($request['DIR_REFFA2']) && $request['DIR_REFFA2'] != '') ? $request['DIR_REFFA2'] : '',
+			'TEL_REFFA2' => (isset($request['TEL_REFFA2']) && $request['TEL_REFFA2'] != '') ? $request['TEL_REFFA2'] : '',
+			'PARENTESC2' => (isset($request['PARENTESC2']) && $request['PARENTESC2'] != '') ? $request['PARENTESC2'] : '',
+			'BAR_REFPER' => '',
+			'CIU_REFPER' => '',
+			'BAR_REFPE2' => '',
+			'CIU_REFPE2' => '',
+			'BAR_REFFAM' => '',
+			'BAR_REFFA2' => '',
+			'CON_CLI1'   => '',
+			'CON_CLI2'   => '',
+			'CON_CLI3'   => '',
+			'CON_CLI4'   => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
+		];
+
+		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
+	}
+
 	public function decisionCreditCard(Request $request, $identificationNumber)
 	{
 		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
@@ -1226,54 +1274,6 @@ class assessorsController extends Controller
 			'quotaAdvance'    => $solicCredit['quotaApprovedAdvance'],
 			'estado'          => ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO"
 		]);
-	}
-
-	public function decisionTraditionalCredit(Request $request, $identificationNumber)
-	{
-		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->SUBTIPO     = "NUEVO";
-		$customer->save();
-		$intention = $customer->latestIntention;
-		$intention->CREDIT_DECISION = 'Tradicional';
-		$intention->save();
-
-		$policyCredit = [
-			'quotaApprovedProduct' => 0,
-			'quotaApprovedAdvance' => 0,
-			'resp'                 => 'true'
-		];
-
-		$data = [
-			'NOM_REFPER' => (isset($request['NOM_REFPER']) && $request['NOM_REFPER'] != '') ? $request['NOM_REFPER'] : '',
-			'DIR_REFPER' => (isset($request['DIR_REFPER']) && $request['DIR_REFPER'] != '') ? $request['DIR_REFPER'] : '',
-			'TEL_REFPER' => (isset($request['TEL_REFPER']) && $request['TEL_REFPER'] != '') ? $request['TEL_REFPER'] : '',
-			'NOM_REFPE2' => (isset($request['NOM_REFPE2']) && $request['NOM_REFPE2'] != '') ? $request['NOM_REFPE2'] : '',
-			'DIR_REFPE2' => (isset($request['DIR_REFPE2']) && $request['DIR_REFPE2'] != '') ? $request['DIR_REFPE2'] : '',
-			'TEL_REFPE2' => (isset($request['TEL_REFPE2']) && $request['TEL_REFPE2'] != '') ? $request['TEL_REFPE2'] : '',
-			'NOM_REFFAM' => (isset($request['NOM_REFFAM']) && $request['NOM_REFFAM'] != '') ? $request['NOM_REFFAM'] : '',
-			'DIR_REFFAM' => (isset($request['DIR_REFFAM']) && $request['DIR_REFFAM'] != '') ? $request['DIR_REFFAM'] : '',
-			'TEL_REFFAM' => (isset($request['TEL_REFFAM']) && $request['TEL_REFFAM'] != '') ? $request['TEL_REFFAM'] : '',
-			'PARENTESCO' => (isset($request['PARENTESCO']) && $request['PARENTESCO'] != '') ? $request['PARENTESCO'] : '',
-			'NOM_REFFA2' => (isset($request['NOM_REFFA2']) && $request['NOM_REFFA2'] != '') ? $request['NOM_REFFA2'] : '',
-			'DIR_REFFA2' => (isset($request['DIR_REFFA2']) && $request['DIR_REFFA2'] != '') ? $request['DIR_REFFA2'] : '',
-			'TEL_REFFA2' => (isset($request['TEL_REFFA2']) && $request['TEL_REFFA2'] != '') ? $request['TEL_REFFA2'] : '',
-			'PARENTESC2' => (isset($request['PARENTESC2']) && $request['PARENTESC2'] != '') ? $request['PARENTESC2'] : '',
-			'BAR_REFPER' => '',
-			'CIU_REFPER' => '',
-			'BAR_REFPE2' => '',
-			'CIU_REFPE2' => '',
-			'BAR_REFFAM' => '',
-			'BAR_REFFA2' => '',
-			'CON_CLI1'   => '',
-			'CON_CLI2'   => '',
-			'CON_CLI3'   => '',
-			'CON_CLI4'   => '',
-			'EDIT_RFCLI' => '',
-			'EDIT_RFCL2' => ''
-		];
-
-		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
 	}
 
 	public function getFormVentaContado()
