@@ -1,7 +1,7 @@
 <div class="card card-success">
   <div class="card-header">
-    <h3 class="card-title"><i class="fas fa-user mr-2"></i> Solicitud {{ $factoryRequest->SOLICITUD }}
-      Sucursal {{ $factoryRequest->SUCURSAL }} Asesor {{ $factoryRequest->CODASESOR }}</h3>
+    <h3 class="card-title"><i class="fas fa-user mr-2"></i> <strong>Solicitud</strong> {{ $factoryRequest->SOLICITUD }}
+      <strong>Sucursal</strong> {{ $factoryRequest->SUCURSAL }} <strong>Asesor</strong> {{ $factoryRequest->CODASESOR }}</h3>
 
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus text-dark"></i>
