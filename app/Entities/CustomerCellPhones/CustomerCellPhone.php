@@ -10,7 +10,7 @@ class CustomerCellPhone extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey = 'IDENTI, NUM';
+    protected $primaryKey = 'IDENTI';
 
     public $timestamps = false;
 

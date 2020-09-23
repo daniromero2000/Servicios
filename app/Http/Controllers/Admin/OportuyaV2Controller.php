@@ -542,15 +542,20 @@ class OportuyaV2Controller extends Controller
 
 	public function verificationCode($code, $identificationNumber)
 	{
-		$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
-		$smsVigency = $this->consultationValidityInterface->getSmsValidity()->sms_vigencia;
-		$dateCode = date('Y-m-d H:i:s', strtotime($getCode->created_at));
-		$dateCodeNew = strtotime("+ $smsVigency minute", strtotime($dateCode));
-		$dateNow = strtotime(date('Y-m-d H:i:s'));
+		$getCode 	  = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
+		$smsVigency   = $this->consultationValidityInterface->getSmsValidity()->sms_vigencia;
+		$dateCode 	  = date('Y-m-d H:i:s', strtotime($getCode->created_at));
+		$dateCodeNew  = strtotime("+ $smsVigency minute", strtotime($dateCode));
+		$dateNow 	  = strtotime(date('Y-m-d H:i:s'));
+		$customerCell = $this->customerCellPhoneInterface->checkIfExists($getCode->identificationNumber, $getCode->telephone);
 		if ($dateNow <= $dateCodeNew) {
 			if ($code === $getCode->token) {
 				$getCode->state = 1;
 				$getCode->save();
+				if ($customerCell) {
+					$customerCell->CEL_VAL = 1;
+					$customerCell->save();
+				}
 				return response()->json(true);
 			} else {
 				return response()->json(-1);

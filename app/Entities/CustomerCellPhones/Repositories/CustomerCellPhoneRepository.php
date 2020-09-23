@@ -35,7 +35,7 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
                 'IDENTI'  => trim($clientInfo['CEDULA']),
                 'NUM'     => trim($clientInfo['CELULAR']),
                 'TIPO'    => 'CEL',
-                'CEL_VAL' => 0,
+                'CEL_VAL' => 1,
                 'FECHA'   => date("Y-m-d H:i:s")
             ];
             return $this->createCustomerCellPhone($data);
@@ -49,7 +49,7 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
                 'IDENTI'  => trim($clientInfo['CEDULA']),
                 'NUM'     => trim($clientInfo['CELULAR']),
                 'TIPO'    => 'CEL',
-                'CEL_VAL' => 0,
+                'CEL_VAL' => 1,
                 'FECHA'   => date("Y-m-d H:i:s")
             ];
             return $this->createCustomerCellPhone($data);
