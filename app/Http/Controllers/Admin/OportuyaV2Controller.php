@@ -69,7 +69,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $secondCodebtorInterface;
 	private $ubicaInterface, $datosClienteInterface, $analisisInterface, $codebtorInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface,  $confrontaSelectinterface;
-	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
+	private $confrontaResultInterface, $toolsInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -145,7 +145,7 @@ class OportuyaV2Controller extends Controller
 		$this->analisisInterface                 = $analisisRepositoryInterface;
 		$this->confrontaSelectinterface          = $confrontaSelectRepositoryInterface;
 		$this->confrontaResultInterface          = $confrontaResultRepositoryInterface;
-		$this->toolInterface                     = $toolRepositoryInterface;
+		$this->toolsInterface                     = $toolRepositoryInterface;
 		$this->ubicaMailInterface                = $ubicaEmailRepositoryInterface;
 		$this->ubicaCellPhoneInterfac            = $ubicaCellPhoneRepositoryInterface;
 		$this->userInterface                     = $userRepositoryInterface;
@@ -797,8 +797,7 @@ class OportuyaV2Controller extends Controller
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$consultaComercial     = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
-			$customerIntention = $customer->latestIntention;
-		$estadoSolic           = 3;
+		$customerIntention     = $customer->latestIntention;
 
 		if ($consultaComercial == 0) {
 			$customer->ESTADO = "SIN COMERCIAL";
@@ -839,35 +838,9 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 
-			$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
-			$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
-			$resultUbica = $this->validateConsultaUbica($customer);
-
-			if ($resultUbica == 0) {
-				$fechaExpIdentification = $this->toolInterface->getConfrontaDateFormat($customer->FEC_EXP);
-				$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
-				if ($confronta == 1) {
-					$form = $this->toolInterface->getFormConfronta($customer->CEDULA);
-					if (empty($form)) {
-						$customerIntention->save();
-						$estadoSolic = 3;
-					} else {
-						$customerIntention->save();
-						return [
-							'form' => $form,
-							'resp' => 'confronta'
-						];
-					}
-				} else {
-					$customerIntention->save();
-					$estadoSolic = 3;
-				}
-			} else {
-				$customerIntention->ID_DEF = '27';
-				$estadoSolic = 19;
-			}
-			$customerIntention->save();
+			$estadoSolic = $this->doUbica($customer, $customerIntention);
 		}
+		$customerIntention->save();
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 

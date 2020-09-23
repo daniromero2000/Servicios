@@ -1081,39 +1081,10 @@ class assessorsController extends Controller
 		$customerIntention = $customer->latestIntention;
 		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$estadoSolic = 3;
-
-		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
-		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
-		$resultUbica = $this->validateConsultaUbica($customer);
-
-		if ($resultUbica == 0) {
-			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
-			if ($confronta == 1) {
-				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
-				if (empty($form)) {
-					$customerIntention->save();
-					$estadoSolic = 3;
-				} else {
-					$customerIntention->save();
-					return [
-						'form' => $form,
-						'resp' => 'confronta'
-					];
-				}
-			} else {
-				$customerIntention->save();
-				$estadoSolic = 3;
-			}
-		} else {
-			$customerIntention->ID_DEF = '27';
-			$estadoSolic = 19;
-		}
-
+		$estadoSolic = $this->doUbica($customer, $customerIntention);
 		$customerIntention->save();
-
 		$dataPolicy = $request['policyResult'];
+
 		$policyCredit = [
 			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
 			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],

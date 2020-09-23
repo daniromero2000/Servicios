@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 trait PolicyTrait
 {
 
-  public function doUbica($customer, $customerIntention){
+  public function doUbica($customer, $customerIntention)
+  {
+    $estadoSolic = 3;
     $lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
     $this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
     $resultUbica = $this->validateConsultaUbica($customer);
@@ -37,10 +39,11 @@ trait PolicyTrait
       $estadoSolic = 19;
     }
 
-    $customerIntention->save();
+    return  $estadoSolic;
   }
 
-  public function getHistorialCrediticio($identificationNumber){
+  public function getHistorialCrediticio($identificationNumber)
+  {
 
     $historialCrediticio = 0;
     $historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
