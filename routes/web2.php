@@ -237,6 +237,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('/api/liquidator/getFactors', 'CreditLiquidatorController@getFactors');
         Route::get('/api/liquidator/validationLead/{identificationNumber}', 'CreditLiquidatorController@validationLead');
         Route::get('/api/liquidator/getProduct/{id}/{list}', 'CreditLiquidatorController@getProduct');
+        Route::get('/api/liquidator/getCharges/{code}', 'CreditLiquidatorController@getCharges');
         Route::get('/api/liquidator/getGift/{id}', 'CreditLiquidatorController@getGift');
         Route::get('/api/liquidator/createRequest/{id}/{city}', 'CreditLiquidatorController@addSolicFab');
     });

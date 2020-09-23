@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Auth;
 class CreditLiquidatorController extends Controller
 {
     private $customerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
-    private $creditBusinesDetailInterface, $creditBusinesInterface ,$productListInterface;
+    private $creditBusinesDetailInterface, $creditBusinesInterface, $productListInterface;
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
@@ -285,9 +285,14 @@ class CreditLiquidatorController extends Controller
         return $this->productListInterface->getCurrentProductListsForZoneAndSubsidiary(auth()->user()->Assessor->subsidiary->ZONA, auth()->user()->Assessor->subsidiary->CODIGO);
     }
 
+    public function getCharges($code)
+    {
+        $productListSku  = $this->listProductInterface->findListProductBySku($code);
+        return ['product' => $productListSku, 'zone' =>  auth()->user()->Assessor->subsidiary->ZONA];
+    }
+
     public function getProduct($code, $list)
     {
-        //  auth()->user()->Assessor->subsidiary->ZONA,
         $productListSku  = $this->listProductInterface->findListProductBySku($code);
         $dataProduct     = $this->listProductInterface->getPriceProductForList($productListSku[0]->id, $list);
         foreach ($dataProduct as $key => $value) {
