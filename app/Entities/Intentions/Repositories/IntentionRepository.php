@@ -491,7 +491,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         if ($resultConfronta == 1) {
             return 19;
         } else {
-            return 3;
+            return 1;
         }
     }
 
