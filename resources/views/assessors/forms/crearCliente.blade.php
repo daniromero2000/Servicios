@@ -93,14 +93,14 @@
                                     <input class="inputs" id="email" type="text" validation-pattern="email" ng-model="lead.EMAIL" />
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <div ng-hide="lead.CEL_VAL == '0'">
+                                    <div ng-hide="lead.CEL_VAL">
                                         <label class="ventaContado-label">Celular*</label>
                                         <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR" validation-pattern="telephone" required />
                                         <div class="alert alert-danger" role="alert" ng-show="showAlertCel" style="margin-top: 10px;">
                                             Debe digitar un número de celular
                                         </div>
                                     </div>
-                                    <div ng-show="lead.CEL_VAL == '1'">
+                                    <div ng-show="lead.CEL_VAL">
                                         <label class="ventaContado-label">Celular*</label>
                                         <input class="inputs" ng-model="CELULAR" readonly ng-disabled="true" />
                                     </div>
