@@ -618,7 +618,7 @@ class assessorsController extends Controller
 			$customerScore  = $lastCifinScore->score;
 		} else {
 			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
-			$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
+			$customer       = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		}
@@ -631,8 +631,7 @@ class assessorsController extends Controller
 			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
 			$idDef                                = $perfilCrediticio['idDef'];
-			$perfilCrediticio                     = $perfilCrediticio['perfilCrediticio'];
-			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
 
 			if ($customerIntention->PERFIL_CREDITICIO == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';

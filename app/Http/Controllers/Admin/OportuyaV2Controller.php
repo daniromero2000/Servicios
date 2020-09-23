@@ -57,8 +57,8 @@ use App\Entities\Policies\PolicyTrait;
 
 class OportuyaV2Controller extends Controller
 {
-
 	use PolicyTrait;
+
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -919,8 +919,7 @@ class OportuyaV2Controller extends Controller
 			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
 			$idDef                                = $perfilCrediticio['idDef'];
-			$perfilCrediticio                     = $perfilCrediticio['perfilCrediticio'];
-			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
 
 			if ($customerIntention->PERFIL_CREDITICIO == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
