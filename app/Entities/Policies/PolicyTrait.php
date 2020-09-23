@@ -44,7 +44,7 @@ trait PolicyTrait
 
   public function doUbica($customer, $customerIntention)
   {
-    $estadoSolic = 3;
+    $estadoSolic = 1;
     $lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
     $this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
     $resultUbica = $this->validateConsultaUbica($customer);
@@ -56,7 +56,7 @@ trait PolicyTrait
         $form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
         if (empty($form)) {
           $customerIntention->save();
-          $estadoSolic = 3;
+          $estadoSolic = 1;
         } else {
           $customerIntention->save();
           return [
@@ -66,7 +66,7 @@ trait PolicyTrait
         }
       } else {
         $customerIntention->save();
-        $estadoSolic = 3;
+        $estadoSolic = 1;
       }
     } else {
       $customerIntention->ID_DEF = '27';
