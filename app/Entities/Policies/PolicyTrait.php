@@ -8,6 +8,40 @@ use Illuminate\Support\Facades\DB;
 trait PolicyTrait
 {
 
+  private function getInfoLeadCreate($identificationNumber)
+  {
+    $queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
+		FROM `CLIENTE_FAB` as cf
+		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
+		LEFT JOIN `TB_DEFINICIONES` as def ON def.id = inten.`ID_DEF`
+		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
+		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
+		ORDER BY FECHA_INTENCION DESC
+		LIMIT 1', ['cedula' => $identificationNumber, 'cedulaScore' => $identificationNumber]);
+
+    return $queryDataLead[0];
+  }
+
+  public function getHistorialCrediticio($identificationNumber)
+  {
+
+    $historialCrediticio = 0;
+    $historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+
+    if ($historialCrediticio == 0) {
+      $historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    }
+
+    if ($historialCrediticio == 0) {
+      $historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    }
+
+    if ($historialCrediticio == 0) {
+      $historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    }
+    return $historialCrediticio;
+  }
+
   public function doUbica($customer, $customerIntention)
   {
     $estadoSolic = 3;
@@ -42,24 +76,56 @@ trait PolicyTrait
     return  $estadoSolic;
   }
 
-  public function getHistorialCrediticio($identificationNumber)
+  public function validateConsultaUbica($customer)
   {
+    $customerPhone = $customer->checkedPhone;
+    $celLead       = 0;
 
-    $historialCrediticio = 0;
-    $historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
-
-    if ($historialCrediticio == 0) {
-      $historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    if (!empty($customerPhone)) {
+      $celLead =  $customerPhone =  $customer->checkedPhone->NUM;
     }
 
-    if ($historialCrediticio == 0) {
-      $historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    $aprobo = 0;
+    $consec = $customer->lastUbicaConsultation->consec;
+    $telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec($celLead, $consec);
+
+    if ($telConsultaUbica->isNotEmpty()) {
+      $aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+    } else {
+      $aprobo = 0;
     }
 
-    if ($historialCrediticio == 0) {
-      $historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    if ($aprobo == 0) {
+      // Validacion Telefono empresarial
+      if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
+        $telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep`
+				FROM `ubica_telefono`
+				WHERE `ubitipoubi` LIKE '%LAB%'
+				AND `ubiconsul` = :consec
+				AND (`ubitelefono` = :tel_emp
+				OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
+        if (!empty($telEmpConsultaUbica)) {
+          $aprobo = $this->ubicaInterface->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
+        } else {
+          $aprobo = 0;
+        }
+      } else {
+        $aprobo = 0;
+      }
     }
-    return $historialCrediticio;
+
+    if ($aprobo == 0) {
+      // Validacion Correo
+      if ($customer->EMAIL != '') {
+        $emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
+        if ($emailConsultaUbica->isNotEmpty()) {
+          $aprobo = $this->ubicaInterface->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
+        }
+      } else {
+        $aprobo = 0;
+      }
+    }
+    return $aprobo;
   }
 
   private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
@@ -177,71 +243,5 @@ trait PolicyTrait
     $this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
     $customerFactoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
     return $customerFactoryRequest;
-  }
-
-  public function validateConsultaUbica($customer)
-  {
-    $customerPhone = $customer->checkedPhone;
-    $celLead       = 0;
-
-    if (!empty($customerPhone)) {
-      $celLead =  $customerPhone =  $customer->checkedPhone->NUM;
-    }
-
-    $aprobo = 0;
-    $consec = $customer->lastUbicaConsultation->consec;
-    $telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec($celLead, $consec);
-
-    if ($telConsultaUbica->isNotEmpty()) {
-      $aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
-    } else {
-      $aprobo = 0;
-    }
-
-    if ($aprobo == 0) {
-      // Validacion Telefono empresarial
-      if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
-        $telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep`
-				FROM `ubica_telefono`
-				WHERE `ubitipoubi` LIKE '%LAB%'
-				AND `ubiconsul` = :consec
-				AND (`ubitelefono` = :tel_emp
-				OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
-        if (!empty($telEmpConsultaUbica)) {
-          $aprobo = $this->ubicaInterface->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
-        } else {
-          $aprobo = 0;
-        }
-      } else {
-        $aprobo = 0;
-      }
-    }
-
-    if ($aprobo == 0) {
-      // Validacion Correo
-      if ($customer->EMAIL != '') {
-        $emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
-        if ($emailConsultaUbica->isNotEmpty()) {
-          $aprobo = $this->ubicaInterface->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
-        }
-      } else {
-        $aprobo = 0;
-      }
-    }
-    return $aprobo;
-  }
-
-  private function getInfoLeadCreate($identificationNumber)
-  {
-    $queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
-		FROM `CLIENTE_FAB` as cf
-		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
-		LEFT JOIN `TB_DEFINICIONES` as def ON def.id = inten.`ID_DEF`
-		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
-		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
-		ORDER BY FECHA_INTENCION DESC
-		LIMIT 1', ['cedula' => $identificationNumber, 'cedulaScore' => $identificationNumber]);
-
-    return $queryDataLead[0];
   }
 }
