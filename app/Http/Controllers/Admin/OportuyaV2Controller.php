@@ -906,8 +906,8 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		} else {
 			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
-			$customer = $this->customerInterface->findCustomerById($customer->CEDULA);
-			$lastCifinScore = $customer->latestCifinScore;
+			$customer       = $this->customerInterface->findCustomerById($customer->CEDULA);
+			$lastCifinScore  = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		}
 
@@ -916,7 +916,7 @@ class OportuyaV2Controller extends Controller
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
+			$perfilCrediticio                      = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
 			$idDef                                = $perfilCrediticio['idDef'];
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
@@ -999,8 +999,6 @@ class OportuyaV2Controller extends Controller
 			}
 		}
 
-		// Hasta aca esta igual en Assessors y OportuyaV2
-
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($customerIntention->HISTORIAL_CREDITO == 1) {
@@ -1047,10 +1045,10 @@ class OportuyaV2Controller extends Controller
 		);
 
 		if ($customerStatusDenied == true) {
-			$customer->ESTADO          = 'NEGADO';
-			$customerIntention->ID_DEF = $idDef;
-			$customerIntention->ESTADO_INTENCION  = '1';
-			$customerIntention->CREDIT_DECISION = 'Negado';
+			$customer->ESTADO                    = 'NEGADO';
+			$customerIntention->ID_DEF           = $idDef;
+			$customerIntention->ESTADO_INTENCION = '1';
+			$customerIntention->CREDIT_DECISION  = 'Negado';
 			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "false"];
@@ -1201,9 +1199,10 @@ class OportuyaV2Controller extends Controller
 			} else {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
-				$customerIntention->TARJETA = '';
-				$customerIntention->ID_DEF  = '24';
-				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->TARJETA          = '';
+				$customerIntention->ID_DEF           = '24';
+				$customerIntention->ESTADO_INTENCION = '1';
+				$customerIntention->CREDIT_DECISION  = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
