@@ -1,7 +1,7 @@
 <div class="card card-success">
   <div class="card-header">
     <h3 class="card-title"><i class="fas fa-user mr-2"></i> Solicitud {{ $factoryRequest->SOLICITUD }}
-      Sucursal {{ $factoryRequest->SUCURSAL }}</h3>
+      Sucursal {{ $factoryRequest->SUCURSAL }} Asesor {{ $factoryRequest->CODASESOR }}</h3>
 
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus text-dark"></i>
@@ -18,7 +18,6 @@
             <th class="text-center" scope="col">Fecha de Solicitud</th>
             <th class="text-center" scope="col">Cliente</th>
             <th class="text-center" scope="col">Codeudores</th>
-            <th class="text-center" scope="col">Asesor</th>
             <th class="text-center" scope="col">Gran Total</th>
             <th class="text-center" scope="col">Crédito</th>
             <th class="text-center" scope="col">Avance</th>
@@ -34,7 +33,6 @@
             </td>
             <td class="text-center">
               {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
-            <td class="text-center">{{ $factoryRequest->CODASESOR }}</td>
             <td class="text-center">${{  number_format($factoryRequest->GRAN_TOTAL) }}</td>
             <td class="text-center">{{ $factoryRequest->PRODUC_W }}</td>
             <td class="text-center">{{ $factoryRequest->AVANCE_W }}</td>
