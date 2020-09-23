@@ -1080,17 +1080,18 @@ class assessorsController extends Controller
 		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
-		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$estadoSolic = 3;
+
+		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
 		$resultUbica = $this->validateConsultaUbica($customer);
-		$dataLead               = $request['lead'];
-		$estadoSolic = 3;
+
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $lastName);
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
-				$form = $this->toolsInterface->getFormConfronta($identificationNumber);
+				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 				if (empty($form)) {
 					$intention->save();
 					$estadoSolic = 3;
@@ -1102,6 +1103,7 @@ class assessorsController extends Controller
 					];
 				}
 			} else {
+				$intention->save();
 				$estadoSolic = 3;
 			}
 		} else {
@@ -1118,6 +1120,7 @@ class assessorsController extends Controller
 			'resp' => 'true'
 		];
 
+		$dataLead = $request['lead'];
 		$data = [
 			'NOM_REFPER' => (isset($dataLead['NOM_REFPER']) && $dataLead['NOM_REFPER'] != '') ? $dataLead['NOM_REFPER'] : '',
 			'DIR_REFPER' => (isset($dataLead['DIR_REFPER']) && $dataLead['DIR_REFPER'] != '') ? $dataLead['DIR_REFPER'] : '',
@@ -1482,4 +1485,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1487
+//1485
