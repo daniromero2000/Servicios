@@ -165,7 +165,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 		$scope.checkIfExistNum = function () {
 			$http({
 				method: 'GET',
-				url: '/api/checkIfExistNum/' + $scope.leadInfo.telephone,
+				url: '/api/checkIfExistNum/' + $scope.leadInfo.telephone + '/' + $scope.leadInfo.identificationNumber,
 			}).then(function successCallback(response) {
 				if (response.data >= 1) {
 					alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
