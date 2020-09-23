@@ -246,5 +246,38 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 			});
 		};
 
+		$scope.addError = function (response, cedula = '') {
+			var arrayData = {
+				url: response.url,
+				mensaje: response.data.message,
+				archivo: response.data.file,
+				linea: response.data.line,
+				cedula: cedula,
+				datos: (response.datos) ? response.datos : []
+			}
+
+			var data = {
+				status: response.status,
+				data: angular.toJson(arrayData)
+			}
+			$http({
+				method: 'POST',
+				url: '/api/appError',
+				data: data,
+			}).then(function successCallback(response) {
+				setTimeout(() => {
+					$('#congratulations').modal('hide');
+					$('#proccess').modal('hide');
+					$('#confirmCodeVerification').modal('hide');
+					$('#validationLead').modal('hide');
+					$('#decisionCredit').modal('hide');
+					$('#error').modal('show');
+				}, 100);
+				$scope.numError = response.data.id;
+			}, function errorCallback(response) {
+				console.log(response);
+			});
+		};
+
 		setTimeout(function () { $scope.getDataStep3(); }, 1);
 	});

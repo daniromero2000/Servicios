@@ -140,6 +140,8 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 				$scope.leadInfo.otherRevenue = ($scope.leadInfo.otherRevenue != 0 && $scope.leadInfo.otherRevenue != '') ? $scope.leadInfo.otherRevenue : '';
 			}, function errorCallback(response) {
 				hideLoader();
+				response.url = '/api/oportuya/getDataStep3/' + $scope.leadInfo.identificationNumber;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -193,6 +195,8 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 				}
 			}, function errorCallback(response) {
 				hideLoader();
+				response.url = '/oportuyaV2';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 				console.log(response);
 			});
 		};
@@ -219,6 +223,10 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 						$('#congratulations').modal('show');
 					}, 1800);
 				}
+			}, function errorCallback(response) {
+				console.log(response);
+				response.url = '/oportuyaV2';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 			});
 		};
 
@@ -232,6 +240,41 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 				if (response.data != false) {
 					window.location = "/OP_gracias_FRM";
 				}
+			}, function errorCallback(response) {
+				response.url = '/oportuyaV2';
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
+				console.log(response);
+			});
+		};
+
+		$scope.addError = function (response, cedula = '') {
+			var arrayData = {
+				url: response.url,
+				mensaje: response.data.message,
+				archivo: response.data.file,
+				linea: response.data.line,
+				cedula: cedula,
+				datos: (response.datos) ? response.datos : []
+			}
+
+			var data = {
+				status: response.status,
+				data: angular.toJson(arrayData)
+			}
+			$http({
+				method: 'POST',
+				url: '/api/appError',
+				data: data,
+			}).then(function successCallback(response) {
+				setTimeout(() => {
+					$('#congratulations').modal('hide');
+					$('#proccess').modal('hide');
+					$('#confirmCodeVerification').modal('hide');
+					$('#validationLead').modal('hide');
+					$('#decisionCredit').modal('hide');
+					$('#error').modal('show');
+				}, 100);
+				$scope.numError = response.data.id;
 			}, function errorCallback(response) {
 				console.log(response);
 			});

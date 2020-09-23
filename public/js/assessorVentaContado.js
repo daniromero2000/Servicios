@@ -260,7 +260,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 			$http({
 				method: 'POST',
-				url: '/Administrator/appError',
+				url: '/api/appError',
 				data: data,
 			}).then(function successCallback(response) {
 				setTimeout(() => {

@@ -355,6 +355,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}
 			}, function errorCallback(response) {
 				console.log(response);
+				response.url = '/api/encryptText/' + $scope.leadInfo.identificationNumber;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
 			});
 		};
 
@@ -374,7 +376,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			}
 			$http({
 				method: 'POST',
-				url: '/Administrator/appError',
+				url: '/api/appError',
 				data: data,
 			}).then(function successCallback(response) {
 				setTimeout(() => {

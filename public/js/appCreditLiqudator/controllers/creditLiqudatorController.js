@@ -913,7 +913,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }
             $http({
                 method: 'POST',
-                url: '/Administrator/appError',
+                url: '/api/appError',
                 data: data,
             }).then(function successCallback(response) {
                 setTimeout(() => {
