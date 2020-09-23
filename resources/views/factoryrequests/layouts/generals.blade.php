@@ -33,7 +33,7 @@
             <td class="text-center">
               {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
             <td class="text-center">${{  number_format($factoryRequest->GRAN_TOTAL) }}</td>
-            <td class="text-center">${{  number_format($factoryRequest->SOLICITUD_WEB) }}</td>
+            <td class="text-center">{{  $factoryRequest->SOLICITUD_WEB }}</td>
             <td class="text-center"><span class="badge badge-primary">
                 {{ $factoryRequest->factoryRequestStatus->name }}</span></td>
           </tr>
