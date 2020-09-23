@@ -34,7 +34,7 @@
               {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
             <td class="text-center">${{  number_format($factoryRequest->GRAN_TOTAL) }}</td>
             <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
-                  href="{{ route('intentions.show', $factoryRequest->CLIENTE) }}">
+                  href="{{ route('intentions.show', $factoryRequest->SOLICITUD_WEB) }}">
                   {{ str_replace(' ', '', $factoryRequest->SOLICITUD_WEB) }} </a>
               </td>
             <td class="text-center"><span class="badge badge-primary">
