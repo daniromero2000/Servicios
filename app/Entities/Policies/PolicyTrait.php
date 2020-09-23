@@ -8,6 +8,25 @@ use Illuminate\Support\Facades\DB;
 trait PolicyTrait
 {
 
+  public function getHistorialCrediticio($identificationNumber){
+
+    $historialCrediticio = 0;
+    $historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+
+    if ($historialCrediticio == 0) {
+      $historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    }
+
+    if ($historialCrediticio == 0) {
+      $historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    }
+
+    if ($historialCrediticio == 0) {
+      $historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+    }
+    return $historialCrediticio;
+  }
+
   private function addSolicCredit($customer, $policyCredit, $estadoSolic, $data)
   {
     $this->webServiceInterface->execMigrateCustomer($customer->CEDULA);

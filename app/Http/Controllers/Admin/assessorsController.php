@@ -665,22 +665,7 @@ class assessorsController extends Controller
 		$customerIntention->ESTADO_OBLIGACIONES = $finDoubtful['doubtful'];
 
 		//3.5 Historial de Crédito
-		$historialCrediticio = 0;
-		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
-
-		if ($historialCrediticio == 0) {
-			$historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
-		}
-
-		if ($historialCrediticio == 0) {
-			$historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
-		}
-
-		if ($historialCrediticio == 0) {
-			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
-		}
-
-		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
+		$customerIntention->HISTORIAL_CREDITO = $this->getHistorialCrediticio($customer->CEDULA);
 		$customerIntention->TIPO_CLIENTE = 'NUEVO';
 
 		$edad                    = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $customerIntention->TIPO_CLIENTE, $idDef);
@@ -1499,4 +1484,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1503
+//1487
