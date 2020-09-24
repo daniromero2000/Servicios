@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <label class="labels" for="telEmpresa">Teléfono de la empresa*</label>
-                            <input class="inputs" id="telEmpresa" type="text" ng-model="lead.TEL_EMP" required />
+                            <input class="inputs" id="telEmpresa" type="text" ng-model="lead.TEL_EMP" validation-pattern="telephoneReal" required />
                         </div>
                     </div>
                     <div class="row">

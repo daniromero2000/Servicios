@@ -14,7 +14,7 @@
                  </div>
                  <div class="col-12 col-sm-6">
                      <label for="TIPOV" class="labels">Tipo de vivienda</label>
-                     <select class="inputs form-control select2bs4" ng-model="lead.TIPOV" id="TIPOV" ng-options="housingType.value as housingType.label for housingType in housingTypes"></select>
+                     <select class="inputs form-control select2bs4" ng-model="lead.TIPOV" id="TIPOV" ng-options="housingType.value as housingType.label for housingType in housingTypes" required></select>
                  </div>
              </div>
              <div class="row" ng-show="lead.TIPOV == 'ARRIENDO'">
@@ -44,7 +44,7 @@
              <div class="row form-group">
                  <div class="col-12 col-sm-4">
                      <label for="TELFIJO" class="labels">Teléfono fijo</label>
-                     <input type="text" class="form-control inputs" ng-model="lead.TELFIJO" id="TELFIJO" />
+                     <input type="text" class="form-control inputs" validation-pattern="telephoneReal" ng-model="lead.TELFIJO" id="TELFIJO" />
                  </div>
                  <div class="col-12 col-sm-4">
                      <div ng-hide="lead.CEL_VAL">

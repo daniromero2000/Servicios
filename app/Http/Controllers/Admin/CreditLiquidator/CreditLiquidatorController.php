@@ -282,7 +282,11 @@ class CreditLiquidatorController extends Controller
 
     public function getLists()
     {
-        return $this->productListInterface->getCurrentProductListsForZoneAndSubsidiary(auth()->user()->Assessor->subsidiary->ZONA, auth()->user()->Assessor->subsidiary->CODIGO);
+        $user = auth()->user()->Assessor;
+        if ($user->SUCURSAL == 1) {
+            return $this->productListInterface->getAllCurrentProductLists();
+        }
+        return $this->productListInterface->getCurrentProductListsForZoneAndSubsidiary($user->subsidiary->ZONA, $user->subsidiary->CODIGO);
     }
 
     public function getCharges($code)
