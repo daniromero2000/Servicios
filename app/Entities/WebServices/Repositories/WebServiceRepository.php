@@ -81,12 +81,12 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         }
     }
 
-    public function execConsultaConfronta($typeDocument, $identificationNumber, $dateExpIdentification, $lastName)
+    public function execConsultaConfronta($customer, $dateExpIdentification, $lastName)
     {
         $obj = new \stdClass();
-        $obj->typeDocument = trim($typeDocument);
+        $obj->typeDocument = trim($customer->TIPO_DOC);
         $obj->expeditionDate = trim($dateExpIdentification);
-        $obj->identificationNumber = trim($identificationNumber);
+        $obj->identificationNumber = trim($customer->CEDULA);
         $obj->lastName = trim($lastName);
         $obj->phone = "3333333";
         try {

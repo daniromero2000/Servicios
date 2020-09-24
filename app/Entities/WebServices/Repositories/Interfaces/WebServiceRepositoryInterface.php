@@ -9,7 +9,7 @@ interface WebServiceRepositoryInterface
 
   public function sendMessageSmsInfobip($code, $date, $celNumber);
 
-  public function execConsultaConfronta($typeDocument, $identificationNumber, $dateExpIdentification, $lastName);
+  public function execConsultaConfronta($customer, $dateExpIdentification, $lastName);
 
   public function execMigrateCustomer($identificationNumber);
 
