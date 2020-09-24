@@ -141,10 +141,8 @@ trait PolicyTrait
 
     $this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
 
-    $fosygaTemp = $customer->customerFosygaTemps->first();
-    $analisisData = [
-      'solicitud' => $factoryRequest->SOLICITUD,
-    ];
+    $fosygaTemp   = $customer->customerFosygaTemps->first();
+    $analisisData = ['solicitud' => $factoryRequest->SOLICITUD];
 
     if ($fosygaTemp) {
       $analisisData['paz_cli']     = $fosygaTemp->paz_cli;
@@ -161,12 +159,13 @@ trait PolicyTrait
     $infoLead->numSolic = $factoryRequest->SOLICITUD;
 
     if ($estadoSolic == 19) {
-      $customer->ESTADO = "APROBADO";
+      $estadoResult = 'APROBADO';
+      $customer->ESTADO = $estadoResult;
       $customer->save();
       $customerIntention = $customer->latestIntention;
       $customerIntention->ESTADO_INTENCION = 4;
       $customerIntention->save();
-      $estadoResult = "APROBADO";
+
 
       $existCard = $this->creditCardInterface->checkCustomerHasCreditCard($customer->CEDULA);
       if ($existCard == true) {
@@ -184,8 +183,8 @@ trait PolicyTrait
       $debtor         = new DebtorInsurance();
       $debtor->CEDULA = $customer->CEDULA;
       $debtor->SOLIC  = $factoryRequest->SOLICITUD;
+      $estadoResult   = "PREAPROBADO";
       $debtor->save();
-      $estadoResult = "PREAPROBADO";
     } else {
       $estadoResult  = "PREAPROBADO";
       $respScoreLead = $customer->latestCifinScore;
@@ -211,7 +210,7 @@ trait PolicyTrait
       $infoLead = $this->getInfoLeadCreate($customer->CEDULA);
     }
     $infoLead->numSolic = $factoryRequest->SOLICITUD;
-    $infoLead->ESTADO = $factoryRequest->ESTADO;
+    $infoLead->ESTADO   = $factoryRequest->ESTADO;
 
     return [
       'estadoCliente'        => $estadoResult,
@@ -224,7 +223,7 @@ trait PolicyTrait
 
   private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
   {
-    $assessorData      = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
+    $assessorData = $this->assessorInterface->findAssessorById($customer->USUARIO_ACTUALIZACION);
 
     $requestData = [
       'AVANCE_W'      => $quotaApprovedAdvance,
