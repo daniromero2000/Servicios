@@ -44,12 +44,12 @@ trait PolicyTrait
 
   public function doUbicaOrConfronta($customer, $customerIntention)
   {
-    $estadoSolic = 1;
     $lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
     $this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
     $this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
     $resultUbica = $this->validateConsultaUbica($customer);
 
+    $estadoSolic = 1;
     if ($resultUbica == 0) {
       $fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
       $confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
@@ -70,6 +70,7 @@ trait PolicyTrait
         $estadoSolic = 1;
       }
     } else {
+      $customerIntention->save();
       $estadoSolic = 19;
     }
 
