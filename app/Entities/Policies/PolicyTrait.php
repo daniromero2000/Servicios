@@ -238,6 +238,8 @@ trait PolicyTrait
       'SOLICITUD_WEB' => $customer->latestIntention->id
     ];
 
+    return dd($requestData);
+
     $customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
     $this->codebtorInterface->createCodebtor($customerFactoryRequest->SOLICITUD);
     $this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest->SOLICITUD);
