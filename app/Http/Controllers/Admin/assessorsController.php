@@ -628,7 +628,7 @@ class assessorsController extends Controller
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			$perfilCrediticio                      = $this->policyInterface->CheckScorePolicy($customerScore);
+			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
 			$idDef                                = $perfilCrediticio['idDef'];
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
@@ -694,22 +694,20 @@ class assessorsController extends Controller
 		$quotaApprovedAdvance = 0;
 
 		if ($blackCard) {
-			$tarjetaBlack         = new Black;
-			$tarjeta              = $tarjetaBlack->getName();
-			$quotaApprovedProduct = $tarjetaBlack->getQuotaApprovedProduct();
-			$quotaApprovedAdvance = $tarjetaBlack->getQuotaApprovedAdvance();
+			$creditCard = new Black;
 		}
 
 		// 3.7 Tarjeta Gray
 		if ($this->policyInterface->tipoAConHistorial($customerIntention) && $blackCard == false) {
 			if ($this->policyInterface->pensionadoOEmpleado($customer)) {
-				$aprobado             = true;
-				$tarjetaGray          = new Gray;
-				$tarjeta              = $tarjetaGray->getName();
-				$quotaApprovedProduct = $tarjetaGray->getQuotaApprovedProduct();
-				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
+				$aprobado   = true;
+				$creditCard = new Gray;
 			}
 		}
+
+		$tarjeta              = $creditCard->getName();
+		$quotaApprovedProduct = $creditCard->getQuotaApprovedProduct();
+		$quotaApprovedAdvance = $creditCard->getQuotaApprovedAdvance();
 
 		if ($aprobado) {
 			if ($customer->creditCard) {
@@ -1110,32 +1108,29 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
+		$lastName    = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$resultUbica = $this->doUbica($customer, $lastName);
 		$estadoSolic = 1;
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 				if (empty($form)) {
-					$customerIntention->save();
 					$estadoSolic = 1;
 				} else {
-					$customerIntention->save();
 					return [
 						'form' => $form,
 						'resp' => 'confronta'
 					];
 				}
 			} else {
-				$customerIntention->save();
 				$estadoSolic = 1;
 			}
 		} else {
-			$customerIntention->save();
 			$estadoSolic = 19;
 		}
+		$customerIntention->save();
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
