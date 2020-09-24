@@ -301,7 +301,7 @@
                 </div>
             </div>
         </div>
-        @include('layouts.admin.button_float')
+
     </div>
 </div>
 @endsection

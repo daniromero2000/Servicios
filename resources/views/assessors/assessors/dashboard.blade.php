@@ -399,7 +399,7 @@
         </div>
         <!-- Card 1 -->
         <!-- /.col (LEFT) -->
-        @include('layouts.admin.button_float')
+
 
 
     </div>

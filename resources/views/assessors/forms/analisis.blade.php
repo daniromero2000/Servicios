@@ -157,7 +157,7 @@
     </div>
 
 </div>
-@include('layouts.admin.button_float')
+
 <script type="text/javascript" src="{{ asset('js/assessorVentaContado.js') }}"></script>
 @stop
 @section('scriptsJs')

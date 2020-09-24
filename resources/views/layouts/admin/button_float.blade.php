@@ -4,10 +4,11 @@
 
     <input type="checkbox" id="btn-mas">
     <div class="redes" data-toggle="tooltip" data-placement="top" title="Crear liquidación">
-        <a href="" data-toggle="modal" data-target="#exampleModal" class="icon-facebook"> <i class="fas fa-user-clock"></i></a>
+        <a href="" data-toggle="modal" data-target="#exampleModal" class="icon-facebook"> <i class="fas fa-user-clock m-auto"></i></a>
     </div>
     <div class="btn-mas">
-        <label for="btn-mas" class="icon-mas2"> <i class="fas fa-bars"></i></label>
+        <label for="btn-mas" class="icon-mas2"> <i class="fas fa-bars m-auto"></i></label>
+
     </div>
 </div>
 

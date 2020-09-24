@@ -17,8 +17,7 @@
                 <div class="col-12 mt-4">
                     <div class="row">
                         <div class="col-6">
-                            <a href="{{ URL::previous() }}"
-                                class="btn btn-primary btn-sm-reset ml-auto mr-3 mb-2 ">Regresar</a>
+                            <a href="{{ URL::previous() }}" class="btn btn-primary btn-sm-reset ml-auto mr-3 mb-2 ">Regresar</a>
                         </div>
                         <div class="col-6 text-right">
                             {{-- @if ( auth()->user()->idProfile == 5 )
@@ -58,12 +57,10 @@
             </li>
             @endif
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab"
-                    aria-controls="profile">Solicitudes Fábrica</a>
+                <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab" aria-controls="profile">Solicitudes Fábrica</a>
             </li>
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#warranties" role="tab"
-                    aria-controls="profile">Garantías</a>
+                <a class="nav-link" data-toggle="tab" href="#warranties" role="tab" aria-controls="profile">Garantías</a>
             </li>
             @if ( auth()->user()->idProfile == 2 )
             <li class="active" role="presentation">
@@ -72,8 +69,7 @@
             </li>
             @endif
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
-                    aria-controls="profile">Seguimiento</a>
+                <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab" aria-controls="profile">Seguimiento</a>
             </li>
         </ul>
         <div class="tab-content mt-4" id="tabcontent">
@@ -137,8 +133,7 @@
             </div>
         </div>
 
-        <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccessConsult"
-            tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccessConsult" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modalPrincipal" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -156,6 +151,6 @@
                 </div>
             </div>
         </div>
-        @include('layouts.admin.button_float')
+
 </section>
 @endsection
