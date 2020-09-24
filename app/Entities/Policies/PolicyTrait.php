@@ -70,7 +70,6 @@ trait PolicyTrait
         $estadoSolic = 1;
       }
     } else {
-      $customerIntention->ID_DEF = '27';
       $estadoSolic = 19;
     }
 
@@ -140,10 +139,9 @@ trait PolicyTrait
       $estadoSolic
     );
 
-
     $this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
-    $fosygaTemp = $customer->customerFosygaTemps->first();
 
+    $fosygaTemp = $customer->customerFosygaTemps->first();
     $analisisData = [
       'solicitud' => $factoryRequest->SOLICITUD,
     ];

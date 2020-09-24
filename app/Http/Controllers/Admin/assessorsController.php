@@ -1082,7 +1082,6 @@ class assessorsController extends Controller
 		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$customerIntention->save();
 		$dataPolicy = $request['policyResult'];
-
 		$policyCredit = [
 			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
 			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],
