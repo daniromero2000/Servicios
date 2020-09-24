@@ -935,7 +935,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][0].splice(i, 1)
                         $http({
                             method: 'GET',
-                            url: '/api/liquidator/getProduct/' + product.CODIGO,
+                            url: '/api/liquidator/getCharges/' + product.CODIGO,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)
                             $scope.liquidator[key][0].forEach(j => {
@@ -958,7 +958,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             item.SOLICITUD = $scope.request.SOLICITUD;
                             $scope.liquidator[key][0].push(item);
                         }, function errorCallback(response) {
-                            response.url = '/api/liquidator/getProduct/' + product.CODIGO;
+                            response.url = '/api/liquidator/getCharges/' + product.CODIGO;
                             $scope.addError(response, product.CODIGO);
                         });
                     }
