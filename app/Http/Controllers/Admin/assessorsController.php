@@ -1077,11 +1077,9 @@ class assessorsController extends Controller
 
 	public function decisionCreditCard(Request $request, $identificationNumber)
 	{
-		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerIntention = $customer->latestIntention;
+		$customer                           = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerIntention                  = $customer->latestIntention;
 		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
-		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$estadoSolic = $this->doUbica($customer, $customerIntention);
 		$customerIntention->save();
 		$dataPolicy = $request['policyResult'];
 
@@ -1121,7 +1119,7 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-
+		$estadoSolic = $this->doUbicaOrConfronta($customer, $customerIntention);
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;

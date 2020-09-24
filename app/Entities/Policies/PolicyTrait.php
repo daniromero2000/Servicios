@@ -42,10 +42,11 @@ trait PolicyTrait
     return $historialCrediticio;
   }
 
-  public function doUbica($customer, $customerIntention)
+  public function doUbicaOrConfronta($customer, $customerIntention)
   {
     $estadoSolic = 1;
     $lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
+    $this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
     $this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
     $resultUbica = $this->validateConsultaUbica($customer);
 
