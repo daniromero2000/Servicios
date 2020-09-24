@@ -138,6 +138,7 @@ trait PolicyTrait
       $policyCredit['quotaApprovedAdvance'],
       $estadoSolic
     );
+    dd($factoryRequest);
 
     $this->datosClienteInterface->addDatosCliente($customer, $factoryRequest, $data);
     $fosygaTemp = $customer->customerFosygaTemps->first();
