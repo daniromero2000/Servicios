@@ -623,8 +623,8 @@ class assessorsController extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
-		$customerStatusDenied  = false;
-		$idDef                 = "";
+		$customerStatusDenied                 = false;
+		$idDef                                = "";
 		$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
 		$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
 		$idDef                                = $perfilCrediticio['idDef'];
@@ -641,12 +641,10 @@ class assessorsController extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-		$ValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('finvrmora');
-		$ValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('rmvrmora');
-		$obligaciones        = $this->policyInterface->validateCustomerArreas($ValorMoraFinanciero, $ValorMoraReal, $customerStatusDenied, $idDef);
-		$customerStatusDenied                   = $obligaciones['customerStatusDenied'];
-		$idDef                                  = $obligaciones['idDef'];
-		$mora = $obligaciones['arreas'];
+		$obligaciones         = $this->doArreas($customer, $lastCifinScore, $customerStatusDenied, $idDef);
+		$customerStatusDenied = $obligaciones['customerStatusDenied'];
+		$idDef                = $obligaciones['idDef'];
+		$mora                 = $obligaciones['arreas'];
 		$customerIntention->ESTADO_OBLIGACIONES = $obligaciones['arreas'];
 
 		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
