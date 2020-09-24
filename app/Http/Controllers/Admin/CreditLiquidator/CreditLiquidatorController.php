@@ -355,7 +355,6 @@ class CreditLiquidatorController extends Controller
     public function validationLead($identificationNumber)
     {
         $customer = $this->customerInterface->findCustomerById($identificationNumber);
-        dd($customer);
         $zone = auth()->user()->Assessor->subsidiary->ZONA;
 
         $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
