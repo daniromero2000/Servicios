@@ -662,11 +662,13 @@ class assessorsController extends Controller
 		$customerIntention->HISTORIAL_CREDITO = $this->getHistorialCrediticio($customer->CEDULA);
 		$customerIntention->TIPO_CLIENTE = 'NUEVO';
 
+		//Politica de Edad
 		$edad                    = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $customerIntention->TIPO_CLIENTE, $idDef);
 		$customerStatusDenied    = $edad['customerStatusDenied'];
 		$idDef                   = $edad['idDef'];
 		$customerIntention->EDAD = $edad['edad'];
 
+		//Politica tiempo en labor
 		$labor                           = $this->policyInterface->validateLabourTime($customer, $customerStatusDenied, $idDef);
 		$customerStatusDenied            = $labor['customerStatusDenied'];
 		$idDef                           = $labor['idDef'];
@@ -1446,4 +1448,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1454
+//1451
