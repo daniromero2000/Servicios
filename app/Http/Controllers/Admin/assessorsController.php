@@ -717,11 +717,7 @@ class assessorsController extends Controller
 					$idDef     = 26;
 				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 					$idDef     = 25;
-				} else {
-					//'Aprobado con tarjeta no apto'
 				}
-			} else {
-				//'Aprobado sin tarjeta'
 			}
 		} else {
 			if ($customer->creditCard) {
@@ -729,11 +725,7 @@ class assessorsController extends Controller
 					$idDef     = 26;
 				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 					$idDef     = 25;
-				} else {
-					//'No Aprobado con tarjeta no apto'
 				}
-			} else {
-				//'No Aprobado sin tarjeta'
 			}
 		}
 
