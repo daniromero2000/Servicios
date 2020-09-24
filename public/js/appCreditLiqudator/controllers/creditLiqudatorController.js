@@ -655,20 +655,26 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var precio = 0;
             var product = 0;
             var cuotaIni = 0
-            var hasRetanqueoIva = 0;
-            var hasRetanqueo = 0;
+            var hasRetanqueoIva1 = 0;
+            var hasRetanqueoIva2 = 0;
+            var hasRetanqueo1 = 0;
+            var hasRetanqueo2 = 0;
 
             if ($scope.liquidator[key][0][0].PRECIO != 0) {
                 precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)
             }
 
             $scope.liquidator[key][0].forEach(j => {
-                if (j.CODIGO == 'GPG1' || j.CODIGO == 'GPG2') {
-                    hasRetanqueoIva = 1
+                if (j.CODIGO == 'GPG1') {
+                    hasRetanqueoIva1 = 1
+                } else if (j.CODIGO == 'GPG2') {
+                    hasRetanqueoIva2 = 1
+                } else if (j.CODIGO == 'EPG1') {
+                    hasRetanqueo1 = 1
+                } else if (j.CODIGO == 'EPG2') {
+                    hasRetanqueo2 = 2
                 }
-                if (j.CODIGO == 'EPG1' || j.CODIGO == 'EPG2') {
-                    hasRetanqueo = 1
-                }
+
                 if (j.COD_PROCESO == 4) {
                     precio = precio + parseInt(parseInt(j.PRECIO) * parseInt(j.CANTIDAD));
                 }
@@ -692,7 +698,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '5':
 
-                    if ($scope.liquidator[key][3].check && hasRetanqueoIva == 0) {
+                    if ($scope.liquidator[key][3].check && hasRetanqueoIva2 == 0) {
                         var list = $scope.liquidator[key][0][0].LISTA;
                         $scope.items = {};
                         $scope.items.key = key
@@ -709,7 +715,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][0].push($scope.items);
                         $scope.items = {};
 
-                    } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo == 0) {
+                    } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo2 == 0) {
                         var list = $scope.liquidator[key][0][0].LISTA;
                         $scope.items = {};
                         $scope.items.key = key
@@ -731,7 +737,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '6':
 
-                    if ($scope.liquidator[key][3].check && hasRetanqueoIva == 0) {
+                    if ($scope.liquidator[key][3].check && hasRetanqueoIva1 == 0) {
                         var list = $scope.liquidator[key][0][0].LISTA;
                         $scope.items = {};
                         $scope.items.key = key
@@ -748,7 +754,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][0].push($scope.items);
                         $scope.items = {};
 
-                    } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo == 0) {
+                    } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo1 == 0) {
                         var list = $scope.liquidator[key][0][0].LISTA;
                         $scope.items = {};
                         $scope.items.key = key
