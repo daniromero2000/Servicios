@@ -21,6 +21,16 @@ trait PolicyTrait
     return $queryDataLead[0];
   }
 
+  public function doArreas($customer, $lastCifinScore, $customerStatusDenied, $idDef)
+  {
+    // 3.3 Estado de obligaciones
+    $ValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('finvrmora');
+    $ValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('rmvrmora');
+    $obligaciones        = $this->policyInterface->validateCustomerArreas($ValorMoraFinanciero, $ValorMoraReal, $customerStatusDenied, $idDef);
+
+    return $obligaciones;
+  }
+
   public function getHistorialCrediticio($identificationNumber)
   {
     $historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
