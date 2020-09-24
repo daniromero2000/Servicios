@@ -1111,7 +1111,7 @@ class assessorsController extends Controller
 		];
 
 		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
-		$resultUbica = $this->doUbica($customer, $customerIntention);
+		$resultUbica = $this->doUbica($customer, $lastName);
 		$estadoSolic = 1;
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
