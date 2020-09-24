@@ -40,39 +40,13 @@ trait PolicyTrait
     return $historialCrediticio;
   }
 
-  public function doUbicaOrConfronta($customer, $customerIntention)
+  public function doUbica($customer, $lastName)
   {
-    $lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
     $this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
     $this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
     $resultUbica = $this->validateConsultaUbica($customer);
 
-    $estadoSolic = 1;
-    if ($resultUbica == 0) {
-      $fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-      $confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
-      if ($confronta == 1) {
-        $form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
-        if (empty($form)) {
-          $customerIntention->save();
-          $estadoSolic = 1;
-        } else {
-          $customerIntention->save();
-          return [
-            'form' => $form,
-            'resp' => 'confronta'
-          ];
-        }
-      } else {
-        $customerIntention->save();
-        $estadoSolic = 1;
-      }
-    } else {
-      $customerIntention->save();
-      $estadoSolic = 19;
-    }
-
-    return  $estadoSolic;
+    return  $resultUbica;
   }
 
   public function validateConsultaUbica($customer)
