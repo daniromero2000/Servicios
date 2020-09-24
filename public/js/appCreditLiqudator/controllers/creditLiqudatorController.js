@@ -580,11 +580,11 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) / parseInt($scope.liquidator[key][3].PLAZO)))
                     }
 
-                    if ($scope.zone == 'ALTA' || $scope.zone == ' ' || typeProduct == 3 || typeProduct == 2) {
-                        $scope.liquidator[key][3].timelyPayment = 0;
-                    } else {
-                        $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
-                    }
+                    // if ($scope.zone == 'ALTA' || $scope.zone == ' ' || typeProduct == 3 || typeProduct == 2) {
+                    //     $scope.liquidator[key][3].timelyPayment = 0;
+                    // } else {
+                    //     $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
+                    // }
 
                     $scope.liquidator[key][3].TASAEA = $scope.tasaea;
                     $scope.liquidator[key][3].TASAMORA = $scope.tasamora;
