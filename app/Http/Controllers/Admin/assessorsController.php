@@ -568,7 +568,7 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($oportudataLead);
+			$policyCredit = $this->validatePolicyAssessors($oportudataLead);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -581,7 +581,7 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function validatePolicyCredit_new($customer)
+	private function validatePolicyAssessors($customer)
 	{
 		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
@@ -1228,8 +1228,8 @@ class assessorsController extends Controller
 	public function decisionTraditionalCredit(Request $request, $identificationNumber)
 	{
 		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->SUBTIPO     = "NUEVO";
+		$customer->TIPOCLIENTE = 'NUEVO';
+		$customer->SUBTIPO     = 'NUEVO';
 		$customer->save();
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tradicional';

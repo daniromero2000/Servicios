@@ -843,7 +843,7 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 
-			$estadoSolic = $this->doUbica($customer, $customerIntention);
+			$estadoSolic = $this->doUbicaOrConfronta($customer, $customerIntention);
 		}
 		$customerIntention->save();
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
