@@ -1119,23 +1119,20 @@ class assessorsController extends Controller
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 				if (empty($form)) {
-					$customerIntention->save();
 					$estadoSolic = 1;
 				} else {
-					$customerIntention->save();
 					return [
 						'form' => $form,
 						'resp' => 'confronta'
 					];
 				}
 			} else {
-				$customerIntention->save();
 				$estadoSolic = 1;
 			}
 		} else {
-			$customerIntention->save();
 			$estadoSolic = 19;
 		}
+		$customerIntention->save();
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;

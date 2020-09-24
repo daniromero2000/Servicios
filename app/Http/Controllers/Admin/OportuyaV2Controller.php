@@ -852,21 +852,17 @@ class OportuyaV2Controller extends Controller
 				if ($confronta == 1) {
 					$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 					if (empty($form)) {
-						$customerIntention->save();
 						$estadoSolic = 1;
 					} else {
-						$customerIntention->save();
 						return [
 							'form' => $form,
 							'resp' => 'confronta'
 						];
 					}
 				} else {
-					$customerIntention->save();
 					$estadoSolic = 1;
 				}
 			} else {
-				$customerIntention->save();
 				$estadoSolic = 19;
 			}
 		}
