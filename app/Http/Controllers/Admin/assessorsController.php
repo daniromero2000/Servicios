@@ -509,7 +509,7 @@ class assessorsController extends Controller
 		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
-			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->ESTADO = 'NEGADO';
 			$oportudataLead->save();
 
 			$dataIntention = [
@@ -537,7 +537,7 @@ class assessorsController extends Controller
 		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($oportudataLead, $this->daysToIncrement);
 
 		if ($consultaComercial == 0) {
-			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->ESTADO = 'SIN COMERCIAL';
 			$oportudataLead->save();
 
 			$dataIntention = [
@@ -568,7 +568,7 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($oportudataLead);
+			$policyCredit = $this->validatePolicyAssessors($oportudataLead);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -581,7 +581,7 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function validatePolicyCredit_new($customer)
+	private function validatePolicyAssessors($customer)
 	{
 		$customer                  = $this->customerInterface->findCustomerById($customer->CEDULA);
 		$intentionData             = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $customer->USUARIO_ACTUALIZACION];
@@ -590,11 +590,11 @@ class assessorsController extends Controller
 		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
 		//3.1 Estado de documento
-		$estadoCliente = "PREAPROBADO";
+		$estadoCliente = 'PREAPROBADO';
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
 		if (!empty($getDataRegistraduria)) {
 			if ($getDataRegistraduria->fuenteFallo == 'SI') {
-				$fuenteFallo = "true";
+				$fuenteFallo = 'true';
 			} elseif (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
 					$customer->ESTADO  = 'NEGADO';
@@ -603,7 +603,7 @@ class assessorsController extends Controller
 					$customerIntention->ESTADO_INTENCION  = '1';
 					$customerIntention->CREDIT_DECISION = 'Negado';
 					$customerIntention->save();
-					return ['resp' => "false"];
+					return ['resp' => 'false'];
 				}
 			} else {
 				$fuenteFallo = "true";
@@ -717,11 +717,7 @@ class assessorsController extends Controller
 					$idDef     = 26;
 				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 					$idDef     = 25;
-				} else {
-					//'Aprobado con tarjeta no apto'
 				}
-			} else {
-				//'Aprobado sin tarjeta'
 			}
 		} else {
 			if ($customer->creditCard) {
@@ -729,11 +725,7 @@ class assessorsController extends Controller
 					$idDef     = 26;
 				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 					$idDef     = 25;
-				} else {
-					//'No Aprobado con tarjeta no apto'
 				}
-			} else {
-				//'No Aprobado sin tarjeta'
 			}
 		}
 
@@ -1128,21 +1120,19 @@ class assessorsController extends Controller
 
 	public function decisionHasCreditCard(Request $request, $identificationNumber)
 	{
-		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
-		$intention = $customer->latestIntention;
-		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$customer                    = $this->customerInterface->findCustomerById($identificationNumber);
+		$intention                   = $customer->latestIntention;
+		$intention->CREDIT_DECISION  = 'Tarjeta Oportuya';
 		$intention->ESTADO_INTENCION = 4;
 		$intention->save();
-		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dataLead               = $request['lead'];
 
-		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
 			'resp' => 'true'
 		];
 
+		$dataLead = $request['lead'];
 		$data = [
 			'NOM_REFPER' => (isset($dataLead['NOM_REFPER']) && $dataLead['NOM_REFPER'] != '') ? $dataLead['NOM_REFPER'] : '',
 			'DIR_REFPER' => (isset($dataLead['DIR_REFPER']) && $dataLead['DIR_REFPER'] != '') ? $dataLead['DIR_REFPER'] : '',
@@ -1172,11 +1162,11 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = 1;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
-		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
+
+		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
 	}
 
 	public function validateFormConfronta(Request $request)
@@ -1230,8 +1220,8 @@ class assessorsController extends Controller
 	public function decisionTraditionalCredit(Request $request, $identificationNumber)
 	{
 		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->SUBTIPO     = "NUEVO";
+		$customer->TIPOCLIENTE = 'NUEVO';
+		$customer->SUBTIPO     = 'NUEVO';
 		$customer->save();
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tradicional';
@@ -1454,4 +1444,4 @@ class assessorsController extends Controller
 		]);
 	}
 }
-//1459
+//1455
