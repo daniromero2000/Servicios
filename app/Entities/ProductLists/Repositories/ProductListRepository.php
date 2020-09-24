@@ -50,7 +50,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     public function getAllProductLists()
     {
         try {
-            return $this->model->with('userChecked')->get($this->columns);
+            return $this->model->with('userChecked')->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -88,7 +88,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     {
         $dateNow = date("Y-m-d");
         try {
-            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get($this->columns);
+            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -98,7 +98,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     {
         $dateNow = date("Y-m-d");
         try {
-            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get($this->columns);
+            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -121,7 +121,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     {
         $dateNow = date("Y-m-d");
         try {
-            return $this->model->where('name',  $list)->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get($this->columns);
+            return $this->model->where('name',  $list)->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -130,7 +130,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     public function getProductListsForTheCatalog($zone)
     {
         try {
-            return $this->model->where('checked', 1)->where('zone', $zone)->get($this->columns);
+            return $this->model->where('checked', 1)->where('zone', $zone)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
