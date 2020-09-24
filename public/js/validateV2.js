@@ -50,6 +50,10 @@ $(document).ready(function () {
 					case 'date':
 						validateDate(inputs[i]);
 						break;
+
+					case 'telephoneReal':
+						validateTelephone(inputs[i]);
+						break;
 				}
 			}
 		}
@@ -83,12 +87,17 @@ $(document).ready(function () {
 		}
 
 		function validateAddres(input) {
-			var patt ="(\\w*\\s?[\\.]*[\\-]*)+";
+			var patt = "(\\w*\\s?[\\.]*[\\-]*)+";
 			setAttributePatternInput(input, patt);
 		}
 
 		function validateTelephoneAndCelphone(input) {
 			var patt = "(\\+57)?\\s?((\\d{7})|(\\d{10}))";
+			setAttributePatternInput(input, patt);
+		}
+
+		function validateTelephone(input) {
+			var patt = "(\\+57)?\\s?((\\d{7})|(\\d{7}))";
 			setAttributePatternInput(input, patt);
 		}
 
@@ -114,7 +123,7 @@ $(document).ready(function () {
 			setAttributePatternInput(input, patt);
 		};
 
-		function validateDate(input){
+		function validateDate(input) {
 			var patt = "[1-2][0-9][0-9][0-9][\\-][0-3][0-9][\\-][0-3][0-9]";
 			setAttributePatternInput(input, patt);
 		}
