@@ -843,7 +843,7 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 
-			$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
+			$lastName    = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 			$resultUbica = $this->doUbica($customer, $lastName);
 			$estadoSolic = 1;
 			if ($resultUbica == 0) {
@@ -916,7 +916,7 @@ class OportuyaV2Controller extends Controller
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			$perfilCrediticio                      = $this->policyInterface->CheckScorePolicy($customerScore);
+			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
 			$idDef                                = $perfilCrediticio['idDef'];
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
@@ -982,22 +982,20 @@ class OportuyaV2Controller extends Controller
 		$quotaApprovedAdvance = 0;
 
 		if ($blackCard) {
-			$tarjetaBlack         = new Black;
-			$tarjeta              = $tarjetaBlack->getName();
-			$quotaApprovedProduct = $tarjetaBlack->getQuotaApprovedProduct();
-			$quotaApprovedAdvance = $tarjetaBlack->getQuotaApprovedAdvance();
+			$creditCard = new Black;
 		}
 
 		// 3.7 Tarjeta Gray
 		if ($this->policyInterface->tipoAConHistorial($customerIntention) && $blackCard == false) {
 			if ($this->policyInterface->pensionadoOEmpleado($customer)) {
-				$aprobado             = true;
-				$tarjetaGray          = new Gray;
-				$tarjeta              = $tarjetaGray->getName();
-				$quotaApprovedProduct = $tarjetaGray->getQuotaApprovedProduct();
-				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
+				$aprobado   = true;
+				$creditCard = new Gray;
 			}
 		}
+
+		$tarjeta              = $creditCard->getName();
+		$quotaApprovedProduct = $creditCard->getQuotaApprovedProduct();
+		$quotaApprovedAdvance = $creditCard->getQuotaApprovedAdvance();
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
