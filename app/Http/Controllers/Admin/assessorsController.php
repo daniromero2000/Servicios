@@ -1121,7 +1121,6 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		dd($estadoSolic);
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;

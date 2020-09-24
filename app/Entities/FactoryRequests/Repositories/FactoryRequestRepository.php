@@ -37,6 +37,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $data['STATE']         = "A";
         $data['GRAN_TOTAL']    = 0;
 
+
+        return dd($data);
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
