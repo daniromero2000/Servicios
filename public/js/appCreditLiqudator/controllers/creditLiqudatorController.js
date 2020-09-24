@@ -155,6 +155,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         }
                     }, function errorCallback(response) {
                         hideLoader();
+                        $('#validationCustomer').modal('show');
+                        $scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de Liquidación ya que el cliente no se encuentra registrado en nuestra base de datos.";
                         response.url = '/api/liquidator/validationLead/' + $scope.lead.CEDULA;
                         $scope.addError(response, $scope.lead.CEDULA);
                     });
