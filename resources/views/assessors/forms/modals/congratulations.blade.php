@@ -15,7 +15,7 @@
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
-                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '1' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
@@ -47,7 +47,7 @@
                             <p class="textTnakYouModal">
                                 Su intención ha sido aprobada.
                             </p>
-                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '1' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
@@ -65,7 +65,7 @@
 
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO' && resp.policy.ID_DEF != '25'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
-                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '1' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
@@ -106,7 +106,7 @@
                         <div class="col-12 text-center">
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
-                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
+                            @if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '1' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138')
                             <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO' || estadoCliente == 'APROBADO'" href="/Administrator/creditLiquidator/@{{lead.CEDULA}}" class="btn bg-primary buttonBackCardExist">Crear negocio</a>
                             @endif
                         </div>

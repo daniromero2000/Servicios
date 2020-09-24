@@ -1,5 +1,6 @@
 @if(auth()->user()->Assessor)
-@if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138') <div class="button-absolute">
+@if (auth()->user()->Assessor->subsidiary->CODIGO == '133' || auth()->user()->Assessor->subsidiary->CODIGO == '1' || auth()->user()->Assessor->subsidiary->CODIGO == '155' || auth()->user()->Assessor->subsidiary->CODIGO == '147' || auth()->user()->Assessor->subsidiary->CODIGO == '138') <div class="button-absolute">
+
 
     <input type="checkbox" id="btn-mas">
     <div class="redes" data-toggle="tooltip" data-placement="top" title="Crear liquidación">
