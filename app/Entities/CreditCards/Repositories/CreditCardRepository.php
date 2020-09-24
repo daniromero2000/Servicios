@@ -106,7 +106,6 @@ class CreditCardRepository implements CreditCardRepositoryInterface
 
 	public function validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef)
 	{
-		//Validacion si posee tarjeta
 		if ($aprobado) {
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {

@@ -913,23 +913,19 @@ class OportuyaV2Controller extends Controller
 
 		$customerStatusDenied  = false;
 		$idDef                 = "";
-		if (empty($customer)) {
-			return ['resp' => "false"];
-		} else {
-			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
-			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
-			$idDef                                = $perfilCrediticio['idDef'];
-			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
+		$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
+		$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
+		$idDef                                = $perfilCrediticio['idDef'];
+		$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio['perfilCrediticio'];
 
-			if ($customerIntention->PERFIL_CREDITICIO == 'TIPO 7') {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
-				$customerIntention->ID_DEF            = $idDef;
-				$customerIntention->ESTADO_INTENCION  = '1';
-				$customerIntention->CREDIT_DECISION   = 'Negado';
-				$customerIntention->save();
-				return ['resp' => "false"];
-			}
+		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO 7') {
+			$customer->ESTADO = 'NEGADO';
+			$customer->save();
+			$customerIntention->ID_DEF            = $idDef;
+			$customerIntention->ESTADO_INTENCION  = '1';
+			$customerIntention->CREDIT_DECISION   = 'Negado';
+			$customerIntention->save();
+			return ['resp' => "false"];
 		}
 
 		// 3.3 Estado de obligaciones
@@ -1236,6 +1232,7 @@ class OportuyaV2Controller extends Controller
 				return ['resp' =>  "-2"];
 			}
 		}
+
 		$customerIntention->save();
 		$customer->save();
 		return ['resp' => "true"];
@@ -1407,4 +1404,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1389
+//1410
