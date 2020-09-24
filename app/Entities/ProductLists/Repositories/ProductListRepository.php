@@ -26,7 +26,10 @@ class ProductListRepository implements ProductListRepositoryInterface
         'percentage_credit_card_black',
         'bond_black',
         'apply_protection',
-        'apply_gift'
+        'apply_gift',
+        'percentage_base_oportuya_customer',
+        'priority',
+        'percentage_public_price_promotion'
     ];
 
     public function __construct(
@@ -47,7 +50,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     public function getAllProductLists()
     {
         try {
-            return $this->model->with('userChecked')->get();
+            return $this->model->with('userChecked')->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -85,7 +88,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     {
         $dateNow = date("Y-m-d");
         try {
-            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();
+            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -95,7 +98,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     {
         $dateNow = date("Y-m-d");
         try {
-            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get();
+            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -106,9 +109,9 @@ class ProductListRepository implements ProductListRepositoryInterface
         $dateNow = date("Y-m-d");
         try {
             return
-            $this->model->whereHas('sudsidiaries', function (Builder $query) use ($subsidiary) {
-                $query->where('product_list_subsidiary.codigo', $subsidiary);
-            })->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get(['id','name']);
+                $this->model->whereHas('sudsidiaries', function (Builder $query) use ($subsidiary) {
+                    $query->where('product_list_subsidiary.codigo', $subsidiary);
+                })->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get(['id', 'name']);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -116,9 +119,9 @@ class ProductListRepository implements ProductListRepositoryInterface
 
     public function getCurrentProductListsForName($list)
     {
-       $dateNow = date("Y-m-d");
+        $dateNow = date("Y-m-d");
         try {
-            return $this->model->where('name',  $list)->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();
+            return $this->model->where('name',  $list)->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -127,7 +130,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     public function getProductListsForTheCatalog($zone)
     {
         try {
-            return $this->model->where('checked', 1)->where('zone', $zone)->get();
+            return $this->model->where('checked', 1)->where('zone', $zone)->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
