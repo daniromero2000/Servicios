@@ -291,29 +291,33 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 		};
 
 		$scope.verificationCode = function () {
-			showLoader();
-			$http({
-				method: 'GET',
-				url: '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.leadInfo.identificationNumber,
-			}).then(function successCallback(response) {
-				hideLoader();
-				if (response.data == true) {
-					$scope.validateNum = 1;
-					$('#confirmCodeVerification').modal('hide');
-					$scope.saveStep1();
-				} else if (response.data == -1) {
-					// En caso de que el codigo sea erroneo
-					$scope.showAlertCode = true;
-				} else if (response.data == -2) {
-					// en caso de que el codigo ya expiro
-					$scope.showWarningCode = true;
-				}
-			}, function errorCallback(response) {
-				hideLoader();
-				response.url = '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.leadInfo.identificationNumber;
-				$scope.addError(response, $scope.leadInfo.identificationNumber);
-				console.log(response);
-			});
+			if ($scope.code.code != '') {
+				showLoader();
+				$http({
+					method: 'GET',
+					url: '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.leadInfo.identificationNumber,
+				}).then(function successCallback(response) {
+					hideLoader();
+					if (response.data == true) {
+						$scope.validateNum = 1;
+						$('#confirmCodeVerification').modal('hide');
+						$scope.saveStep1();
+					} else if (response.data == -1) {
+						// En caso de que el codigo sea erroneo
+						$scope.showAlertCode = true;
+					} else if (response.data == -2) {
+						// en caso de que el codigo ya expiro
+						$scope.showWarningCode = true;
+					}
+				}, function errorCallback(response) {
+					hideLoader();
+					response.url = '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.leadInfo.identificationNumber;
+					$scope.addError(response, $scope.leadInfo.identificationNumber);
+					console.log(response);
+				});
+			} else {
+				alert('Por favor ingresa el token correspondiente');
+			}
 		};
 
 		$scope.saveStep1 = function () {
