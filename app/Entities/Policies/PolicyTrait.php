@@ -24,8 +24,6 @@ trait PolicyTrait
 
   public function getHistorialCrediticio($identificationNumber)
   {
-
-    $historialCrediticio = 0;
     $historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
 
     if ($historialCrediticio == 0) {
