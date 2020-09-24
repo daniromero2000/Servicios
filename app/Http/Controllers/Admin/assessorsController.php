@@ -694,20 +694,22 @@ class assessorsController extends Controller
 		$quotaApprovedAdvance = 0;
 
 		if ($blackCard) {
-			$creditCard = new Black;
+			$tarjetaBlack         = new Black;
+			$tarjeta              = $tarjetaBlack->getName();
+			$quotaApprovedProduct = $tarjetaBlack->getQuotaApprovedProduct();
+			$quotaApprovedAdvance = $tarjetaBlack->getQuotaApprovedAdvance();
 		}
 
 		// 3.7 Tarjeta Gray
 		if ($this->policyInterface->tipoAConHistorial($customerIntention) && $blackCard == false) {
 			if ($this->policyInterface->pensionadoOEmpleado($customer)) {
-				$aprobado   = true;
-				$creditCard = new Gray;
+				$aprobado             = true;
+				$tarjetaGray          = new Gray;
+				$tarjeta              = $tarjetaGray->getName();
+				$quotaApprovedProduct = $tarjetaGray->getQuotaApprovedProduct();
+				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
 			}
 		}
-
-		$tarjeta              = $creditCard->getName();
-		$quotaApprovedProduct = $creditCard->getQuotaApprovedProduct();
-		$quotaApprovedAdvance = $creditCard->getQuotaApprovedAdvance();
 
 		if ($aprobado) {
 			if ($customer->creditCard) {
