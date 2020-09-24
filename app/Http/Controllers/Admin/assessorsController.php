@@ -1173,9 +1173,8 @@ class assessorsController extends Controller
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
-		$estadoSolic = 1;
 
-		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
+		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
 	}
 
 	public function validateFormConfronta(Request $request)
