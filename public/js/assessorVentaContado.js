@@ -504,30 +504,35 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.verificationCode = function () {
 			$scope.disabledButtonCode = true;
 			showLoader();
-			$http({
-				method: 'GET',
-				url: '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.lead.CEDULA,
-			}).then(function successCallback(response) {
-				if (response.data == true) {
-					$scope.validateNum = 1;
-					$('#confirmCodeVerification').modal('hide');
-					$scope.addCliente($scope.tipoCliente);
-				} else if (response.data == -1) {
-					$scope.disabledButtonCode = false;
+			if ($scope.code.code != '') {
+				$http({
+					method: 'GET',
+					url: '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.lead.CEDULA,
+				}).then(function successCallback(response) {
+					if (response.data == true) {
+						$scope.validateNum = 1;
+						$('#confirmCodeVerification').modal('hide');
+						$scope.addCliente($scope.tipoCliente);
+					} else if (response.data == -1) {
+						$scope.disabledButtonCode = false;
 
-					// En caso de que el codigo sea erroneo
-					$scope.showAlertCode = true;
-				} else if (response.data == -2) {
-					$scope.disabledButtonCode = false;
-					// en caso de que el codigo ya expiro
-					$scope.showWarningCode = true;
-				}
-				hideLoader();
-			}, function errorCallback(response) {
-				response.url = '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.lead.CEDULA;
-				hideLoader();
-				$scope.addError(response, $scope.lead.CEDULA);
-			});
+						// En caso de que el codigo sea erroneo
+						$scope.showAlertCode = true;
+					} else if (response.data == -2) {
+						$scope.disabledButtonCode = false;
+						// en caso de que el codigo ya expiro
+						$scope.showWarningCode = true;
+					}
+					hideLoader();
+				}, function errorCallback(response) {
+					response.url = '/api/oportuya/verificationCode/' + $scope.code.code + '/' + $scope.lead.CEDULA;
+					hideLoader();
+					$scope.addError(response, $scope.lead.CEDULA);
+				});
+			} else {
+				showAlert('error', 'Por favor ingresa el token correspondiente');
+				$scope.disabledButtonCode = false;
+			}
 		};
 
 		$scope.addCliente = function (tipoCreacion) {
