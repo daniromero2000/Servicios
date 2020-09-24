@@ -34,7 +34,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         $data['FECHASOL']      = date("Y-m-d H:i:s");
         $data['FTP']           = 0;
-        $data['STATE']         = "A";
+        $data['STATE']         = 'A';
         $data['GRAN_TOTAL']    = 0;
 
         try {
