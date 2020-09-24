@@ -509,7 +509,7 @@ class assessorsController extends Controller
 		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
-			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->ESTADO = 'NEGADO';
 			$oportudataLead->save();
 
 			$dataIntention = [
@@ -537,7 +537,7 @@ class assessorsController extends Controller
 		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($oportudataLead, $this->daysToIncrement);
 
 		if ($consultaComercial == 0) {
-			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->ESTADO = 'SIN COMERCIAL';
 			$oportudataLead->save();
 
 			$dataIntention = [
@@ -590,11 +590,11 @@ class assessorsController extends Controller
 		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
 		//3.1 Estado de documento
-		$estadoCliente = "PREAPROBADO";
+		$estadoCliente = 'PREAPROBADO';
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
 		if (!empty($getDataRegistraduria)) {
 			if ($getDataRegistraduria->fuenteFallo == 'SI') {
-				$fuenteFallo = "true";
+				$fuenteFallo = 'true';
 			} elseif (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
 					$customer->ESTADO  = 'NEGADO';
@@ -603,7 +603,7 @@ class assessorsController extends Controller
 					$customerIntention->ESTADO_INTENCION  = '1';
 					$customerIntention->CREDIT_DECISION = 'Negado';
 					$customerIntention->save();
-					return ['resp' => "false"];
+					return ['resp' => 'false'];
 				}
 			} else {
 				$fuenteFallo = "true";
