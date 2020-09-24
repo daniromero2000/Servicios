@@ -842,13 +842,13 @@ class OportuyaV2Controller extends Controller
 					'infoLead' => $infoLead
 				];
 			}
+
 			$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 			$resultUbica = $this->doUbica($customer, $lastName);
-
 			$estadoSolic = 1;
 			if ($resultUbica == 0) {
 				$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-				$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
+				$confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
 				if ($confronta == 1) {
 					$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 					if (empty($form)) {

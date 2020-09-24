@@ -1115,7 +1115,7 @@ class assessorsController extends Controller
 		$estadoSolic = 1;
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
 				if (empty($form)) {
