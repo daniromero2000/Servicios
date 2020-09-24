@@ -3,7 +3,6 @@ $(document).ready(function () {
 		var inputs = $('input');
 		for (var i = 0; i < inputs.length; i++) {
 			var name = "";
-			var typeInput = "";
 			if (inputs[i].getAttribute('type') != 'hidden') {
 				name = getTypeValidationInput(inputs[i]);
 				switch (name) {
