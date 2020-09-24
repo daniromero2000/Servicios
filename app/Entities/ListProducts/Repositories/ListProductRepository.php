@@ -14,7 +14,18 @@ class ListProductRepository implements ListProductRepositoryInterface
     private $productListInterface;
     private $giveAwayInterface;
     private $factorInterface;
-
+    private $columns = [
+        'sku',
+        'item',
+        'base_cost',
+        'iva_cost',
+        'cash_cost',
+        'protection',
+        'type_product',
+        'min_tolerance',
+        'max_tolerance',
+        'type_product'
+    ];
 
     public function __construct(
         ListProduct $ListProduct,
@@ -205,7 +216,7 @@ class ListProductRepository implements ListProductRepositoryInterface
             }
 
             $dataProduct[$productList['name']] = [
-                'normal_public_price'                 => round($normalPublicPrice, -1, PHP_ROUND_HALF_UP),
+                'normal_public_price'                 => round($normalPublicPrice, -2, PHP_ROUND_HALF_UP),
                 'cash_promotion'                      => $cashPromotion,
                 'promotion_public_price'              => round($promotionPublicPrice, -1, PHP_ROUND_HALF_UP),
                 'percentage_promotion_public_price'   => $percentagePublicPrice,
