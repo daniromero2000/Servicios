@@ -1386,4 +1386,4 @@ class OportuyaV2Controller extends Controller
 		return $charTrim;
 	}
 }
-//1384
+//1389
