@@ -240,7 +240,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}, function errorCallback(response) {
 				hideLoader();
 				response.url = '/assessor/api/ventaContado/getInfoVentaContado';
-				$scope.addError(response, $scope.lead.CEDULA);
+				// $scope.addError(response, $scope.lead.CEDULA);
 			});
 		};
 
