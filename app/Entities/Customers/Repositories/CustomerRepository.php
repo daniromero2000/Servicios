@@ -9,6 +9,7 @@ use Illuminate\Support\Collection as Support;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
@@ -63,6 +64,7 @@ class CustomerRepository implements CustomerRepositoryInterface
 
     public function findCustomerById($identificationNumber): Customer
     {
+
         try {
             return $this->model->with([
                 'latestCifinScore',
@@ -70,8 +72,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'DebtorInsurance',
                 'creditCard'
             ])->findOrFail($identificationNumber);
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
+        } catch (ModelNotFoundException $e) {
+            abort(404, $e->getMessage());
         }
     }
 
