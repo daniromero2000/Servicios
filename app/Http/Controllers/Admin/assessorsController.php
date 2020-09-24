@@ -1128,21 +1128,19 @@ class assessorsController extends Controller
 
 	public function decisionHasCreditCard(Request $request, $identificationNumber)
 	{
-		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
-		$intention = $customer->latestIntention;
-		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$customer                    = $this->customerInterface->findCustomerById($identificationNumber);
+		$intention                   = $customer->latestIntention;
+		$intention->CREDIT_DECISION  = 'Tarjeta Oportuya';
 		$intention->ESTADO_INTENCION = 4;
 		$intention->save();
-		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dataLead               = $request['lead'];
 
-		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
 			'resp' => 'true'
 		];
 
+		$dataLead = $request['lead'];
 		$data = [
 			'NOM_REFPER' => (isset($dataLead['NOM_REFPER']) && $dataLead['NOM_REFPER'] != '') ? $dataLead['NOM_REFPER'] : '',
 			'DIR_REFPER' => (isset($dataLead['DIR_REFPER']) && $dataLead['DIR_REFPER'] != '') ? $dataLead['DIR_REFPER'] : '',
@@ -1172,10 +1170,11 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = 1;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
+		$estadoSolic = 1;
+
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
