@@ -305,6 +305,7 @@ Route::get('/getAssessors', 'Admin\UserController@getAllAssessor');
 
 // Administrator
 Route::resource('/api/appError', 'Admin\AppErrors\AppErrorController');
+Route::get('/Administrator/appError', 'Admin\AppErrors\AppErrorController@index');
 
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
     Route::get('/crearCliente', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
