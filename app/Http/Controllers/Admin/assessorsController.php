@@ -711,23 +711,7 @@ class assessorsController extends Controller
 			}
 		}
 
-		if ($aprobado) {
-			if ($customer->creditCard) {
-				if ($customer->creditCard->ESTADO == 'B') {
-					$idDef     = 26;
-				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
-					$idDef     = 25;
-				}
-			}
-		} else {
-			if ($customer->creditCard) {
-				if ($customer->creditCard->ESTADO == 'B') {
-					$idDef     = 26;
-				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
-					$idDef     = 25;
-				}
-			}
-		}
+		$idDef = $this->creditCardInterface->validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef);
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {

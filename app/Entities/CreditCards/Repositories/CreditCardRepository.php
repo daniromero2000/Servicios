@@ -103,4 +103,27 @@ class CreditCardRepository implements CreditCardRepositoryInterface
 			//throw $th;
 		}
 	}
+
+	public function validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef)
+	{
+		//Validacion si posee tarjeta
+		if ($aprobado) {
+			if ($customer->creditCard) {
+				if ($customer->creditCard->ESTADO == 'B') {
+					$idDef     = 26;
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
+					$idDef     = 25;
+				}
+			}
+		} else {
+			if ($customer->creditCard) {
+				if ($customer->creditCard->ESTADO == 'B') {
+					$idDef     = 26;
+				} elseif ($customerIntention->PERFIL_CREDITICIO == 'TIPO A' || $customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
+					$idDef     = 25;
+				}
+			}
+		}
+		return $idDef;
+	}
 }
