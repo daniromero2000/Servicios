@@ -842,8 +842,33 @@ class OportuyaV2Controller extends Controller
 					'infoLead' => $infoLead
 				];
 			}
+			$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
+			$resultUbica = $this->doUbica($customer, $lastName);
 
-			$estadoSolic = $this->doUbicaOrConfronta($customer, $customerIntention);
+			$estadoSolic = 1;
+			if ($resultUbica == 0) {
+				$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
+				$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
+				if ($confronta == 1) {
+					$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
+					if (empty($form)) {
+						$customerIntention->save();
+						$estadoSolic = 1;
+					} else {
+						$customerIntention->save();
+						return [
+							'form' => $form,
+							'resp' => 'confronta'
+						];
+					}
+				} else {
+					$customerIntention->save();
+					$estadoSolic = 1;
+				}
+			} else {
+				$customerIntention->save();
+				$estadoSolic = 19;
+			}
 		}
 		$customerIntention->save();
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);

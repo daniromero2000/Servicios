@@ -1110,7 +1110,33 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = $this->doUbicaOrConfronta($customer, $customerIntention);
+		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
+		$resultUbica = $this->doUbica($customer, $lastName);
+		$estadoSolic = 1;
+		if ($resultUbica == 0) {
+			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $customer->CEDULA, $fechaExpIdentification, $lastName);
+			if ($confronta == 1) {
+				$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
+				if (empty($form)) {
+					$customerIntention->save();
+					$estadoSolic = 1;
+				} else {
+					$customerIntention->save();
+					return [
+						'form' => $form,
+						'resp' => 'confronta'
+					];
+				}
+			} else {
+				$customerIntention->save();
+				$estadoSolic = 1;
+			}
+		} else {
+			$customerIntention->save();
+			$estadoSolic = 19;
+		}
+
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
