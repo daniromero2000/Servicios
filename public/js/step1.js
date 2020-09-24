@@ -179,21 +179,23 @@ angular.module('appStep1', ['moment-picker'])
 		};
 
 		$scope.checkIfExistNum = function () {
-			$http({
-				method: 'GET',
-				url: '/api/checkIfExistNum/' + $scope.leadInfo.telephone + '/' + $scope.leadInfo.identificationNumbe,
-			}).then(function successCallback(response) {
-				if (response.data >= 1) {
-					alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
-					$scope.leadInfo.telephone = "";
-				} else {
-					console.log("Validado!!!");
-				}
-			}, function errorCallback(response) {
-				response.url = '/api/checkIfExistNum/' + $scope.leadInfo.telephone;
-				$scope.addError(response, $scope.leadInfo.identificationNumber);
-				console.log(response);
-			});
+			if ($scope.leadInfo.telephone != '') {
+				$http({
+					method: 'GET',
+					url: '/api/checkIfExistNum/' + $scope.leadInfo.telephone + '/' + $scope.leadInfo.identificationNumbe,
+				}).then(function successCallback(response) {
+					if (response.data >= 1) {
+						alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
+						$scope.leadInfo.telephone = "";
+					} else {
+						console.log("Validado!!!");
+					}
+				}, function errorCallback(response) {
+					response.url = '/api/checkIfExistNum/' + $scope.leadInfo.telephone;
+					$scope.addError(response, $scope.leadInfo.identificationNumber);
+					console.log(response);
+				});
+			}
 		};
 
 		$scope.getValidationLead = function () {
