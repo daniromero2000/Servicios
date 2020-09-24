@@ -1121,6 +1121,7 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
+		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
