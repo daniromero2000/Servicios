@@ -183,10 +183,10 @@ trait PolicyTrait
       $debtor         = new DebtorInsurance();
       $debtor->CEDULA = $customer->CEDULA;
       $debtor->SOLIC  = $factoryRequest->SOLICITUD;
-      $estadoResult   = "PREAPROBADO";
+      $estadoResult   = 'PREAPROBADO';
       $debtor->save();
     } else {
-      $estadoResult  = "PREAPROBADO";
+      $estadoResult  = 'PREAPROBADO';
       $respScoreLead = $customer->latestCifinScore;
       $scoreLead     = 0;
       if (!empty($respScoreLead)) {
