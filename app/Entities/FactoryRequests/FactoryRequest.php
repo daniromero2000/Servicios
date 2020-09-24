@@ -66,6 +66,7 @@ class FactoryRequest extends Model
     {
         return self::search($term);
     }
+
     public function searchFactoryRequestTurnsTotal($term)
     {
         return self::search($term);
