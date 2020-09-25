@@ -92,7 +92,7 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr>
-                <th scope="col">Cedula</th>
+                <th scope="col">Cédula</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Celular</th>
                 <th scope="col">Email</th>

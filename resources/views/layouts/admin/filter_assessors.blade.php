@@ -5,7 +5,7 @@
             <div class="input-group">
                 <div class="row mx-0 w-100 d-flex justify-content-center">
                     <div class="col-md-12 col-sm-5 col-6">
-                        <label class="label-reset" for="q">Buscar: Solicitud / Cedula</label>
+                        <label class="label-reset" for="q">Buscar: Solicitud / Cédula</label>
                         <input type="text" name="q" class="form-control input-reset" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>

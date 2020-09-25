@@ -27,7 +27,7 @@
             <!-- /.card-header -->
             <div class="card-body" style="display: block;">
                 <div class="form-group">
-                    <label for="identificationNumber">Cedula</label>
+                    <label for="identificationNumber">Cédula</label>
                     <input type="text" class="form-control" id="identificationNumber">
                 </div>
                 <div class="w-100 text-right">
@@ -51,7 +51,7 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Token</th>
-                                            <th>Cedula</th>
+                                            <th>Cédula</th>
                                             <th>Telefono</th>
                                             <th>Tipo</th>
                                             <th>Fecha</th>

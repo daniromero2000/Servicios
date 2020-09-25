@@ -37,7 +37,7 @@ class CallCenterController extends Controller
     return view('callCenter.list', [
       'customers'            => $list,
       'optionsRoutes'        => (request()->segment(2)),
-      'headers'              => ['Fecha', 'Cedula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen', 'Celular', 'Paso', 'Estado'],
+      'headers'              => ['Fecha', 'Cédula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen', 'Celular', 'Paso', 'Estado'],
       'listCount'            => $listCount,
       'skip'                 => $skip,
     ]);

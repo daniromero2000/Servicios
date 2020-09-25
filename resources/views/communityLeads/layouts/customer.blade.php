@@ -6,7 +6,7 @@
   <table class="table table-hover table-stripped leadTable " >
     <thead>
        <tr>
-        <th class="text-center" scope="col">Cedula</th>
+        <th class="text-center" scope="col">Cédula</th>
         <th class="text-center" scope="col">Apellido</th>
         <th class="text-center" scope="col">Nombre</th>
         <th class="text-center" scope="col">Celular</th>

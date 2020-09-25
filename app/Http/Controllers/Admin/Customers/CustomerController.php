@@ -56,7 +56,7 @@ class CustomerController extends Controller
         return view('customers.list', [
             'customers'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Fecha', 'Cedula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen', 'Celular', 'Paso', 'Estado'],
+            'headers'              => ['Fecha', 'Cédula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen', 'Celular', 'Paso', 'Estado'],
             'listCount'            => $leadsOfMonth->count(),
             'skip'                 => $skip,
         ]);

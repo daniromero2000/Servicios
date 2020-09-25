@@ -7,7 +7,7 @@
       <table class="table table-borderless table-hover table-sm">
         <thead>
           <tr>
-            <th class="text-center" scope="col">Cedula</th>
+            <th class="text-center" scope="col">Cédula</th>
             <th class="text-center" scope="col">Apellido</th>
             <th class="text-center" scope="col">Nombre</th>
             <th class="text-center" scope="col">Celular</th>
