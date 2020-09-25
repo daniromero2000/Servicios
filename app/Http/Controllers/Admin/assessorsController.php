@@ -1111,6 +1111,7 @@ class assessorsController extends Controller
 				$estadoSolic = 1;
 			}
 		} else {
+			$customerIntention->ESTADO_INTENCION = 4;
 			$estadoSolic = 19;
 		}
 		$customerIntention->save();
