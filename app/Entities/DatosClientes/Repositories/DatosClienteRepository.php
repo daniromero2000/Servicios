@@ -16,13 +16,8 @@ class DatosClienteRepository implements DatosClienteRepositoryInterface
     public function addDatosCliente($customer, $factoryRequest, $data)
     {
         try {
-            if (!empty($data)) {
-                $data['identificationNumber'] = $customer->CEDULA;
-                $data['numSolic']             = $factoryRequest->SOLICITUD;
-            } else {
+            if (empty($data)) {
                 $data = [
-                    'identificationNumber' => $customer->CEDULA,
-                    'numSolic'             => $factoryRequest->SOLICITUD,
                     'NOM_REFPER'           => 'NA',
                     'TEL_REFPER'           => 'NA',
                     'NOM_REFFAM'           => 'NA',
@@ -31,8 +26,8 @@ class DatosClienteRepository implements DatosClienteRepositoryInterface
             }
 
             $datosCliente             = new DatosCliente();
-            $datosCliente->CEDULA     = (isset($data['identificationNumber']) && $data['identificationNumber'] != '') ? $data['identificationNumber'] : 'NA';
-            $datosCliente->SOLICITUD  = (isset($data['numSolic']) && $data['numSolic'] != '') ? $data['numSolic'] : 'NA';
+            $datosCliente->CEDULA     = $customer->CEDULA;
+            $datosCliente->SOLICITUD  = $factoryRequest->SOLICITUD;
             $datosCliente->NOM_REFPER = (isset($data['NOM_REFPER']) && $data['NOM_REFPER'] != '') ? $data['NOM_REFPER'] : 'NA';
             $datosCliente->DIR_REFPER = (isset($data['DIR_REFPER']) && $data['DIR_REFPER'] != '') ? $data['DIR_REFPER'] : 'NA';
             $datosCliente->BAR_REFPER = (isset($data['BAR_REFPER']) && $data['BAR_REFPER'] != '') ? $data['BAR_REFPER'] : 'NA';
