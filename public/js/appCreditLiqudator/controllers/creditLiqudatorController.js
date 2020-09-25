@@ -514,7 +514,12 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.createLiquidator = function () {
-            if ($scope.liquidator[0][5].length > 0) {
+            var save = '';
+            $scope.liquidator.forEach(element => {
+                save = element[5].length > 0;
+            });
+
+            if (save) {
                 $scope.request.push({ 'EXTENDID': $scope.request.EXTENDID })
                 $http({
                     method: 'POST',
@@ -528,7 +533,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.addError(response, $scope.lead.CEDULA);
                 });
             } else {
-                showAlert("error", "Por favor ingrese todos los datos");
+                showAlert("error", "Por favor termine de diligenciar el negocio");
             }
         };
 
