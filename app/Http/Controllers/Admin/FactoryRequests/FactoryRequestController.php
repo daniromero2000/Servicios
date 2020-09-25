@@ -204,7 +204,7 @@ class FactoryRequestController extends Controller
     {
         $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
         $factoryRequest->ASESOR_DIG = auth()->user()->id;
-        $factoryRequest->CODASESOR = auth()->user()->id;
+        $factoryRequest->CODASESOR = auth()->user()->email;
         return response()->json($factoryRequest->save());
     }
 
