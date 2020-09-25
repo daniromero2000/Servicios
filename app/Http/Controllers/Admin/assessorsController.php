@@ -728,6 +728,16 @@ class assessorsController extends Controller
 			return ['resp' => "-2"];
 		}
 
+		if ($customerStatusDenied == true) {
+			$customer->ESTADO                    = 'NEGADO';
+			$customerIntention->ID_DEF           = $idDef;
+			$customerIntention->ESTADO_INTENCION = '1';
+			$customerIntention->CREDIT_DECISION  = 'Negado';
+			$customer->save();
+			$customerIntention->save();
+			return ['resp' => "false"];
+		}
+
 		// 2. WS Fosyga
 		$fuenteFallo = "false";
 		$statusAfiliationCustomer = true;
@@ -748,16 +758,6 @@ class assessorsController extends Controller
 			$customer->ACTIVIDAD,
 			$statusAfiliationCustomer
 		);
-
-		if ($customerStatusDenied == true) {
-			$customer->ESTADO                    = 'NEGADO';
-			$customerIntention->ID_DEF           = $idDef;
-			$customerIntention->ESTADO_INTENCION = '1';
-			$customerIntention->CREDIT_DECISION  = 'Negado';
-			$customer->save();
-			$customerIntention->save();
-			return ['resp' => "false"];
-		}
 
 		// 5 Definiciones cliente
 		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
