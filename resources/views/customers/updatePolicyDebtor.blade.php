@@ -74,7 +74,7 @@
                                                                 name="sucursalCustomer">
                                                             <div class="row">
                                                                 <div class="col-6" hidden>
-                                                                    <label for="my-input">Cedula</label>
+                                                                    <label for="my-input">Cédula</label>
                                                                     <input id="identification" class="form-control"
                                                                         type="text" name="identificationNumberCustomer">
                                                                 </div>

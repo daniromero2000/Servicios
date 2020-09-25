@@ -7,7 +7,7 @@
 
                 <div class="row w-100 d-flex justify-content-start">
                     <div class="col-md-12 col-sm-5 col-6">
-                        <label for="q">Buscar: Cedula - Nombre - Apellido</label>
+                        <label for="q">Buscar: Cédula - Nombre - Apellido</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>

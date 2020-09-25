@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-4 col-sm-4 col-md-12">
                 <div class="form-group mb-1">
-                    <label for="q">Buscar: Solicitud / Cedula</label>
+                    <label for="q">Buscar: Solicitud / Cédula</label>
                     <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                         value="{!! request()->input('q') !!}">
                 </div>

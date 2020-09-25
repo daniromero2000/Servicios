@@ -108,7 +108,7 @@
                         class="table table-responsive-lg table-stripped leadTable  text-center table-hover">
                         <thead class="text-center">
                             <tr>
-                                <th scope="col">Cedula</th>
+                                <th scope="col">Cédula</th>
                                 <th scope="col">Sucursal / N° solicitud</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Teléfono</th>
@@ -346,7 +346,7 @@
                         class="table text-center table-responsive-lg table-stripped leadTable  table-hover">
                         <thead class="text-center">
                             <tr>
-                                <th scope="col">Cedula</th>
+                                <th scope="col">Cédula</th>
                                 <th scope="col">Nombres</th>
                                 <th scope="col">Celular</th>
                                 <th scope="col">Email</th>
@@ -477,7 +477,7 @@
                                 <th scope="col">Estado</th>
                                 <th scope="col">Lead</th>
                                 <th scope="col">Asesor</th>
-                                <th scope="col">Cedula</th>
+                                <th scope="col">Cédula</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Correo</th>
                                 <th scope="col">Celular</th>

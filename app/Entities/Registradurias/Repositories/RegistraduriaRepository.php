@@ -166,7 +166,7 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         }
 
         if ($respEstadoCedula->estado != 'VIGENTE') {
-            return -1; // Cedula no vigente
+            return -1; // Cédula no vigente
         }
 
         $nameComplete = $oportudataLead->NOMBRES . ' ' . $oportudataLead->APELLIDOS;
