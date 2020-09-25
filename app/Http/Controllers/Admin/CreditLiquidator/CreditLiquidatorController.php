@@ -172,6 +172,7 @@ class CreditLiquidatorController extends Controller
 
     public function store(Request $request)
     {
+
         $liquidation = $request->input();
         $items          = [];
         $items2         = [];
@@ -183,6 +184,7 @@ class CreditLiquidatorController extends Controller
         $feeInitial     = [];
         $fees           = [];
         $plans          = [];
+
 
         foreach ($liquidation[0] as $key => $value) {
             $items2[$key] = $liquidation[0][$key];
@@ -257,6 +259,19 @@ class CreditLiquidatorController extends Controller
                 $super2->save();
             }
         }
+
+        $dataOpo = [
+            'modulo' => 'Liquidador',
+            'proceso' => 'Liquidacion de la solicitud ' . $liquidation[1][0]['SOLICITUD'],
+            'accion' => 'Crear',
+            'identificacion' => $liquidation[1][0]['SOLICITUD'],
+            'fecha' => date('Y-m-d H:i:s'),
+            'usuario' => auth()->user()->codeOportudata,
+            'state' => 'A'
+        ];
+        $oportudataLog = OportudataLog::create($dataOpo);
+
+
         return response()->json(true);
     }
 
