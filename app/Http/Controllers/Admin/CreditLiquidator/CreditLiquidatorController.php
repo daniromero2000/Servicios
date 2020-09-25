@@ -241,7 +241,6 @@ class CreditLiquidatorController extends Controller
         $factoryRequest                  += $liquidation[1][1];
         $factoryRequest['GRAN_TOTAL']    = $sumTotal;
         $factoryRequest['id_asesor']     = $user;
-        $factoryRequest['SOLICITUD_WEB'] = 1;
         $this->factoryInterface->updateFactoryRequest($factoryRequest);
 
         foreach ($products2 as $key => $value) {
