@@ -230,10 +230,10 @@ class OportuyaV2Controller extends Controller
 			$assessorCode         = $this->userInterface->getAssessorCode();
 			$usuarioCreacion      = (string) $assessorCode;
 			$clienteWeb           = 1;
-			$clienteWeb = (isset($customer->CLIENTE_WEB)) ? $customer->CLIENTE_WEB : 1;
-			$usuarioCreacion = (isset($customer->USUARIO_CREACION)) ? $customer->USUARIO_CREACION : (string) $assessorCode;
-			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
-			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
+			$clienteWeb 		  = (isset($customer->CLIENTE_WEB)) ? $customer->CLIENTE_WEB : 1;
+			$usuarioCreacion      = (isset($customer->USUARIO_CREACION)) ? $customer->USUARIO_CREACION : (string) $assessorCode;
+			$subsidiaryCityName   = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
+			$city                 = $this->cityInterface->getCityByName($subsidiaryCityName);
 
 			$dataOportudata = [
 				'TIPO_DOC'              => $request->get('typeDocument'),
