@@ -134,8 +134,8 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         value: 'SEGUROS'
     },
     {
-        label: 'ASESORES - CRÉDITO',
-        value: 'ASESORES-CREDITO'
+        label: 'ASESORES',
+        value: 'ASESORES'
     }
     ];
 
