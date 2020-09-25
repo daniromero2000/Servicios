@@ -62,17 +62,17 @@ class LoginController extends Controller
             WHERE ppm.id_profile = :idProfile order by modu.name", ['idProfile' => $userInfo->idProfile]);
             session(['modules' => $resp]);
 
-            $data = [
-                'modulo' => 'Panel Asesores',
-                'proceso' => 'Inicio de Sesion',
-                'accion' => 'Ingresar',
-                'identificacion' => $userInfo->codeOportudata,
-                'fecha' => $date,
-                'usuario' => $userInfo->email,
-                'state' => 'A'
-            ];
+            // $data = [
+            //     'modulo' => 'Panel Asesores',
+            //     'proceso' => 'Inicio de Sesion',
+            //     'accion' => 'Ingresar',
+            //     'identificacion' => $userInfo->codeOportudata,
+            //     'fecha' => $date,
+            //     'usuario' => $userInfo->email,
+            //     'state' => 'A'
+            // ];
 
-            $oportudataLog = OportudataLog::create($data);
+            // $oportudataLog = OportudataLog::create($data);
 
             return $this->sendLoginResponse($request);
         }
