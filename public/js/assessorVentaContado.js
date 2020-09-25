@@ -239,42 +239,46 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.kinships = response.data.kinships;
 			}, function errorCallback(response) {
 				hideLoader();
+				console.log(response);
 				response.url = '/assessor/api/ventaContado/getInfoVentaContado';
-				// $scope.addError(response, $scope.lead.CEDULA);
+				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		};
 
 		$scope.addError = function (response, cedula = '') {
-			var arrayData = {
-				url: response.url,
-				mensaje: response.data.message,
-				archivo: response.data.file,
-				linea: response.data.line,
-				cedula: cedula,
-				datos: (response.datos) ? response.datos : []
+			if (response.statusText != 'Unauthorized') {
+				var arrayData = {
+					url: response.url,
+					mensaje: response.data.message,
+					archivo: response.data.file,
+					linea: response.data.line,
+					cedula: cedula,
+					datos: (response.datos) ? response.datos : []
+				}
+				var data = {
+					status: response.status,
+					data: angular.toJson(arrayData)
+				}
+				$http({
+					method: 'POST',
+					url: '/api/appError',
+					data: data,
+				}).then(function successCallback(response) {
+					setTimeout(() => {
+						$('#congratulations').modal('hide');
+						$('#proccess').modal('hide');
+						$('#confirmCodeVerification').modal('hide');
+						$('#validationLead').modal('hide');
+						$('#decisionCredit').modal('hide');
+						$('#error').modal('show');
+					}, 1800);
+					$scope.numError = response.data.id;
+				}, function errorCallback(response) {
+					console.log(response);
+				});
+			} else {
+				location.reload();
 			}
-
-			var data = {
-				status: response.status,
-				data: angular.toJson(arrayData)
-			}
-			$http({
-				method: 'POST',
-				url: '/api/appError',
-				data: data,
-			}).then(function successCallback(response) {
-				setTimeout(() => {
-					$('#congratulations').modal('hide');
-					$('#proccess').modal('hide');
-					$('#confirmCodeVerification').modal('hide');
-					$('#validationLead').modal('hide');
-					$('#decisionCredit').modal('hide');
-					$('#error').modal('show');
-				}, 1800);
-				$scope.numError = response.data.id;
-			}, function errorCallback(response) {
-				console.log(response);
-			});
 		};
 
 		$scope.validateStep1 = function () {

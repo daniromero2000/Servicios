@@ -103,7 +103,7 @@ Route::group(['prefix' => '/assessor/'], function () {
             return view('assessors.forms.analisis');
         })->name('assessorAnalisis');
     });
-    Route::group(['prefix' => '/api/'], function () {
+    Route::group(['prefix' => '/api/', 'middleware' => 'auth'], function () {
         Route::get('ventaContado/getInfoVentaContado', 'Admin\assessorsController@getInfoVentaContado');
         Route::get('ventaContado/getinfoLeadVentaContado/{CEDULA}', 'Admin\assessorsController@getinfoLeadVentaContado');
         Route::post('ventaContado/addVentaContado', 'Admin\assessorsController@store');
@@ -478,16 +478,16 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
     });
 
     // Administrador de modulos
-    /*Route::resource('modules', 'Admin\ModulesController');
-    Route::group(['prefix'=>'/Modules/'],function(){
-        Route::get('/', function(){
+    Route::resource('modules', 'Admin\ModulesController');
+    Route::group(['prefix' => '/Modules/'], function () {
+        Route::get('/', function () {
             return view('modules.index');
         });
 
-        Route::get('/Modules', function(){
+        Route::get('/Modules', function () {
             return view('modules.modules');
         });
-    });*/
+    });
 
     // Administrador Lista de Empleados
     Route::group(['prefix' => '/ListaEmpleados'], function () {
