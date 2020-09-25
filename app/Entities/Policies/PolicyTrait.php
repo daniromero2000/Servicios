@@ -68,7 +68,12 @@ trait PolicyTrait
     }
 
     $aprobo = 0;
-    $consec = $customer->lastUbicaConsultation->consec;
+    if ($customer->lastUbicaConsultation) {
+      $consec = $customer->lastUbicaConsultation->consec;
+    } else {
+      return  $aprobo = 0;
+    }
+
     $telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec($celLead, $consec);
 
     if ($telConsultaUbica->isNotEmpty()) {
