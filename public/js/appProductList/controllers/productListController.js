@@ -400,6 +400,9 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 				showAlert('success', 'Archivo migrado exitosamente');
 				$scope.resetDataListProduct();
 			}, function errorCallback(response) {
+				response.url = '/api/listProducts';
+				response.datos = $scope.product;
+				$scope.addError(response, '10006');
 			});
 		};
 
@@ -546,7 +549,9 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 					$scope.resetDataListGiveAway();
 				}
 			}, function errorCallback(response) {
-
+				response.url = '/api/listGiveAways/';
+				response.datos = idListGiveAway;
+				$scope.addError(response, idListGiveAway);
 			});
 		};
 
@@ -565,8 +570,46 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 					$scope.viewProductPrices = true;
 				}
 			}, function errorCallback(response) {
-
+				response.url = '/api/listProducts/getDataPriceProduct/';
+				response.datos = $scope.product;
+				$scope.addError(response, $scope.product.id);
 			});
+		};
+
+		$scope.addError = function (response, cedula = '') {
+			if (response.statusText != 'Unauthorized') {
+				var arrayData = {
+					url: response.url,
+					mensaje: response.data.message,
+					archivo: response.data.file,
+					linea: response.data.line,
+					cedula: cedula,
+					datos: (response.datos) ? response.datos : []
+				}
+				var data = {
+					status: response.status,
+					data: angular.toJson(arrayData)
+				}
+				$http({
+					method: 'POST',
+					url: '/api/appError',
+					data: data,
+				}).then(function successCallback(response) {
+					setTimeout(() => {
+						$('#congratulations').modal('hide');
+						$('#proccess').modal('hide');
+						$('#confirmCodeVerification').modal('hide');
+						$('#validationLead').modal('hide');
+						$('#decisionCredit').modal('hide');
+						$('#error').modal('show');
+					}, 1800);
+					$scope.numError = response.data.id;
+				}, function errorCallback(response) {
+					console.log(response);
+				});
+			} else {
+				location.reload();
+			}
 		};
 
 		// $scope.getSubsidiaries();

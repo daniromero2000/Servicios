@@ -993,36 +993,39 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.addError = function (response, cedula = '') {
-            var arrayData = {
-                url: response.url,
-                mensaje: response.data.message,
-                archivo: response.data.file,
-                linea: response.data.line,
-                cedula: cedula,
-                datos: (response.datos) ? response.datos : []
+            if (response.statusText != 'Unauthorized') {
+                var arrayData = {
+                    url: response.url,
+                    mensaje: response.data.message,
+                    archivo: response.data.file,
+                    linea: response.data.line,
+                    cedula: cedula,
+                    datos: (response.datos) ? response.datos : []
+                }
+                var data = {
+                    status: response.status,
+                    data: angular.toJson(arrayData)
+                }
+                $http({
+                    method: 'POST',
+                    url: '/api/appError',
+                    data: data,
+                }).then(function successCallback(response) {
+                    setTimeout(() => {
+                        $('#congratulations').modal('hide');
+                        $('#proccess').modal('hide');
+                        $('#confirmCodeVerification').modal('hide');
+                        $('#validationLead').modal('hide');
+                        $('#decisionCredit').modal('hide');
+                        $('#error').modal('show');
+                    }, 1800);
+                    $scope.numError = response.data.id;
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            } else {
+                location.reload();
             }
-
-            var data = {
-                status: response.status,
-                data: angular.toJson(arrayData)
-            }
-            $http({
-                method: 'POST',
-                url: '/api/appError',
-                data: data,
-            }).then(function successCallback(response) {
-                setTimeout(() => {
-                    $('#congratulations').modal('hide');
-                    $('#proccess').modal('hide');
-                    $('#confirmCodeVerification').modal('hide');
-                    $('#validationLead').modal('hide');
-                    $('#decisionCredit').modal('hide');
-                    $('#error').modal('show');
-                }, 100);
-                $scope.numError = response.data.id;
-            }, function errorCallback(response) {
-                console.log(response);
-            });
         };
 
         $scope.getDataPriceProduct = function () {
