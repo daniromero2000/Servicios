@@ -1053,7 +1053,6 @@ class assessorsController extends Controller
 		$customer                           = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerIntention                  = $customer->latestIntention;
 		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
-		$customerIntention->save();
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
 			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
