@@ -111,8 +111,9 @@ class ListProductRepository implements ListProductRepositoryInterface
         $product = $product->toArray();
         $currentProductLists = $this->productListInterface->getAllCurrentProductLists();
         $currentProductLists = $currentProductLists->toArray();
-        $priceGiveAway = $this->giveAwayInterface->getPriceGiveAwayProduct($product['base_cost']);
+        $priceGiveAway = $this->giveAwayInterface->getPriceGiveAwayProduct($product['iva_cost']);
         $priceGiveAway = $priceGiveAway->total;
+        // dd($priceGiveAway);
         $protectionVat = $product['protection'] * 1.19;
         $factors = $this->factorInterface->getAllFactors();
         $factors = $factors->toArray();
