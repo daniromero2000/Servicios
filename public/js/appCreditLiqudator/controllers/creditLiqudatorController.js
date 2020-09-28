@@ -182,8 +182,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         //Consultar Producto
         $scope.getProduct = function () {
-
-            console.log($scope.items);
             $scope.items.CODIGO = $scope.items.CODIGO.toUpperCase();
             switch ($scope.items.COD_PROCESO) {
                 case '1':
