@@ -68,7 +68,8 @@ class ListGiveAwayRepository implements ListGiveAwayRepositoryInterface
         return [];
     }
 
-    public function getPriceGiveAwayProduct($productPrice){
+    public function getPriceGiveAwayProduct($productPrice)
+    {
         return $this->model->where('base_give_aways', '<=', $productPrice)->orderBy('total', 'desc')->first();
     }
 }
