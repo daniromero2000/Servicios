@@ -33,6 +33,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.fixedList = 'Convenio';
         $scope.fixedSeleccion = '01';
         $scope.loader = false;
+        $scope.buttonDisabled = true;
         $scope.viewProductImg = false;
         $scope.typeDiscount =
             [
@@ -357,6 +358,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO_P = item.PRECIO;
                 }
                 // item.LISTA = response.data.price.list;
+                $scope.buttonDisabled = false;
                 item.type_product = response.data.product[0].type_product;
             }, function errorCallback(response) {
                 showAlert("error", "El código ingresado no existe");
@@ -372,6 +374,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.addProduct = function (key) {
             $scope.items.key = key;
+            $scope.buttonDisabled = true;
             $('#addItem' + key).modal('show');
         };
 
@@ -480,7 +483,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 }
 
                 //Calculo del IVA AVAL
-
                 $scope.liquidator[key][0].push($scope.items);
             }
             $scope.items = {};
