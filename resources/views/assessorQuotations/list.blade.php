@@ -64,7 +64,7 @@
                                 <div class="small-box ">
                                     <div class="inner">
                                         <h2 class="titleCardNumber">Total</h2>
-                                        {{-- <p>${{ number_format ($assessorQuotationsTotal) }}</p> --}}
+                                        <p>${{ number_format ($assessorQuotationsTotal) }}</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-shopping-cart"></i>

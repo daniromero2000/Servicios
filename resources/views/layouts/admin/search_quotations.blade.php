@@ -27,7 +27,7 @@
                         <a class="btn btn-danger btn-sm mt-2" href="{{$route}}">
                             <i class="fas fa-times"></i> Restaurar filtros
                         </a>
-                        <button type="submit" name="action" value="search" id="search-btn" class="btn btn-primary mt-2 btn-sm"><i class="fa fa-search"></i>
+                        <button type="submit" class="btn btn-primary mt-2 btn-sm"><i class="fa fa-search"></i>
                             Buscar
                         </button>
                     </span>

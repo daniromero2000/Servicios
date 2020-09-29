@@ -53,7 +53,7 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
     public function searchQuotations(string $text = null, $totalView,  $from = null,  $to = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to)) {
-            return $this->model->orderBy('created_at', 'desc')
+            return $this->model->orderBy('created_at', 'desc')->where('assessor_id', auth()->user()->id)
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -61,15 +61,14 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchQuotations($text, null, true, true)
-
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'desc')->where('assessor_id', auth()->user()->id)
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
 
         return $this->model->searchQuotations($text, null, true, true)
-            ->whereBetween('created_at', [$from, $to])
+            ->whereBetween('created_at', [$from, $to])->where('assessor_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
             ->get($this->columns);
     }
