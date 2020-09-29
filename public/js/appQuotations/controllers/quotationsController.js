@@ -7,6 +7,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.items = {};
         $scope.discount = {};
         $scope.plans = [];
+        $scope.lists = [];
         $scope.request = [];
         $scope.listTags = [];
         $scope.listValue = [];
@@ -15,16 +16,22 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.quotations = [];
         $scope.numberOfFees = [];
         $scope.productPrices = [];
+        $scope.typeQuotations = [];
         $scope.code = '';
         $scope.zone = '';
         $scope.tabs = 1;
-        $scope.step = 1;
+        $scope.step = 2;
         $scope.tabItem = 0;
         $scope.totalDiscount = 0;
         $scope.loader = false;
         $scope.show = false;
         $scope.disabledButton = false;
+        $scope.buttonDisabled = true;
         $scope.typesDocuments = [
+            {
+                'value': "",
+                'label': 'Selecciona'
+            },
             {
                 'value': "1",
                 'label': 'Cédula de ciudadanía'
@@ -74,6 +81,11 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 { 'type': 'Otros' },
             ];
 
+        $scope.addItem = function () {
+            var index = [[], [], [], [], [], [], [], [], []];
+            $scope.quotations.push(index);
+        };
+
         //Listado de Planes
         $scope.getPlans = function () {
             $http({
@@ -83,6 +95,32 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 $scope.plans = response.data
             }, function errorCallback(response) {
                 response.url = '/api/liquidator/getPlans';
+                $scope.addError(response, $scope.lead.identificationNumber);
+            });
+        };
+
+        //Traer listas
+        $scope.getList = function () {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getLists',
+            }).then(function successCallback(response) {
+                $scope.lists = response.data
+            }, function errorCallback(response) {
+                response.url = '/api/liquidator/getLists';
+                $scope.addError(response, $scope.lead.identificationNumber);
+            });
+        };
+
+        //Listado de cuotas
+        $scope.listOfFees = function () {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getFactors',
+            }).then(function successCallback(response) {
+                $scope.numberOfFees = response.data
+            }, function errorCallback(response) {
+                response.url = '/api/liquidator/getFactors';
                 $scope.addError(response, $scope.lead.identificationNumber);
             });
         };
@@ -97,7 +135,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 case '2':
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getProduct/' + $scope.items.sku,
+                        url: '/api/liquidator/getProduct/' + $scope.items.sku + '/' + $scope.items.list,
                     }).then(function successCallback(response) {
                         var key = $scope.items.key;
 
@@ -114,7 +152,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                             }
                         });
 
-                        //Calculo del aval
+                        //Calculo del AVAL
                         if ($scope.items.sku == 'AV10' || $scope.items.sku == 'AV12' || $scope.items.sku == 'AV15') {
                             $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(response.data.product[0].base_cost) / 100));
 
@@ -123,7 +161,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                             $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(response.data.product[0].base_cost) / 100));
                         } else {
 
-                            //Calculo del IVA aval
+                            //Calculo del IVA AVAL
                             if ($scope.items.sku == 'IVAV') {
                                 var e = $scope.quotations[key][0];
                                 for (let i = 0; i < e.length; i++) {
@@ -138,13 +176,27 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                                 $scope.items.price = parseInt(response.data.product[0].base_cost);
                             }
                         }
-                        $scope.items.list = response.data.price.list;
+                        $scope.buttonDisabled = false;
+
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
-                        response.url = '/api/liquidator/getProduct/' + $scope.items.sku;
-                        $scope.addError(response, $scope.items.sku);
                     });
                     break;
+
+                case '3':
+                    $http({
+                        method: 'GET',
+                        url: '/api/liquidator/getGift/' + $scope.items.sku,
+                    }).then(function successCallback(response) {
+                        $scope.items.article = response.data.product[0].item;
+                        $scope.items.price = 0;
+                        $scope.buttonDisabled = false;
+
+                    }, function errorCallback(response) {
+                        showAlert("error", "El código no es un obsequio");
+                    });
+                    break;
+
 
                 case '4':
                     $scope.calcPriceProduct($scope.items);
@@ -152,15 +204,13 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 default:
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getProduct/' + $scope.items.sku,
+                        url: '/api/liquidator/getProduct/' + $scope.items.sku + '/' + $scope.items.list,
                     }).then(function successCallback(response) {
                         $scope.items.article = response.data.product[0].item;
                         $scope.items.price = 0;
-                        $scope.items.list = response.data.price.list;
+                        $scope.buttonDisabled = false;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
-                        response.url = '/api/liquidator/getProduct/' + $scope.items.sku;
-                        $scope.addError(response, $scope.items.sku);
                     });
                     break;
             }
@@ -170,45 +220,38 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.calcPriceProduct = function (item) {
             $http({
                 method: 'GET',
-                url: '/api/liquidator/getProduct/' + item.sku,
+                url: '/api/liquidator/getProduct/' + item.sku + '/' + $scope.items.list,
             }).then(function successCallback(response) {
                 item.article = response.data.product[0].item;
                 if (response.data.product[0].type_product == 1) {
+                    $scope.discount.key = item.key
+                    $scope.discount.type = 'Por lista';
+                    $scope.zone = response.data.zone;
+                    if ($scope.typeQuotations[item.key].type == '4') {
+                        $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
+                    } else if ($scope.typeQuotations[item.key].type == '2' || $scope.typeQuotations[item.key].type == '3') {
+                        $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
+                    } else {
+                        if (response.data.price.percentage_promotion_public_price != '0') {
+                            $scope.discount.type = 'Por lista';
+                            $scope.discount.value = Math.floor(response.data.price.percentage_promotion_public_price);
+                        }
+                    }
                     item.price = response.data.price.normal_public_price;
                 } else {
                     item.price = response.data.product[0].cash_cost;
                 }
-                item.list = response.data.price.list;
                 item.type_product = response.data.product[0].type_product;
             }, function errorCallback(response) {
-                response.url = '/api/liquidator/getProduct/' + item.sku;
                 showAlert("error", "El código ingresado no existe");
-                $scope.addError(response, item.sku);
             });
         }
-
-        $scope.listOfFees = function () {
-            $http({
-                method: 'GET',
-                url: '/api/liquidator/getFactors',
-            }).then(function successCallback(response) {
-                $scope.numberOfFees = response.data
-            }, function errorCallback(response) {
-                response.url = '/api/liquidator/getFactors';
-                $scope.addError(response, $scope.lead.identificationNumber);
-            });
-        };
 
         //Listado de porcentajes de descuento
         $scope.listDiscount = function () {
             for (let i = 1; i < 101; i++) {
                 $scope.listValue.push({ 'value': i });
             }
-        };
-
-        $scope.addItem = function () {
-            var index = [[], [], [], [], [], [], [], [], []];
-            $scope.quotations.push(index);
         };
 
         $scope.addProduct = function (key) {
@@ -242,20 +285,83 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         }
 
         $scope.createItemLiquidator = function () {
-            $scope.quotations[$scope.items.key][0].push($scope.items);
+            var key = $scope.items.key;
+            $scope.quotations[key][0].push($scope.items);
             if ($scope.discount.length != '') {
                 if ($scope.discount.type) {
                     if ($scope.items.cod_proceso == 1 || $scope.items.cod_proceso == 4) {
-                        $scope.quotations[$scope.items.key][1] = [];
-                        $scope.quotations[$scope.items.key][1].push($scope.discount);
+                        $scope.quotations[key][1] = [];
+                        $scope.quotations[key][1].push($scope.discount);
                         $scope.discount = {};
-                        $scope.sumDiscount($scope.items.key);
+                        if ($scope.typeQuotations[key].type != '1' && $scope.typeQuotations[key].type != '5') {
+                            $scope.discount.key = key
+                            $scope.discount.type = 'Cliente Oportuya';
+                            if ($scope.typeQuotations[key].type == '4') {
+                                if ($scope.zone == 'ALTA') {
+                                    $scope.discount.value = 5;
+                                    $scope.liquidator[key][1].push($scope.discount);
+                                } else {
+                                    $scope.discount.value = 10;
+                                    $scope.liquidator[key][1].push($scope.discount);
+                                    $scope.discount = {};
+                                    $scope.discount.key = key
+                                    $scope.discount.type = 'Tarjeta Black';
+                                    $scope.discount.value = 5;
+                                    $scope.liquidator[key][1].push($scope.discount);
+                                }
+                            } else {
+                                if ($scope.zone == 'ALTA') {
+                                    $scope.discount.value = 3;
+                                    $scope.liquidator[key][1].push($scope.discount);
+                                } else {
+                                    $scope.discount.value = 10;
+                                    $scope.liquidator[key][1].push($scope.discount);
+                                }
+                            }
+                            $scope.discount = {};
+                        }
                     }
                 }
             }
-            $("#addItem" + $scope.items.key).modal("hide");
+            $("#addItem" + key).modal("hide");
             showAlert("success", "Producto ingresado correctamente");
+
+
+            //Insertar IVAV automatico
+            if ($scope.items.sku == 'AV10' || $scope.items.sku == 'AV12' || $scope.items.sku == 'AV15') {
+                var list = $scope.items.list;
+                var e = $scope.liquidator[key][0];
+                $scope.items = {};
+                $scope.items.key = key
+                $scope.items.sku = 'IVAV';
+                $scope.items.quantity = '1';
+                $scope.items.article = "IVA AVAL 19 %";
+                if ($("#typeLiquidator").val() == '3') {
+                    $scope.items.list = $scope.fixedList;
+                    $scope.items.cod_proceso = '5';
+                    var type = 5
+                } else {
+                    $scope.items.list = list;
+                    $scope.items.cod_proceso = '2';
+                    var type = 2
+                }
+
+                for (let i = 0; i < e.length; i++) {
+                    if ((e[i].cod_proceso == type) && ((e[i].sku == 'AV10') || (e[i].sku == 'AV12') || (e[i].sku == 'AV15'))) {
+                        $scope.items.price = parseInt($scope.liquidator[key][0][i].price) * (parseInt(19) / 100);
+                    } else {
+                        $scope.items.price = 0
+                    }
+                }
+
+                //Calculo del IVA AVAL
+                $scope.liquidator[key][0].push($scope.items);
+            }
+
             $scope.items = {};
+
+            $scope.sumDiscount($scope.items.key);
+
         };
 
         $scope.createDiscountLiquidator = function () {
@@ -363,20 +469,33 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
 
         $scope.sumDiscount = function (key) {
+
             var total = 0;
             var precio = 0;
             var product = 0;
             var cuotaIni = 0
+            var hasRetanqueoIva1 = 0;
+            var hasRetanqueoIva2 = 0;
+            var hasRetanqueo1 = 0;
+            var hasRetanqueo2 = 0;
 
             if ($scope.quotations[key][0][0].price != 0) {
                 precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
             }
 
             $scope.quotations[key][0].forEach(j => {
-                if (j.cod_proceso == 2 || j.cod_proceso == 4) {
-                    if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
-                        precio = precio + j.price;
-                    }
+                if (j.code == 'GPG1') {
+                    hasRetanqueoIva1 = 1
+                } else if (j.code == 'GPG2') {
+                    hasRetanqueoIva2 = 1
+                } else if (j.code == 'EPG1') {
+                    hasRetanqueo1 = 1
+                } else if (j.code == 'EPG2') {
+                    hasRetanqueo2 = 2
+                }
+
+                if (j.cod_proceso == 4) {
+                    precio = precio + parseInt(parseInt(j.price) * parseInt(j.quantity));
                 }
             });
 
@@ -384,7 +503,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.quotations[key][2] = 0
             $scope.quotations[key][1].forEach(e => {
                 total = (parseInt(e.value) / 100) * product;
-                $scope.quotations[key][2] = parseInt($scope.quotations[key][2]) + Math.round(total)
+                $scope.quotations[key][2] = parseInt($scope.quotations[key][2]) + (total)
                 product = product - total;
                 total = 0;
             });
@@ -397,9 +516,76 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     cuotaIni = 1
                     break;
                 case '5':
+
+                    if ($scope.quotations[key][3].check && hasRetanqueoIva2 == 0) {
+                        var list = $scope.quotations[key][0][0].list;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.cod_proceso = '2';
+                        $scope.items.list = list;
+                        $scope.items.code = 'GPG2';
+                        $scope.items.quantity = '1';
+                        $scope.items.article = "PERIODO GRACIA CAPITAL 2 MES";
+
+                        //Calculo Retanqueo
+                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(4) / 100));
+                        $scope.items.price_P = $scope.items.price;
+                        $scope.quotations[key][0].push($scope.items);
+                        $scope.items = {};
+
+                    } else if (($scope.quotations[key][3].check == undefined || $scope.quotations[key][3].check == false) && hasRetanqueo2 == 0) {
+                        var list = $scope.quotations[key][0][0].list;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.cod_proceso = '2';
+                        $scope.items.list = list;
+                        $scope.items.code = 'EPG2';
+                        $scope.items.quantity = '1';
+                        $scope.items.article = "PERIODO GRACIA CAPITAL 2 MESES EXCLUIDO";
+
+                        //Calculo Retanqueo
+                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(4) / 100));
+                        $scope.items.price_P = $scope.items.price;
+                        $scope.quotations[key][0].push($scope.items);
+                        $scope.items = {};
+                    }
+
                     cuotaIni = 30000
                     break;
                 case '6':
+
+                    if ($scope.quotations[key][3].check && hasRetanqueoIva1 == 0) {
+                        var list = $scope.quotations[key][0][0].list;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.cod_proceso = '2';
+                        $scope.items.list = list;
+                        $scope.items.code = 'GPG1';
+                        $scope.items.quantity = '1';
+                        $scope.items.article = "PERIODO GRACIA CAPITAL 1 MES";
+
+                        //Calculo Retanqueo
+                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(2) / 100));
+                        $scope.items.price_P = $scope.items.price;
+                        $scope.quotations[key][0].push($scope.items);
+                        $scope.items = {};
+
+                    } else if (($scope.quotations[key][3].check == undefined || $scope.quotations[key][3].check == false) && hasRetanqueo1 == 0) {
+                        var list = $scope.quotations[key][0][0].list;
+                        $scope.items = {};
+                        $scope.items.key = key
+                        $scope.items.cod_proceso = '2';
+                        $scope.items.list = list;
+                        $scope.items.code = 'EPG1';
+                        $scope.items.quantity = '1';
+                        $scope.items.article = "PERIODO GRACIA CAPITAL 1 MESES EXCLUIDO";
+
+                        //Calculo Retanqueo
+                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(2) / 100));
+                        $scope.quotations[key][0].push($scope.items);
+                        $scope.items = {};
+                    }
+
                     cuotaIni = 30000
                     break;
                 case '7':
@@ -429,12 +615,26 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 default:
                     break;
             }
+
             $scope.quotations[key][6] = []
             $scope.quotations[key][3].initialFeeFeedback = false;
-            $scope.quotations[key][3].initial_fee = cuotaIni;
-            $scope.quotations[key][6].push({ 'initial_fee': $scope.quotations[key][3].initial_fee });
-            $scope.updateCharges(key);
+
+            if ($scope.quotations[key][3].checkInitialFee == undefined || $scope.quotations[key][3].checkInitialFee == false) {
+                $scope.quotations[key][3].initial_fee = cuotaIni;
+            } else {
+                if ($scope.quotations[key][3].initial_fee < cuotaIni) {
+                    $scope.quotations[key][3].initial_fee = cuotaIni;
+                    $scope.quotations[key][3].initialFeeFeedback = cuotaIni;
+                }
+            }
+
+            $scope.quotations[key][6].push({ 'CUOTAINI': $scope.quotations[key][3].initial_fee });
+            $timeout(() => {
+                $scope.updateChargesLiquidator(key);
+            }, 500);
+
         };
+
 
         $scope.refreshLiquidator = function (key) {
             $scope.sumDiscount(key);
@@ -451,7 +651,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                         $scope.quotations[key][0].splice(i, 1)
                         $http({
                             method: 'GET',
-                            url: '/api/liquidator/getProduct/' + product.sku,
+                            url: '/api/liquidator/getProduct/' + product.sku + '/' + product.list,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
 
@@ -472,14 +672,12 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                             item.list = response.data.price.list;
                             $scope.quotations[key][0].push(item);
                         }, function errorCallback(response) {
-                            response.url = '/api/liquidator/getProduct/' + product.sku;
-                            $scope.addError(response, product.sku);
+
                         });
                     }
                 }
             };
             $scope.updateIva(key);
-            $scope.updateChargesCotizador(key);
         }
 
 
@@ -491,7 +689,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     $scope.quotations[key][0].splice(i, 1)
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getProduct/' + product.sku,
+                        url: '/api/liquidator/getProduct/' + product.sku + '/' + product.list,
                     }).then(function successCallback(response) {
                         var item = {}
                         item.key = key;
@@ -513,8 +711,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                         item.list = response.data.price.list;
                         $scope.quotations[key][0].push(item);
                     }, function errorCallback(response) {
-                        response.url = '/api/liquidator/getProduct/' + product.sku;
-                        $scope.addError(response, product.sku);
+
                     });
                 }
             }
@@ -524,7 +721,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             }, 3500);
         };
 
-        $scope.updateChargesCotizador = function (key) {
+        $scope.updateChargesLiquidator = function (key) {
             var e = $scope.quotations[key][0];
             for (let i = 0; i < e.length; i++) {
                 var item = {};
@@ -534,7 +731,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                         $scope.quotations[key][0].splice(i, 1)
                         $http({
                             method: 'GET',
-                            url: '/api/liquidator/getProduct/' + product.sku,
+                            url: '/api/liquidator/getProduct/' + product.sku + '/' + product.list,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity)
                             $scope.quotations[key][0].forEach(j => {
@@ -553,12 +750,12 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                             item.list = response.data.price.list;
                             $scope.quotations[key][0].push(item);
                         }, function errorCallback(response) {
-                            response.url = '/api/liquidator/getProduct/' + product.sku;
-                            $scope.addError(response, product.sku);
+
                         });
                     }
                 }
             };
+            $scope.updateCharges(key);
         }
 
         $scope.removeItem = function (key) {
@@ -578,36 +775,40 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         };
 
         $scope.addError = function (response, cedula = '') {
-            var arrayData = {
-                url: response.url,
-                mensaje: response.data.message,
-                archivo: response.data.file,
-                linea: response.data.line,
-                cedula: cedula,
-                datos: (response.datos) ? response.datos : []
-            }
+            if (response.statusText != 'Unauthorized') {
+                var arrayData = {
+                    url: response.url,
+                    mensaje: response.data.message,
+                    archivo: response.data.file,
+                    linea: response.data.line,
+                    cedula: cedula,
+                    datos: (response.datos) ? response.datos : []
+                }
 
-            var data = {
-                status: response.status,
-                data: angular.toJson(arrayData)
+                var data = {
+                    status: response.status,
+                    data: angular.toJson(arrayData)
+                }
+                $http({
+                    method: 'POST',
+                    url: '/api/appError',
+                    data: data,
+                }).then(function successCallback(response) {
+                    setTimeout(() => {
+                        $('#congratulations').modal('hide');
+                        $('#proccess').modal('hide');
+                        $('#confirmCodeVerification').modal('hide');
+                        $('#validationLead').modal('hide');
+                        $('#decisionCredit').modal('hide');
+                        $('#error').modal('show');
+                    }, 100);
+                    $scope.numError = response.data.id;
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            } else {
+                location.reload();
             }
-            $http({
-                method: 'POST',
-                url: '/api/appError',
-                data: data,
-            }).then(function successCallback(response) {
-                setTimeout(() => {
-                    $('#congratulations').modal('hide');
-                    $('#proccess').modal('hide');
-                    $('#confirmCodeVerification').modal('hide');
-                    $('#validationLead').modal('hide');
-                    $('#decisionCredit').modal('hide');
-                    $('#error').modal('show');
-                }, 100);
-                $scope.numError = response.data.id;
-            }, function errorCallback(response) {
-                console.log(response);
-            });
         };
 
         $scope.getInfoLead = function () {
@@ -636,5 +837,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.getPlans();
         $scope.listDiscount();
         $scope.listOfFees();
+        $scope.getList();
 
     });
