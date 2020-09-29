@@ -238,6 +238,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 $scope.items.PRECIO_P = $scope.items.PRECIO;
                             }
                         }
+                        $scope.buttonDisabled = false;
                         // $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
@@ -253,6 +254,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.items.PRECIO = 0;
                         $scope.items.PRECIO_P = 0;
                         // $scope.items.LISTA = response.data.price.list;
+                        $scope.buttonDisabled = false;
+
                     }, function errorCallback(response) {
                         showAlert("error", "El código no es un obsequio");
                     });
@@ -308,6 +311,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 $scope.items.PRECIO_P = $scope.items.PRECIO;
                             }
                         }
+                        $scope.buttonDisabled = false;
                         // $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
