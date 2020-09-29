@@ -3,9 +3,12 @@
 namespace App\Entities\AssessorQuotations;
 
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class AssessorQuotation extends Model
 {
+    use SearchableTrait;
+
     protected $table = 'assesor_quotations';
 
     protected $connection = 'oportudata';

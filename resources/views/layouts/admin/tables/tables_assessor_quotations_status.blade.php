@@ -16,6 +16,7 @@
                     <td>{{$data->name}}</td>
                     <td>{{$data->lastName}}</td>
                     <td>{{$data->phone}}</td>
+                    <td>{{$data->Assesor}}</td>
                     <td>$ {{ number_format($data->total) }}</td>
                     <td>{{$data->created_at}}</td>
                 </tr>

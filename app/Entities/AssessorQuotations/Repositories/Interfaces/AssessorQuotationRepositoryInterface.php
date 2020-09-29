@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface AssessorQuotationRepositoryInterface
 {
-  public function listAssessorQuotations($from, $to);
+  public function listAssessorQuotations($from, $to, $skip);
 
   public function createAssessorQuotations($data): AssessorQuotation;
+
+  public function searchQuotations(string $text = null, $totalView,  $from = null,  $to = null): Collection;
 
   public function updateAssessorQuotations($data): AssessorQuotation;
 }
