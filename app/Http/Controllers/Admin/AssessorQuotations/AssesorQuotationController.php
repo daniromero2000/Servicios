@@ -34,12 +34,12 @@ class AssesorQuotationController extends Controller
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
 
-        $list = $this->assessorQuotationRepositoryInterface->listAssessorQuotations($from, $to);
-        $listCount = $list->count();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $list = $this->assessorQuotationRepositoryInterface->listAssessorQuotations($from, $to, $skip * 30);
+        $listCount = $list->count();
 
         if (request()->has('q')) {
-            $list = $this->assessorQuotationRepositoryInterface->searchQuotations(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'));
+            $list = $this->assessorQuotationRepositoryInterface->searchQuotations(request()->input('q'), $skip * 100, request()->input('from'), request()->input('to'));
         }
 
         return view('assessorQuotations.list', [
