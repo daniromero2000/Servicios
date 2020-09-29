@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @include('layouts.admin.search_quotations', ['route' => route('factoryrequestTurns.index')])
+                        @include('layouts.admin.search_quotations', ['route' => route('assessorquotations.index')])
                     </div>
                 </div>
             </div>
