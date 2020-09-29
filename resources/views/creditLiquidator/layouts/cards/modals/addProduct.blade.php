@@ -61,7 +61,7 @@
                           </div>
                           <div class="text-right mt-2">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                              <button type="submit" class="btn btn-primary">Agregar</button>
+                              <button type="submit" ng-disabled="buttonDisabled" class="btn btn-primary">Agregar</button>
                           </div>
                       </div>
                   </form>
