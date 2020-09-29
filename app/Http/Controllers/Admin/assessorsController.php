@@ -1093,6 +1093,7 @@ class assessorsController extends Controller
 		$lastName    = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$resultUbica = $this->doUbica($customer, $lastName);
 		$estadoSolic = 1;
+		$customerIntention->save();
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
 			$confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
@@ -1112,7 +1113,7 @@ class assessorsController extends Controller
 		} else {
 			$estadoSolic = 19;
 		}
-		$customerIntention->save();
+
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
