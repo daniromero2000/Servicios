@@ -34,6 +34,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.fixedSeleccion = '01';
         $scope.loader = false;
         $scope.buttonDisabled = true;
+        $scope.createDisabled = true;
         $scope.viewProductImg = false;
         $scope.typeDiscount =
             [
@@ -239,7 +240,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             }
                         }
                         $scope.buttonDisabled = false;
-                        // $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
                     });
@@ -253,7 +253,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.items.ARTICULO = response.data.product[0].item;
                         $scope.items.PRECIO = 0;
                         $scope.items.PRECIO_P = 0;
-                        // $scope.items.LISTA = response.data.price.list;
                         $scope.buttonDisabled = false;
 
                     }, function errorCallback(response) {
@@ -517,13 +516,18 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             });
         };
 
+        $scope.enabledButton = function () {
+            $scope.createDisabled = false;
+        };
+
+
         $scope.createLiquidator = function () {
             var save = '';
             $scope.liquidator.forEach(element => {
                 save = element[5].length > 0;
             });
-
             if (save) {
+                $scope.createDisabled = true;
                 $scope.request.push({ 'EXTENDID': $scope.request.EXTENDID })
                 $http({
                     method: 'POST',
@@ -537,7 +541,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.addError(response, $scope.lead.CEDULA);
                 });
             } else {
-                showAlert("error", "Por favor termine de diligenciar el negocio");
+                showAlert("error", "Por favor termine de diligenciar la liquidación");
             }
         };
 
@@ -588,12 +592,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     } else {
                         $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) / parseInt($scope.liquidator[key][3].PLAZO)))
                     }
-
-                    // if ($scope.zone == 'ALTA' || $scope.zone == ' ' || typeProduct == 3 || typeProduct == 2) {
-                    //     $scope.liquidator[key][3].timelyPayment = 0;
-                    // } else {
-                    //     $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
-                    // }
 
                     $scope.liquidator[key][3].TASAEA = $scope.tasaea;
                     $scope.liquidator[key][3].TASAMORA = $scope.tasamora;

@@ -2,6 +2,8 @@
 
 namespace App\Entities\AssessorQuotations;
 
+use App\Entities\Assessors\Assessor;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -36,5 +38,10 @@ class AssessorQuotation extends Model
     public function searchQuotations($term)
     {
         return self::search($term);
+    }
+
+    public function assessor()
+    {
+        return $this->belongsTo(User::class, 'assessor_id');
     }
 }
