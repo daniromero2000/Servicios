@@ -19,6 +19,7 @@
                     <td>{{$data->assessor->email}}</td>
                     <td>$ {{ number_format($data->total) }}</td>
                     <td>{{$data->created_at}}</td>
+                    <td><a data-toggle="tooltip" title="Ver Cotización" href="{{ route('assessorquotations.show', $data->id) }}"> <i class="far fa-eye"></i></a></td>
                 </tr>
                 @endforeach
             </tbody>
