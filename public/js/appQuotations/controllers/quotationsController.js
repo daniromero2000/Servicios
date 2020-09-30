@@ -82,7 +82,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             ];
 
         $scope.addItem = function () {
-            var index = [[], [], [], [], [], [], [], [], []];
+            var index = [[], [], [], [], [], [], [], [], [], []];
             $scope.quotations.push(index);
         };
 
@@ -424,7 +424,9 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                         }
                     });
                 }
+
                 $scope.quotations[key][5] = [];
+                $scope.quotations[key][9] = []
 
                 totalAval = Math.round(parseInt(aval) + parseInt(iva));
                 if ($scope.typeQuotations[key].type != '5') {
@@ -453,7 +455,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 $scope.quotations[key][4].total_aval = totalAval
                 $scope.quotations[key][4].push({ 'aval': aval, 'iva_aval': iva, 'total_aval': totalAval });
 
-
                 if ($scope.quotations[key][3].check) {
                     var div = 1.19
                 } else {
@@ -465,6 +466,9 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 $scope.quotations[key][5].push({
                     'total': $scope.quotations[key][5].total, 'iva': $scope.quotations[key][5].iva, 'subtotal': $scope.quotations[key][5].subtotal
                 });
+
+                $scope.quotations[key][9].push({ 'type_quotation': $scope.typeQuotations[key].type });
+
             } else {
                 if ($scope.quotations[key][3].term) {
                     showAlert("error", "El plazo ingresado no es valido para esta liquidación");
