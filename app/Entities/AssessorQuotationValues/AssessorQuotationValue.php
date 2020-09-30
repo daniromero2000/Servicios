@@ -24,6 +24,7 @@ class AssessorQuotationValue extends Model
         'initial_fee',
         'term',
         'value_fee',
-        'plan_id'
+        'plan_id',
+        'type_quotation'
     ];
 }
