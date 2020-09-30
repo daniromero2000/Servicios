@@ -130,37 +130,36 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-4">
-
                                         <label for="name">Plan <span class="text-danger">*</span></label>
-                                        <select ng-model="quotations[key][3].plan_id" id="plan" ng-blur="createPlan(key)" name="plan" class="form-control " required>
+                                        <select ng-model="quotations[key][3].plan_id" id="plan" ng-disabled="typeQuotations[key].type == 5" ng-blur="createPlan(key)" name="plan" class="form-control " required>
                                             <option selected value> Selecciona Plan </option>
                                             <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
                                                 @{{plan.PLAN}}</option>
                                         </select>
                                         <div class="form-group mt-3">
                                             <label>Aplica IVA?
-                                                <input type="checkbox" ng-model="quotations[key][3].check" ng-click="refreshLiquidator(key)">
+                                                <input type="checkbox" ng-disabled="typeQuotations[key].type == 5" ng-model=" quotations[key][3].check" ng-click="refreshLiquidator(key)">
+
                                             </label>
                                         </div>
-
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="initialFee">Cuota inicial</label>
-                                        <input required type="text" class="form-control" id="initialFee" ng-model="quotations[key][3].initial_fee" ng-currency ng-blur="refreshLiquidator(key)" aria-describedby="initialFee">
+                                        <input required type="text" class="form-control" id="initialFee" ng-model="quotations[key][3].initial_fee" ng-currency ng-blur="refreshLiquidator(key)" ng-disabled="typeQuotations[key].type == 5" aria-describedby="initialFee">
                                         <div ng-if="quotations[key][3].initialFeeFeedback" class="text-danger small">
                                             El monto minimo para la cuota inicial es de:
                                             @{{quotations[key][3].initialFeeFeedback | currency}}.
                                         </div>
-
                                         <div class="form-group mt-3">
                                             <label>Desea incrementar la cuota inicial?
-                                                <input type="checkbox" ng-model="quotations[key][3].checkInitialFee" ng-click="refreshLiquidator(key)">
+                                                <input type="checkbox" ng-disabled="typeQuotations[key].type == 5" ng-model="quotations[key][3].checkInitialFee" ng-click="refreshLiquidator(key)">
+
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                        <select ng-model="quotations[key][3].term" id="feeInitial" ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
+                                        <select ng-model="quotations[key][3].term" ng-disabled="typeQuotations[key].type == 5" id="feeInitial" ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
                                             <option selected value> Selecciona una Cuota </option>
                                             <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
                                                 @{{fees.CUOTA}}</option>

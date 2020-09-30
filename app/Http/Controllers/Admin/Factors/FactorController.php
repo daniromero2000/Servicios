@@ -47,7 +47,7 @@ class FactorController extends Controller
     {
         $data = $request->input();
 
-        // calculo de los factores de las cuotas;
+        // Cálculo factores de las cuotas;
         if ($data['id'] == 1) {
             $value = $data['value'] / 100;
             for ($i = 1; $i <= 24; $i++) {
@@ -55,7 +55,27 @@ class FactorController extends Controller
                 $share = round((($value * (1 + $value) ** $i) * 100 / (((1 + $value) ** $i) - 1)) / 100, 5);
                 $factorOportudata[] = ['CUOTA'  => $i, 'FACTOR' => $share];
             }
-            $factors = $this->factorOportudataInterface->updateFactorsOportudata($factorOportudata);
+            for ($i = 36; $i <= 48; $i++) {
+                $share = 0;
+                $share = round((($value * (1 + $value) ** $i) * 100 / (((1 + $value) ** $i) - 1)) / 100, 5);
+                $factorOportudata[] = ['CUOTA'  => $i, 'FACTOR' => $share];
+            }
+            $this->factorOportudataInterface->updateFactorsOportudata($factorOportudata);
+        }
+
+        // Cálculo factores nominales;
+        if ($data['id'] == 8) {
+            $variacion = $this->factorInterface->findFactorById(9);
+            $value = $data['value'] / 100;
+            $tasanom = round(((((1 + $value) ** (30 / 360) - 1) * 100) - $variacion->value), 2) * 12;
+            $this->factorInterface->updateFactor(['id' => '6', 'value' => $tasanom]);
+
+            $tasaMensualVencida =  $tasanom / 12;
+            $this->factorInterface->updateFactor(['id' => '7', 'value' => $tasaMensualVencida]);
+
+            $tasaEa = ((($tasaMensualVencida / 100 + 1) ** 12) - 1) * 100;
+            $this->factorInterface->updateFactor(['id' => '4', 'value' => $tasaEa]);
+            $this->factorInterface->updateFactor(['id' => '5', 'value' => $tasaEa]);
         }
 
         $factor =  $this->factorInterface->updateFactor($data);
