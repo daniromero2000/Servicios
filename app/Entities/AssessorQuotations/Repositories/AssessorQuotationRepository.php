@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 class AssessorQuotationRepository implements AssessorQuotationRepositoryInterface
 {
     private $columns = [
+        'id',
         'name',
         'lastName',
         'cedula',
@@ -31,6 +32,7 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
     {
         try {
             return $this->model->whereBetween('created_at', [$from, $to])->where('assessor_id', auth()->user()->id)
+                ->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
