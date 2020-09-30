@@ -7,7 +7,6 @@ use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
 class FactorController extends Controller
 {
 

@@ -20,8 +20,7 @@ class CreateAssesorQuotationsTable extends Migration
             $table->string('cedula', 10)->nullable();
             $table->string('phone', 50);
             $table->string('email', 100)->nullable();
-            $table->string('product_id');
-            $table->integer('product_price');
+            $table->string('total', 100);
             $table->boolean('termsAndConditions');
             $table->integer('assessor_id');
             $table->timestamps();
