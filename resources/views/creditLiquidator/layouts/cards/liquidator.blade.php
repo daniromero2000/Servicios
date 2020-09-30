@@ -174,11 +174,6 @@
                                                     <li class="mt-2 small d-flex justify-content-between"><span class="fa-li"><i class="fas fa-money-bill-wave-alt"></i></span>
                                                         Valor cuotas:
                                                         <b> $ @{{liquidator[key][3].VRCUOTA | number:0}}</b></li>
-                                                    {{-- <li class="mt-2 small d-flex justify-content-between"><span class="fa-li"><i class="fas fa-money-bill-wave-alt"></i></span>
-                                                        Pago
-                                                        oportuno:
-                                                        <b> $ @{{liquidator[key][3].timelyPayment | number:0}}</b>
-                                                    </li> --}}
                                                     <li class="mt-2 small d-flex justify-content-between"><span class="fa-li"><i class="far fa-credit-card"></i></span>
                                                         Cuota de
                                                         manejo:

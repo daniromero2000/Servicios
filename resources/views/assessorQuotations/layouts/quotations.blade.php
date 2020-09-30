@@ -15,15 +15,18 @@
 
         <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in quotations">
             <div class="tab-pane mb-4 border-0" id="nav-general@{{key}}" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabItem  == key }">
-                <label for="name">Tipo de Cotización <span class="text-danger">*</span></label>
-                <select ng-model="typeQuotations[key].type" name="action" class="form-control" required>
-                    <option selected value> Seleccione </option>
-                    <option value="1">Tradicional</option>
-                    <option value="2">Oportuya Blue</option>
-                    <option value="3">Oportuya Gray</option>
-                    <option value="4">Oportuya Black</option>
-                    <option value="5">Contado</option>
-                </select>
+                <div class="mx-auto" style="max-width: 300px;">
+                    <label for="name">Tipo de Cotización <span class="text-danger">*</span></label>
+                    <select ng-model="typeQuotations[key].type" name="action" class="form-control" required>
+                        <option selected value> Seleccione </option>
+                        <option value="1">Tradicional</option>
+                        <option value="2">Oportuya Blue</option>
+                        <option value="3">Oportuya Gray</option>
+                        <option value="4">Oportuya Black</option>
+                        <option value="5">Contado</option>
+                    </select>
+                </div>
+
                 <div class="row" ng-if="typeQuotations[key].type">
                     <div class="col-12">
                         <div class="mb-2 text-right" data-toggle="tooltip" data-placement="top" title="Actualizar liquidación">
@@ -32,7 +35,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-lg-8">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between ">
                                 <div>Negocio</div>
@@ -127,16 +130,33 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-4">
+
                                         <label for="name">Plan <span class="text-danger">*</span></label>
                                         <select ng-model="quotations[key][3].plan_id" id="plan" ng-blur="createPlan(key)" name="plan" class="form-control " required>
                                             <option selected value> Selecciona Plan </option>
                                             <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
                                                 @{{plan.PLAN}}</option>
                                         </select>
+                                        <div class="form-group mt-3">
+                                            <label>Aplica IVA?
+                                                <input type="checkbox" ng-model="quotations[key][3].check" ng-click="refreshLiquidator(key)">
+                                            </label>
+                                        </div>
+
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="initialFee">Cuota inicial</label>
-                                        <input required type="text" class="form-control" id="initialFee" ng-model="quotations[key][3].initial_fee" ng-currency aria-describedby="initialFee">
+                                        <input required type="text" class="form-control" id="initialFee" ng-model="quotations[key][3].initial_fee" ng-currency ng-blur="refreshLiquidator(key)" aria-describedby="initialFee">
+                                        <div ng-if="quotations[key][3].initialFeeFeedback" class="text-danger small">
+                                            El monto minimo para la cuota inicial es de:
+                                            @{{quotations[key][3].initialFeeFeedback | currency}}.
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label>Desea incrementar la cuota inicial?
+                                                <input type="checkbox" ng-model="quotations[key][3].checkInitialFee" ng-click="refreshLiquidator(key)">
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
@@ -157,11 +177,6 @@
                                     <div class="card-header text-muted border-bottom-0">
                                     </div>
                                     <div class="card-body pt-0">
-                                        <div class="form-group ">
-                                            <label>Aplica IVA?
-                                                <input type="checkbox" ng-model="quotations[key][3].check" ng-click="sumDiscount(key)">
-                                            </label>
-                                        </div>
                                         <div class="row mx-0">
                                             <div class="col-12">
                                                 <ul class="ml-4 mb-0 fa-ul text-muted mx-auto" style=" max-width: 280px; padding: 0px 20px;">
@@ -254,7 +269,8 @@
                                         </div>
                                         <div class="text-right mt-2">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Agregar</button>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="buttonDisabled">Agregar</button>
+
                                         </div>
                                     </div>
                                 </div>

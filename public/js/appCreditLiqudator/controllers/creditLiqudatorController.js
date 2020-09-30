@@ -34,6 +34,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.fixedSeleccion = '01';
         $scope.loader = false;
         $scope.buttonDisabled = true;
+        $scope.createDisabled = true;
         $scope.viewProductImg = false;
         $scope.typeDiscount =
             [
@@ -515,12 +516,18 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             });
         };
 
+        $scope.enabledButton = function () {
+            $scope.createDisabled = false;
+        };
+
+
         $scope.createLiquidator = function () {
             var save = '';
             $scope.liquidator.forEach(element => {
                 save = element[5].length > 0;
             });
             if (save) {
+                $scope.createDisabled = true;
                 $scope.request.push({ 'EXTENDID': $scope.request.EXTENDID })
                 $http({
                     method: 'POST',
@@ -534,7 +541,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.addError(response, $scope.lead.CEDULA);
                 });
             } else {
-                showAlert("error", "Por favor termine de diligenciar el negocio");
+                showAlert("error", "Por favor termine de diligenciar la liquidación");
             }
         };
 
