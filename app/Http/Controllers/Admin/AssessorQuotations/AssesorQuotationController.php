@@ -43,11 +43,12 @@ class AssesorQuotationController extends Controller
         }
 
         return view('assessorQuotations.list', [
-            'assessorQuotations' => $list,
-            'listCount'          => $listCount,
-            'headers'            => ['Cédula', 'Nombre', 'Apellidos', 'Celular', 'Monto', 'Fecha', 'Opciones'],
-            'skip'               => $skip,
-            'optionsRoutes'      => (request()->segment(2)),
+            'assessorQuotations'      => $list,
+            'listCount'               => $listCount,
+            'headers'                 => ['Cedula', 'Nombre', 'Apellidos', 'Celular', 'Asesor', 'Monto',  'Fecha', 'Opciones'],
+            'skip'                    => $skip,
+            'optionsRoutes'           => (request()->segment(2)),
+            'assessorQuotationsTotal' => $list->sum('total')
         ]);
     }
 
