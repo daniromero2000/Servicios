@@ -1053,6 +1053,7 @@ class assessorsController extends Controller
 		$customer                           = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerIntention                  = $customer->latestIntention;
 		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$customerIntention->save();
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
 			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
@@ -1093,7 +1094,7 @@ class assessorsController extends Controller
 		$lastName    = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$resultUbica = $this->doUbica($customer, $lastName);
 		$estadoSolic = 1;
-		$customerIntention->save();
+
 		if ($resultUbica == 0) {
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
 			$confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
@@ -1113,7 +1114,6 @@ class assessorsController extends Controller
 		} else {
 			$estadoSolic = 19;
 		}
-
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
