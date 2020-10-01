@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssesorQuotationValuesTable extends Migration
+class CreateAssessorQuotationValuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateAssesorQuotationValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('assesor_quotation_values', function (Blueprint $table) {
+        Schema::create('assessor_quotation_values', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('assesor_quotation_id');
+            $table->integer('assessor_quotation_id');
             $table->integer('product_id');
             $table->string('quantity', 100);
             $table->string('article', 100);
@@ -42,6 +42,6 @@ class CreateAssesorQuotationValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assesor_quotation_values');
+        Schema::dropIfExists('assessor_quotation_values');
     }
 }

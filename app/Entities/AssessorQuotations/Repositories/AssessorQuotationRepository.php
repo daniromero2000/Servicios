@@ -31,13 +31,23 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
     public function listAssessorQuotations($from, $to, $totalView)
     {
         try {
-            return $this->model->whereBetween('created_at', [$from, $to])->where('assessor_id', auth()->user()->id)
+            return $this->model->where('assessor_id', auth()->user()->id)
                 ->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
         } catch (QueryException $e) {
             dd($e);
+        }
+    }
+
+    public function findAssessorQuotationsById($id): AssessorQuotation
+    {
+        try {
+            return $this->model->with(['values'])
+                ->findOrFail($id, $this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
         }
     }
 

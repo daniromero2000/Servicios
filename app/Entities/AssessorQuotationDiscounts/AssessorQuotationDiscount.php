@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class AssessorQuotationDiscount extends Model
 {
-    protected $table = 'assesor_quotation_discounts';
+    protected $table = 'assessor_quotation_discounts';
 
     protected $connection = 'oportudata';
 
     protected $fillable = [
         'type',
         'value',
-        'assesor_quotations_value_id'
+        'assessor_quotation_value_id'
     ];
 }
