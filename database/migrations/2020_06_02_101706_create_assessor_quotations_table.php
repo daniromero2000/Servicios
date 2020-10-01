@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssesorQuotationsTable extends Migration
+class CreateAssessorQuotationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAssesorQuotationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assesor_quotations', function (Blueprint $table) {
+        Schema::create('assessor_quotations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
             $table->string('lastName', 100);
@@ -35,6 +35,6 @@ class CreateAssesorQuotationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assesor_quotations');
+        Schema::dropIfExists('assessor_quotations');
     }
 }

@@ -594,7 +594,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
 
                     $scope.liquidator[key][3].TASAEA = $scope.tasaea;
-                    $scope.liquidator[key][3].TASAMORA = $scope.tasamora;
+                    $scope.liquidator[key][3].TASAMORA = $scope.tasaea;
                     $scope.liquidator[key][3].TASANOM = $scope.tasanom;
                     $scope.liquidator[key][3].TASAMAX = $scope.tasamax;
                     $scope.liquidator[key][3].TASA_INT = $scope.tasaint;

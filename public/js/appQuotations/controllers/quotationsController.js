@@ -78,7 +78,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 { 'type': 'Por Lista' },
                 { 'type': 'Por Tipo de cliente' },
                 { 'type': 'Por traslado' },
-                { 'type': 'Otros' },
+                { 'type': 'Otros' }
             ];
 
         $scope.addItem = function () {
@@ -446,7 +446,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     $scope.quotations[key][7].push({ 'term': $scope.quotations[key][3].term, 'value_fee': $scope.quotations[key][3].value_fee });
                     $scope.quotations[key][5].total = precio
                     $scope.quotations[key][8] = []
-                    $scope.quotations[key][8].push({ 'plan': 'CONTADO', 'plan_id': '18' })
+                    $scope.quotations[key][8].push({ 'plan': 'CONTADO', 'plan_id': '22' })
                 }
 
                 $scope.quotations[key][4] = []
