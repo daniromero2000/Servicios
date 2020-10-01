@@ -11,6 +11,8 @@ interface AssessorQuotationRepositoryInterface
 
   public function createAssessorQuotations($data): AssessorQuotation;
 
+  public function findAssessorQuotationsById($id): AssessorQuotation;
+
   public function searchQuotations(string $text = null, $totalView,  $from = null,  $to = null): Collection;
 
   public function updateAssessorQuotations($data): AssessorQuotation;

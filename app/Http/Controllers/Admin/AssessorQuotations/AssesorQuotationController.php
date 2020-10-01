@@ -42,6 +42,7 @@ class AssesorQuotationController extends Controller
             $list = $this->assessorQuotationRepositoryInterface->searchQuotations(request()->input('q'), $skip * 100, request()->input('from'), request()->input('to'));
         }
 
+
         return view('assessorQuotations.list', [
             'assessorQuotations'      => $list,
             'listCount'               => $listCount,
@@ -80,6 +81,7 @@ class AssesorQuotationController extends Controller
         foreach ($items2 as $id => $value) {
             $products[]       = $items2[$id][0][0];
             $discounts[]      = $items2[$id][1];
+            $totalDiscounts[] = $items2[$id][2];
             $aval[]           = $items2[$id][4][0];
             $total[]          = $items2[$id][5][0];
             $feeInitial[]     = $items2[$id][6][0];
@@ -92,10 +94,11 @@ class AssesorQuotationController extends Controller
         $assessorQuotationValue = [];
         foreach ($products as $key => $value) {
             $assessorQuotationValue = new AssessorQuotationValue();
-            $assessorQuotationValue->fill(['assesor_quotation_id' => $customerQuotation->id]);
+            $assessorQuotationValue->fill(['assessor_quotation_id' => $customerQuotation->id]);
             $assessorQuotationValue->fill($products[$key]);
             $assessorQuotationValue->fill($aval[$key]);
             $assessorQuotationValue->fill($total[$key]);
+            $assessorQuotationValue->fill(['total_discount' => $totalDiscounts[$key]]);
             $assessorQuotationValue->fill($feeInitial[$key]);
             $assessorQuotationValue->fill($fees[$key]);
             $assessorQuotationValue->fill($plans[$key]);
@@ -103,7 +106,7 @@ class AssesorQuotationController extends Controller
             $assessorQuotationValue->save();
             foreach ($discounts[$key] as $key2 => $value2) {
                 unset($discounts[$key][$key2]['key']);
-                $discounts[$key][$key2]['assesor_quotations_value_id']  = $assessorQuotationValue->id;
+                $discounts[$key][$key2]['assessor_quotation_value_id']  = $assessorQuotationValue->id;
                 $assessorQuotationDiscountValue  = $this->quotationDiscountInterface->createAssessorQuotationDiscounts($discounts[$key][$key2]);
             }
             $sumTotal = $sumTotal + $total[$key]['total'];
@@ -120,9 +123,9 @@ class AssesorQuotationController extends Controller
     }
 
 
-    public function show()
+    public function show($id)
     {
-        return view('assessorQuotations.show');
+        return view('assessorQuotations.show', ['assessorQuotation' => $this->assessorQuotationRepositoryInterface->findAssessorQuotationsById($id)]);
     }
 
 

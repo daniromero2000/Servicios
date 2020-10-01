@@ -2,7 +2,7 @@
 
 namespace App\Entities\AssessorQuotations;
 
-use App\Entities\Assessors\Assessor;
+use App\Entities\AssessorQuotationValues\AssessorQuotationValue;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -11,7 +11,7 @@ class AssessorQuotation extends Model
 {
     use SearchableTrait;
 
-    protected $table = 'assesor_quotations';
+    protected $table = 'assessor_quotations';
 
     protected $connection = 'oportudata';
 
@@ -43,5 +43,10 @@ class AssessorQuotation extends Model
     public function assessor()
     {
         return $this->belongsTo(User::class, 'assessor_id');
+    }
+
+    public function values()
+    {
+        return $this->hasMany(AssessorQuotationValue::class)->with('discounts');
     }
 }

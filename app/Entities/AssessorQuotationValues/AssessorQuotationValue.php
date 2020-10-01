@@ -3,22 +3,25 @@
 namespace App\Entities\AssessorQuotationValues;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\AssessorQuotationDiscounts\AssessorQuotationDiscount;
+use App\Entities\Plans\Plan;
 
 class AssessorQuotationValue extends Model
 {
-    protected $table = 'assesor_quotation_values';
+    protected $table = 'assessor_quotation_values';
 
     protected $connection = 'oportudata';
 
     protected $fillable = [
-        'assesor_quotation_id',
-        'product_id',
+        'assessor_quotation_id',
+        'sku',
         'quantity',
         'article',
         'price',
         'list',
         'total_aval',
         'total',
+        'total_discount',
         'iva',
         'subtotal',
         'initial_fee',
@@ -27,4 +30,14 @@ class AssessorQuotationValue extends Model
         'plan_id',
         'type_quotation'
     ];
+
+    public function discounts()
+    {
+        return $this->hasMany(AssessorQuotationDiscount::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
+    }
 }
