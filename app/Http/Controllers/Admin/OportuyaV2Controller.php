@@ -843,6 +843,8 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 
+			$customerIntention->CREDIT_DECISION  = 'Tarjeta Oportuya';
+			$customerIntention->save();
 			$lastName    = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 			$resultUbica = $this->doUbica($customer, $lastName);
 			$estadoSolic = 1;
@@ -866,7 +868,7 @@ class OportuyaV2Controller extends Controller
 				$estadoSolic = 19;
 			}
 		}
-		$customerIntention->save();
+
 		return $this->addSolicCredit($customer, $policyCredit, $estadoSolic, $data);
 	}
 
