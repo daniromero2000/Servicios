@@ -19,13 +19,13 @@
                     <div class="col-sm-9 order-sm-last">
                         <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequestTurns">Dashboard
-                                    Turnos Fábrica</a>
-                            <li class="breadcrumb-item active"><a href="/Administrator/factoryrequestTurns">Turnos Fábrica</a></li>
+                            <li class="breadcrumb-item active"><a href="/Administrator/assessorquotations">Listado de
+                                    cotizaciones</a></li>
                         </ol>
                     </div>
                     <div class="col-sm-3 mt-2 order-sm-first">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
+                        <a href="{{ URL::previous() }}"
+                            class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -39,7 +39,8 @@
                         <h3 class="card-title">Reportes</h3>
 
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -81,7 +82,8 @@
                         <h3 class="card-title">Filtros</h3>
 
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -95,7 +97,8 @@
                         <h3 class="card-title">Cotizaciones</h3>
 
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body px-0">
