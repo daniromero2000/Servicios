@@ -5,13 +5,16 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
         $scope.lead = {};
         $scope.items = {};
-        $scope.discount = {};
+        $scope.discountTradicional = {};
+        $scope.discountOportuyaCard = {};
+        $scope.discountOportuyaCardBlack = {};
+        $scope.discountCash = {};
         $scope.plans = [];
         $scope.lists = [];
         $scope.request = [];
         $scope.listTags = [];
         $scope.listValue = [];
-        $scope.discounts = [];
+        $scope.discountTradicionals = [];
         $scope.productImg = [];
         $scope.quotations = [];
         $scope.numberOfFees = [];
@@ -20,7 +23,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.code = '';
         $scope.zone = '';
         $scope.tabs = 1;
-        $scope.step = 1;
+        $scope.step = 2;
         $scope.tabItem = 0;
         $scope.totalDiscount = 0;
         $scope.loader = false;
@@ -82,7 +85,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             ];
 
         $scope.addItem = function () {
-            var index = [[], [], [], [], [], [], [], [], [], []];
+            var index = [[], [], [], [], [], [], [], [], [], [], [], []];
             $scope.quotations.push(index);
         };
 
@@ -223,20 +226,20 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 url: '/api/liquidator/getProduct/' + item.sku + '/' + $scope.items.list,
             }).then(function successCallback(response) {
                 item.article = response.data.product[0].item;
-                if (response.data.product[0].type_product == '1' && $scope.typeQuotations[item.key].type != '5') {
-                    $scope.discount.key = item.key
-                    $scope.discount.type = 'Por lista';
+                if (response.data.product[0].type_product == '1') {
+                    $scope.discountTradicional.key = item.key
+                    $scope.discountTradicional.type = 'Por lista';
+                    $scope.discountTradicional.value = Math.floor(response.data.price.percentage_promotion_public_price);
+
+                    $scope.discountOportuyaCard.key = item.key
+                    $scope.discountOportuyaCard.type = 'Por lista';
+                    $scope.discountOportuyaCard.value = Math.floor(response.data.price.percentage_oportuya_customer);
+
+                    $scope.discountOportuyaCardBlack.key = item.key
+                    $scope.discountOportuyaCardBlack.type = 'Por lista';
+                    $scope.discountOportuyaCardBlack.value = Math.floor(response.data.price.percentage_oportuya_customer);
                     $scope.zone = response.data.zone;
-                    if ($scope.typeQuotations[item.key].type == '4') {
-                        $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
-                    } else if ($scope.typeQuotations[item.key].type == '2' || $scope.typeQuotations[item.key].type == '3') {
-                        $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
-                    } else {
-                        if (response.data.price.percentage_promotion_public_price != '0') {
-                            $scope.discount.type = 'Por lista';
-                            $scope.discount.value = Math.floor(response.data.price.percentage_promotion_public_price);
-                        }
-                    }
+
                     item.price = response.data.price.normal_public_price;
                 } else {
                     item.price = response.data.product[0].cash_cost;
@@ -261,9 +264,9 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.buttonDisabled = true;
         };
 
-        $scope.addDiscount = function (key) {
-            $scope.discount.key = key;
-            $('#addDiscount' + key).modal('show');
+        $scope.addDiscountTradicional = function (key) {
+            $scope.discountTradicional.key = key;
+            $('#addDiscountTradicional' + key).modal('show');
         };
 
         $scope.alterTab = function (value) {
@@ -286,42 +289,53 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             }
         }
 
-        $scope.createItemLiquidator = function () {
+        $scope.createItemQuotations = function () {
             var key = $scope.items.key;
             $scope.quotations[key][0].push($scope.items);
-            if ($scope.discount.length != '') {
-                if ($scope.discount.type) {
+            if ($scope.discountTradicional.length != '') {
+                if ($scope.discountTradicional.type) {
                     if ($scope.items.cod_proceso == 1 || $scope.items.cod_proceso == 4) {
-                        $scope.quotations[key][1] = [];
-                        $scope.quotations[key][1].push($scope.discount);
-                        $scope.discount = {};
-                        if ($scope.typeQuotations[key].type != '1' && $scope.typeQuotations[key].type != '5') {
-                            $scope.discount.key = key
-                            $scope.discount.type = 'Cliente Oportuya';
-                            if ($scope.typeQuotations[key].type == '4') {
-                                if ($scope.zone == 'ALTA') {
-                                    $scope.discount.value = 5;
-                                    $scope.quotations[key][1].push($scope.discount);
-                                } else {
-                                    $scope.discount.value = 10;
-                                    $scope.quotations[key][1].push($scope.discount);
-                                    $scope.discount = {};
-                                    $scope.discount.key = key
-                                    $scope.discount.type = 'Tarjeta Black';
-                                    $scope.discount.value = 5;
-                                    $scope.quotations[key][1].push($scope.discount);
-                                }
-                            } else {
-                                if ($scope.zone == 'ALTA') {
-                                    $scope.discount.value = 3;
-                                    $scope.quotations[key][1].push($scope.discount);
-                                } else {
-                                    $scope.discount.value = 10;
-                                    $scope.quotations[key][1].push($scope.discount);
-                                }
-                            }
-                            $scope.discount = {};
+                        $scope.quotations[key][9] = [];
+                        $scope.quotations[key][9].push($scope.discountTradicional);
+                        $scope.quotations[key][10] = [];
+                        $scope.quotations[key][10].push($scope.discountOportuyaCard);
+                        $scope.quotations[key][11] = [];
+                        $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
+
+                        $scope.discountOportuyaCard = {};
+                        $scope.discountOportuyaCardBlack = {};
+
+                        $scope.discountOportuyaCard.key = key
+                        $scope.discountOportuyaCard.type = 'Cliente Oportuya';
+
+                        $scope.discountOportuyaCardBlack.key = key
+                        $scope.discountOportuyaCardBlack.type = 'Cliente Oportuya';
+
+                        if ($scope.zone == 'ALTA') {
+                            $scope.discountOportuyaCardBlack.value = 5;
+                            $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
+
+                        } else {
+                            $scope.discountOportuyaCardBlack.value = 10;
+                            $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
+
+                            $scope.discountOportuyaCardBlack = {};
+                            $scope.discountOportuyaCardBlack.key = key
+                            $scope.discountOportuyaCardBlack.type = 'Tarjeta Black';
+                            $scope.discountOportuyaCardBlack.value = 5;
+                            $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
                         }
+
+                        if ($scope.zone == 'ALTA') {
+                            $scope.discountOportuyaCard.value = 3;
+                            $scope.quotations[key][10].push($scope.discountOportuyaCard);
+                        } else {
+                            $scope.discountOportuyaCard.value = 10;
+                            $scope.quotations[key][10].push($scope.discountOportuyaCard);
+                        }
+
+                        $scope.discountOportuyaCard = {};
+                        $scope.discountOportuyaCardBlack = {};
                     }
                 }
             }
@@ -337,7 +351,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 $scope.items.sku = 'IVAV';
                 $scope.items.quantity = '1';
                 $scope.items.article = "IVA AVAL 19 %";
-                if ($("#typeLiquidator").val() == '3') {
+                if ($("#typeQuotations").val() == '3') {
                     $scope.items.list = $scope.fixedList;
                     $scope.items.cod_proceso = '5';
                     var type = 5
@@ -362,28 +376,34 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.items = {};
         };
 
-        $scope.createDiscountLiquidator = function () {
-            $scope.quotations[$scope.discount.key][1].push($scope.discount);
+        $scope.createDiscountQuotations = function () {
+            $scope.quotations[$scope.discountTradicional.key][1].push($scope.discountTradicional);
             showAlert("success", "Descuento ingresado correctamente");
-            $("#addDiscount" + $scope.discount.key).modal("hide");
-            $scope.sumDiscount($scope.discount.key);
-            $scope.discount = {};
+            $("#addDiscount" + $scope.discountTradicional.key).modal("hide");
+            $scope.sumDiscount($scope.discountTradicional.key);
+            $scope.discountTradicional = {};
         };
 
-        $scope.createLiquidator = function () {
-            if ($scope.quotations[0][5].length > 0) {
-                $http({
-                    method: 'POST',
-                    url: '/Administrator/assessorquotations',
-                    data: [$scope.quotations, $scope.lead]
-                }).then(function successCallback(response) {
-                    if (response.data) {
-                        $('#congratulations').modal('show');
-                    }
-                }, function errorCallback(response) {
-                });
-            } else {
-                showAlert("error", "Por favor ingrese todos los datos");
+        $scope.createQuotations = function () {
+            var save = '';
+            $scope.quotations.forEach(element => {
+                save = element[5].length > 0;
+            });
+            if (save) {
+                if ($scope.quotations[0][5].length > 0) {
+                    $http({
+                        method: 'POST',
+                        url: '/Administrator/assessorquotations',
+                        data: [$scope.quotations, $scope.lead]
+                    }).then(function successCallback(response) {
+                        if (response.data) {
+                            $('#congratulations').modal('show');
+                        }
+                    }, function errorCallback(response) {
+                    });
+                } else {
+                    showAlert("error", "Por favor ingrese todos los datos");
+                }
             }
         };
 
@@ -426,7 +446,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 }
 
                 $scope.quotations[key][5] = [];
-                $scope.quotations[key][9] = []
 
                 totalAval = Math.round(parseInt(aval) + parseInt(iva));
                 if ($scope.typeQuotations[key].type != '5') {
@@ -467,7 +486,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     'total': $scope.quotations[key][5].total, 'iva': $scope.quotations[key][5].iva, 'subtotal': $scope.quotations[key][5].subtotal
                 });
 
-                $scope.quotations[key][9].push({ 'type_quotation': $scope.typeQuotations[key].type });
 
             } else {
                 if ($scope.quotations[key][3].term) {
@@ -642,12 +660,12 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
             $scope.quotations[key][6].push({ 'initial_fee': $scope.quotations[key][3].initial_fee });
             $timeout(() => {
-                $scope.updateChargesLiquidator(key);
+                $scope.updateChargesQuotations(key);
             }, 500);
 
         };
 
-        $scope.refreshLiquidator = function (key) {
+        $scope.refreshQuotations = function (key) {
             $scope.sumDiscount(key);
             showAlert("success", "La liquidación ha sido actualizada");
         };
@@ -731,7 +749,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             }, 3500);
         };
 
-        $scope.updateChargesLiquidator = function (key) {
+        $scope.updateChargesQuotations = function (key) {
             var e = $scope.quotations[key][0];
             for (let i = 0; i < e.length; i++) {
                 var item = {};

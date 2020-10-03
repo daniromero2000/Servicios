@@ -27,6 +27,61 @@
 
 </div>
 
+<div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content ">
+            <div class="modal-body">
+                <div class="row">
+                    <div ng-repeat="(key2, quotation) in quotations"
+                        class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                        {{-- <p>@{{quotation.quotation_values}} </p> --}}
+                        <div class="card bg-light w-100">
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="lead mt-3"><b>Total: </b> @{{ quotation.total | currency }}</b></h2>
+                                        <ul class="ml-4 mb-0 fa-ul text-muted"
+                                            ng-repeat="(key3, item) in quotation.quotation_values">
+                                            <div class="form-check text-right">
+                                                <input class="form-check-input" ng-click="select(item)"
+                                                    ng-model="quotation_push[item.id]" type="checkbox">
+                                                <label class="form-check-label"></label>
+                                            </div>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-lg fa-building"></i></span> Código:
+                                                @{{ item.sku }}</li>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-lg fa-building"></i></span> Producto:
+                                                @{{ item.article }}</li>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-lg fa-building"></i></span> Lista:
+                                                @{{ item.list }}</li>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-lg fa-building"></i></span> Cantidad:
+                                                @{{ item.quantity }}</li>
+                                            <div class="dropdown-divider"></div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-sm bg-teal">
+                                        <i class="fas fa-comments"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-user"></i> View Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="validationCustomer"
     tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

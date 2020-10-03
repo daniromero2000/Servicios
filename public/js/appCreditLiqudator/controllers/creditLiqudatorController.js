@@ -16,9 +16,12 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.listValue = [];
         $scope.discounts = [];
         $scope.productImg = [];
+        $scope.quotations = [];
         $scope.liquidator = [];
         $scope.numberOfFees = [];
         $scope.productPrices = [];
+        $scope.quotation_push = [];
+        $scope.quotation_push_items = [];
         $scope.code = '';
         $scope.zone = '';
         $scope.listSearch = '';
@@ -175,11 +178,24 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.lead = response.data;
                 $scope.createRequest();
                 $scope.loader = false;
-                $scope.addItem();
+                if (response.data.customer_quotations.length > 0) {
+                    $('#my-modal').modal('show');
+                    $scope.quotations = response.data.customer_quotations;
+                    console.log($scope.quotations)
+                } else {
+                    $scope.addItem();
+                }
             }, function errorCallback(response) {
                 response.url = '/assessor/api/getInfoLead/' + $scope.lead.CEDULA;
                 $scope.addError(response, $scope.lead.CEDULA);
             });
+        };
+
+        $scope.select = function (item) {
+            $scope.quotation_push_items += item;
+            console.log(item)
+            console.log($scope.quotation_push_items)
+            console.log($scope.quotation_push)
         };
 
         //Consultar Producto

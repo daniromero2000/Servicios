@@ -152,7 +152,7 @@
             <div class="card card-primary card-outline card-outline-tabs">
                 <div class="card-header p-0 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                        @foreach($assessorQuotation->values as $key => $value)
+                        @foreach($assessorQuotation->quotationValues as $key => $value)
                         <li class="nav-item">
                             <a class="nav-link {{$key == 0 ? 'active' : '' }}" id="item{{$key}}-tab" data-toggle="pill"
                                 href="#item{{$key}}" role="tab" aria-controls="item{{$key}}" aria-selected="false">Item
@@ -163,7 +163,7 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-four-tabContent">
-                        @foreach($assessorQuotation->values as $key => $value)
+                        @foreach($assessorQuotation->quotationValues as $key => $value)
                         <div class="tab-pane fade {{$key == 0 ? 'active show' : '' }}" id="item{{$key}}" role="tabpanel"
                             aria-labelledby="item{{$key}}-tab">
                             <div class="row">

@@ -3,6 +3,7 @@
 namespace App\Entities\Customers;
 
 use App\codeUserVerificationOportudata;
+use App\Entities\AssessorQuotations\AssessorQuotation;
 use App\Entities\CurrentCredits\PaymentTime;
 use App\Entities\CurrentCredits\CustomerType;
 use App\Entities\CurrentCredits\CurrentCredit;
@@ -335,5 +336,10 @@ class Customer extends Model
     public function customerType()
     {
         return $this->hasOne(CustomerType::class, 'identificationNumber');
+    }
+
+    public function customerQuotations()
+    {
+        return $this->hasMany(AssessorQuotation::class, 'cedula')->with('quotationValues');
     }
 }
