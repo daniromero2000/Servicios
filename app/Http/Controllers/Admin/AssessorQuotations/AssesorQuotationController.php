@@ -62,6 +62,7 @@ class AssesorQuotationController extends Controller
 
     public function store(Request $request)
     {
+
         $quotations = $request->input();
         $customer = [
             'name'               => $quotations[1]['NOMBRES'],
@@ -107,7 +108,7 @@ class AssesorQuotationController extends Controller
             foreach ($discounts[$key] as $key2 => $value2) {
                 unset($discounts[$key][$key2]['key']);
                 $discounts[$key][$key2]['assessor_quotation_value_id']  = $assessorQuotationValue->id;
-                $assessorQuotationDiscountValue  = $this->quotationDiscountInterface->createAssessorQuotationDiscounts($discounts[$key][$key2]);
+                $this->quotationDiscountInterface->createAssessorQuotationDiscounts($discounts[$key][$key2]);
             }
             $sumTotal = $sumTotal + $total[$key]['total'];
         }

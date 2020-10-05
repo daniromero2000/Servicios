@@ -31,14 +31,7 @@
                 </div> --}}
 
                 <div class="row">
-                    <div class="col-12">
-                        <div class="mb-2 text-right" data-toggle="tooltip" data-placement="top"
-                            title="Actualizar liquidación">
-                            <a class="mr-3" href ng-click="refreshQuotations(key)">
-                                <i class="fas fa-sync-alt rotate"></i>
-                            </a>
-                        </div>
-                    </div>
+
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between ">
@@ -88,66 +81,30 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-xl-4">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between ">
-                                <div>Descuentos</div>
-                                <div class="text-right ml-auto">
-                                    <button type="button" class="btn btn-primary btn-sm" ng-click="addDiscount(key)">
-                                        Agregar Descuento
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table text-sm" ng-if="tab[1] != ''">
-                                        <thead class="">
-                                            <tr>
-                                                <th>Tipo</th>
-                                                <th>%</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="item in tab[1]">
-                                                <td>@{{ item.type }}</td>
-                                                <td>@{{ item.value }}</td>
-                                                <td class="d-flex">
-                                                    <button class="close mx-auto text-danger"
-                                                        ng-click="removeDiscount(item)">
-                                                        <span>×</span>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-
-                                    </table>
-                                    <div ng-if="tab[1] == ''">
-                                        <div class="alert alert-primary" role="alert">
-                                            No hay descuentos
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-12">
+                        <div class="mb-2 text-right" data-toggle="tooltip" data-placement="top"
+                            title="Actualizar liquidación">
+                            <a class="mr-3" href ng-click="refreshQuotations(key)">
+                                <i class="fas fa-sync-alt rotate"></i>
+                            </a>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-xl-8">
+
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-4">
                                         <label for="name">Plan <span class="text-danger">*</span></label>
                                         <select ng-model="quotations[key][3].plan_id" id="plan"
-                                            ng-disabled="typeQuotations[key].type == 5" ng-blur="createPlan(key)"
-                                            name="plan" class="form-control " required>
+                                            ng-blur="createPlan(key)" name="plan" class="form-control " required>
                                             <option selected value> Selecciona Plan </option>
                                             <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
                                                 @{{plan.PLAN}}</option>
                                         </select>
                                         <div class="form-group mt-3">
                                             <label>Aplica IVA?
-                                                <input type="checkbox" ng-disabled="typeQuotations[key].type == 5"
-                                                    ng-model=" quotations[key][3].check"
+                                                <input type="checkbox" ng-model=" quotations[key][3].check"
                                                     ng-click="refreshQuotations(key)">
 
                                             </label>
@@ -157,16 +114,14 @@
                                         <label for="initialFee">Cuota inicial</label>
                                         <input required type="text" class="form-control" id="initialFee"
                                             ng-model="quotations[key][3].initial_fee" ng-currency
-                                            ng-blur="refreshQuotations(key)" ng-disabled="typeQuotations[key].type == 5"
-                                            aria-describedby="initialFee">
+                                            ng-blur="refreshQuotations(key)" aria-describedby="initialFee">
                                         <div ng-if="quotations[key][3].initialFeeFeedback" class="text-danger small">
                                             El monto minimo para la cuota inicial es de:
                                             @{{quotations[key][3].initialFeeFeedback | currency}}.
                                         </div>
                                         <div class="form-group mt-3">
                                             <label>Desea incrementar la cuota inicial?
-                                                <input type="checkbox" ng-disabled="typeQuotations[key].type == 5"
-                                                    ng-model="quotations[key][3].checkInitialFee"
+                                                <input type="checkbox" ng-model="quotations[key][3].checkInitialFee"
                                                     ng-click="refreshQuotations(key)">
 
                                             </label>
@@ -174,9 +129,8 @@
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                        <select ng-model="quotations[key][3].term"
-                                            ng-disabled="typeQuotations[key].type == 5" id="feeInitial"
-                                            ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
+                                        <select ng-model="quotations[key][3].term" id="feeInitial" ng-blur="addFee(key)"
+                                            name="feeInitial" class="form-control " required>
                                             <option selected value> Selecciona una Cuota </option>
                                             <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
                                                 @{{fees.CUOTA}}</option>
@@ -186,52 +140,300 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-10 col-md-7 col-lg-6 col-xl-4 mx-auto">
-                        <div>
-                            <div class="row mx-0">
-                                <div class="card bg-white w-100">
-                                    <div class="card-header text-muted border-bottom-0">
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <div class="row mx-0">
-                                            <div class="col-12">
-                                                <ul class="ml-4 mb-0 fa-ul text-muted mx-auto"
-                                                    style=" max-width: 280px; padding: 0px 20px;">
-                                                    <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-percent"></i></span>
-                                                        Total
-                                                        Descuentos: <b> $
-                                                            @{{quotations[key][2] | number:0 }}</b>
-                                                    </li>
-                                                    <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i
-                                                                class="fas fa-money-bill-wave-alt"></i></span>
-                                                        Valor cuotas:
-                                                        <b> $ @{{quotations[key][3].value_fee | number:0}}</b></li>
-                                                    <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-store-alt"></i></span>
-                                                        Aval+Iva:
-                                                        <b> $ @{{quotations[key][4].total_aval | number:0}}</b></li>
-                                                    <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-dollar-sign"></i></span>
-                                                        Subtotal:
-                                                        <b> $ @{{quotations[key][5].subtotal | number:0}}</b></li>
-                                                    <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-dollar-sign"></i></span>
-                                                        Iva:
-                                                        <b> $ @{{quotations[key][5].iva | number:0}}</b></li>
-                                                    <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-dollar-sign"></i></span>
-                                                        Total:
-                                                        <b> $ @{{quotations[key][5].total | number:0}}</b></li>
-                                                </ul>
+
+                    <div class="col-12">
+                        <div class="card card-primary card-outline card-outline-tabs" ng-if="quotations[key][3].term">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tradicional-tab" data-toggle="pill" href="#tradicional"
+                                            role="tab" aria-controls="tradicional" aria-selected="false"
+                                            ng-click="alterTypeQuatation(key ,9)">Tradicional</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="card-blue-tab" data-toggle="pill" href="#card-blue"
+                                            role="tab" aria-controls="card-blue" aria-selected="false"
+                                            ng-click="alterTypeQuatation(key ,10)">Oportuya
+                                            Blue</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="card-gray-tab" data-toggle="pill" href="#card-gray"
+                                            role="tab" aria-controls="card-gray" aria-selected="false"
+                                            ng-click="alterTypeQuatation(key ,10)">Oportuya
+                                            Gray</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " id="card-black-tab" data-toggle="pill" href="#card-black"
+                                            role="tab" aria-controls="card-black" aria-selected="true"
+                                            ng-click="alterTypeQuatation(key, 11)">Oportuya
+                                            Black</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " id="cash-tab" data-toggle="pill" href="#cash" role="tab"
+                                            aria-controls="cash" aria-selected="true"
+                                            ng-click="alterTypeQuatation(key, 1)">Contado</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-one-tabContent">
+                                    <div class="tab-pane fade" id="tradicional" role="tabpanel"
+                                        aria-labelledby="tradicional-tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-4">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between ">
+                                                        <div>Descuentos</div>
+                                                        <div class="text-right ml-auto">
+                                                            <button type="button" class="btn btn-primary btn-sm"
+                                                                ng-click="addDiscountTradicional(key)">
+                                                                Agregar Descuento
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table text-sm" ng-if="tab[9] != ''">
+                                                                <thead class="">
+                                                                    <tr>
+                                                                        <th>Tipo</th>
+                                                                        <th>%</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in tab[9]">
+                                                                        <td>@{{ item.type }}</td>
+                                                                        <td>@{{ item.value }}</td>
+                                                                        <td class="d-flex">
+                                                                            <button class="close mx-auto text-danger"
+                                                                                ng-click="removeDiscountTradicional(item)">
+                                                                                <span>×</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                            <div ng-if="tab[9] == ''">
+                                                                <div class="alert alert-primary" role="alert">
+                                                                    No hay descuentos
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            @include('assessorQuotations.layouts.deal.deal')
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="card-blue" role="tabpanel"
+                                        aria-labelledby="card-blue-tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-4">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between ">
+                                                        <div>Descuentos</div>
+                                                        <div class="text-right ml-auto">
+                                                            <button type="button" class="btn btn-primary btn-sm"
+                                                                ng-click="addDiscountOportuyaCard(key)">
+                                                                Agregar Descuento
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table text-sm" ng-if="tab[10] != ''">
+                                                                <thead class="">
+                                                                    <tr>
+                                                                        <th>Tipo</th>
+                                                                        <th>%</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in tab[10]">
+                                                                        <td>@{{ item.type }}</td>
+                                                                        <td>@{{ item.value }}</td>
+                                                                        <td class="d-flex">
+                                                                            <button class="close mx-auto text-danger"
+                                                                                ng-click="removeDiscountOportuyaCard(item)">
+                                                                                <span>×</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                            <div ng-if="tab[10] == ''">
+                                                                <div class="alert alert-primary" role="alert">
+                                                                    No hay descuentos
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @include('assessorQuotations.layouts.deal.deal')
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="card-gray" role="tabpanel"
+                                        aria-labelledby="card-gray-tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-4">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between ">
+                                                        <div>Descuentos</div>
+                                                        <div class="text-right ml-auto">
+                                                            <button type="button" class="btn btn-primary btn-sm"
+                                                                ng-click="addDiscountOportuyaCard(key)">
+                                                                Agregar Descuento
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table text-sm" ng-if="tab[10] != ''">
+                                                                <thead class="">
+                                                                    <tr>
+                                                                        <th>Tipo</th>
+                                                                        <th>%</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in tab[10]">
+                                                                        <td>@{{ item.type }}</td>
+                                                                        <td>@{{ item.value }}</td>
+                                                                        <td class="d-flex">
+                                                                            <button class="close mx-auto text-danger"
+                                                                                ng-click="removeDiscountOportuyaCard(item)">
+                                                                                <span>×</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                            <div ng-if="tab[10] == ''">
+                                                                <div class="alert alert-primary" role="alert">
+                                                                    No hay descuentos
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @include('assessorQuotations.layouts.deal.deal')
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="card-black" role="tabpanel"
+                                        aria-labelledby="card-black-tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-4">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between ">
+                                                        <div>Descuentos</div>
+                                                        <div class="text-right ml-auto">
+                                                            <button type="button" class="btn btn-primary btn-sm"
+                                                                ng-click="addDiscountOportuyaCardBlack(key)">
+                                                                Agregar Descuento
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table text-sm" ng-if="tab[11] != ''">
+                                                                <thead class="">
+                                                                    <tr>
+                                                                        <th>Tipo</th>
+                                                                        <th>%</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in tab[11]">
+                                                                        <td>@{{ item.type }}</td>
+                                                                        <td>@{{ item.value }}</td>
+                                                                        <td class="d-flex">
+                                                                            <button class="close mx-auto text-danger"
+                                                                                ng-click="removeDiscountOportuyaCardBlack(item)">
+                                                                                <span>×</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                            <div ng-if="tab[11] == ''">
+                                                                <div class="alert alert-primary" role="alert">
+                                                                    No hay descuentos
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @include('assessorQuotations.layouts.deal.deal')
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="cash" role="tabpanel" aria-labelledby="cash-tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-4">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between ">
+                                                        <div>Descuentos</div>
+                                                        <div class="text-right ml-auto">
+                                                            <button type="button" class="btn btn-primary btn-sm"
+                                                                ng-click="addDiscount(key)">
+                                                                Agregar Descuento
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table text-sm" ng-if="tab[1] != ''">
+                                                                <thead class="">
+                                                                    <tr>
+                                                                        <th>Tipo</th>
+                                                                        <th>%</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in tab[1]">
+                                                                        <td>@{{ item.type }}</td>
+                                                                        <td>@{{ item.value }}</td>
+                                                                        <td class="d-flex">
+                                                                            <button class="close mx-auto text-danger"
+                                                                                ng-click="removeDiscount(item)">
+                                                                                <span>×</span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+
+                                                            </table>
+                                                            <div ng-if="tab[1] == ''">
+                                                                <div class="alert alert-primary" role="alert">
+                                                                    No hay descuentos
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @include('assessorQuotations.layouts.deal.deal')
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- /.card -->
                         </div>
                     </div>
+
+
                 </div>
             </div>
 
@@ -316,7 +518,7 @@
                 </div>
             </div>
 
-            <div id="addDiscount@{{key}}" class="modal fade" tabindex="-1" role="dialog"
+            <div id="addDiscountTradicional@{{key}}" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="my-modal-title" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -327,13 +529,108 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form ng-submit="createDiscountQuotations()">
+                            <form ng-submit="createDiscountTradicionalQuotation()">
                                 <div class=" row pl-0 pr-0">
                                     <div class="col-8">
                                         <div class="form-group">
                                             <label for="name">Tipo de descuento <span
                                                     class="text-danger">*</span></label>
-                                            <select ng-model="discount.type" id="discountType" name="discountType"
+                                            <select ng-model="discountTradicional.type" id="discountTradicionalType"
+                                                name="discountTradicionalType" class="form-control select2" required>
+                                                <option selected value> Selecciona Tipo de descuento </option>
+                                                <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
+                                                    @{{type.type}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="name">Descuento % <span class="text-danger">*</span></label>
+                                            <select ng-model="discountTradicional.value" id="discountTradicionalValue"
+                                                name="discountTradicionalValue" class="form-control" required>
+                                                <option selected value> Selecciona</option>
+                                                <option ng-repeat="value in listValue" value="@{{value.value}}">
+                                                    @{{value.value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-2">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Agregar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addDiscountOportuyaCard@{{key}}" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="my-modal-title" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="my-modal-title">Ingresar Descuento</h5>
+                            <button class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="createDiscountOportuyaCardQuotation()">
+                                <div class=" row pl-0 pr-0">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <label for="name">Tipo de descuento <span
+                                                    class="text-danger">*</span></label>
+                                            <select ng-model="discountOportuyaCard.type" id="discountOportuyaCardType"
+                                                name="discountOportuyaCardType" class="form-control select2" required>
+                                                <option selected value> Selecciona Tipo de descuento </option>
+                                                <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
+                                                    @{{type.type}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="name">Descuento % <span class="text-danger">*</span></label>
+                                            <select ng-model="discountOportuyaCard.value" id="discountOportuyaCardValue"
+                                                name="discountOportuyaCardValue" class="form-control" required>
+                                                <option selected value> Selecciona</option>
+                                                <option ng-repeat="value in listValue" value="@{{value.value}}">
+                                                    @{{value.value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-2">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Agregar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addDiscountOportuyaCardBlack@{{key}}" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="my-modal-title" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="my-modal-title">Ingresar Descuento</h5>
+                            <button class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="createDiscountOportuyaCardBlackQuotation()">
+                                <div class=" row pl-0 pr-0">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <label for="name">Tipo de descuento <span
+                                                    class="text-danger">*</span></label>
+                                            <select ng-model="discountOportuyaCardBlack.type"
+                                                id="discountOportuyaCardBlackType" name="discountOportuyaCardBlackType"
                                                 class="form-control select2" required>
                                                 <option selected value> Selecciona Tipo de descuento </option>
                                                 <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
@@ -344,8 +641,9 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="name">Descuento % <span class="text-danger">*</span></label>
-                                            <select ng-model="discount.value" id="discountValue" name="discountValue"
-                                                class="form-control" required>
+                                            <select ng-model="discountOportuyaCardBlack.value"
+                                                id="discountOportuyaCardBlackValue"
+                                                name="discountOportuyaCardBlackValue" class="form-control" required>
                                                 <option selected value> Selecciona</option>
                                                 <option ng-repeat="value in listValue" value="@{{value.value}}">
                                                     @{{value.value}}</option>
