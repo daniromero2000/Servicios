@@ -18,8 +18,16 @@
                     <td>{{$data->phone}}</td>
                     <td>{{$data->assessor->email}}</td>
                     <td>$ {{ number_format($data->total) }}</td>
+                    <td>@if ($data->state == 0)
+                        <span class="badge badge-primary">Sin gestionar</span>
+                        @else
+                        <span class="badge badge-success">Liquidado</span>
+                        @endif
+                    </td>
                     <td>{{$data->created_at}}</td>
-                    <td><a data-toggle="tooltip" title="Ver Cotización" href="{{ route('assessorquotations.show', $data->id) }}"> <i class="far fa-eye"></i></a></td>
+                    <td><a data-toggle="tooltip" title="Ver Cotización"
+                            href="{{ route('assessorquotations.show', $data->id) }}"> <i class="far fa-eye"></i></a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

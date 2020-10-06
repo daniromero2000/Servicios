@@ -16,7 +16,7 @@ class CreateAssessorQuotationValuesTable extends Migration
         Schema::create('assessor_quotation_values', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('assessor_quotation_id');
-            $table->integer('product_id');
+            $table->string('sku');
             $table->string('quantity', 100);
             $table->string('article', 100);
             $table->string('price', 100);

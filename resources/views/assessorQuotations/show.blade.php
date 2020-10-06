@@ -167,7 +167,7 @@
                         <div class="tab-pane fade {{$key == 0 ? 'active show' : '' }}" id="item{{$key}}" role="tabpanel"
                             aria-labelledby="item{{$key}}-tab">
                             <div class="row">
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <p class="text-gray"><b>Tipo de Cotización:</b>
                                         @if ($value->type_quotation == 1)
                                         Tradicional
@@ -180,7 +180,7 @@
                                         @else
                                         Contado
                                         @endif </p>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-8">
                                     <div class="card">
                                         <div class="card-header d-flex justify-content-between ">

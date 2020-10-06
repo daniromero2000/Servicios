@@ -53,6 +53,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.addItem = function () {
             var index = [[], [], [], [], [], [], [], [], []];
             $scope.liquidator.push(index);
+
+
         };
 
         //Listado de Planes
@@ -191,11 +193,40 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             });
         };
 
-        $scope.select = function (item) {
-            $scope.quotation_push_items += item;
-            console.log(item)
-            console.log($scope.quotation_push_items)
-            console.log($scope.quotation_push)
+        //Insertar Cotizaciones
+        $scope.addItemForQuotation = function (item) {
+            $scope.quotation_push_items = [];
+
+            $('input[type=checkbox]').each(function () {
+                if (this.checked) {
+                    $scope.quotation_push_items.push({ 'item': $(this).val() });
+                }
+            });
+
+            if ($scope.quotation_push_items.length > 0) {
+                let promise = $timeout();
+                angular.forEach($scope.quotation_push_items, function (value, key) {
+                    promise = promise.then(function () {
+                        $scope.addItem();
+                        value.item = JSON.parse(value.item);
+                        $scope.items.key = key;
+                        $scope.items.COD_PROCESO = '1';
+                        $scope.items.LISTA = value.item.list;
+                        $scope.items.CODIGO = value.item.sku.toString();
+                        $scope.items.SELECCION = '01';
+                        $scope.items.CANTIDAD = value.item.quantity;
+                        $scope.calcPriceProducFromQuotations($scope.items)
+                        $scope.liquidator[$scope.items.key][3].COD_PLAN = value.item.plan_id.toString()
+                        $scope.liquidator[$scope.items.key][3].CUOTAINI = value.item.initial_fee
+                        $scope.liquidator[$scope.items.key][3].PLAZO = value.item.term
+                        return $timeout(1500);
+                    });
+                });
+
+            } else {
+                $scope.addItem();
+            }
+            $('#my-modal').modal('hide');
         };
 
         //Consultar Producto
@@ -337,7 +368,55 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
                     break;
             }
+
         };
+
+        //Calculo del precio del producto desde las cotizaciones
+        $scope.calcPriceProducFromQuotations = function (item) {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getProduct/' + item.CODIGO + '/' + item.LISTA,
+            }).then(function successCallback(response) {
+                $scope.liquidator[item.key][3].apply_gift = response.data.price.apply_gift;
+                item.ARTICULO = response.data.product[0].item;
+                if (response.data.product[0].type_product == 1) {
+                    if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                        $scope.discount.key = item.key
+                        $scope.discount.type = 'Por lista';
+                        $scope.zone = response.data.zone;
+                        if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
+                            $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
+                        } else if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Gray' || $scope.lead.latest_intention.TARJETA == 'Tarjeta Blue') {
+                            $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
+                        } else {
+                            if (response.data.price.percentage_promotion_public_price != '0') {
+                                $scope.discount.key = item.key
+                                $scope.discount.type = 'Por lista';
+                                $scope.discount.value = Math.floor(response.data.price.percentage_promotion_public_price);
+                            }
+                        }
+                    } else {
+                        if (response.data.price.percentage_promotion_public_price != '0') {
+                            $scope.discount.key = item.key
+                            $scope.discount.type = 'Por lista';
+                            $scope.discount.value = Math.floor(response.data.price.percentage_promotion_public_price);
+                        }
+                    }
+                    item.PRECIO = response.data.price.normal_public_price;
+                    item.PRECIO_P = item.PRECIO;
+                } else {
+                    item.PRECIO = response.data.product[0].cash_cost;
+                    item.PRECIO_P = item.PRECIO;
+                }
+                // item.LISTA = response.data.price.list;
+                $scope.buttonDisabled = false;
+                item.type_product = response.data.product[0].type_product;
+                $scope.createItemLiquidator()
+
+            }, function errorCallback(response) {
+                showAlert("error", "El código ingresado no existe");
+            });
+        }
 
         //Calculo del precio del producto
         $scope.calcPriceProduct = function (item) {
@@ -379,6 +458,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 // item.LISTA = response.data.price.list;
                 $scope.buttonDisabled = false;
                 item.type_product = response.data.product[0].type_product;
+
             }, function errorCallback(response) {
                 showAlert("error", "El código ingresado no existe");
             });
@@ -428,7 +508,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.items.LISTA = $scope.fixedList;
                 $scope.items.SELECCION = $scope.fixedSeleccion;
             }
-            var key = $scope.items.key;
+            var key = $scope.items.key ? $scope.items.key : 0;
             $scope.liquidator[key][0].push($scope.items);
             if ($scope.discount.length != '') {
                 if ($scope.discount.type) {
@@ -548,7 +628,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $http({
                     method: 'POST',
                     url: '/Administrator/creditLiquidator',
-                    data: [$scope.liquidator, $scope.request, $scope.lead]
+                    data: [$scope.liquidator, $scope.request, $scope.lead, $scope.quotation_push_items]
                 }).then(function successCallback(response) {
                     if (response.data) {
                         $('#congratulations').modal('show');

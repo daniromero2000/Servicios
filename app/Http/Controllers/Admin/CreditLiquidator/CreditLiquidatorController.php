@@ -15,6 +15,7 @@ use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterfa
 use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetailRepositoryInterface;
 use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryInterface;
+use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
@@ -45,7 +46,8 @@ class CreditLiquidatorController extends Controller
         FactorsOportudataRepositoryInterface $factorsOportudataRepositoryInterface,
         CreditBusinesDetailRepositoryInterface $creditBusinesDetailRepositoryInterface,
         CreditBusinesRepositoryInterface $creditBusinesRepositoryInterface,
-        ProductListRepositoryInterface $productListRepositoryInterface
+        ProductListRepositoryInterface $productListRepositoryInterface,
+        AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface
     ) {
         $this->customerInterface            = $CustomerRepositoryInterface;
         $this->toolsInterface               = $toolRepositoryInterface;
@@ -62,6 +64,7 @@ class CreditLiquidatorController extends Controller
         $this->creditBusinesDetailInterface = $creditBusinesDetailRepositoryInterface;
         $this->creditBusinesInterface       = $creditBusinesRepositoryInterface;
         $this->productListInterface         = $productListRepositoryInterface;
+        $this->assessorQuotationRepositoryInterface = $assessorQuotationRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -173,6 +176,8 @@ class CreditLiquidatorController extends Controller
     public function store(Request $request)
     {
 
+
+
         $liquidation = $request->input();
         $items          = [];
         $items2         = [];
@@ -184,7 +189,6 @@ class CreditLiquidatorController extends Controller
         $feeInitial     = [];
         $fees           = [];
         $plans          = [];
-
 
         foreach ($liquidation[0] as $key => $value) {
             $items2[$key] = $liquidation[0][$key];
@@ -269,8 +273,14 @@ class CreditLiquidatorController extends Controller
             'usuario' => auth()->user()->codeOportudata,
             'state' => 'A'
         ];
-        $oportudataLog = OportudataLog::create($dataOpo);
 
+        if ($liquidation[3]) {
+            foreach ($liquidation[3] as $key => $quoatation) {
+                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => 'Liquidado']);
+            }
+        }
+
+        $oportudataLog = OportudataLog::create($dataOpo);
 
         return response()->json(true);
     }

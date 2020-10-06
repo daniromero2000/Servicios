@@ -23,7 +23,8 @@ class AssessorQuotation extends Model
         'email',
         'total',
         'termsAndConditions',
-        'assessor_id'
+        'assessor_id',
+        'state'
     ];
 
 
