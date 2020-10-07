@@ -235,7 +235,6 @@ class ListProductRepository implements ListProductRepositoryInterface
                 'black_bond_on_price'                 => $blackBondOnPrice * 12,
                 'zone'                                => $productList['zone'],
                 'apply_gift'                          => $productList['apply_gift'],
-                'test'                                => $applyProteccion
             ];
         }
 
