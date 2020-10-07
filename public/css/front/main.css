@@ -182,7 +182,7 @@
     right   : 20px;
 }
 
-.redes a,
+.redes .icon-primary,
 .icon-mas2 {
     display        : block;
     text-decoration: none;
@@ -197,17 +197,46 @@
     transition     : all 500ms ease;
 }
 
-.redes a:hover {
+.redes .icon-primary:hover {
     background: #fff;
     color     : #007bff;
 }
 
-.redes a {
+.redes .icon-primary {
     margin-bottom: -15px;
     opacity      : 0;
     visibility   : hidden;
     display      : flex;
 }
+
+
+.redes .icon-success,
+.icon-mas2 {
+    display        : block;
+    text-decoration: none;
+    background     : #28a745;
+    color          : #fff;
+    width          : 55px;
+    height         : 55px;
+    line-height    : 55px;
+    text-align     : center;
+    border-radius  : 50%;
+    box-shadow     : 0px 1px 10px rgba(0, 0, 0, 0.4);
+    transition     : all 500ms ease;
+}
+
+.redes .icon-success:hover {
+    background: #fff;
+    color     : #28a745;
+}
+
+.redes .icon-success {
+    margin-bottom: -15px;
+    opacity      : 0;
+    visibility   : hidden;
+    display      : flex;
+}
+
 
 #btn-mas:checked~.redes a {
     margin-bottom: 10px;

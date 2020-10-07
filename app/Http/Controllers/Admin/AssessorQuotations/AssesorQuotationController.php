@@ -42,7 +42,6 @@ class AssesorQuotationController extends Controller
             $list = $this->assessorQuotationRepositoryInterface->searchQuotations(request()->input('q'), $skip * 100, request()->input('from'), request()->input('to'));
         }
 
-
         return view('assessorQuotations.list', [
             'assessorQuotations'      => $list,
             'listCount'               => $listCount,
