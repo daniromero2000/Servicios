@@ -24,14 +24,14 @@
 
 <div class="row m-0 relative">
     <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Banner/Banner.png')}}"
-        class="img-fluid img-responsive img-principal" />
+        class="img-fluid w-100 img-responsive img-principal" />
     <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Banner/Banner02.png')}}"
-        class="img-fluid img-responsive img-secondary" />
+        class="img-fluid w-100 img-responsive img-secondary" />
     <div class="text-center container-text-baner-initial">
         <h4 class="text-baner-initial">Comprar tus <br>electrodomésticos <br> a crédito jamás
             <br> fue tan facil</h4>
     </div>
-    <a href="/step1" class="btn button-baner-initial" style=" background: #fff800; ">
+    <a href="/step1" class="btn button-baner-initial shadow" style=" background: #fff800; ">
         <div>
             Solicita tu crédito
         </div>
@@ -100,9 +100,9 @@
 </div>
 <div class="row m-0 relative">
     <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/SnipetPromociones/Promociones.png')}}"
-        class="img-fluid img-responsive img-promociones" />
+        class="img-fluid w-100 img-responsive img-promociones" />
     <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/SnipetPromociones/Promociones02.png')}}"
-        class="img-fluid img-responsive img-promociones-responsive" />
+        class="img-fluid w-100 img-responsive img-promociones-responsive" />
     <div class="text-center container-text-snipet-promotions">
         <h4 class="text-snipet-promotions">Tenemos estas <br> <b>súper promociones </b> <br>
             a
