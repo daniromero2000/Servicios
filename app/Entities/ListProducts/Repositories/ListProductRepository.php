@@ -125,19 +125,19 @@ class ListProductRepository implements ListProductRepositoryInterface
         foreach ($currentProductLists as $key => $productList) {
             if ($productList['apply_protection'] == 1) {
                 $applyProteccion = $protectionVat;
-                $percentageProtectionDividedPrice = $percentageProtectionDividedPrice;
+                $percentageProtectionDividedPriceProteccion = $percentageProtectionDividedPrice;
             } else {
                 $applyProteccion = 0;
-                $percentageProtectionDividedPrice = 0;
+                $percentageProtectionDividedPriceProteccion = 0;
             }
             $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
             if ($productList['zone'] == 'ALTA') {
                 //Especial
-                if ($percentageProtectionDividedPrice == 0) {
+                if ($percentageProtectionDividedPriceProteccion == 0) {
                     $percentageProtection = 0;
-                } elseif ($percentageProtectionDividedPrice <= 10) {
+                } elseif ($percentageProtectionDividedPriceProteccion <= 10) {
                     $percentageProtection = 70;
-                } elseif ($percentageProtectionDividedPrice > 10 && $percentageProtectionDividedPrice <= 20) {
+                } elseif ($percentageProtectionDividedPriceProteccion > 10 && $percentageProtectionDividedPriceProteccion <= 20) {
                     $percentageProtection = 80;
                 } else {
                     $percentageProtection = 90;
@@ -234,7 +234,8 @@ class ListProductRepository implements ListProductRepositoryInterface
                 'black_bond_price'                    => $blackBondPrice * 12,
                 'black_bond_on_price'                 => $blackBondOnPrice * 12,
                 'zone'                                => $productList['zone'],
-                'apply_gift'                          => $productList['apply_gift']
+                'apply_gift'                          => $productList['apply_gift'],
+                'test'                                => $applyProteccion
             ];
         }
 
