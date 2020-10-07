@@ -115,7 +115,10 @@
                     <div class="col-sm-9 order-sm-last">
                         <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a href="/Administrator/assessorquotations">Crear
+                            <li class="breadcrumb-item active"><a href="/Administrator/assessorquotations">Listado de
+                                    cotizaciones</a></li>
+                            <li class="breadcrumb-item active"><a
+                                    href="/Administrator/assessorquotations/{{$assessorQuotation->id}}">Ver
                                     Cotización</a></li>
                         </ol>
                     </div>

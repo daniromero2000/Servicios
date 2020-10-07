@@ -321,9 +321,9 @@ class CreditLiquidatorController extends Controller
         return ['price' => $dataProduct, 'product' => $productListSku, 'zone' =>  auth()->user()->Assessor->subsidiary->ZONA];
     }
 
-    public function getGift($code)
+    public function getGift($code, $type)
     {
-        $productListSku  = $this->listProductInterface->findListProductBySkuAndType($code, 4);
+        $productListSku  = $this->listProductInterface->findListProductBySkuAndType($code, $type);
         $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, auth()->user()->Assessor->subsidiary->ZONA);
         foreach ($dataProduct as $key => $value) {
             $dataProduct[$key]['list'] = $key;
@@ -332,6 +332,7 @@ class CreditLiquidatorController extends Controller
 
         return ['price' => $dataProduct, 'product' => $productListSku, 'zone' =>  auth()->user()->Assessor->subsidiary->ZONA];
     }
+
 
     public function addSolicFab(int $id, $city)
     {

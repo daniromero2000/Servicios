@@ -62,9 +62,9 @@
                                         <div class="inner">
                                             <h4>${{ number_format ($leadsOfMonthTotal) }}</h4>
                                             @if ($_GET)
-                                            <p class="mt-4">Total de Cotizaciónes</p>
+                                            <p class="mt-4">Total de Cotizaciones</p>
                                             @else
-                                            <p class="mt-3">Total de Cotizaciónes en este mes</p>
+                                            <p class="mt-3">Total de Cotizaciones en este mes</p>
                                             @endif
                                         </div>
                                         <div class="icon">
