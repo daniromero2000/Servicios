@@ -295,7 +295,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 case '3':
                     $http({
                         method: 'GET',
-                        url: '/api/liquidator/getGift/' + $scope.items.CODIGO,
+                        url: '/api/liquidator/getGift/' + $scope.items.CODIGO + '/' + 4,
                     }).then(function successCallback(response) {
                         $scope.items.ARTICULO = response.data.product[0].item;
                         $scope.items.PRECIO = 0;
@@ -361,6 +361,21 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         // $scope.items.LISTA = response.data.price.list;
                     }, function errorCallback(response) {
                         showAlert("error", "El código ingresado no existe");
+                    });
+                    break;
+
+                case '6':
+                    $http({
+                        method: 'GET',
+                        url: '/api/liquidator/getGift/' + $scope.items.CODIGO + '/' + 6,
+                    }).then(function successCallback(response) {
+                        $scope.items.ARTICULO = response.data.product[0].item;
+                        $scope.items.PRECIO = 0;
+                        $scope.items.PRECIO_P = 0;
+                        $scope.buttonDisabled = false;
+
+                    }, function errorCallback(response) {
+                        showAlert("error", "El código no es un obsequio");
                     });
                     break;
 
@@ -450,11 +465,14 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         }
                     }
                     item.PRECIO = response.data.price.normal_public_price;
-                    item.PRECIO_P = item.PRECIO;
+                } else if (response.data.product[0].type_product == 5) {
+                    //Incrementar el 10% 
+                    item.PRECIO = response.data.product[0].cash_cost * 1.10;
                 } else {
                     item.PRECIO = response.data.product[0].cash_cost;
-                    item.PRECIO_P = item.PRECIO;
                 }
+
+                item.PRECIO_P = item.PRECIO;
                 // item.LISTA = response.data.price.list;
                 $scope.buttonDisabled = false;
                 item.type_product = response.data.product[0].type_product;
@@ -504,13 +522,14 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.createItemLiquidator = function () {
             $scope.items.SOLICITUD = $scope.request.SOLICITUD;
-            if ($("#typeLiquidator").val() == '3') {
+            var list = $scope.items.LISTA
+            if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
                 $scope.items.LISTA = $scope.fixedList;
                 $scope.items.SELECCION = $scope.fixedSeleccion;
             }
             var key = $scope.items.key ? $scope.items.key : 0;
             $scope.liquidator[key][0].push($scope.items);
-            if ($scope.discount.length != '') {
+            if ($scope.discount.length != '' && $scope.items.type_product != 5) {
                 if ($scope.discount.type) {
                     if ($scope.items.COD_PROCESO == 1 || $scope.items.COD_PROCESO == 4) {
                         $scope.liquidator[key][1] = [];
@@ -547,19 +566,35 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 }
             }
 
+            // Calculo de Motos
+            if ($scope.items.type_product == 5) {
+                var precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD);
+                $scope.items = {};
+                $scope.items.key = key
+                $scope.items.COD_PROCESO = '2';
+                $scope.items.LISTA = list;
+                $scope.items.CODIGO = 'AV10';
+                $scope.items.CANTIDAD = '1';
+                $scope.items.SELECCION = '01';
+                $scope.items.ARTICULO = "AVAL CREDIT 10 %";
+                //Calculo AVAL10
+                $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(10) / 100));
+                $scope.items.PRECIO_P = $scope.items.PRECIO;
+                $scope.liquidator[key][0].push($scope.items);
+            }
+
             $("#addItem" + key).modal("hide");
             showAlert("success", "Producto ingresado correctamente");
 
             //Insertar IVAV automatico
             if ($scope.items.CODIGO == 'AV10' || $scope.items.CODIGO == 'AV12' || $scope.items.CODIGO == 'AV15') {
-                var list = $scope.items.LISTA;
                 var e = $scope.liquidator[key][0];
                 $scope.items = {};
                 $scope.items.key = key
                 $scope.items.CODIGO = 'IVAV';
                 $scope.items.CANTIDAD = '1';
                 $scope.items.ARTICULO = "IVA AVAL 19 %";
-                if ($("#typeLiquidator").val() == '3') {
+                if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
                     $scope.items.LISTA = $scope.fixedList;
                     $scope.items.SELECCION = $scope.fixedSeleccion;
                     $scope.items.COD_PROCESO = '5';
@@ -586,7 +621,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }
             $scope.items = {};
             $scope.sumDiscount(key);
-
         };
 
         $scope.createDiscountLiquidator = function () {
@@ -647,7 +681,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var aval = 0;
             var totalAval = 0;
             var typeProduct = $scope.liquidator[key][0][0].type_product;
-            if ($("#typeLiquidator").val() == '3') {
+            if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
                 var type = 5
             } else {
                 var type = 2
@@ -697,12 +731,22 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
                     if ($scope.liquidator[key][3].COD_PLAN != '20') {
                         if (typeProduct != 3) {
-                            if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
-                                $scope.liquidator[key][3].MANEJO = 9900;
-                                $scope.liquidator[key][3].SEGURO = 3000;
+                            if (typeProduct == 5) {
+                                if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                                    $scope.liquidator[key][3].MANEJO = 9900;
+                                    $scope.liquidator[key][3].SEGURO = 7000;
+                                } else {
+                                    $scope.liquidator[key][3].MANEJO = 0;
+                                    $scope.liquidator[key][3].SEGURO = 7000;
+                                }
                             } else {
-                                $scope.liquidator[key][3].MANEJO = 0;
-                                $scope.liquidator[key][3].SEGURO = 3000;
+                                if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                                    $scope.liquidator[key][3].MANEJO = 9900;
+                                    $scope.liquidator[key][3].SEGURO = 3000;
+                                } else {
+                                    $scope.liquidator[key][3].MANEJO = 0;
+                                    $scope.liquidator[key][3].SEGURO = 3000;
+                                }
                             }
                         } else {
                             if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
@@ -762,6 +806,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var hasRetanqueoIva2 = 0;
             var hasRetanqueo1 = 0;
             var hasRetanqueo2 = 0;
+            var typeProduct = $scope.liquidator[key][0][0].type_product;
 
             if ($scope.liquidator[key][0][0].PRECIO != 0) {
                 precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)

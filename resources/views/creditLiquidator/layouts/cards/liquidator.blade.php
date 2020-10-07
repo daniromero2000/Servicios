@@ -34,6 +34,7 @@
                                         <thead class="">
                                             <tr>
                                                 <th>Cantidad </th>
+                                                <th>Tipo </th>
                                                 <th>Lista</th>
                                                 <th>Código</th>
                                                 <th>Seleccion</th>
@@ -45,6 +46,11 @@
                                         <tbody>
                                             <tr ng-repeat="item in tab[0]">
                                                 <td>@{{ item.CANTIDAD }}</td>
+                                                <td ng-if="item.COD_PROCESO == 1">Articulo</td>
+                                                <td ng-if="item.COD_PROCESO == 2">Cargo</td>
+                                                <td ng-if="item.COD_PROCESO == 3">Obsequio por lista</td>
+                                                <td ng-if="item.COD_PROCESO == 4">Combo</td>
+                                                <td ng-if="item.COD_PROCESO == 6">Obsequio por Marca</td>
                                                 <td>@{{ item.LISTA }}</td>
                                                 <td>@{{ item.CODIGO}}</td>
                                                 <td>@{{ item.SELECCION }}</td>

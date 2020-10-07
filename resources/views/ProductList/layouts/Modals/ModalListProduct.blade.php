@@ -57,7 +57,9 @@
                                 <option value="1"> Articulo o Cargo </option>
                                 <option value="2"> Seguro </option>
                                 <option value="3"> Garantía </option>
-                                <option value="4"> Obsequio </option>
+                                <option value="4"> Obsequio por lista </option>
+                                <option value="5"> Moto </option>
+                                <option value="6"> Obsequio por marca </option>
                             </select>
                         </div>
                     </div>
