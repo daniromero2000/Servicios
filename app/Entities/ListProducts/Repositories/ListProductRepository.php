@@ -216,7 +216,7 @@ class ListProductRepository implements ListProductRepositoryInterface
             }
 
             $dataProduct[$productList['name']] = [
-                'normal_public_price'                 => round($normalPublicPrice, -2, PHP_ROUND_HALF_UP),
+                'normal_public_price'                 => round($normalPublicPrice, -3, PHP_ROUND_HALF_UP),
                 'cash_promotion'                      => $cashPromotion,
                 'promotion_public_price'              => round($promotionPublicPrice, -1, PHP_ROUND_HALF_UP),
                 'percentage_promotion_public_price'   => $percentagePublicPrice,
