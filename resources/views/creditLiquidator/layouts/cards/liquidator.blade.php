@@ -154,8 +154,9 @@
                                 <div class="form-group ">
                                     <label for="initialFee">Cuota inicial</label>
                                     <input required type="text" class="form-control" id="initialFee"
-                                        ng-model="liquidator[key][3].CUOTAINI" ng-currency aria-describedby="initialFee"
-                                        ng-blur="refreshLiquidator(key)">
+                                        ng-model="liquidator[key][3].CUOTAINI"
+                                        ng-disabled="!liquidator[key][3].COD_PLAN" ng-currency
+                                        aria-describedby="initialFee" ng-blur="refreshLiquidator(key)">
                                     <div ng-if="liquidator[key][3].initialFeeFeedback" class="text-danger small">
                                         El monto minimo para la cuota inicial es de:
                                         @{{liquidator[key][3].initialFeeFeedback | currency}}.
@@ -163,7 +164,8 @@
                                 </div>
                                 <div class="form-group ">
                                     <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                    <select ng-model="liquidator[key][3].PLAZO" id="feeInitial" ng-blur="addFee(key)"
+                                    <select ng-model="liquidator[key][3].PLAZO" id="feeInitial"
+                                        ng-disabled="!liquidator[key][3].COD_PLAN" ng-blur="addFee(key)"
                                         name="feeInitial" class="form-control " required>
                                         <option selected value> Selecciona una Cuota </option>
                                         <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
