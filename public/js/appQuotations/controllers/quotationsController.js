@@ -22,7 +22,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.code = '';
         $scope.zone = '';
         $scope.tabs = 1;
-        $scope.step = 2;
+        $scope.step = 1;
         $scope.tabItem = 0;
         $scope.totalDiscount = 0;
         $scope.loader = false;
