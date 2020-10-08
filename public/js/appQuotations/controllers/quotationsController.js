@@ -537,7 +537,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
             } else {
                 if ($scope.quotations[key][3].term) {
-                    showAlert("error", "El plazo ingresado no es valido para esta liquidación");
+                    showAlert("error", "El plazo ingresado no es valido para esta cotización");
                     $scope.quotations[key][3].term = ''
                 }
             }
@@ -722,7 +722,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
         $scope.refreshQuotations = function (key) {
             $scope.sumDiscount(key);
-            showAlert("success", "La liquidación ha sido actualizada");
+            showAlert("success", "La cotización ha sido actualizada");
         };
 
         $scope.updateCharges = function (key) {
