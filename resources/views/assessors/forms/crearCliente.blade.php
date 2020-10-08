@@ -8,18 +8,8 @@
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('css/assessor/forms/ventaContado.css') }}">
 <link rel="stylesheet" href="{{ asset('css/assessor/forms/creacionCliente.css') }}">
-<link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
-<style>
-    button:focus {
-        outline: 0px dotted !important;
-    }
-
-    input:focus {
-        outline: 0px dotted !important;
-    }
-
-</style>
-
+<link rel="stylesheet"
+    href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 
 @section('content')
