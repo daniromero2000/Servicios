@@ -17,7 +17,18 @@
 <meta property="og:description"
     content="Tarjeta Oportuya, nuestro cupo de tarjeta de crédito con el que podrás obtener todos los beneficios de ser un cliente Oportunidades">
 <link rel="stylesheet" href="{{ asset('css/front/homeAppliances/app.css')}}">
+<style>
+    .paddin-reset {
+        padding: 3rem
+    }
 
+    @media (max-width: 500px) {
+        .paddin-reset {
+            padding: 1.5rem 1.5rem
+        }
+    }
+
+</style>
 @endsection()
 
 @section('content')
@@ -42,16 +53,20 @@
     aria-labelledby="getCityLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="p-5">
-                <div class="w-100 mb-3">
+            <div class="paddin-reset">
+                <div class="w-100 mb-4">
                     <h5 class="modal-title" id="getCityLabel"
-                        style=" line-height: 17px; font-size: 18px; font-weight: bold; color: #2798c5; ">Para un mejor
-                        servicio, por favor ingresa tu ciudad</h5>
+                        style="font-size: 16px; font-weight: bold; color: #2798c5; ">Selecciona tu
+                        ciudad de residencia y solicita el crédito para cualquiera de nuestros electrodomésticos en el
+                        catálogo
+                        que encontrarás a continuación <i class="far fa-hand-point-down mt-2"></i></h5>
                 </div>
                 <div>
                     <form action="/credito-electrodomesticos/catalogo" method="get">
                         <div class="form-group">
-                            <label for="my-select">Selecciona tu ciudad</label>
+                            <label for="my-select" class="pb-2">**Servicio de crédito vigente únicamente para las
+                                ciudades
+                                disponibles en este listado</label>
                             <select id="my-select" class="custom-select" name="city">
                                 <option value="">Selecciona</option>
                                 <option value="MEDIA">ACACIAS</option>
@@ -67,15 +82,12 @@
                                 <option value="MEDIA">YOPAL</option>
                             </select>
                         </div>
-                        <div>
-                            <button class="btn btn-primary " type="submit">Ingresar</button>
+                        <div class="mx-auto text-center pt-2">
+                            <button class="btn btn-primary " type="submit">Continuar</button>
                         </div>
                     </form>
                 </div>
             </div>
-
-
-            {{-- <button type="button" class="btn btn-primary">Understood</button> --}}
         </div>
     </div>
 </div>
