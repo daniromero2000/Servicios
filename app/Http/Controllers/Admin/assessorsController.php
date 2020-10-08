@@ -393,7 +393,7 @@ class assessorsController extends Controller
 				'NOMBRES'   			=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
 				'TIPOCLIENTE' 		    => 'OPORTUYA',
 				'SUBTIPO'               => 'WEB',
-				'EDAD'       		 	=> $age,
+				'EDAD'       		 	=> ($age) ? $age : '0',
 				'FEC_EXP'     			=> ($request->get('FEC_EXP') != '') ?  trim($request->get('FEC_EXP')) : '1900-01-01',
 				'CIUD_EXP'              => ($request->get('CIUD_EXP') != '') ? trim($getNameCiudadExp->NOMBRE) : '',
 				'SEXO'  				=> ($request->get('SEXO') != '') ? trim($request->get('SEXO')) : '',
