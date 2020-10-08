@@ -70,7 +70,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'latestCifinScore',
                 'latestIntention',
                 'DebtorInsurance',
-                'creditCard'
+                'creditCard',
+                'customerQuotations'
             ])->findOrFail($identificationNumber);
         } catch (ModelNotFoundException $e) {
             abort(404, $e->getMessage());

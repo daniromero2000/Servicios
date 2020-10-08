@@ -27,14 +27,71 @@
 
 </div>
 
+<div id="my-modal" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content ">
+            <div class="modal-body">
+                <div class="row resetRow">
+                    <div class="col-12 text-center py-3">
+                        <img style="width: 250px;" src="{{ asset('images/oportunidades.png')}}">
+                    </div>
+                    <p style="font-weight: bold;font-size: 84%;margin: auto;padding-bottom: 2%;text-align: center;">
+                        <i>* Actualmente cuentas con las siguientes cotizaciones, puedes seleccionar con las que deseas
+                            continuar.</i>
+                    </p>
+                </div>
+                <div class="row justify-content-center">
+                    <div ng-repeat="(key2, quotation) in quotations"
+                        class="col-12 col-sm-6 col-lg-4 d-flex align-items-stretch">
+                        <div class="card bg-light w-100">
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="lead mt-3"><b>Total: </b> @{{ quotation.total | currency }}</b></h2>
+                                        <ul class="ml-4 mb-0 fa-ul text-muted"
+                                            ng-repeat="(key3, item) in quotation.quotation_values">
+                                            <div class="form-check text-right">
+                                                <input class="form-check-input" name="itemsValue[]" value="@{{item}}"
+                                                    type="checkbox">
+                                                <label class="form-check-label"></label>
+                                            </div>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-barcode"></i></span> Código:
+                                                @{{ item.sku }}</li>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-shopping-cart"></i></span> Producto:
+                                                @{{ item.article }}</li>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="fas fa-list"></i></span> Lista:
+                                                @{{ item.list }}</li>
+                                            <li class="small mb-1"><span class="fa-li">
+                                                    <i class="far fa-caret-square-right"></i></span> Cantidad:
+                                                @{{ item.quantity }}</li>
+                                            <div class="dropdown-divider"></div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ml-auto btn btn-primary" ng-click="addItemForQuotation()"
+                    style=" float: right; ">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="validationCustomer"
     tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content modalCardContent">
             <div class="modal-body modalStepsBody " style="padding: 0">
                 <div class="row resetRow">
-                    <div class="col-12 text-center containerLogoModalStep">
-                        <img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
+                    <div class="col-12 text-center pt-4 pb-3">
+                        <img style="width: 250px;" src="{{ asset('images/oportunidades.png')}}">
                     </div>
                 </div>
                 <div class="row resetRow">
@@ -73,7 +130,6 @@
             <div class="modal-body " style="padding: 0">
                 <div class="row resetRow">
                     <div class="col-12 text-center resetCol mt-4 headThankYuoModal">
-                        {{-- <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid"> --}}
                         <img style="width: 250px;" src="{{ asset('images/oportunidades.png')}}">
                     </div>
                 </div>

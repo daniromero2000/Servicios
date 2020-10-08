@@ -15,7 +15,7 @@ class CreateAssessorQuotationDiscountsTable extends Migration
     {
         Schema::create('assessor_quotation_discounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('assessor_quotations_value_id');
+            $table->integer('assessor_quotation_value_id');
             $table->string('value', 100);
             $table->string('type', 100);
             $table->timestamps();

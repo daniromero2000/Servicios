@@ -16,10 +16,11 @@ auth()->user()->Assessor->subsidiary->CODIGO == '1')
         <a href="" data-toggle="modal" data-target="#exampleModal" class="icon-primary"> <i
                 class="fas fa-user-clock m-auto"></i></a>
     </div>
-    {{-- <div class="redes" data-toggle="tooltip" data-placement="top" title="Crear cotización">
-        <a href="/Administrator/assessorquotations/create" class="icon-success"> <i
-                class="fas fa-user-clock m-auto"></i></a>
-    </div> --}}
+    @if (auth()->user()->codeOportudata == '1088247299')
+    <div class="redes" data-toggle="tooltip" data-placement="top" title="Crear cotización">
+        <a href="/Administrator/assessorquotations/create" class="icon-success"> <i class="fas fa-store m-auto"></i></a>
+    </div>
+    @endif
     <div class="btn-mas">
         <label for="btn-mas" class="icon-mas2"> <i class="fas fa-bars m-auto"></i></label>
     </div>
