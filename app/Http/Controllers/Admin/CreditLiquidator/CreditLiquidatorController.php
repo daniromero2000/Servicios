@@ -176,8 +176,6 @@ class CreditLiquidatorController extends Controller
     public function store(Request $request)
     {
 
-
-
         $liquidation = $request->input();
         $items          = [];
         $items2         = [];
@@ -274,13 +272,13 @@ class CreditLiquidatorController extends Controller
             'state' => 'A'
         ];
 
+        OportudataLog::create($dataOpo);
+
         if ($liquidation[3]) {
             foreach ($liquidation[3] as $key => $quoatation) {
                 $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => 'Liquidado']);
             }
         }
-
-        $oportudataLog = OportudataLog::create($dataOpo);
 
         return response()->json(true);
     }
