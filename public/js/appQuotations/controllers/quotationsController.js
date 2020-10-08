@@ -22,7 +22,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.code = '';
         $scope.zone = '';
         $scope.tabs = 1;
-        $scope.step = 1;
+        $scope.step = 2;
         $scope.tabItem = 0;
         $scope.totalDiscount = 0;
         $scope.loader = false;
@@ -227,13 +227,14 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 item.article = response.data.product[0].item;
                 if (response.data.product[0].type_product == '1') {
 
-                    if (response.data.price.percentage_promotion_public_price >= 1) {
+                    if (response.data.price.percentage_promotion_public_price) {
+                        console.log(response.data.price.percentage_promotion_public_price);
                         $scope.discountTradicional.key = item.key
                         $scope.discountTradicional.type = 'Por lista';
                         $scope.discountTradicional.value = Math.floor(response.data.price.percentage_promotion_public_price);
                     }
 
-                    if (response.data.price.percentage_oportuya_customer >= 1) {
+                    if (response.data.price.percentage_oportuya_customer) {
                         $scope.discountOportuyaCard.key = item.key
                         $scope.discountOportuyaCard.type = 'Por lista';
                         $scope.discountOportuyaCard.value = Math.floor(response.data.price.percentage_oportuya_customer);
@@ -244,6 +245,9 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     }
                     $scope.zone = response.data.zone;
                     item.price = response.data.price.normal_public_price;
+                } else if (response.data.product[0].type_product == 5) {
+                    //Incrementar el 10% 
+                    item.price = response.data.product[0].cash_cost * 1.10;
                 } else {
                     item.price = response.data.product[0].cash_cost;
                 }
@@ -304,65 +308,86 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
         $scope.createItemQuotations = function () {
             var key = $scope.items.key;
+            var list = $scope.items.list;
             $scope.quotations[key][0].push($scope.items);
             if ($scope.items.cod_proceso == 1 || $scope.items.cod_proceso == 4) {
-                if ($scope.discountTradicional != '') {
-                    $scope.quotations[key][9] = [];
-                    $scope.quotations[key][9].push($scope.discountTradicional);
-                }
 
-                if ($scope.discountOportuyaCard != '') {
-                    $scope.quotations[key][10] = [];
-                    $scope.quotations[key][10].push($scope.discountOportuyaCard);
-                }
+                if ($scope.items.type_product == '1') {
 
-                if ($scope.discountOportuyaCardBlack != '') {
-                    $scope.quotations[key][11] = [];
-                    $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
-                }
+                    console.log($scope.discountTradicional)
+                    if (!angular.equals($scope.discountTradicional, {})) {
+                        $scope.quotations[key][9] = [];
+                        $scope.quotations[key][9].push($scope.discountTradicional);
+                    }
 
-                $scope.discountTradicional = {};
-                $scope.discountOportuyaCard = {};
-                $scope.discountOportuyaCardBlack = {};
+                    if (!angular.equals($scope.discountOportuyaCard, {})) {
+                        $scope.quotations[key][10] = [];
+                        $scope.quotations[key][10].push($scope.discountOportuyaCard);
+                    }
 
-                $scope.discountOportuyaCard.key = key
-                $scope.discountOportuyaCard.type = 'Cliente Oportuya';
+                    if (!angular.equals($scope.discountOportuyaCardBlack, {})) {
+                        $scope.quotations[key][11] = [];
+                        $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
+                    }
 
-                $scope.discountOportuyaCardBlack.key = key
-                $scope.discountOportuyaCardBlack.type = 'Cliente Oportuya';
-
-                if ($scope.zone == 'ALTA') {
-                    $scope.discountOportuyaCardBlack.value = 5;
-                    $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
-
-                } else {
-                    $scope.discountOportuyaCardBlack.value = 10;
-                    $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
-
+                    $scope.discountTradicional = {};
+                    $scope.discountOportuyaCard = {};
                     $scope.discountOportuyaCardBlack = {};
+
+                    $scope.discountOportuyaCard.key = key
+                    $scope.discountOportuyaCard.type = 'Cliente Oportuya';
+
                     $scope.discountOportuyaCardBlack.key = key
-                    $scope.discountOportuyaCardBlack.type = 'Tarjeta Black';
-                    $scope.discountOportuyaCardBlack.value = 5;
-                    $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
-                }
+                    $scope.discountOportuyaCardBlack.type = 'Cliente Oportuya';
 
-                if ($scope.zone == 'ALTA') {
-                    $scope.discountOportuyaCard.value = 3;
-                    $scope.quotations[key][10].push($scope.discountOportuyaCard);
-                } else {
-                    $scope.discountOportuyaCard.value = 10;
-                    $scope.quotations[key][10].push($scope.discountOportuyaCard);
-                }
+                    if ($scope.zone == 'ALTA') {
+                        $scope.discountOportuyaCardBlack.value = 5;
+                        $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
 
-                $scope.discountOportuyaCard = {};
-                $scope.discountOportuyaCardBlack = {};
+                    } else {
+                        $scope.discountOportuyaCardBlack.value = 10;
+                        $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
+
+                        $scope.discountOportuyaCardBlack = {};
+                        $scope.discountOportuyaCardBlack.key = key
+                        $scope.discountOportuyaCardBlack.type = 'Tarjeta Black';
+                        $scope.discountOportuyaCardBlack.value = 5;
+                        $scope.quotations[key][11].push($scope.discountOportuyaCardBlack);
+                    }
+
+                    if ($scope.zone == 'ALTA') {
+                        $scope.discountOportuyaCard.value = 3;
+                        $scope.quotations[key][10].push($scope.discountOportuyaCard);
+                    } else {
+                        $scope.discountOportuyaCard.value = 10;
+                        $scope.quotations[key][10].push($scope.discountOportuyaCard);
+                    }
+
+                    $scope.discountOportuyaCard = {};
+                    $scope.discountOportuyaCardBlack = {};
+                }
             }
+
             $("#addItem" + key).modal("hide");
             showAlert("success", "Producto ingresado correctamente");
 
+            // Calculo de Motos
+            //Calculo AVAL10
+            if ($scope.items.type_product == 5) {
+                var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity);
+                $scope.items = {};
+                $scope.items.key = key
+                $scope.items.cod_proceso = '2';
+                $scope.items.list = list;
+                $scope.items.sku = 'AV10';
+                $scope.items.quantity = '1';
+                $scope.items.article = "AVAL CREDIT 10 %";
+                $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(10) / 100));
+                $scope.quotations[key][0].push($scope.items);
+            }
+
             //Insertar IVAV automatico
             if ($scope.items.sku == 'AV10' || $scope.items.sku == 'AV12' || $scope.items.sku == 'AV15') {
-                var list = $scope.items.list;
                 var e = $scope.quotations[key][0];
                 $scope.items = {};
                 $scope.items.key = key
