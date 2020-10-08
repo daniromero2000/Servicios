@@ -23,7 +23,8 @@ class AssessorQuotation extends Model
         'email',
         'total',
         'termsAndConditions',
-        'assessor_id'
+        'assessor_id',
+        'state'
     ];
 
 
@@ -45,7 +46,7 @@ class AssessorQuotation extends Model
         return $this->belongsTo(User::class, 'assessor_id');
     }
 
-    public function values()
+    public function quotationValues()
     {
         return $this->hasMany(AssessorQuotationValue::class)->with('discounts');
     }

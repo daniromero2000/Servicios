@@ -239,6 +239,8 @@
             @include('creditLiquidator.layouts.cards.modals.addProduct')
             @endif
             @include('creditLiquidator.layouts.cards.modals.addDiscount')
+
+
         </div>
     </div>
 

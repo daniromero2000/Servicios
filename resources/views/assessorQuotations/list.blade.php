@@ -51,9 +51,9 @@
                                     <div class="inner">
                                         <h2 class="titleCardNumber">{{ $listCount }}</h2>
                                         @if (request()->input())
-                                        <p class="textCardNumber">Total de Solicitudes</p>
+                                        <p class="textCardNumber">Total de Cotizaciones</p>
                                         @else
-                                        <p class="textCardNumber">Solicitudes en este mes</p>
+                                        <p class="textCardNumber">Cotizaciones en este mes</p>
                                         @endif
                                     </div>
                                     <div class="icon">

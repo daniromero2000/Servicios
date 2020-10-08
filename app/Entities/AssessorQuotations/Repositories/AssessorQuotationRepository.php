@@ -19,6 +19,7 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
         'total',
         'termsAndConditions',
         'assessor_id',
+        'state',
         'created_at'
     ];
 
@@ -44,7 +45,7 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
     public function findAssessorQuotationsById($id): AssessorQuotation
     {
         try {
-            return $this->model->with(['values'])
+            return $this->model->with(['quotationValues'])
                 ->findOrFail($id, $this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

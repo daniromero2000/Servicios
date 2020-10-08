@@ -21,6 +21,7 @@ class CreateAssessorQuotationsTable extends Migration
             $table->string('phone', 50);
             $table->string('email', 100)->nullable();
             $table->string('total', 100);
+            $table->string('state', 100);
             $table->boolean('termsAndConditions');
             $table->integer('assessor_id');
             $table->timestamps();

@@ -265,7 +265,7 @@
                                             @include('assessorQuotations.layouts.quotations')
                                             <div class="ml-auto my-auto">
                                                 <button type="button" ng-if="quotations[0]"
-                                                    ng-click="createLiquidator()" class="btn btn-primary btn-sm">Crear
+                                                    ng-click="createQuotations()" class="btn btn-primary btn-sm">Crear
                                                     Cotización</button>
                                             </div>
                                         </div>
