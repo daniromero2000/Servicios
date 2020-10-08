@@ -3,7 +3,8 @@
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
 <link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
-<link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+<link rel="stylesheet"
+    href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 <style>
     html {
         min-width: 440px
@@ -144,14 +145,17 @@
         {{-- <button ng-click="printToCart('printSectionId')"
                 class="button">Print</button> --}}
         <input type="hidden" id="identification" ng-model="lead.CEDULA" value="{{ $id }}">
+        <input type="hidden" id="user" value="{{ auth()->user()->codeOportudata }}">
         <div class="container-fluid">
             <div class="card card-primary card-outline card-outline-tabs">
                 <div class="card-header p-0 border-bottom-0">
                     <nav>
                         <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">Liquidador
+                            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }"
+                                ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">Liquidador
                                 de crédito</a>
-                            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Buscar
+                            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }"
+                                ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Buscar
                                 producto</a>
 
                         </div>
@@ -166,7 +170,8 @@
                                 Cargando...
                             </div>
                         </div>
-                        <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
+                        <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
+                            aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
                             <div class="row">
                                 <div class="col-12">
                                     @include('creditLiquidator.layouts.cards.customer')
@@ -177,7 +182,8 @@
                                 @if(auth()->user()->Assessor->ID_EMPRESA != '3')
                                 <div class="d-block mx-2" ng-if="liquidator[0]">
                                     <label for="">¿Se ofrece garantía extendida?</label>
-                                    <select name="action" class="form-control" required ng-model="request.EXTENDID" ng-change="enabledButton()" style=" max-width: 190px; ">
+                                    <select name="action" class="form-control" required ng-model="request.EXTENDID"
+                                        ng-change="enabledButton()" style=" max-width: 190px; ">
 
                                         <option selected value> Seleccione </option>
                                         <option value="SI">SI</option>
@@ -185,12 +191,15 @@
                                     </select>
                                 </div>
                                 <div class="d-flex" ng-if="liquidator[0]">
-                                    <button type="button" ng-disabled="createDisabled" ng-click="createLiquidator()" class="btn btn-primary btn-sm" style=" margin-bottom: 2px; margin-top: auto; ">Crear
+                                    <button type="button" ng-disabled="createDisabled" ng-click="createLiquidator()"
+                                        class="btn btn-primary btn-sm"
+                                        style=" margin-bottom: 2px; margin-top: auto; ">Crear
                                         Liquidacion</button>
                                 </div>
                                 @else
                                 <div class="d-flex" ng-if="liquidator[0]">
-                                    <button type="button" ng-click="createLiquidator()" class="btn btn-primary btn-sm" style=" margin-bottom: 2px; margin-top: auto; ">Crear
+                                    <button type="button" ng-click="createLiquidator()" class="btn btn-primary btn-sm"
+                                        style=" margin-bottom: 2px; margin-top: auto; ">Crear
                                         Liquidacion</button>
                                 </div>
                                 @endif
@@ -198,7 +207,8 @@
                         </div>
                     </div>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
+                        <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
+                            aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
                             <div class="row">
                                 <div class="col-12">
                                     @include('creditLiquidator.layouts.cards.search_product')
