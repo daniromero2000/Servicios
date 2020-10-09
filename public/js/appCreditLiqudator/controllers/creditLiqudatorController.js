@@ -55,7 +55,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var index = [[], [], [], [], [], [], [], [], []];
             $scope.liquidator.push(index);
             $scope.tabItem = $scope.liquidator.length - 1;
-            console.log($scope.liquidator);
         };
 
         //Listado de Planes
