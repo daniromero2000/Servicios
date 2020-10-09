@@ -42,7 +42,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div ng-repeat="(key2, quotation) in quotations"
-                        class="col-12 col-sm-6 col-lg-4 d-flex align-items-stretch">
+                        class="col-12 col-sm-6 col-lg-4 d-flex align-items-stretch" ng-if="quotation.total > 0 && quotation.state != 1">
                         <div class="card bg-light w-100">
                             <div class="card-body pt-0">
                                 <div class="row">
