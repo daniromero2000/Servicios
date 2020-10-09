@@ -22,7 +22,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.code = '';
         $scope.zone = '';
         $scope.tabs = 1;
-        $scope.step = 1;
+        $scope.step = 2;
         $scope.tabItem = 0;
         $scope.totalDiscount = 0;
         $scope.loader = false;
@@ -842,8 +842,10 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         }
 
         $scope.removeItem = function (key) {
-            $scope.quotations.splice($scope.quotations.indexOf(key), 1);
-            $scope.tabItem = key - 1
+            $scope.quotations.splice(key, 1);
+            if (key > 0) {
+                $scope.tabItem = key - 1
+            }
             showAlert("success", "El item se ha eliminado correctamente");
         };
 
