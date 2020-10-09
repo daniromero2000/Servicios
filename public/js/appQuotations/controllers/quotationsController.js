@@ -448,7 +448,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.createQuotations = function () {
             var save = '';
             $scope.quotations.forEach(element => {
-                save = element[5].length > 0;
+                save = element[5].total > 0;
             });
             if (save) {
                 if ($scope.quotations[0][5].length > 0) {
