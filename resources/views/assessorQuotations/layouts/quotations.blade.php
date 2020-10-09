@@ -18,20 +18,7 @@
         <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in quotations">
             <div class="tab-pane mb-4 border-0" id="nav-general@{{key}}" role="tabpanel"
                 aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabItem  == key }">
-                {{-- <div class="mx-auto" style="max-width: 300px;">
-                    <label for="name">Tipo de Cotización <span class="text-danger">*</span></label>
-                    <select ng-model="typeQuotations[key].type" name="action" class="form-control" required>
-                        <option selected value> Seleccione </option>
-                        <option value="1">Tradicional</option>
-                        <option value="2">Oportuya Blue</option>
-                        <option value="3">Oportuya Gray</option>
-                        <option value="4">Oportuya Black</option>
-                        <option value="5">Contado</option>
-                    </select>
-                </div> --}}
-
                 <div class="row">
-
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between ">
@@ -146,25 +133,25 @@
                             <div class="card-header p-0 pt-1">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link" id="tradicional-tab" data-toggle="pill" href="#tradicional"
-                                            role="tab" aria-controls="tradicional" aria-selected="false"
+                                        <a class="nav-link" id="tradicional@{{key}}-tab" data-toggle="pill" href="#tradicional@{{key}}"
+                                            role="tab" aria-controls="tradicional@{{key}}" aria-selected="false"
                                             ng-click="alterTypeQuatation(key ,9)">Tradicional</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="card-blue-tab" data-toggle="pill" href="#card-blue"
-                                            role="tab" aria-controls="card-blue" aria-selected="false"
+                                        <a class="nav-link" id="card-blue@{{key}}-tab" data-toggle="pill" href="#card-blue@{{key}}"
+                                            role="tab" aria-controls="card-blue@{{key}}" aria-selected="false"
                                             ng-click="alterTypeQuatation(key ,10)">Oportuya
                                             Blue</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="card-gray-tab" data-toggle="pill" href="#card-gray"
-                                            role="tab" aria-controls="card-gray" aria-selected="false"
+                                        <a class="nav-link" id="card-gray@{{key}}-tab" data-toggle="pill" href="#card-gray@{{key}}"
+                                            role="tab" aria-controls="card-gray@{{key}}" aria-selected="false"
                                             ng-click="alterTypeQuatation(key ,10)">Oportuya
                                             Gray</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link " id="card-black-tab" data-toggle="pill" href="#card-black"
-                                            role="tab" aria-controls="card-black" aria-selected="true"
+                                        <a class="nav-link " id="card-black@{{key}}-tab" data-toggle="pill" href="#card-black@{{key}}"
+                                            role="tab" aria-controls="card-black@{{key}}" aria-selected="true"
                                             ng-click="alterTypeQuatation(key, 11)">Oportuya
                                             Black</a>
                                     </li>
@@ -178,8 +165,8 @@
 
                             <div class="card-body">
                                 <div class="tab-content" id="custom-tabs-one-tabContent">
-                                    <div class="tab-pane fade" id="tradicional" role="tabpanel"
-                                        aria-labelledby="tradicional-tab">
+                                    <div class="tab-pane fade" id="tradicional@{{key}}" role="tabpanel"
+                                        aria-labelledby="tradicional@{{key}}-tab">
                                         <div class="row">
                                             <div class="col-lg-6 col-xl-4">
                                                 <div class="card">
@@ -228,8 +215,8 @@
                                             @include('assessorQuotations.layouts.deal.deal')
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="card-blue" role="tabpanel"
-                                        aria-labelledby="card-blue-tab">
+                                    <div class="tab-pane fade" id="card-blue@{{key}}" role="tabpanel"
+                                        aria-labelledby="card-blue@{{key}}-tab">
                                         <div class="row">
                                             <div class="col-lg-6 col-xl-4">
                                                 <div class="card">
@@ -278,8 +265,8 @@
                                             @include('assessorQuotations.layouts.deal.deal')
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="card-gray" role="tabpanel"
-                                        aria-labelledby="card-gray-tab">
+                                    <div class="tab-pane fade" id="card-gray@{{key}}" role="tabpanel"
+                                        aria-labelledby="card-gray@{{key}}-tab">
                                         <div class="row">
                                             <div class="col-lg-6 col-xl-4">
                                                 <div class="card">
@@ -328,8 +315,8 @@
                                             @include('assessorQuotations.layouts.deal.deal')
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="card-black" role="tabpanel"
-                                        aria-labelledby="card-black-tab">
+                                    <div class="tab-pane fade" id="card-black@{{key}}" role="tabpanel"
+                                        aria-labelledby="card-black@{{key}}-tab">
                                         <div class="row">
                                             <div class="col-lg-6 col-xl-4">
                                                 <div class="card">
