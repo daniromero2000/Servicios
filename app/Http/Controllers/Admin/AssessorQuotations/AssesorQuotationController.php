@@ -6,6 +6,7 @@ use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuot
 use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
 use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
 use App\Entities\AssessorQuotationValues\AssessorQuotationValue;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,18 +15,20 @@ use Carbon\Carbon;
 class AssesorQuotationController extends Controller
 {
     private $assessorQuotationRepositoryInterface, $toolInterface, $assessorQuotationValueInterface;
-    private $quotationDiscountInterface;
+    private $quotationDiscountInterface, $leadInterface;
 
     public function __construct(
         AssessorQuotationValueRepositoryInterface $assessorQuotationValueRepositoryInterface,
         AssessorQuotationDiscountRepositoryInterface $assessorQuotationDiscountRepositoryInterface,
         AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface,
+        LeadRepositoryInterface $leadRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface
     ) {
         $this->assessorQuotationValueInterface      = $assessorQuotationValueRepositoryInterface;
         $this->assessorQuotationRepositoryInterface = $assessorQuotationRepositoryInterface;
         $this->quotationDiscountInterface           = $assessorQuotationDiscountRepositoryInterface;
         $this->toolsInterface                       = $toolRepositoryInterface;
+        $this->leadInterface                       = $leadRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -69,18 +72,22 @@ class AssesorQuotationController extends Controller
         $quotations = $request->input();
 
         if (!empty($quotations[2])) {
-            dd($quotations[2]);
+            $customer = $this->leadInterface->findLeadById($quotations[2]);
+            $customer->lead_id = $quotations[2];
+            $customer->state = 0;
+            $customer = $customer->toArray();
+        } else {
+            $customer = [
+                'name'                  => $quotations[1]['NOMBRES'],
+                'lastName'              => $quotations[1]['APELLIDOS'],
+                'identificationNumber'  => $quotations[1]['CEDULA'],
+                'telephone'             => $quotations[1]['CELULAR'],
+                'email'                 => $quotations[1]['EMAIL'],
+                'termsAndConditions'    => 1,
+                'assessor_id'           => auth()->user()->id
+            ];
         }
 
-        $customer = [
-            'name'                  => $quotations[1]['NOMBRES'],
-            'lastName'              => $quotations[1]['APELLIDOS'],
-            'identificationNumber'  => $quotations[1]['CEDULA'],
-            'telephone'             => $quotations[1]['CELULAR'],
-            'email'                 => $quotations[1]['EMAIL'],
-            'termsAndConditions'    => 1,
-            'assessor_id'           => auth()->user()->id
-        ];
         $customerQuotation = $this->assessorQuotationRepositoryInterface->createAssessorQuotations($customer);
 
         foreach ($quotations[0] as $key => $value) {

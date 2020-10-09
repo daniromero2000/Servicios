@@ -24,6 +24,7 @@ class AssessorQuotation extends Model
         'total',
         'termsAndConditions',
         'assessor_id',
+        'lead_id',
         'state'
     ];
 
