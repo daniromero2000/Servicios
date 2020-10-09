@@ -17,8 +17,8 @@ class CreateAssessorQuotationsTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->string('lastName', 100);
-            $table->string('cedula', 10)->nullable();
-            $table->string('phone', 50);
+            $table->string('identificationNumber', 20)->nullable();
+            $table->string('telephone', 50);
             $table->string('email', 100)->nullable();
             $table->string('total', 100);
             $table->string('state', 100);

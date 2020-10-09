@@ -18,8 +18,8 @@ class AssessorQuotation extends Model
     protected $fillable = [
         'name',
         'lastName',
-        'cedula',
-        'phone',
+        'identificationNumber',
+        'telephone',
         'email',
         'total',
         'termsAndConditions',
@@ -30,7 +30,7 @@ class AssessorQuotation extends Model
 
     protected $searchable = [
         'columns' => [
-            'assesor_quotations.cedula'   => 10,
+            'assesor_quotations.identificationNumber'   => 10,
             'assesor_quotations.name'     => 10,
             'assesor_quotations.lastName' => 10
         ],

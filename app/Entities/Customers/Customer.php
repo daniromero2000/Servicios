@@ -340,6 +340,6 @@ class Customer extends Model
 
     public function customerQuotations()
     {
-        return $this->hasMany(AssessorQuotation::class, 'cedula')->with('quotationValues');
+        return $this->hasMany(AssessorQuotation::class, 'identificationNumber')->with('quotationValues');
     }
 }

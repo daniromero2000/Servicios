@@ -56,10 +56,10 @@
         <div class="tab-content" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('digitalchannelleads.layouts.generals')
-                @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 4 || auth()->user()->idProfile == 3)
+                @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 3)
                 @include('digitalchannelleads.layouts.lead_libranza')
                 @endif
-                @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 4)
+                @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 8 || auth()->user()->idProfile == 15 || auth()->user()->idProfile == 16 || auth()->user()->idProfile == 23 )
                 @include('digitalchannelleads.layouts.lead_prices')
                 @endif
             </div>

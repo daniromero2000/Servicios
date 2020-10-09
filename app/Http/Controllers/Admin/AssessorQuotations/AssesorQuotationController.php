@@ -55,22 +55,31 @@ class AssesorQuotationController extends Controller
 
     public function create()
     {
-        return view('assessorQuotations.create');
-    }
+        $lead = '';
+        if (request()->input('q')) {
+            $lead = request()->input('q');
+        }
 
+        return view('assessorQuotations.create', compact('lead'));
+    }
 
     public function store(Request $request)
     {
 
         $quotations = $request->input();
+
+        if (!empty($quotations[2])) {
+            dd($quotations[2]);
+        }
+
         $customer = [
-            'name'               => $quotations[1]['NOMBRES'],
-            'lastName'           => $quotations[1]['APELLIDOS'],
-            'cedula'             => $quotations[1]['CEDULA'],
-            'phone'              => $quotations[1]['CELULAR'],
-            'email'              => $quotations[1]['EMAIL'],
-            'termsAndConditions' => 1,
-            'assessor_id'        => auth()->user()->id
+            'name'                  => $quotations[1]['NOMBRES'],
+            'lastName'              => $quotations[1]['APELLIDOS'],
+            'identificationNumber'  => $quotations[1]['CEDULA'],
+            'telephone'             => $quotations[1]['CELULAR'],
+            'email'                 => $quotations[1]['EMAIL'],
+            'termsAndConditions'    => 1,
+            'assessor_id'           => auth()->user()->id
         ];
         $customerQuotation = $this->assessorQuotationRepositoryInterface->createAssessorQuotations($customer);
 
