@@ -87,7 +87,6 @@ class AssesorQuotationController extends Controller
             $feeInitial[]     = $items2[$id][6][0];
             $fees[]           = $items2[$id][7][0];
             $plans[]          = $items2[$id][8][0];
-            $type[]           = $items2[$id][9][0];
         }
 
         $sumTotal = 0;
@@ -102,7 +101,6 @@ class AssesorQuotationController extends Controller
             $assessorQuotationValue->fill($feeInitial[$key]);
             $assessorQuotationValue->fill($fees[$key]);
             $assessorQuotationValue->fill($plans[$key]);
-            $assessorQuotationValue->fill($type[$key]);
             $assessorQuotationValue->save();
             foreach ($discounts[$key] as $key2 => $value2) {
                 unset($discounts[$key][$key2]['key']);
