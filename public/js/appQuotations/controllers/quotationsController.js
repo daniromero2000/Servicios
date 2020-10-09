@@ -86,6 +86,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.addItem = function () {
             var index = [[], [], [], [], [], [], [], [], [], [], [], []];
             $scope.quotations.push(index);
+            $scope.tabItem = $scope.liquidator.length - 1;
         };
 
         //Listado de Planes

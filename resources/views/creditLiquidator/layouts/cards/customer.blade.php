@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" id="focusedItem">
     <div class="card-body" style="display: block;">
         <div class="row py-3">
             <div class="text-gray px-4">
@@ -27,7 +27,7 @@
 
 </div>
 
-<div id="my-modal" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="list-quotations" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content ">
             <div class="modal-body">
