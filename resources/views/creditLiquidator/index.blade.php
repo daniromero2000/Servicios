@@ -179,7 +179,7 @@
                                 </div>
                             </div>
                             <div class="ml-auto my-auto d-flex justify-content-end">
-                                @if(auth()->user()->Assessor->ID_EMPRESA != '3')
+                                @if(auth()->user()->Assessor->ID_EMPRESA != '3' && auth()->user()->Assessor->ID_EMPRESA != '2')
                                 <div class="d-block mx-2" ng-if="liquidator[0]">
                                     <label for="">¿Se ofrece garantía extendida?</label>
                                     <select name="action" class="form-control" required ng-model="request.EXTENDID"

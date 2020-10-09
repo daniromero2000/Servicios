@@ -1,7 +1,7 @@
 
 angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize', 'ngTagsInput'])
 
-    .controller('creditLiqudatorController', function ($scope, $http, $timeout) {
+    .controller('creditLiqudatorController', function ($scope, $http, $timeout, $location, $anchorScroll) {
 
         $scope.lead = {};
         $scope.fees = {};
@@ -36,6 +36,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.fixedList = 'Convenio';
         $scope.fixedSeleccion = '01';
         $scope.loader = false;
+        $scope.focusedItem = false;
         $scope.buttonDisabled = true;
         $scope.createDisabled = true;
         $scope.viewProductImg = false;
@@ -53,8 +54,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.addItem = function () {
             var index = [[], [], [], [], [], [], [], [], []];
             $scope.liquidator.push(index);
-
-
+            $scope.tabItem = $scope.liquidator.length - 1;
+            console.log($scope.liquidator);
         };
 
         //Listado de Planes
@@ -181,7 +182,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.createRequest();
                 $scope.loader = false;
                 if (response.data.customer_quotations.length > 0 && ($("#user").val() == '1088247299' || $("#user").val() == '998877' || $("#user").val() == '98587878')) {
-                    $('#my-modal').modal('show');
+                    $('#list-quotations').modal('show');
                     $scope.quotations = response.data.customer_quotations;
                     console.log($scope.quotations)
                 } else {
@@ -226,7 +227,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             } else {
                 $scope.addItem();
             }
-            $('#my-modal').modal('hide');
+            $('#list-quotations').modal('hide');
         };
 
         //Consultar Producto
@@ -653,8 +654,12 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.enabledButton = function () {
             $scope.createDisabled = false;
+            if ($scope.request.EXTENDID == 'SI') {
+                $scope.addItem();
+                $location.hash('focusedItem');
+                $anchorScroll();
+            };
         };
-
 
         $scope.createLiquidator = function () {
             var save = '';

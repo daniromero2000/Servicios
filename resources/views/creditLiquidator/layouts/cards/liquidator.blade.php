@@ -1,4 +1,4 @@
-<div class="card card-primary card-outline card-outline-tabs">
+<div class="card card-primary card-outline card-outline-tabs" >
     <div class="card-header p-0 border-bottom-0">
         <nav>
             <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
