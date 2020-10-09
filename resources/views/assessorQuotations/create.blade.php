@@ -134,6 +134,7 @@
             </div>
         </div>
         <div ng-app="appQuotations" ng-controller="quotationsController">
+        <input type="hidden" value="{{$lead}}" id="lead">
             <div class="row mx-0 p-3">
                 <div class="w-100">
                     <div class="tab-content" id="nav-tabContent">

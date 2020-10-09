@@ -21,6 +21,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.productPrices = [];
         $scope.code = '';
         $scope.zone = '';
+        $scope.leadId = '';
         $scope.tabs = 1;
         $scope.step = 1;
         $scope.tabItem = 0;
@@ -86,7 +87,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.addItem = function () {
             var index = [[], [], [], [], [], [], [], [], [], [], [], []];
             $scope.quotations.push(index);
-            $scope.tabItem = $scope.liquidator.length - 1;
+            $scope.tabItem = $scope.quotations.length - 1;
         };
 
         //Listado de Planes
@@ -456,7 +457,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     $http({
                         method: 'POST',
                         url: '/Administrator/assessorquotations',
-                        data: [$scope.quotations, $scope.lead]
+                        data: [$scope.quotations, $scope.lead, $scope.leadId]
                     }).then(function successCallback(response) {
                         if (response.data) {
                             $('#congratulations').modal('show');
@@ -932,6 +933,17 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.loader = false;
         };
 
+        $scope.checkLead = function () {
+            $scope.loader = true;
+            if ($('#lead').val() != '') {
+                $scope.leadId = $('#lead').val();
+                $scope.step = 2;
+                $scope.addItem()
+            }
+            $scope.loader = false;
+        };
+
+        $scope.checkLead();
         $scope.getPlans();
         $scope.listDiscount();
         $scope.listOfFees();

@@ -160,7 +160,6 @@ class DigitalChannelLeadController extends Controller
     {
         $digitalChannelLead =  $this->leadInterface->findLeadByIdFull($id);
         $pattern = ['/[\\+][0-9]{0,2}\s[0-9]{0,3}\s[0-9]{0,7}/', '/[\\[]/'];
-        //$pattern = '/[\\+][\\5][\\7]\s[0-9]{0,3}\s[0-9]{0,7}/';
         $replace = ['Cliente', PHP_EOL . '['];
         foreach ($digitalChannelLead->comments as $key => $value) {
             $digitalChannelLead->comments[$key]->comment = preg_replace($pattern, $replace, $digitalChannelLead->comments[$key]->comment);
@@ -192,6 +191,7 @@ class DigitalChannelLeadController extends Controller
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'product_quotations' => auth()->user()->leadArea->leadProduct,
             'leadPriceStatus'    => $leadPriceStatus,
             'liquidators'        => $liquidators,
             'subsidaries'        => $subsidary
