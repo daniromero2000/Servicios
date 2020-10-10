@@ -421,7 +421,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO_P = item.PRECIO;
                 } else if (response.data.product[0].type_product == 5) {
                     //Incrementar el 10% 
-                    item.PRECIO = response.data.product[0].cash_cost * 0.90;
+                    item.PRECIO = response.data.product[0].cash_cost / 0.90;
                 } else {
                     item.PRECIO = response.data.product[0].cash_cost;
                     item.PRECIO_P = item.PRECIO;
@@ -470,7 +470,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO = response.data.price.normal_public_price;
                 } else if (response.data.product[0].type_product == 5) {
                     //Incrementar el 10% 
-                    item.PRECIO = response.data.product[0].cash_cost * 0.90;
+                    item.PRECIO = response.data.product[0].cash_cost / 0.90;
                 } else {
                     item.PRECIO = response.data.product[0].cash_cost;
                 }
