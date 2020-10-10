@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table text-sm" ng-if="tab[0] != ''" style="min-width: 800px;">
+                                    <table class="table text-sm" ng-if="tab[0] != ''" >
                                         <thead class="">
                                             <tr>
                                                 <th>Cantidad </th>
@@ -81,7 +81,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-4">
+                                    <div class="form-group col-sm-4">
                                         <label for="name">Plan <span class="text-danger">*</span></label>
                                         <select ng-model="quotations[key][3].plan_id" id="plan"
                                             ng-blur="createPlan(key)" name="plan" class="form-control " required>
@@ -97,7 +97,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-4">
+                                    <div class="form-group col-sm-4">
                                         <label for="initialFee">Cuota inicial</label>
                                         <input required type="text" class="form-control" id="initialFee"
                                             ng-model="quotations[key][3].initial_fee" ng-currency
@@ -114,7 +114,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-4">
+                                    <div class="form-group col-sm-4">
                                         <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
                                         <select ng-model="quotations[key][3].term" id="feeInitial" ng-blur="addFee(key)"
                                             name="feeInitial" class="form-control " required>
@@ -437,7 +437,7 @@
                         <div class="modal-body">
                             <form ng-submit="createItemQuotations()">
                                 <div class=" row pl-0 pr-0">
-                                    <div class="col-8 form-group">
+                                    <div class="col-6 col-sm-8 form-group">
                                         <label for="name">Tipo <span class="text-danger">*</span></label>
                                         <select ng-if="tab[0].length != 0" ng-model="items.cod_proceso" name="action"
                                             class="form-control" required>
@@ -452,7 +452,7 @@
                                             <option value="4">Combo</option>
                                         </select>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6 col-sm-4">
                                         <div class="form-group">
                                             <label for="name">Selecciona lista<span class="text-danger">*</span></label>
                                             <select ng-model="items.list" id="typeLists" name="typeLists"
@@ -469,12 +469,12 @@
                                     <div class=" row pl-0 pr-0">
                                         <input required type="hidden" class="form-control" ng-model="items.product_id"
                                             id="product_id" name="product_id">
-                                        <div class="col-4 form-group">
+                                        <div class="col-sm-4 form-group">
                                             <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
                                             <input required type="text" class="form-control" ng-model="items.sku"
                                                 ng-blur="getProduct()" id="codeProduct" name="codeProduct">
                                         </div>
-                                        <div class="col-8 form-group">
+                                        <div class="col-sm-8 form-group">
                                             <label for="nameProduct">Nombre</label>
                                             <input required type="text" ng-model="items.article" readonly
                                                 id="nameProduct" name="nameProduct" class="form-control">

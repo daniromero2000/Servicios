@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -82,10 +80,8 @@
             @include('layouts.admin.header')
             @include('layouts.admin.sidebar')
             <div class="content-wrapper bg-white">
-                <div class="container-responsive">
                     @yield('content')
                     @include('layouts.admin.button_float')
-                </div>
             </div>
             @include('layouts.admin.footer')
         </div>

@@ -30,7 +30,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table text-sm" ng-if="tab[0] != ''" style="min-width: 800px;">
+                                    <table class="table text-sm" ng-if="tab[0] != ''" >
                                         <thead class="">
                                             <tr>
                                                 <th>Cantidad </th>

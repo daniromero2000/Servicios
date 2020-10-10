@@ -5,116 +5,7 @@
 <link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
-<style>
-    html {
-        min-width: 440px
-    }
 
-    body {
-        min-width: 440px
-    }
-
-    .rotate {
-        transition-duration: .2s, 1s;
-        transition-timing-function: linear, ease-in;
-    }
-
-    .rotate:hover {
-        transform: rotate(180deg);
-    }
-
-    .main-header {
-        min-width: 440px !important;
-    }
-
-    .modal-backdrop {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    @media(max-width:440px) {
-        .card-body {
-            padding: 1.25rem 10px !important;
-        }
-    }
-
-</style>
-<style>
-    .overlay {
-        background: #ffffff;
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0.5;
-        z-index: 999999;
-        max-height: 100%;
-    }
-
-    .loader-products {
-        background: #ffffff;
-        border: 10px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 6px solid #007bff;
-        border-right: 6px solid #3094ff;
-        border-bottom: 6px solid #007bff;
-        border-left: 6px solid #3094ff;
-        width: 35px;
-        height: 35px;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-        position: absolute;
-        margin: auto;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    .text-loader {
-        margin: auto;
-        position: absolute;
-        top: 71px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 88px;
-        text-align: center;
-        height: 10px;
-        font-weight: bold;
-    }
-
-    .card .overlay {
-        background: rgba(255, 255, 255, .9) !important;
-    }
-
-    .overlay {
-        opacity: 0.8 !important;
-    }
-
-    @-webkit-keyframes spin {
-        0% {
-            -webkit-transform: rotate(0deg);
-        }
-
-        100% {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-</style>
 <script src="http://parall.ax/parallax/js/jspdf.js?1391533408"></script>
 <script>
     document.write('<base href="' + document.location + '" />');
@@ -124,7 +15,7 @@
 @endsection
 
 @section('content')
-<section style="min-width: 440px">
+<section >
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
@@ -161,7 +52,7 @@
                         </div>
                     </nav>
                 </div>
-                <div class="card-body">
+                <div class="card-body card-body-reset">
                     <div class="tab-content" id="nav-tabContent">
                         <div class="overlay" data-ng-show="loader">
                             <div class="loader-products">
