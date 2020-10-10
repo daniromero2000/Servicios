@@ -31,9 +31,9 @@ class AssessorQuotation extends Model
 
     protected $searchable = [
         'columns' => [
-            'assesor_quotations.identificationNumber'   => 10,
-            'assesor_quotations.name'     => 10,
-            'assesor_quotations.lastName' => 10
+            'assessor_quotations.identificationNumber' => 10,
+            'assessor_quotations.name'     => 10,
+            'assessor_quotations.lastName' => 10
         ],
     ];
 

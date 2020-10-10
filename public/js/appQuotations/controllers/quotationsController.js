@@ -247,9 +247,10 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     }
                     $scope.zone = response.data.zone;
                     item.price = response.data.price.normal_public_price;
+                    item.price_cash = response.data.product[0].cash_cost;
                 } else if (response.data.product[0].type_product == 5) {
                     //Incrementar el 10% 
-                    item.price = response.data.product[0].cash_cost * 1.10;
+                    item.price = response.data.product[0].cash_cost / 0.90;
                 } else {
                     item.price = response.data.product[0].cash_cost;
                 }
@@ -315,8 +316,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             if ($scope.items.cod_proceso == 1 || $scope.items.cod_proceso == 4) {
 
                 if ($scope.items.type_product == '1') {
-
-                    console.log($scope.discountTradicional)
                     if (!angular.equals($scope.discountTradicional, {})) {
                         $scope.quotations[key][9] = [];
                         $scope.quotations[key][9].push($scope.discountTradicional);
@@ -481,12 +480,19 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.quotations[key][7] = []
 
             if ((typeProduct == 2 && $scope.quotations[key][3].term <= 12) || typeProduct != 2) {
-                var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity);
+
+                if ($scope.quotations[key][3].typeQuotation != 1) {
+                    var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity);
+                } else {
+                    var precio = parseInt($scope.quotations[key][0][0].price_cash) * parseInt($scope.quotations[key][0][0].quantity);
+                }
 
                 if (typeProduct != 3) {
                     $scope.numberOfFees.forEach(e => {
-                        if (e.CUOTA == $scope.quotations[key][3].term) {
-                            factor = e.FACTOR;
+                        if ($scope.quotations[key][3].typeQuotation != 1) {
+                            if (e.CUOTA == $scope.quotations[key][3].term) {
+                                factor = e.FACTOR;
+                            }
                         }
                     });
                 }
@@ -518,7 +524,11 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     }
                     $scope.quotations[key][7].push({ 'term': $scope.quotations[key][3].term, 'value_fee': $scope.quotations[key][3].value_fee });
                 }
-                $scope.quotations[key][5].total = Math.round((parseInt($scope.quotations[key][3].value_fee) * parseInt($scope.quotations[key][3].term)) + parseInt($scope.quotations[key][3].initial_fee))
+                if ($scope.quotations[key][3].typeQuotation != 1) {
+                    $scope.quotations[key][5].total = Math.round((parseInt($scope.quotations[key][3].value_fee) * parseInt($scope.quotations[key][3].term)) + parseInt($scope.quotations[key][3].initial_fee))
+                } else {
+                    $scope.quotations[key][5].total = precio
+                }
 
                 $scope.quotations[key][4] = []
                 $scope.quotations[key][4].aval = aval
@@ -707,6 +717,10 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
             $scope.quotations[key][6] = []
             $scope.quotations[key][3].initialFeeFeedback = false;
+
+            if ($scope.quotations[key][3].typeQuotation == 1) {
+                cuotaIni = 0;
+            }
 
             if ($scope.quotations[key][3].checkInitialFee == undefined || $scope.quotations[key][3].checkInitialFee == false) {
                 $scope.quotations[key][3].initial_fee = cuotaIni;
