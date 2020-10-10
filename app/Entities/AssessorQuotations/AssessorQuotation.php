@@ -24,13 +24,14 @@ class AssessorQuotation extends Model
         'total',
         'termsAndConditions',
         'assessor_id',
+        'lead_id',
         'state'
     ];
 
 
     protected $searchable = [
         'columns' => [
-            'assesor_quotations.identificationNumber'   => 10,
+            'assesor_quotations.identificationNumber' => 10,
             'assesor_quotations.name'     => 10,
             'assesor_quotations.lastName' => 10
         ],

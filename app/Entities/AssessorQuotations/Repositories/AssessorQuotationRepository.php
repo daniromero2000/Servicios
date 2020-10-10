@@ -20,6 +20,7 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
         'termsAndConditions',
         'assessor_id',
         'state',
+        'lead_id',
         'created_at'
     ];
 

@@ -137,7 +137,7 @@
                             <b>Cliente:</b> {{$assessorQuotation->name }} {{$assessorQuotation->lastName}}
                         </div>
                         <div class="text-gray px-4">
-                            <b>Cédula:</b> {{$assessorQuotation->cedula }}
+                            <b>Cédula:</b> {{$assessorQuotation->identificationNumber }}
                         </div>
                         <div class="text-gray px-4">
                             <b>Correo:</b> {{$assessorQuotation->email }}

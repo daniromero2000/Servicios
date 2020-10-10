@@ -421,7 +421,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO_P = item.PRECIO;
                 } else if (response.data.product[0].type_product == 5) {
                     //Incrementar el 10% 
-                    item.PRECIO = response.data.product[0].cash_cost * 1.10;
+                    item.PRECIO = response.data.product[0].cash_cost * 0.90;
                 } else {
                     item.PRECIO = response.data.product[0].cash_cost;
                     item.PRECIO_P = item.PRECIO;
@@ -470,7 +470,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO = response.data.price.normal_public_price;
                 } else if (response.data.product[0].type_product == 5) {
                     //Incrementar el 10% 
-                    item.PRECIO = response.data.product[0].cash_cost * 1.10;
+                    item.PRECIO = response.data.product[0].cash_cost * 0.90;
                 } else {
                     item.PRECIO = response.data.product[0].cash_cost;
                 }
@@ -963,12 +963,25 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[key][3].initialFeeFeedback = false;
 
             if ($scope.liquidator[key][3].checkInitialFee == undefined || $scope.liquidator[key][3].checkInitialFee == false) {
-                $scope.liquidator[key][3].CUOTAINI = cuotaIni;
-            } else {
-                if ($scope.liquidator[key][3].CUOTAINI < cuotaIni) {
+                if (typeProduct == 5) {
+                    $scope.liquidator[key][3].CUOTAINI = 400000;
+                    $scope.liquidator[key][3].initialFeeFeedback = 400000;
+                } else {
                     $scope.liquidator[key][3].CUOTAINI = cuotaIni;
-                    $scope.liquidator[key][3].initialFeeFeedback = cuotaIni;
                 }
+            } else {
+                if (typeProduct == 5) {
+                    if ($scope.liquidator[key][3].CUOTAINI < 400000) {
+                        $scope.liquidator[key][3].CUOTAINI = 400000;
+                        $scope.liquidator[key][3].initialFeeFeedback = 400000;
+                    }
+                } else {
+                    if ($scope.liquidator[key][3].CUOTAINI < cuotaIni) {
+                        $scope.liquidator[key][3].CUOTAINI = cuotaIni;
+                        $scope.liquidator[key][3].initialFeeFeedback = cuotaIni;
+                    }
+                }
+
             }
 
             $scope.liquidator[key][6].push({ 'CUOTAINI': $scope.liquidator[key][3].CUOTAINI });
