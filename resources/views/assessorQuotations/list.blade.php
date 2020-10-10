@@ -1,15 +1,8 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
-<style>
-    .main-header {
-        min-width: 540px !important;
-    }
-
-</style>
-
 @endsection
 @section('content')
-<section style="min-width: 540px">
+<section >
     @include('layouts.errors-and-messages')
     @if(!is_null($assessorQuotations))
     <div class="mx-auto" style="max-width: 1450px;">
