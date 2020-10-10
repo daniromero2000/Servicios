@@ -8,6 +8,7 @@ use App\Entities\Comments\Comment;
 use App\Entities\LeadAreas\LeadArea;
 use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\LeadProducts\LeadProduct;
+use App\Entities\AssessorQuotations\AssessorQuotation;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\LeadStatusesLogs\LeadStatusesLog;
 use App\Entities\Services\Service;
@@ -143,5 +144,10 @@ class Lead extends Model
     public function subsidiary()
     {
         return $this->belongsTo(Subsidiary::class, 'subsidiary_id');
+    }
+
+    public function leadQuotations()
+    {
+        return $this->hasMany(AssessorQuotation::class)->with('quotationValues');
     }
 }

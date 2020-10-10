@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row">
       <div class="col-12 text-right">
-        <a href="#myModal" data-toggle="modal" data-target="#leadPricemodal" <i class="btn btn-primary btn-sm"><i
+      <a target="_blank" href="/Administrator/assessorquotations/create?q={{$digitalChannelLead->id}}" <i class="btn btn-primary btn-sm"><i
             class="fa fa-edit"></i>
           Agregar Cotizacion</a>
       </div>
@@ -14,41 +14,45 @@
     </div>
   </div>
   <div class="card-body table-responsive pt-1">
-    @if($digitalChannelLead->leadPrices->isNotEmpty())
+    @if($digitalChannelLead->leadQuotations->isNotEmpty())
     <table class="table table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
-          <th class="text-center" scope="col">Cotización</th>
-          <th class="text-center" scope="col">Producto</th>
-          <th class="text-center" scope="col">Descripción</th>
-          <th class="text-center" scope="col">Precio</th>
           <th class="text-center" scope="col">Asesor</th>
+          <th class="text-center" scope="col">Productos</th>
+          <th class="text-center" scope="col">Monto</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Fecha</th>
-          <th class="text-center" scope="col">Acciones</th>
+          <th class="text-center" scope="col">Opciones</th>
         </tr>
       </thead>
-      <tbody class="body-table">
+      <tbody class="body-table text-center">
 
-        @foreach ($digitalChannelLead->leadPrices as $leadPrice)
+        @foreach ($digitalChannelLead->leadQuotations as $leadPrice)
 
-        <tr>
-          <td class="text-center">{{ $leadPrice->id }}</td>
-          <td class="text-center">{{ $leadPrice->leadProduct->lead_product }}</td>
-          <td class="text-center">{{ $leadPrice->description }}</td>
-          <td class="text-center">${{ number_format($leadPrice->lead_price) }}</td>
-          @if ($leadPrice->user)
-          <td class="text-center">{{ $leadPrice->user->name }}</td>
-          @endif
-          <td class="text-center"><span class="badge badge-{{$leadPrice->leadPriceStatus->color}}">
-              {{$leadPrice->leadPriceStatus->status}}
-            </span></td>
-          <td class="text-center">{{ $leadPrice->created_at->format('M d, Y h:i a') }}</td>
-          <td class="text-center">
-            <i class="fas fa-edit cursor" data-toggle="modal" data-target="#leadPricemodal{{$leadPrice->id}}"></i>
-            <i class="fas fa-trash-alt cursor" data-toggle="modal" data-target="#deleteLead{{$leadPrice->id}}"></i>
-          </td>
-        </tr>
+      <tr>
+        <td>{{$leadPrice->assessor->name}}</td>
+        <td>
+           @foreach ($leadPrice->quotationValues as $products)
+           {{$products->article}} x {{$products->quantity}}
+           <br>
+           <br>
+           {{$products->article}} x {{$products->quantity}}
+
+           @endforeach
+        </td>
+        <td>$ {{ number_format($leadPrice->total) }}</td>
+        <td>@if ($leadPrice->state == 0)
+            <span class="badge badge-primary">Sin gestionar</span>
+            @else
+            <span class="badge badge-success">Liquidado</span>
+            @endif
+        </td>
+        <td>{{$leadPrice->created_at}}</td>
+        <td><a leadPrice-toggle="tooltip" title="Ver Cotización"
+                href="{{ route('assessorquotations.show', $leadPrice->id) }}"> <i class="far fa-eye"></i></a>
+        </td>
+      </tr>
         <div class="modal fade" id="leadPricemodal{{$leadPrice->id}}" tabindex="-1" role="dialog"
           aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
@@ -72,8 +76,8 @@
                             <div class="col-12 col-sm-12 form-group no-padding-right">
                               <label for="lead_product_id">Producto <span class="text-danger">*</span></label>
                               <select id="lead_product_id" name="lead_product_id" class="form-control">
-                                @if ($lead_products)
-                                @foreach($lead_products as $lead_product)
+                                @if ($product_quotations)
+                                @foreach($product_quotations as $lead_product)
                                 <option @if ($leadPrice->leadProduct == $lead_product)
                                   selected="selected" @endif
                                   value="{{ $lead_product->id }}">
@@ -85,21 +89,10 @@
                             </div>
                           </div>
                           <input name="lead_id" id="lead_id" hidden value="{{ $digitalChannelLead->id }}">
-                          <div class="form-group">
-                            <label for="description">Descripción<span class="text-danger">*</span></label>
-                            <div class="input-group">
-                              <input type="text" name="description" validation-pattern="text" id="description"
-                                placeholder="Descripcioón" class="form-control" value="{{ $leadPrice->description }}"
-                                required>
+                            <div class="form-group">
+                             <label for="description">Descripción<span class="text-danger">*</span></label>
+                            <textarea id="my-textarea" class="form-control" validation-pattern="text" id="description" name="description" rows="3">{{ $leadPrice->description }}</textarea>
                             </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="lead_price">Precio <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                              <input type="number" name="lead_price" validation-pattern="text" id="lead_price"
-                                placeholder="Precio" class="form-control" value="{{ $leadPrice->lead_price }}" required>
-                            </div>
-                          </div>
                           <div class="form-group">
                             <label for="lead_price_status_id">Estado <span class="text-danger">*</span></label>
                             <div class="input-group">
@@ -114,10 +107,6 @@
                                 @endforeach
                                 @endif
                               </select>
-                              {{-- <input type="text" name="lead_price_status_id" validation-pattern="text"
-                                id="lead_price_status_id" placeholder="Precio" class="form-control"
-                                value=" {{$leadPrice->leadPriceStatus->status}}" required>
-                              {{$leadPrice->leadPriceStatus->status}} --}}
                             </div>
                           </div>
                         </div>
