@@ -250,7 +250,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     item.price_cash = response.data.product[0].cash_cost;
                 } else if (response.data.product[0].type_product == 5) {
                     //Incrementar el 10% 
-                    item.price = response.data.product[0].cash_cost * 0.90;
+                    item.price = response.data.product[0].cash_cost / 0.90;
                 } else {
                     item.price = response.data.product[0].cash_cost;
                 }
