@@ -12,10 +12,10 @@
             <tbody class="body-table">
                 @foreach($datas as $data)
                 <tr>
-                    <td>{{$data->cedula}}</td>
+                    <td>{{$data->identificationNumber}}</td>
                     <td>{{$data->name}}</td>
                     <td>{{$data->lastName}}</td>
-                    <td>{{$data->phone}}</td>
+                    <td>{{$data->telephone}}</td>
                     <td>{{$data->assessor->email}}</td>
                     <td>$ {{ number_format($data->total) }}</td>
                     <td>@if ($data->state == 0)
