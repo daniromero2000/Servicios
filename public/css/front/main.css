@@ -220,7 +220,7 @@
 
 .redes .icon-success,
 .icon-mas2 {
-    display        : block;
+    display        : none;
     text-decoration: none;
     background     : #28a745;
     color          : #fff;
@@ -231,6 +231,12 @@
     border-radius  : 50%;
     box-shadow     : 0px 1px 10px rgba(0, 0, 0, 0.4);
     transition     : all 500ms ease;
+}
+
+
+.redes {
+    transition: all 500ms ease;
+    visibility: hidden;
 }
 
 .redes .icon-success:hover {
@@ -250,6 +256,12 @@
     margin-bottom: 10px;
     opacity      : 1;
     visibility   : visible;
+    display      : flex;
+}
+
+#btn-mas:checked~.redes {
+    visibility: visible;
+    transition: all 1500ms ease;
 }
 
 .icon-mas2 {
@@ -322,6 +334,34 @@
     .card-body-reset {
         padding-left : 0px !important;
         padding-right: 0px !important;
+    }
+
+    .redes .icon-success,
+    .icon-mas2 {
+        width : 45px;
+        height: 45px;
+    }
+
+    #btn-mas:checked~.redes a {
+        margin-bottom: 5px;
+    }
+
+    #btn-mas:checked~.btn-mas .icon-mas2 {
+        font-size: 18px;
+    }
+
+    .icon-mas2 {
+        margin-left: auto;
+    }
+
+    .redes .icon-primary,
+    .icon-mas2 {
+        width : 45px;
+        height: 45px;
+    }
+
+    .icon-mas2 {
+        font-size: 18px;
     }
 }
 
