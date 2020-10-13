@@ -200,7 +200,8 @@ angular.module('appAssessorStep1', [])
 				archivo: response.data.file,
 				linea: response.data.line,
 				cedula: cedula,
-				datos: (response.datos) ? response.datos : []
+				datos: (response.datos) ? response.datos : [],
+				origen: 'assessorStep1'
 			}
 
 			var data = {
