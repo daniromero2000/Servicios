@@ -37,8 +37,6 @@
            {{$products->article}} x {{$products->quantity}}
            <br>
            <br>
-           {{$products->article}} x {{$products->quantity}}
-
            @endforeach
         </td>
         <td>$ {{ number_format($leadPrice->total) }}</td>
