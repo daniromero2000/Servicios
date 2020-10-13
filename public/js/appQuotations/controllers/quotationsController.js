@@ -29,6 +29,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.loader = false;
         $scope.show = false;
         $scope.disabledButton = false;
+        $scope.showButtonLead = false;
         $scope.buttonDisabled = true;
         $scope.typesDocuments = [
             {
@@ -971,7 +972,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             if ($('#lead').val() != '') {
                 $scope.leadId = $('#lead').val();
                 $scope.step = 1;
-                $scope.addItem()
+                $scope.showButtonLead = true;
             }
             $scope.loader = false;
         };
