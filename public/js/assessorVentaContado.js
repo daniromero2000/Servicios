@@ -253,7 +253,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					archivo: response.data.file,
 					linea: response.data.line,
 					cedula: cedula,
-					datos: (response.datos) ? response.datos : []
+					datos: (response.datos) ? response.datos : [],
+					origen: 'assessorVentaContado'
 				}
 				var data = {
 					status: response.status,

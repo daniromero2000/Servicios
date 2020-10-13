@@ -160,7 +160,8 @@ angular.module('appLibranzaStep2', ['moment-picker', 'ng-currency'])
 				archivo: response.data.file,
 				linea: response.data.line,
 				cedula: cedula,
-				datos: (response.datos) ? response.datos : []
+				datos: (response.datos) ? response.datos : [],
+				origen: 'libranzaStep2'
 			}
 
 			var data = {
