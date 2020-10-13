@@ -75,6 +75,7 @@ class AssesorQuotationController extends Controller
             $customer = $this->leadInterface->findLeadById($quotations[2]);
             $customer->lead_id = $quotations[2];
             $customer->state = 0;
+            $customer->assessor_id = auth()->user()->id;
             $customer = $customer->toArray();
         } else {
             $customer = [
