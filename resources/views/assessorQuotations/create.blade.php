@@ -48,8 +48,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="container">
-                                        <form ng-submit="validateStep1()" name="clienteCredito" id="addCustomerStep1"
-                                            ng-show="step == 1" class="crearCliente-form">
+                                        <form ng-submit="validateStep2()" name="clienteCredito" id="addCustomerStep1"
+                                            ng-show="step == 2" class="crearCliente-form">
                                             <div class="row mx-0 container-form">
 
                                                 <div class="col-12 type-client">
@@ -131,14 +131,19 @@
                                                 </div>
 
                                                 <div class="col-12 text-center">
-                                                    <button type="submit" class="btn btn-primary"
-                                                        ng-disabled="disabledButton">Continuar</button>
+
+                                                      <button type="button" class="btn btn-secondary btn-sm"  ng-click="prevStep()"
+                                                        ng-disabled="disabledButton">Regresar</button>
+                                                       <button type="submit" ng-if="quotations[0]"
+                                                     class="btn btn-primary btn-sm">Crear
+                                                    Cotización</button>
+                                                  
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-md-12" ng-show="step == 2">
+                                <div class="col-md-12" ng-show="step == 1">
                                     <div class="col-12 type-client">
                                         <div class="forms-descStep forms-descStep-avances">
                                             <strong>Cotización</strong><br>
@@ -162,10 +167,9 @@
                                         </div>
                                         <div class="card-body card-body-reset">
                                             @include('assessorQuotations.layouts.quotations')
-                                            <div class="ml-auto my-auto">
-                                                <button type="button" ng-if="quotations[0]"
-                                                    ng-click="createQuotations()" class="btn btn-primary btn-sm">Crear
-                                                    Cotización</button>
+                                            <div class="ml-auto my-auto text-right">
+                                               <button type="submit" class="btn btn-primary" ng-if="quotations[0]" ng-click="nextStep()"
+                                                        ng-disabled="disabledButton">Continuar</button>
                                             </div>
                                         </div>
                                     </div>
