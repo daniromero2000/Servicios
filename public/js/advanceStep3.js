@@ -253,7 +253,8 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 				archivo: response.data.file,
 				linea: response.data.line,
 				cedula: cedula,
-				datos: (response.datos) ? response.datos : []
+				datos: (response.datos) ? response.datos : [],
+				origen: 'advanceStep3'
 			}
 
 			var data = {

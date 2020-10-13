@@ -1,112 +1,10 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
-<style>
-    .rotate {
-        transition-duration: .2s, 1s;
-        transition-timing-function: linear, ease-in;
-    }
-
-    .rotate:hover {
-        transform: rotate(180deg);
-    }
-
-    .main-header {
-        min-width: 440px !important;
-    }
-
-    .modal-backdrop {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    @media(max-width:440px) {
-        .card-body {
-            padding: 1.25rem 10px !important;
-        }
-    }
-
-</style>
-<style>
-    .overlay {
-        background: #ffffff;
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0.5;
-        z-index: 999999;
-        max-height: 100%;
-    }
-
-    .loader-products {
-        background: #ffffff;
-        border: 10px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 6px solid #007bff;
-        border-right: 6px solid #3094ff;
-        border-bottom: 6px solid #007bff;
-        border-left: 6px solid #3094ff;
-        width: 35px;
-        height: 35px;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-        position: absolute;
-        margin: auto;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    .text-loader {
-        margin: auto;
-        position: absolute;
-        top: 71px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 88px;
-        text-align: center;
-        height: 10px;
-        font-weight: bold;
-    }
-
-    .card .overlay {
-        background: rgba(255, 255, 255, .9) !important;
-    }
-
-    .overlay {
-        opacity: 0.8 !important;
-    }
-
-    @-webkit-keyframes spin {
-        0% {
-            -webkit-transform: rotate(0deg);
-        }
-
-        100% {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-</style>
 <link rel="stylesheet" href="{{ asset('css/assessor/forms/creacionCliente.css') }}">
 @endsection
 @section('content')
-<section style="min-width: 540px">
+<section >
     @include('layouts.errors-and-messages')
     <div class="mx-auto" style="max-width: 1450px;">
         <div class="content-header">
@@ -188,7 +86,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table text-sm" style="min-width: 600px;">
+                                                <table class="table text-sm" >
                                                     <thead class="">
                                                         <tr>
                                                             <th>Cantidad </th>
@@ -252,18 +150,18 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-sm-4">
                                                     <label for="name">Plan <span class="text-danger">*</span></label>
                                                     <input type="text" readonly class="form-control"
                                                         value="{{$value->plan->PLAN}}" aria-describedby="initialFee">
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-sm-4">
                                                     <label for="initialFee">Cuota inicial</label>
                                                     <input type="text" readonly class="form-control"
                                                         value="$ {{ $value->initial_fee ? number_format($value->initial_fee) : 0}}"
                                                         aria-describedby="initialFee">
                                                 </div>
-                                                <div class="form-group col-4">
+                                                <div class="form-group col-sm-4">
                                                     <label for="name">N° de Cuotas <span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" readonly class="form-control"

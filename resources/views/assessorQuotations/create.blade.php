@@ -4,114 +4,12 @@
 <link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
-<style>
-    .rotate {
-        transition-duration: .2s, 1s;
-        transition-timing-function: linear, ease-in;
-    }
-
-    .rotate:hover {
-        transform: rotate(180deg);
-    }
-
-    .main-header {
-        min-width: 440px !important;
-    }
-
-    .modal-backdrop {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    @media(max-width:440px) {
-        .card-body {
-            padding: 1.25rem 10px !important;
-        }
-    }
-
-</style>
-<style>
-    .overlay {
-        background: #ffffff;
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0.5;
-        z-index: 999999;
-        max-height: 100%;
-    }
-
-    .loader-products {
-        background: #ffffff;
-        border: 10px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 6px solid #007bff;
-        border-right: 6px solid #3094ff;
-        border-bottom: 6px solid #007bff;
-        border-left: 6px solid #3094ff;
-        width: 35px;
-        height: 35px;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-        position: absolute;
-        margin: auto;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    .text-loader {
-        margin: auto;
-        position: absolute;
-        top: 71px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 88px;
-        text-align: center;
-        height: 10px;
-        font-weight: bold;
-    }
-
-    .card .overlay {
-        background: rgba(255, 255, 255, .9) !important;
-    }
-
-    .overlay {
-        opacity: 0.8 !important;
-    }
-
-    @-webkit-keyframes spin {
-        0% {
-            -webkit-transform: rotate(0deg);
-        }
-
-        100% {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-</style>
 <link rel="stylesheet" href="{{ asset('css/assessor/forms/creacionCliente.css') }}">
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
-<section style="min-width: 540px">
+<section >
     @include('layouts.errors-and-messages')
     <div class="mx-auto" style="max-width: 1450px;">
         <div class="content-header">
@@ -135,12 +33,12 @@
         </div>
         <div ng-app="appQuotations" ng-controller="quotationsController">
         <input type="hidden" value="{{$lead}}" id="lead">
-            <div class="row mx-0 p-3">
+            <div class="row mx-0 padding-3">
                 <div class="w-100">
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
                             aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
-                            <div class="row" style=" position: relative; ">
+                            <div class="row mx-0" style=" position: relative; ">
                                 <div class="overlay" data-ng-show="loader">
                                     <div class="loader-products">
                                     </div>
@@ -150,8 +48,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="container">
-                                        <form ng-submit="validateStep1()" name="clienteCredito" id="addCustomerStep1"
-                                            ng-show="step == 1" class="crearCliente-form">
+                                        <form ng-submit="validateStep2()" name="clienteCredito" id="addCustomerStep1"
+                                            ng-show="step == 2" class="crearCliente-form">
                                             <div class="row mx-0 container-form">
 
                                                 <div class="col-12 type-client">
@@ -167,7 +65,7 @@
                                                         <div class="col-12 col-md-3">
                                                             <label class="labels" for="tipodoc">Tipo de
                                                                 documento*</label>
-                                                            <select class="inputs form-control select2bs4"
+                                                            <select class="inputs form-control select2bs4 w-100"
                                                                 ng-model="lead.TIPO_DOC" id="tipodoc"
                                                                 ng-options="type.value as type.label for type in typesDocuments"
                                                                 required></select>
@@ -216,7 +114,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-12 text-center mt-4">
-                                                    <div class="form-group" style="margin-bottom: 5px;">
+                                                    <div class="form-group terms" style="margin-bottom: 5px;">
                                                         <input type="checkbox" ng-model="lead.termsAndConditions"
                                                             name="termsAndConditions" id="termsAndConditions"
                                                             required="">
@@ -233,14 +131,19 @@
                                                 </div>
 
                                                 <div class="col-12 text-center">
-                                                    <button type="submit" class="btn btn-primary"
-                                                        ng-disabled="disabledButton">Continuar</button>
+
+                                                      <button type="button" class="btn btn-secondary btn-sm"  ng-click="prevStep()"
+                                                        ng-disabled="disabledButton">Regresar</button>
+                                                       <button type="submit" ng-if="quotations[0]"
+                                                     class="btn btn-primary btn-sm">Crear
+                                                    Cotización</button>
+                                                  
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-md-12" ng-show="step == 2">
+                                <div class="col-md-12" ng-show="step == 1">
                                     <div class="col-12 type-client">
                                         <div class="forms-descStep forms-descStep-avances">
                                             <strong>Cotización</strong><br>
@@ -262,12 +165,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body ">
+                                        <div class="card-body card-body-reset">
                                             @include('assessorQuotations.layouts.quotations')
-                                            <div class="ml-auto my-auto">
-                                                <button type="button" ng-if="quotations[0]"
-                                                    ng-click="createQuotations()" class="btn btn-primary btn-sm">Crear
-                                                    Cotización</button>
+                                            <div class="ml-auto my-auto text-right">
+                                               <button type="submit" class="btn btn-primary" ng-if="quotations[0]" ng-click="nextStep()"
+                                                        ng-disabled="disabledButton">Continuar</button>
                                             </div>
                                         </div>
                                     </div>

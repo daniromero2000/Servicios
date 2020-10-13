@@ -370,7 +370,8 @@ angular.module('appStep1', ['moment-picker'])
 				archivo: response.data.file,
 				linea: response.data.line,
 				cedula: cedula,
-				datos: (response.datos) ? response.datos : []
+				datos: (response.datos) ? response.datos : [],
+				origen: 'step1'
 			}
 
 			var data = {

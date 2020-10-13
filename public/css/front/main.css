@@ -160,7 +160,15 @@
     .body-table {
         font-size: 10px
     }
+
 }
+
+@media (max-width: 400px) {
+    .forms-descStep {
+        padding: 5% 23% 7% 13% !important;
+    }
+}
+
 
 @media (max-width: 325px) {
     .textCardNumber {
@@ -168,9 +176,9 @@
     }
 }
 
-.main-header {
+/* .main-header {
     min-width: 420px !important;
-}
+} */
 
 #btn-mas {
     display: none;
@@ -212,7 +220,7 @@
 
 .redes .icon-success,
 .icon-mas2 {
-    display        : block;
+    display        : none;
     text-decoration: none;
     background     : #28a745;
     color          : #fff;
@@ -223,6 +231,12 @@
     border-radius  : 50%;
     box-shadow     : 0px 1px 10px rgba(0, 0, 0, 0.4);
     transition     : all 500ms ease;
+}
+
+
+.redes {
+    transition: all 500ms ease;
+    visibility: hidden;
 }
 
 .redes .icon-success:hover {
@@ -242,6 +256,12 @@
     margin-bottom: 10px;
     opacity      : 1;
     visibility   : visible;
+    display      : flex;
+}
+
+#btn-mas:checked~.redes {
+    visibility: visible;
+    transition: all 1500ms ease;
 }
 
 .icon-mas2 {
@@ -260,4 +280,161 @@
     position: fixed;
     right   : 14px;
     bottom  : 10px;
+}
+
+
+
+.rotate {
+    transition-duration       : .2s, 1s;
+    transition-timing-function: linear, ease-in;
+}
+
+.rotate:hover {
+    transform: rotate(180deg);
+}
+
+.modal-backdrop {
+    width : 100% !important;
+    height: auto !important;
+}
+
+.padding-3 {
+    padding: 1rem;
+}
+
+@media(max-width:440px) {
+    .card-body {
+        padding: 1.25rem 10px !important;
+    }
+
+    .terms {
+        display: flex
+    }
+
+    .terms input {
+        margin-left: 5px;
+    }
+
+    body,
+    td,
+    th {
+        font-size: 80% !important;
+    }
+
+    .btn,
+    input,
+    select {
+        font-size: 90% !important;
+    }
+
+    .padding-3 {
+        padding: 0rem;
+    }
+
+    .card-body-reset {
+        padding-left : 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .redes .icon-success,
+    .icon-mas2 {
+        width : 45px;
+        height: 45px;
+    }
+
+    #btn-mas:checked~.redes a {
+        margin-bottom: 5px;
+    }
+
+    #btn-mas:checked~.btn-mas .icon-mas2 {
+        font-size: 18px;
+    }
+
+    .icon-mas2 {
+        margin-left: auto;
+    }
+
+    .redes .icon-primary,
+    .icon-mas2 {
+        width : 45px;
+        height: 45px;
+    }
+
+    .icon-mas2 {
+        font-size: 18px;
+    }
+}
+
+.overlay {
+    background: #ffffff;
+    display   : block;
+    position  : absolute;
+    top       : 0;
+    right     : 0;
+    bottom    : 0;
+    left      : 0;
+    opacity   : 0.5;
+    z-index   : 999999;
+    max-height: 100%;
+}
+
+.loader-products {
+    background       : #ffffff;
+    border           : 10px solid #f3f3f3;
+    border-radius    : 50%;
+    border-top       : 6px solid #007bff;
+    border-right     : 6px solid #3094ff;
+    border-bottom    : 6px solid #007bff;
+    border-left      : 6px solid #3094ff;
+    width            : 35px;
+    height           : 35px;
+    -webkit-animation: spin 2s linear infinite;
+    animation        : spin 2s linear infinite;
+    position         : absolute;
+    margin           : auto;
+    top              : 0;
+    left             : 0;
+    right            : 0;
+    bottom           : 0;
+}
+
+.text-loader {
+    margin     : auto;
+    position   : absolute;
+    top        : 71px;
+    left       : 0;
+    right      : 0;
+    bottom     : 0;
+    width      : 88px;
+    text-align : center;
+    height     : 10px;
+    font-weight: bold;
+}
+
+.card .overlay {
+    background: rgba(255, 255, 255, .9) !important;
+}
+
+.overlay {
+    opacity: 0.8 !important;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
