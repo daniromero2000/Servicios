@@ -940,10 +940,29 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             }
         };
 
-        $scope.validateStep1 = function () {
+        $scope.validateStep2 = function () {
             $scope.loader = true;
-            $scope.step = 2;
-            $scope.addItem()
+            $scope.createQuotations()
+            $scope.loader = false;
+        };
+
+        $scope.nextStep = function () {
+            $scope.loader = true;
+            var save = '';
+            $scope.quotations.forEach(element => {
+                save = element[5].total > 0;
+            });
+            if (save) {
+                $scope.step = 2;
+            } else {
+                showAlert("error", "Por favor termine de diligenciar la información");
+            }
+            $scope.loader = false;
+        };
+
+        $scope.prevStep = function () {
+            $scope.loader = true;
+            $scope.step = 1;
             $scope.loader = false;
         };
 
@@ -951,7 +970,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.loader = true;
             if ($('#lead').val() != '') {
                 $scope.leadId = $('#lead').val();
-                $scope.step = 2;
+                $scope.step = 1;
                 $scope.addItem()
             }
             $scope.loader = false;
@@ -962,5 +981,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.listDiscount();
         $scope.listOfFees();
         $scope.getList();
+        $scope.addItem()
 
     });
