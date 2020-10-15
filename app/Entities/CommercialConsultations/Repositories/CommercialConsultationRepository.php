@@ -59,7 +59,7 @@ class CommercialConsultationRepository implements CommercialConsultationReposito
         $obj->typeDocument = '1';
         $obj->identificationNumber = trim($oportudataLead);
         try {
-            $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc", array()); //correcta
+            $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
             $result = $ws->execConsultaComercialxml($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
