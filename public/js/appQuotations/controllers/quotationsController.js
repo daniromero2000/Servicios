@@ -376,15 +376,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             //Calculo AVAL10
             if ($scope.items.type_product == 5) {
                 var precio = parseInt($scope.quotations[key][0][0].price) * parseInt($scope.quotations[key][0][0].quantity);
-                $scope.items = {};
-                $scope.items.key = key
-                $scope.items.cod_proceso = '2';
-                $scope.items.list = list;
-                $scope.items.sku = 'AV10';
-                $scope.items.quantity = '1';
-                $scope.items.article = "AVAL CREDIT 10 %";
-                $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(10) / 100));
-                $scope.quotations[key][0].push($scope.items);
+                $scope.addChange(key, list, precio, '2', 'AV10', '1', "AVAL CREDIT 10 %", 10, 0);
             }
 
             //Insertar IVAV automatico
@@ -573,6 +565,8 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             var hasRetanqueoIva2 = 0;
             var hasRetanqueo1 = 0;
             var hasRetanqueo2 = 0;
+            var list = $scope.quotations[key][0][0].list;
+
             $scope.quotations[key][2] = 0;
             $scope.quotations[key][1] = [];
             $scope.quotations[key][1] = $scope.quotations[key][$scope.quotations[key][3].typeQuotation];
@@ -617,36 +611,10 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 case '5':
 
                     if ($scope.quotations[key][3].check && hasRetanqueoIva2 == 0) {
-                        var list = $scope.quotations[key][0][0].list;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.cod_proceso = '2';
-                        $scope.items.list = list;
-                        $scope.items.sku = 'GPG2';
-                        $scope.items.quantity = '1';
-                        $scope.items.article = "PERIODO GRACIA CAPITAL 2 MES";
-
-                        //Calculo Retanqueo
-                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(4) / 100));
-                        $scope.items.price_P = $scope.items.price;
-                        $scope.quotations[key][0].push($scope.items);
-                        $scope.items = {};
+                        $scope.addChange(key, list, precio, '2', 'GPG2', '1', "PERIODO GRACIA CAPITAL 2 MES", 4);
 
                     } else if (($scope.quotations[key][3].check == undefined || $scope.quotations[key][3].check == false) && hasRetanqueo2 == 0) {
-                        var list = $scope.quotations[key][0][0].list;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.cod_proceso = '2';
-                        $scope.items.list = list;
-                        $scope.items.sku = 'EPG2';
-                        $scope.items.quantity = '1';
-                        $scope.items.article = "PERIODO GRACIA CAPITAL 2 MESES EXCLUIDO";
-
-                        //Calculo Retanqueo
-                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(4) / 100));
-                        $scope.items.price_P = $scope.items.price;
-                        $scope.quotations[key][0].push($scope.items);
-                        $scope.items = {};
+                        $scope.addChange(key, list, precio, '2', 'EPG2', '1', "PERIODO GRACIA CAPITAL 2 MESES EXCLUIDO", 4);
                     }
 
                     cuotaIni = 30000
@@ -654,35 +622,9 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 case '6':
 
                     if ($scope.quotations[key][3].check && hasRetanqueoIva1 == 0) {
-                        var list = $scope.quotations[key][0][0].list;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.cod_proceso = '2';
-                        $scope.items.list = list;
-                        $scope.items.sku = 'GPG1';
-                        $scope.items.quantity = '1';
-                        $scope.items.article = "PERIODO GRACIA CAPITAL 1 MES";
-
-                        //Calculo Retanqueo
-                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(2) / 100));
-                        $scope.items.price_P = $scope.items.price;
-                        $scope.quotations[key][0].push($scope.items);
-                        $scope.items = {};
-
+                        $scope.addChange(key, list, precio, '2', 'GPG1', '1', "PERIODO GRACIA CAPITAL 1 MES", 2);
                     } else if (($scope.quotations[key][3].check == undefined || $scope.quotations[key][3].check == false) && hasRetanqueo1 == 0) {
-                        var list = $scope.quotations[key][0][0].list;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.cod_proceso = '2';
-                        $scope.items.list = list;
-                        $scope.items.sku = 'EPG1';
-                        $scope.items.quantity = '1';
-                        $scope.items.article = "PERIODO GRACIA CAPITAL 1 MESES EXCLUIDO";
-
-                        //Calculo Retanqueo
-                        $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(2) / 100));
-                        $scope.quotations[key][0].push($scope.items);
-                        $scope.items = {};
+                        $scope.addChange(key, list, precio, '2', 'EPG1', '1', "PERIODO GRACIA CAPITAL 1 MESES EXCLUIDO", 2);
                     }
 
                     cuotaIni = 30000
@@ -742,6 +684,25 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             $scope.sumDiscount(key);
             showAlert("success", "La cotización ha sido actualizada");
         };
+
+        $scope.addChange = function (key, list, precio, code, sku, quanty, item, percentaje, reset = 1) {
+            $scope.items = {};
+            $scope.items.key = key;
+            $scope.items.cod_proceso = code;
+            $scope.items.list = list;
+            $scope.items.sku = sku;
+            $scope.items.quantity = quanty;
+            $scope.items.article = item;
+
+            //Calculo Retanqueo
+            $scope.items.price = Math.round((precio - (parseInt($scope.quotations[key][2]) + parseInt($scope.quotations[key][3].initial_fee))) * (parseInt(percentaje) / 100));
+            $scope.items.price_P = $scope.items.price;
+            $scope.quotations[key][0].push($scope.items);
+            if (reset == 1) {
+                $scope.items = {};
+            }
+        }
+
 
         $scope.updateCharges = function (key) {
             var e = $scope.quotations[key][0];
@@ -895,7 +856,8 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     archivo: response.data.file,
                     linea: response.data.line,
                     cedula: cedula,
-                    datos: (response.datos) ? response.datos : []
+                    datos: (response.datos) ? response.datos : [],
+                    navegador: navigator.userAgent
                 }
 
                 var data = {
@@ -984,3 +946,4 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         $scope.addItem()
 
     });
+

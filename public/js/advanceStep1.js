@@ -377,7 +377,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				linea: response.data.line,
 				cedula: cedula,
 				datos: (response.datos) ? response.datos : [],
-				origen: 'advanceStep1'
+				origen: 'advanceStep1',
+				navegador: navigator.userAgent
 			}
 
 			var data = {

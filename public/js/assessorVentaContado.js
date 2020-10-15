@@ -254,7 +254,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					linea: response.data.line,
 					cedula: cedula,
 					datos: (response.datos) ? response.datos : [],
-					origen: 'assessorVentaContado'
+					origen: 'assessorVentaContado',
+					navegador: navigator.userAgent
 				}
 				var data = {
 					status: response.status,
