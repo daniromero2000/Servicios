@@ -574,18 +574,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             // Calculo de Motos
             if ($scope.items.type_product == 5) {
                 var precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD);
-                $scope.items = {};
-                $scope.items.key = key
-                $scope.items.COD_PROCESO = '2';
-                $scope.items.LISTA = list;
-                $scope.items.CODIGO = 'AV10';
-                $scope.items.CANTIDAD = '1';
-                $scope.items.SELECCION = '01';
-                $scope.items.ARTICULO = "AVAL CREDIT 10 %";
-                //Calculo AVAL10
-                $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(10) / 100));
-                $scope.items.PRECIO_P = $scope.items.PRECIO;
-                $scope.liquidator[key][0].push($scope.items);
+                $scope.addChange(key, list, precio, '2', 'AV10', '1', '01', "AVAL CREDIT 10 %", 10, 0);
             }
 
             $("#addItem" + key).modal("hide");
@@ -594,39 +583,45 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             //Insertar IVAV automatico
             if ($scope.items.CODIGO == 'AV10' || $scope.items.CODIGO == 'AV12' || $scope.items.CODIGO == 'AV15') {
                 var e = $scope.liquidator[key][0];
-                $scope.items = {};
-                $scope.items.key = key
-                $scope.items.CODIGO = 'IVAV';
-                $scope.items.CANTIDAD = '1';
-                $scope.items.ARTICULO = "IVA AVAL 19 %";
-                if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
-                    $scope.items.LISTA = $scope.fixedList;
-                    $scope.items.SELECCION = $scope.fixedSeleccion;
-                    $scope.items.COD_PROCESO = '5';
-                    var type = 5
-                } else {
-                    $scope.items.LISTA = list;
-                    $scope.items.SELECCION = '01';
-                    $scope.items.COD_PROCESO = '2';
-                    var type = 2
-                }
 
-                for (let i = 0; i < e.length; i++) {
-                    if ((e[i].COD_PROCESO == type) && ((e[i].CODIGO == 'AV10') || (e[i].CODIGO == 'AV12') || (e[i].CODIGO == 'AV15'))) {
-                        $scope.items.PRECIO = parseInt($scope.liquidator[key][0][i].PRECIO) * (parseInt(19) / 100);
-                        $scope.items.PRECIO_P = $scope.items.PRECIO;
-                    } else {
-                        $scope.items.PRECIO = 0
-                        $scope.items.PRECIO_P = 0
-                    }
-                }
-
-                //Calculo del IVA AVAL
-                $scope.liquidator[key][0].push($scope.items);
+                $scope.addIva(key, list, 'IVAV', '1', '01', 'IVA AVAL 19 %', e);
             }
             $scope.items = {};
             $scope.sumDiscount(key);
         };
+
+        $scope.addIva = function (key, list, sku, quanty, selecion, item, changes) {
+            $scope.items = {};
+            $scope.items.key = key;
+            $scope.items.CODIGO = sku;
+            $scope.items.CANTIDAD = quanty;
+            $scope.items.ARTICULO = item;
+            if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
+                $scope.items.LISTA = $scope.fixedList;
+                $scope.items.SELECCION = selecion;
+                $scope.items.COD_PROCESO = '5';
+                var type = 5;
+            } else {
+                $scope.items.LISTA = list;
+                $scope.items.SELECCION = selecion;
+                $scope.items.COD_PROCESO = '2';
+                var type = 2;
+            }
+
+            for (let i = 0; i < changes.length; i++) {
+                if ((changes[i].COD_PROCESO == type) && ((changes[i].CODIGO == 'AV10') || (changes[i].CODIGO == 'AV12') || (
+                    changes[i].CODIGO == 'AV15'))) {
+                    $scope.items.PRECIO = parseInt($scope.liquidator[key][0][i].PRECIO) * (parseInt(19) / 100);
+                    $scope.items.PRECIO_P = $scope.items.PRECIO;
+                } else {
+                    $scope.items.PRECIO = 0;
+                    $scope.items.PRECIO_P = 0;
+                }
+            }
+            $scope.liquidator[key][0].push($scope.items);
+            $scope.items = {};
+        }
+
 
         $scope.createDiscountLiquidator = function () {
             $scope.discount.SOLICITUD = $scope.request.SOLICITUD;
@@ -690,6 +685,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var aval = 0;
             var totalAval = 0;
             var typeProduct = $scope.liquidator[key][0][0].type_product;
+
             if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
                 var type = 5
             } else {
@@ -724,78 +720,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 });
 
                 totalAval = Math.round(parseInt(aval) + parseInt(iva));
+                $scope.storeTerms(key, typeProduct, precio, totalAval, factor);
+                $scope.storeAval(key, aval, iva, totalAval);
+                $scope.storeTotal(key, precio);
 
-                if ($scope.liquidator[key][3].PLAZO != null) {
-                    if (typeProduct != 3) {
-                        $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
-                    } else {
-                        $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) / parseInt($scope.liquidator[key][3].PLAZO)))
-                    }
-
-                    $scope.liquidator[key][3].TASAEA = $scope.tasaea;
-                    $scope.liquidator[key][3].TASAMORA = $scope.tasaea;
-                    $scope.liquidator[key][3].TASANOM = $scope.tasanom;
-                    $scope.liquidator[key][3].TASAMAX = $scope.tasamax;
-                    $scope.liquidator[key][3].TASA_INT = $scope.tasaint;
-
-                    if ($scope.liquidator[key][3].COD_PLAN != '20') {
-                        if (typeProduct != 3) {
-                            if (typeProduct == 5) {
-                                if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
-                                    $scope.liquidator[key][3].MANEJO = 9900;
-                                    $scope.liquidator[key][3].SEGURO = 7000;
-                                } else {
-                                    $scope.liquidator[key][3].MANEJO = 0;
-                                    $scope.liquidator[key][3].SEGURO = 7000;
-                                }
-                            } else {
-                                if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
-                                    $scope.liquidator[key][3].MANEJO = 9900;
-                                    $scope.liquidator[key][3].SEGURO = 3000;
-                                } else {
-                                    $scope.liquidator[key][3].MANEJO = 0;
-                                    $scope.liquidator[key][3].SEGURO = 3000;
-                                }
-                            }
-                        } else {
-                            if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
-                                $scope.liquidator[key][3].MANEJO = 9900;
-                                $scope.liquidator[key][3].SEGURO = 3000;
-                            } else {
-                                $scope.liquidator[key][3].MANEJO = 0;
-                                $scope.liquidator[key][3].SEGURO = 3000;
-                            }
-                        }
-                    } else {
-                        $scope.liquidator[key][3].MANEJO = 0;
-                        $scope.liquidator[key][3].SEGURO = 0;
-                    }
-                    $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAEA': $scope.tasaea, 'TASAMORA': $scope.tasamora, 'TASANOM': $scope.tasanom, 'TASAMAX': $scope.tasamax, 'TASA_INT': $scope.tasaint });
-                    $scope.getTerms($scope.liquidator[key][3].PLAZO, key);
-                }
-
-                $scope.liquidator[key][4] = []
-                $scope.liquidator[key][4].AVAL = aval
-                $scope.liquidator[key][4].IVA_AVAL = iva
-                $scope.liquidator[key][4].TOTAL_AVAL = totalAval
-                $scope.liquidator[key][4].push({ 'AVAL': aval, 'IVA_AVAL': iva, 'TOTAL_AVAL': totalAval });
-
-                $scope.liquidator[key][5] = [];
-                $scope.liquidator[key][5].TOTAL = Math.round((parseInt($scope.liquidator[key][3].VRCUOTA) * parseInt($scope.liquidator[key][3].PLAZO)) + parseInt
-                    ($scope.liquidator[key][3].CUOTAINI))
-
-                if ($scope.liquidator[key][3].check) {
-                    var div = 1.19
-                } else {
-                    var div = 1
-                }
-
-                $scope.liquidator[key][5].SUBTOTAL = Math.round((parseInt($scope.liquidator[key][5].TOTAL) / div))
-                $scope.liquidator[key][5].IVA = Math.round(parseInt($scope.liquidator[key][5].TOTAL - parseInt($scope.liquidator[key][5].SUBTOTAL)))
-                $scope.liquidator[key][5].SALDOFIN = Math.round((parseInt($scope.liquidator[key][4].TOTAL_AVAL) + precio) - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI)));
-                $scope.liquidator[key][5].push({
-                    'TOTAL': $scope.liquidator[key][5].TOTAL, 'IVA': $scope.liquidator[key][5].IVA, 'SUBTOTAL': $scope.liquidator[key][5].SUBTOTAL, 'SALDOFIN': $scope.liquidator[key][5].SALDOFIN
-                });
             } else {
                 if ($scope.liquidator[key][3].PLAZO) {
                     showAlert("error", "El plazo ingresado no es valido para esta liquidación");
@@ -816,6 +744,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             var hasRetanqueo1 = 0;
             var hasRetanqueo2 = 0;
             var typeProduct = $scope.liquidator[key][0][0].type_product;
+            var list = $scope.liquidator[key][0][0].LISTA;
 
             if ($scope.liquidator[key][0][0].PRECIO != 0) {
                 precio = parseInt($scope.liquidator[key][0][0].PRECIO) * parseInt($scope.liquidator[key][0][0].CANTIDAD)
@@ -856,77 +785,18 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 case '5':
 
                     if ($scope.liquidator[key][3].check && hasRetanqueoIva2 == 0) {
-                        var list = $scope.liquidator[key][0][0].LISTA;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.COD_PROCESO = '2';
-                        $scope.items.LISTA = list;
-                        $scope.items.CODIGO = 'GPG2';
-                        $scope.items.CANTIDAD = '1';
-                        $scope.items.SELECCION = '01';
-                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 2 MES";
-
-                        //Calculo Retanqueo
-                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(4) / 100));
-                        $scope.items.PRECIO_P = $scope.items.PRECIO;
-                        $scope.liquidator[key][0].push($scope.items);
-                        $scope.items = {};
-
+                        $scope.addChange(key, list, precio, '2', 'GPG2', '1', '01', "PERIODO GRACIA CAPITAL 2 MES", 4);
                     } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo2 == 0) {
-                        var list = $scope.liquidator[key][0][0].LISTA;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.COD_PROCESO = '2';
-                        $scope.items.LISTA = list;
-                        $scope.items.CODIGO = 'EPG2';
-                        $scope.items.CANTIDAD = '1';
-                        $scope.items.SELECCION = '01';
-                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 2 MESES EXCLUIDO";
-
-                        //Calculo Retanqueo
-                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(4) / 100));
-                        $scope.items.PRECIO_P = $scope.items.PRECIO;
-                        $scope.liquidator[key][0].push($scope.items);
-                        $scope.items = {};
+                        $scope.addChange(key, list, precio, '2', 'EPG2', '1', '01', "PERIODO GRACIA CAPITAL 2 MESES EXCLUIDO", 4);
                     }
-
                     cuotaIni = 30000
                     break;
                 case '6':
 
                     if ($scope.liquidator[key][3].check && hasRetanqueoIva1 == 0) {
-                        var list = $scope.liquidator[key][0][0].LISTA;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.COD_PROCESO = '2';
-                        $scope.items.LISTA = list;
-                        $scope.items.CODIGO = 'GPG1';
-                        $scope.items.CANTIDAD = '1';
-                        $scope.items.SELECCION = '01';
-                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 1 MES";
-
-                        //Calculo Retanqueo
-                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(2) / 100));
-                        $scope.items.PRECIO_P = $scope.items.PRECIO;
-                        $scope.liquidator[key][0].push($scope.items);
-                        $scope.items = {};
-
+                        $scope.addChange(key, list, precio, '2', 'GPG1', '1', '01', "PERIODO GRACIA CAPITAL 1 MES", 2);
                     } else if (($scope.liquidator[key][3].check == undefined || $scope.liquidator[key][3].check == false) && hasRetanqueo1 == 0) {
-                        var list = $scope.liquidator[key][0][0].LISTA;
-                        $scope.items = {};
-                        $scope.items.key = key
-                        $scope.items.COD_PROCESO = '2';
-                        $scope.items.LISTA = list;
-                        $scope.items.CODIGO = 'EPG1';
-                        $scope.items.CANTIDAD = '1';
-                        $scope.items.SELECCION = '01';
-                        $scope.items.ARTICULO = "PERIODO GRACIA CAPITAL 1 MESES EXCLUIDO";
-
-                        //Calculo Retanqueo
-                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(2) / 100));
-                        $scope.items.PRECIO_P = $scope.items.PRECIO;
-                        $scope.liquidator[key][0].push($scope.items);
-                        $scope.items = {};
+                        $scope.addChange(key, list, precio, '2', 'EPG1', '1', '01', "PERIODO GRACIA CAPITAL 1 MESES EXCLUIDO", 2);
                     }
 
                     cuotaIni = 30000
@@ -996,6 +866,107 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             showAlert("success", "La liquidación ha sido actualizada");
         };
 
+
+        $scope.storeTerms = function (key, typeProduct, precio, totalAval, factor) {
+            if ($scope.liquidator[key][3].PLAZO != null) {
+                if (typeProduct != 3) {
+                    $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor));
+                } else {
+                    $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) / parseInt($scope.liquidator[key][3].PLAZO)));
+                }
+
+                $scope.searchTerms(key);
+
+                if ($scope.liquidator[key][3].COD_PLAN != '20') {
+                    if (typeProduct != 3) {
+                        if (typeProduct == 5) {
+                            if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                                $scope.liquidator[key][3].MANEJO = 9900;
+                                $scope.liquidator[key][3].SEGURO = 7000;
+                            } else {
+                                $scope.liquidator[key][3].MANEJO = 0;
+                                $scope.liquidator[key][3].SEGURO = 7000;
+                            }
+                        } else {
+                            if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                                $scope.liquidator[key][3].MANEJO = 9900;
+                                $scope.liquidator[key][3].SEGURO = 3000;
+                            } else {
+                                $scope.liquidator[key][3].MANEJO = 0;
+                                $scope.liquidator[key][3].SEGURO = 3000;
+                            }
+                        }
+                    } else {
+                        if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                            $scope.liquidator[key][3].MANEJO = 9900;
+                            $scope.liquidator[key][3].SEGURO = 3000;
+                        } else {
+                            $scope.liquidator[key][3].MANEJO = 0;
+                            $scope.liquidator[key][3].SEGURO = 3000;
+                        }
+                    }
+                } else {
+                    $scope.liquidator[key][3].MANEJO = 0;
+                    $scope.liquidator[key][3].SEGURO = 0;
+                }
+                $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAEA': $scope.tasaea, 'TASAMORA': $scope.tasamora, 'TASANOM': $scope.tasanom, 'TASAMAX': $scope.tasamax, 'TASA_INT': $scope.tasaint });
+                $scope.getTerms($scope.liquidator[key][3].PLAZO, key);
+            }
+        }
+
+        $scope.searchTerms = function (key) {
+            $scope.liquidator[key][3].TASAEA = $scope.tasaea;
+            $scope.liquidator[key][3].TASAMORA = $scope.tasaea;
+            $scope.liquidator[key][3].TASANOM = $scope.tasanom;
+            $scope.liquidator[key][3].TASAMAX = $scope.tasamax;
+            $scope.liquidator[key][3].TASA_INT = $scope.tasaint;
+        }
+
+        $scope.storeTotal = function (key, precio) {
+            $scope.liquidator[key][5] = [];
+            $scope.liquidator[key][5].TOTAL = Math.round((parseInt($scope.liquidator[key][3].VRCUOTA) * parseInt($scope.liquidator[key][3].PLAZO)) + parseInt($scope.liquidator[key][3].CUOTAINI));
+
+            if ($scope.liquidator[key][3].check) {
+                var div = 1.19;
+            } else {
+                var div = 1;
+            }
+
+            $scope.liquidator[key][5].SUBTOTAL = Math.round((parseInt($scope.liquidator[key][5].TOTAL) / div));
+            $scope.liquidator[key][5].IVA = Math.round(parseInt($scope.liquidator[key][5].TOTAL - parseInt($scope.liquidator[key][5].SUBTOTAL)));
+            $scope.liquidator[key][5].SALDOFIN = Math.round((parseInt($scope.liquidator[key][4].TOTAL_AVAL) + precio) - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI)));
+            $scope.liquidator[key][5].push({
+                'TOTAL': $scope.liquidator[key][5].TOTAL, 'IVA': $scope.liquidator[key][5].IVA, 'SUBTOTAL': $scope.liquidator[key][5].SUBTOTAL, 'SALDOFIN': $scope.liquidator[key][5].SALDOFIN
+            });
+        }
+
+        $scope.storeAval = function (key, aval, iva, totalAval) {
+            $scope.liquidator[key][4] = [];
+            $scope.liquidator[key][4].AVAL = aval;
+            $scope.liquidator[key][4].IVA_AVAL = iva;
+            $scope.liquidator[key][4].TOTAL_AVAL = totalAval;
+            $scope.liquidator[key][4].push({ 'AVAL': aval, 'IVA_AVAL': iva, 'TOTAL_AVAL': totalAval });
+        }
+
+        $scope.addChange = function (key, list, precio, code, sku, quanty, selecion, item, percentaje, reset = 1) {
+            $scope.items = {};
+            $scope.items.key = key;
+            $scope.items.COD_PROCESO = code;
+            $scope.items.LISTA = list;
+            $scope.items.CODIGO = sku;
+            $scope.items.CANTIDAD = quanty;
+            $scope.items.SELECCION = selecion;
+            $scope.items.ARTICULO = item;
+            //Calculo Retanqueo
+            $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(percentaje) / 100));
+            $scope.items.PRECIO_P = $scope.items.PRECIO;
+            $scope.items.SOLICITUD = $scope.request.SOLICITUD;
+            $scope.liquidator[key][0].push($scope.items);
+            if (reset == 1) {
+                $scope.items = {};
+            }
+        }
+
         $scope.updateCharges = function (key) {
             var e = $scope.liquidator[key][0];
             if ($("#typeLiquidator").val() != '3') {
@@ -1022,18 +993,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                     }
                                 }
                             });
+                            $scope.addChange(key, product.LISTA, precio, product.COD_PROCESO, response.data.product[0].sku, product.CANTIDAD, product.SELECCION, response.data.product[0].item, response.data.product[0].base_cost, 1);
 
-                            item.key = key;
-                            item.CANTIDAD = product.CANTIDAD;
-                            item.COD_PROCESO = product.COD_PROCESO;
-                            item.SELECCION = product.SELECCION;
-                            item.ARTICULO = response.data.product[0].item;
-                            item.CODIGO = response.data.product[0].sku;
-                            item.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100))
-                            item.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                            item.LISTA = product.LISTA;
-                            item.SOLICITUD = $scope.request.SOLICITUD;
-                            $scope.liquidator[key][0].push(item);
                         }, function errorCallback(response) {
                             response.url = '/api/liquidator/getProduct/' + product.CODIGO;
                             $scope.addError(response, product.CODIGO);
@@ -1061,30 +1022,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         method: 'GET',
                         url: '/api/liquidator/getCharges/' + product.CODIGO,
                     }).then(function successCallback(response) {
-                        var item = {}
-                        item.key = key;
-                        item.CANTIDAD = product.CANTIDAD;
-                        item.COD_PROCESO = product.COD_PROCESO;
-                        item.SELECCION = product.SELECCION;
-                        item.ARTICULO = response.data.product[0].item;
-                        item.CODIGO = response.data.product[0].sku;
-                        for (let h = 0; h < e.length; h++) {
-                            if (e[h].CODIGO == 'AV10' || e[h].CODIGO == 'AV12' || e[h].CODIGO == 'AV15') {
-                                if (e[h].COD_PROCESO == type) {
-                                    item.PRECIO = Math.round(parseInt($scope.liquidator[key][0][h].PRECIO) * (parseInt(response.data.product[0].base_cost) / 100));
-                                    item.PRECIO_P = item.PRECIO
-                                } else {
-                                    item.PRECIO = 0
-                                    item.PRECIO_P = 0
-                                }
-                            } else {
-                                item.PRECIO = 0
-                                item.PRECIO_P = 0
-                            }
-                        }
-                        item.LISTA = product.LISTA;
-                        item.SOLICITUD = $scope.request.SOLICITUD;
-                        $scope.liquidator[key][0].push(item);
+
+                        $scope.addIva(key, product.LISTA, response.data.product[0].sku, product.CANTIDAD, product.SELECCION, response.data.product[0].item, e);
+
                     }, function errorCallback(response) {
                         response.url = '/api/liquidator/getProduct/' + product.CODIGO;
                         $scope.addError(response, product.CODIGO);
@@ -1122,17 +1062,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 }
                             });
 
-                            item.key = key;
-                            item.CANTIDAD = product.CANTIDAD;
-                            item.COD_PROCESO = product.COD_PROCESO;
-                            item.SELECCION = product.SELECCION;
-                            item.ARTICULO = response.data.product[0].item;
-                            item.CODIGO = response.data.product[0].sku;
-                            item.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100))
-                            item.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                            item.LISTA = product.LISTA;
-                            item.SOLICITUD = $scope.request.SOLICITUD;
-                            $scope.liquidator[key][0].push(item);
+                            $scope.addChange(key, product.LISTA, precio, product.COD_PROCESO, response.data.product[0].sku, product.CANTIDAD, product.SELECCION, response.data.product[0].item, response.data.product[0].base_cost, 1);
+
                         }, function errorCallback(response) {
                             response.url = '/api/liquidator/getCharges/' + product.CODIGO;
                             $scope.addError(response, product.CODIGO);
