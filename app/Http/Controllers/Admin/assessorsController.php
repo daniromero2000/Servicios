@@ -617,10 +617,11 @@ class assessorsController extends Controller
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		} else {
-			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
-			$customer       = $this->customerInterface->findCustomerById($customer->CEDULA);
+			// $this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$this->commercialConsultationInterface->execConsultaComercialxml($customer->CEDULA);
+			$customer        = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore  = $customer->latestCifinScore;
-			$customerScore  = $lastCifinScore->score;
+			$customerScore   = $lastCifinScore->score;
 		}
 
 		$customerStatusDenied                 = false;
