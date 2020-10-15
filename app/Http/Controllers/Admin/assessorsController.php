@@ -617,7 +617,7 @@ class assessorsController extends Controller
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		} else {
-			$this->commercialConsultationInterface->execConsultaComercialxml($customer->CEDULA);
+			$this->commercialConsultationInterface->execConsultaSaveXml($customer->CEDULA);
 			$customer        = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore  = $customer->latestCifinScore;
 			$customerScore   = $lastCifinScore->score;

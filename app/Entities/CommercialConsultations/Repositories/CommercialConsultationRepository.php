@@ -53,8 +53,7 @@ class CommercialConsultationRepository implements CommercialConsultationReposito
         }
     }
 
-
-    public function execConsultaComercialxml($oportudataLead)
+    public function execConsultaSaveXml($oportudataLead)
     {
         $obj = new \stdClass();
         $obj->typeDocument = '1';
@@ -68,7 +67,6 @@ class CommercialConsultationRepository implements CommercialConsultationReposito
             return 0;
         }
     }
-
 
     public function ConsultarInformacionComercial($identificationNumber)
     {
