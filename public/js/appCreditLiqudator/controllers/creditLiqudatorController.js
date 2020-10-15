@@ -957,7 +957,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.items.CANTIDAD = quanty;
             $scope.items.SELECCION = selecion;
             $scope.items.ARTICULO = item;
-            //Calculo Retanqueo
             $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(percentaje) / 100));
             $scope.items.PRECIO_P = $scope.items.PRECIO;
             $scope.items.SOLICITUD = $scope.request.SOLICITUD;
