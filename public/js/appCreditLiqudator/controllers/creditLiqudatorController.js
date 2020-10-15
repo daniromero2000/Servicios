@@ -1102,7 +1102,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     archivo: response.data.file,
                     linea: response.data.line,
                     cedula: cedula,
-                    datos: (response.datos) ? response.datos : []
+                    datos: (response.datos) ? response.datos : [],
+                    navegador: navigator.userAgent
                 }
                 var data = {
                     status: response.status,

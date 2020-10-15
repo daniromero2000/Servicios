@@ -56,13 +56,14 @@ class CommercialConsultationRepository implements CommercialConsultationReposito
     public function execConsultaComercialxml($oportudataLead)
     {
         $obj = new \stdClass();
-        $obj->typeDocument = trim($oportudataLead->TIPO_DOC);
-        $obj->identificationNumber = trim($oportudataLead->CEDULA);
+        $obj->typeDocument = '1';
+        $obj->identificationNumber = trim($oportudataLead);
         try {
             $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc", array()); //correcta
             $result = $ws->execConsultaComercialxml($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
+            dd($th);
             return 0;
         }
     }

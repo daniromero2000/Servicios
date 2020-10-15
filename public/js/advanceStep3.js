@@ -254,7 +254,8 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 				linea: response.data.line,
 				cedula: cedula,
 				datos: (response.datos) ? response.datos : [],
-				origen: 'advanceStep3'
+				origen: 'advanceStep3',
+				navegador: navigator.userAgent
 			}
 
 			var data = {
