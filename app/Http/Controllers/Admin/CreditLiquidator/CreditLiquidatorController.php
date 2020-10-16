@@ -175,7 +175,6 @@ class CreditLiquidatorController extends Controller
 
     public function store(Request $request)
     {
-
         $liquidation = $request->input();
         $items          = [];
         $items2         = [];
@@ -191,7 +190,6 @@ class CreditLiquidatorController extends Controller
         foreach ($liquidation[0] as $key => $value) {
             $items2[$key] = $liquidation[0][$key];
         }
-
 
         foreach ($items2 as $id => $value) {
             $products[]       = $items2[$id][0][0];
