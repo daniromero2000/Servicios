@@ -19,8 +19,8 @@
                     <div class="col-12 col-sm-12 form-group no-padding-right">
                       <label for="lead_product_id">Producto <span class="text-danger">*</span></label>
                       <select id="lead_product_id" name="lead_product_id" class="form-control">
-                        @if(!empty($lead_products))
-                        @foreach($lead_products as $lead_product)
+                        @if(!empty($product_quotations))
+                        @foreach($product_quotations as $lead_product)
                         <option value="{{ $lead_product->id }}">
                           {{ $lead_product->lead_product }}
                         </option>
@@ -31,17 +31,7 @@
                   </div>
                   <div class="form-group">
                     <label for="description">Descripción<span class="text-danger">*</span></label>
-                    <div class="input-group">
-                      <input type="text" name="description" validation-pattern="text" id="description"
-                        placeholder="Descripcioón" class="form-control" value="{{ old('description') }}" required>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="lead_price">Precio <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                      <input type="number" name="lead_price" validation-pattern="text" id="lead_price"
-                        placeholder="Precio" class="form-control" value="{{ old('lead_price') }}" required>
-                    </div>
+                        <textarea id="my-textarea" class="form-control" validation-pattern="text" id="description" name="description" rows="3">{{ old('description') }}</textarea>
                   </div>
                   <div class="form-group" hidden>
                     <label for="lead_price_status_id">Fecha de Expedición <span class="text-danger">*</span></label>

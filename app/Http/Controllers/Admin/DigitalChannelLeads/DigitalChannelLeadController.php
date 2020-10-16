@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
@@ -30,7 +31,7 @@ class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface, $UserInterface, $LeadPriceInterface, $assessorInterface;
+    private $leadProductInterface, $UserInterface, $LeadPriceInterface, $assessorInterface, $assessorQuotationInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -46,22 +47,24 @@ class DigitalChannelLeadController extends Controller
         UserRepositoryInterface $UserRepositoryInterface,
         LeadAreaRepository $LeadAreaRepositoryInterface,
         CityRepositoryInterface $CityRepositoryInterface,
+        AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface,
         AssessorRepositoryInterface $AssessorRepositoryInterface
     ) {
-        $this->leadInterface         = $LeadRepositoryInterface;
-        $this->toolsInterface        = $toolRepositoryInterface;
-        $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
-        $this->channelInterface      = $channelRepositoryInterface;
-        $this->serviceInterface      = $serviceRepositoryInterface;
-        $this->campaignInterface     = $campaignRepositoryInterface;
-        $this->customerInterface     = $customerRepositoryInterface;
-        $this->leadProductInterface  = $leadProductRepositoryInterface;
-        $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
-        $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
-        $this->UserInterface         = $UserRepositoryInterface;
-        $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
-        $this->cityInterface         = $CityRepositoryInterface;
-        $this->assessorInterface     = $AssessorRepositoryInterface;
+        $this->leadInterface              = $LeadRepositoryInterface;
+        $this->toolsInterface             = $toolRepositoryInterface;
+        $this->subsidiaryInterface        = $subsidiaryRepositoryInterface;
+        $this->channelInterface           = $channelRepositoryInterface;
+        $this->serviceInterface           = $serviceRepositoryInterface;
+        $this->campaignInterface          = $campaignRepositoryInterface;
+        $this->customerInterface          = $customerRepositoryInterface;
+        $this->leadProductInterface       = $leadProductRepositoryInterface;
+        $this->LeadStatusesInterface      = $leadStatusRepositoryInterface;
+        $this->LeadPriceInterface         = $LeadPriceRepositoryInterface;
+        $this->UserInterface              = $UserRepositoryInterface;
+        $this->LeadAreaInterface          = $LeadAreaRepositoryInterface;
+        $this->cityInterface              = $CityRepositoryInterface;
+        $this->assessorInterface          = $AssessorRepositoryInterface;
+        $this->assessorQuotationInterface = $assessorQuotationRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -212,6 +215,12 @@ class DigitalChannelLeadController extends Controller
 
         $leadRerpo = new leadRepository($lead);
         $leadRerpo->updateLead($request->input());
+        if ($lead->leadQuotations->isNotEmpty()) {
+            foreach ($lead->leadQuotations as $key => $value) {
+                $request->merge(['id' => $value->id]);
+                $this->assessorQuotationInterface->updateAssessorQuotations($request->except('state', '_method', '_token'));
+            }
+        }
         $request->session()->flash('message', 'Actualización Exitosa!');
         return redirect()->back();
     }

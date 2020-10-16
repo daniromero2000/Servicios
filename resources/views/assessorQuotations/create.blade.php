@@ -170,8 +170,11 @@
                                             @include('assessorQuotations.layouts.quotations')
                                             <div class="ml-auto my-auto text-right">
                                                 <button type="submit" class="btn btn-primary" ng-if="quotations[0]"
-                                                    ng-click="nextStep()"
+                                                    ng-show="!showButtonLead" ng-click="nextStep()"
                                                     ng-disabled="disabledButton">Continuar</button>
+                                                <button type="submit" ng-if="quotations[0]" ng-show="showButtonLead"
+                                                    ng-click="createQuotations()" class="btn btn-primary btn-sm">Crear
+                                                    Cotización</button>
                                             </div>
                                         </div>
                                     </div>

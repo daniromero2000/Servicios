@@ -25,7 +25,8 @@ class AssessorQuotation extends Model
         'termsAndConditions',
         'assessor_id',
         'lead_id',
-        'state'
+        'state',
+        'solic_fab_id'
     ];
 
 

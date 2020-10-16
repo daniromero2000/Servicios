@@ -16,6 +16,7 @@ use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetailRepositoryInterface;
 use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryInterface;
 use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
+use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
@@ -30,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 class CreditLiquidatorController extends Controller
 {
     private $customerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
-    private $creditBusinesDetailInterface, $creditBusinesInterface, $productListInterface;
+    private $creditBusinesDetailInterface, $creditBusinesInterface, $productListInterface, $assessorQuotationInterface;
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
@@ -47,24 +48,26 @@ class CreditLiquidatorController extends Controller
         CreditBusinesDetailRepositoryInterface $creditBusinesDetailRepositoryInterface,
         CreditBusinesRepositoryInterface $creditBusinesRepositoryInterface,
         ProductListRepositoryInterface $productListRepositoryInterface,
-        AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface
+        AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface,
+        AssessorQuotationValueRepositoryInterface $AssessorQuotationValueRepositoryInterface
     ) {
-        $this->customerInterface            = $CustomerRepositoryInterface;
-        $this->toolsInterface               = $toolRepositoryInterface;
-        $this->assessorInterface            = $AssessorRepositoryInterface;
-        $this->punishmentInterface          = $punishmentRepositoryInterface;
-        $this->secondCodebtorInterface      = $secondCodebtorRepositoryInterface;
-        $this->factoryInterface             = $factoryRequestRepositoryInterface;
-        $this->codebtorInterface            = $codebtorRepositoryInterface;
-        $this->subsidiaryInterface          = $subsidiaryRepositoryInterface;
-        $this->listProductInterface         = $listProductRepositoryInterface;
-        $this->planInterface                = $planRepositoryInterface;
-        $this->factorsInterface             = $factorsOportudataRepositoryInterface;
-        $this->creditCardInterface          = $creditCardRepositoryInterface;
-        $this->creditBusinesDetailInterface = $creditBusinesDetailRepositoryInterface;
-        $this->creditBusinesInterface       = $creditBusinesRepositoryInterface;
-        $this->productListInterface         = $productListRepositoryInterface;
+        $this->customerInterface                    = $CustomerRepositoryInterface;
+        $this->toolsInterface                       = $toolRepositoryInterface;
+        $this->assessorInterface                    = $AssessorRepositoryInterface;
+        $this->punishmentInterface                  = $punishmentRepositoryInterface;
+        $this->secondCodebtorInterface              = $secondCodebtorRepositoryInterface;
+        $this->factoryInterface                     = $factoryRequestRepositoryInterface;
+        $this->codebtorInterface                    = $codebtorRepositoryInterface;
+        $this->subsidiaryInterface                  = $subsidiaryRepositoryInterface;
+        $this->listProductInterface                 = $listProductRepositoryInterface;
+        $this->planInterface                        = $planRepositoryInterface;
+        $this->factorsInterface                     = $factorsOportudataRepositoryInterface;
+        $this->creditCardInterface                  = $creditCardRepositoryInterface;
+        $this->creditBusinesDetailInterface         = $creditBusinesDetailRepositoryInterface;
+        $this->creditBusinesInterface               = $creditBusinesRepositoryInterface;
+        $this->productListInterface                 = $productListRepositoryInterface;
         $this->assessorQuotationRepositoryInterface = $assessorQuotationRepositoryInterface;
+        $this->assessorQuotationInterface           = $AssessorQuotationValueRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -175,7 +178,6 @@ class CreditLiquidatorController extends Controller
 
     public function store(Request $request)
     {
-
         $liquidation = $request->input();
         $items          = [];
         $items2         = [];
@@ -187,11 +189,10 @@ class CreditLiquidatorController extends Controller
         $feeInitial     = [];
         $fees           = [];
         $plans          = [];
-
+        $quoatations    = [];
         foreach ($liquidation[0] as $key => $value) {
             $items2[$key] = $liquidation[0][$key];
         }
-
 
         foreach ($items2 as $id => $value) {
             $products[]       = $items2[$id][0][0];
@@ -211,9 +212,14 @@ class CreditLiquidatorController extends Controller
         $data = [];
         foreach ($products as $key => $value) {
             $products[$key]['CONSEC']  = $products[$key]['key'] + 1;
-            $products[$key]['CANT']  = $products[$key]['CANTIDAD'];
+            $products[$key]['CANT']    = $products[$key]['CANTIDAD'];
+            if (array_key_exists('quotation', $products[$key])) {
+                $quoatations[$key] = $products[$key]['quotation'];
+                unset($products[$key]['quotation']);
+            }
             unset($products[$key]['key']);
             unset($products[$key]['CANTIDAD']);
+            unset($products[$key]['type_product']);
             unset($products[$key]['COD_PROCESO']);
             $data = new CreditBusines();
             $data->fill($products[$key]);
@@ -237,9 +243,9 @@ class CreditLiquidatorController extends Controller
                 $data->fill(['DCTO' . $position => $discounts[$key][$key2]['value']]);
             }
             $data->save();
-
             $sumTotal = $sumTotal + $total[$key]['TOTAL'];
         }
+
         $user  = auth()->user()->codeOportudata;
         $super2 = [];
         $factoryRequest                  = $liquidation[1][0];
@@ -273,9 +279,11 @@ class CreditLiquidatorController extends Controller
             'state' => 'A'
         ];
 
-        if ($liquidation[3]) {
-            foreach ($liquidation[3] as $key => $quoatation) {
-                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => '1']);
+        if (!empty($quoatations)) {
+            foreach ($quoatations as $key => $quoatation) {
+                $dataValue =   $this->assessorQuotationInterface->updateAssessorQuotationsValues(['id' => $quoatation, 'status' => '1']);
+
+                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $dataValue->assessor_quotation_id, 'state' => '1', 'solic_fab_id' => $liquidation[1][0]['SOLICITUD']]);
             }
         }
 
