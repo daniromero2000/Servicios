@@ -219,6 +219,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[$scope.items.key][3].COD_PLAN = value.item.plan_id.toString()
                         $scope.liquidator[$scope.items.key][3].CUOTAINI = value.item.initial_fee
                         $scope.liquidator[$scope.items.key][3].PLAZO = value.item.term
+                        $scope.liquidator[$scope.items.key][8].push({ 'PLANES': $scope.liquidator[$scope.items.key][3].PLANES, 'COD_PLAN': $scope.liquidator[$scope.items.key][3].COD_PLAN })
                         return $timeout(1500);
                     });
                 });
