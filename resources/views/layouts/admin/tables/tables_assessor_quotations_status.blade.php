@@ -18,7 +18,7 @@
                     <td>{{$data->telephone}}</td>
                     <td>{{$data->assessor->email}}</td>
                     <td>$ {{ number_format($data->total) }}</td>
-                    <td>@if ($data->state == 0)
+                    <td>@if ($data->state == '0')
                         <span class="badge badge-primary">Sin gestionar</span>
                         @else
                         <span class="badge badge-success">Liquidado</span>

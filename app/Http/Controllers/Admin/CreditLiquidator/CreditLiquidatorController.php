@@ -177,7 +177,6 @@ class CreditLiquidatorController extends Controller
     {
 
         $liquidation = $request->input();
-        // dd($liquidation);
         $items          = [];
         $items2         = [];
         $products       = [];
@@ -274,14 +273,13 @@ class CreditLiquidatorController extends Controller
             'state' => 'A'
         ];
 
-        OportudataLog::create($dataOpo);
-
         if ($liquidation[3]) {
             foreach ($liquidation[3] as $key => $quoatation) {
-                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => 'Liquidado']);
+                dd($this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => 'Liquidado']));
             }
         }
 
+        OportudataLog::create($dataOpo);
         return response()->json(true);
     }
 
