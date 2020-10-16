@@ -130,9 +130,9 @@ class AssesorQuotationController extends Controller
 
         $dataOpo = [
             'modulo' => 'Cotizador',
-            'proceso' => 'Cotizacion del cliente ' .  $quotations[1]['CEDULA'],
+            'proceso' => 'Cotizacion del cliente ' .  $customer['identificationNumber'],
             'accion' => 'Crear',
-            'identificacion' =>  $quotations[1]['CEDULA'],
+            'identificacion' =>  $customer['identificationNumber'],
             'fecha' => date('Y-m-d H:i:s'),
             'usuario' => auth()->user()->codeOportudata,
             'state' => 'A'
