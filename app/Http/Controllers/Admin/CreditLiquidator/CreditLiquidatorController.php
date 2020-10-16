@@ -193,6 +193,7 @@ class CreditLiquidatorController extends Controller
             $items2[$key] = $liquidation[0][$key];
         }
 
+
         foreach ($items2 as $id => $value) {
             $products[]       = $items2[$id][0][0];
             $products2[]      = $items2[$id][0];
