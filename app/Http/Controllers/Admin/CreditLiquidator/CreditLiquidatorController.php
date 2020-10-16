@@ -177,6 +177,7 @@ class CreditLiquidatorController extends Controller
     {
 
         $liquidation = $request->input();
+        // dd($liquidation);
         $items          = [];
         $items2         = [];
         $products       = [];

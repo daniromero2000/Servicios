@@ -596,6 +596,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.items.CODIGO = sku;
             $scope.items.CANTIDAD = quanty;
             $scope.items.ARTICULO = item;
+            $scope.items.SOLICITUD = $scope.request.SOLICITUD;
             if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
                 $scope.items.LISTA = $scope.fixedList;
                 $scope.items.SELECCION = selecion;

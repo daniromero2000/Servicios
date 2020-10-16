@@ -9,7 +9,7 @@
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
-<section >
+<section>
     @include('layouts.errors-and-messages')
     <div class="mx-auto" style="max-width: 1450px;">
         <div class="content-header">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div ng-app="appQuotations" ng-controller="quotationsController">
-        <input type="hidden" value="{{$lead}}" id="lead">
+            <input type="hidden" value="{{$lead}}" id="lead">
             <div class="row mx-0 padding-3">
                 <div class="w-100">
                     <div class="tab-content" id="nav-tabContent">
@@ -59,7 +59,7 @@
                                                             hacer la cotización</span>
                                                         <img src="{{ asset('images/datosPersonales.png') }}"
                                                             class="img-fluid forms-descImg">
-                                                        <span class="forms-descStepNum">1</span>
+                                                        <span class="forms-descStepNum">2</span>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-12 col-md-3">
@@ -132,12 +132,13 @@
 
                                                 <div class="col-12 text-center">
 
-                                                      <button type="button" class="btn btn-secondary btn-sm"  ng-click="prevStep()"
+                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                        ng-click="prevStep()"
                                                         ng-disabled="disabledButton">Regresar</button>
-                                                       <button type="submit" ng-if="quotations[0]"
-                                                     class="btn btn-primary btn-sm">Crear
-                                                    Cotización</button>
-                                                  
+                                                    <button type="submit" ng-if="quotations[0]"
+                                                        class="btn btn-primary btn-sm">Crear
+                                                        Cotización</button>
+
                                                 </div>
                                             </div>
                                         </form>
@@ -151,7 +152,7 @@
                                                 proceso</span>
                                             <img src="{{ asset('images/datosPersonales.png') }}"
                                                 class="img-fluid forms-descImg">
-                                            <span class="forms-descStepNum">2</span>
+                                            <span class="forms-descStepNum">1</span>
                                         </div>
                                     </div>
                                     <div class="card card-default">
@@ -168,8 +169,9 @@
                                         <div class="card-body card-body-reset">
                                             @include('assessorQuotations.layouts.quotations')
                                             <div class="ml-auto my-auto text-right">
-                                               <button type="submit" class="btn btn-primary" ng-if="quotations[0]" ng-click="nextStep()"
-                                                        ng-disabled="disabledButton">Continuar</button>
+                                                <button type="submit" class="btn btn-primary" ng-if="quotations[0]"
+                                                    ng-click="nextStep()"
+                                                    ng-disabled="disabledButton">Continuar</button>
                                             </div>
                                         </div>
                                     </div>
