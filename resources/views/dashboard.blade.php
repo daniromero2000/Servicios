@@ -46,7 +46,8 @@ $modules = session('modules');
         </a>
       </div>
       @endforeach
-      @if (auth()->user()->codeOportudata == '1088247299' || auth()->user()->codeOportudata == '98587878' ||
+      @if (auth()->user()->Assessor && (auth()->user()->codeOportudata == '1088247299' || auth()->user()->codeOportudata
+      == '98587878' ||
       auth()->user()->codeOportudata == '998877' || auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
       auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
       auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
@@ -57,7 +58,7 @@ $modules = session('modules');
       auth()->user()->Assessor->subsidiary->CODIGO == '155' ||
       auth()->user()->Assessor->subsidiary->CODIGO == '149' ||
       auth()->user()->Assessor->subsidiary->CODIGO == '138' ||
-      auth()->user()->Assessor->subsidiary->CODIGO == '1')
+      auth()->user()->Assessor->subsidiary->CODIGO == '1'))
       <div class="col-10 col-sm-6 col-lg-4 col-xl-3">
         <a class="cursor" data-toggle="tooltip" data-placement="top" title="Ir al panel"
           href="/Administrator/assessorquotations">
