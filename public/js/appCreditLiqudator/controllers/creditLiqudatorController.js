@@ -180,10 +180,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.lead = response.data;
                 $scope.createRequest();
                 $scope.loader = false;
-                if (response.data.customer_quotations.length > 0 && ($("#user").val() == '1088247299' || $("#user").val() == '998877' || $("#user").val() == '98587878')) {
+                if (response.data.customer_quotations.length > 0) {
                     $('#list-quotations').modal('show');
                     $scope.quotations = response.data.customer_quotations;
-                    console.log($scope.quotations)
                 } else {
                     $scope.addItem();
                 }
