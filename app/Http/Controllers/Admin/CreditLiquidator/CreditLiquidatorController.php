@@ -275,7 +275,7 @@ class CreditLiquidatorController extends Controller
 
         if ($liquidation[3]) {
             foreach ($liquidation[3] as $key => $quoatation) {
-                dd($this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => 'Liquidado']));
+                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation['item']['assessor_quotation_id'], 'state' => '1']);
             }
         }
 
