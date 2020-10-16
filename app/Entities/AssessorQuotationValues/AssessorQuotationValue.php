@@ -28,7 +28,8 @@ class AssessorQuotationValue extends Model
         'term',
         'value_fee',
         'plan_id',
-        'type_quotation'
+        'type_quotation',
+        'status'
     ];
 
     public function discounts()

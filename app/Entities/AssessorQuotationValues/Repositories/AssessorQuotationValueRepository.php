@@ -26,4 +26,13 @@ class AssessorQuotationValueRepository implements AssessorQuotationValueReposito
             dd($e);
         }
     }
+
+    public function updateAssessorQuotationsValues($data): AssessorQuotationValue
+    {
+        try {
+            return $this->model->updateOrCreate(['id' => $data['id']], $data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

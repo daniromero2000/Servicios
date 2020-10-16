@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 class CreditLiquidatorController extends Controller
 {
     private $customerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
-    private $creditBusinesDetailInterface, $creditBusinesInterface, $productListInterface;
+    private $creditBusinesDetailInterface, $creditBusinesInterface, $productListInterface, $assessorQuotationInterface;
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
@@ -67,7 +67,7 @@ class CreditLiquidatorController extends Controller
         $this->creditBusinesInterface               = $creditBusinesRepositoryInterface;
         $this->productListInterface                 = $productListRepositoryInterface;
         $this->assessorQuotationRepositoryInterface = $assessorQuotationRepositoryInterface;
-        $this->AssessorQuotationInterface           = $AssessorQuotationValueRepositoryInterface;
+        $this->assessorQuotationInterface           = $AssessorQuotationValueRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -221,32 +221,30 @@ class CreditLiquidatorController extends Controller
             unset($products[$key]['CANTIDAD']);
             unset($products[$key]['type_product']);
             unset($products[$key]['COD_PROCESO']);
-            // $data = new CreditBusines();
-            // $data->fill($products[$key]);
-            // $data->fill($aval[$key]);
-            // $data->fill($total[$key]);
-            // $data->fill($feeInitial[$key]);
-            // $data->fill($fees[$key]);
-            // $data->fill($plans[$key]);
-            // $data->fill(['TOT_DCTO' => $totalDiscounts[$key]]);
-            // $data->fill(['BONO' => 1]);
-            // $data->fill(['STATE' => 'A']);
-            // $data->fill(['PAPELERIA' => 'A']);
-            // $data->fill(['FPAGOINI' => $dateInitial]);
-            // $dateEnd = $date->addMonth($fees[$key]['PLAZO']);
-            // $dateEnd = $dateEnd->format('Y-m-d');
-            // $data->fill(['FPAGOFIN' => $dateEnd]);
-            // $data->fill(['FEC_AUR' => '1900-01-01']);
-            // $data->fill(['PRIMER_PAGO' => '1900-01-01']);
-            // foreach ($discounts[$key] as $key2 => $value2) {
-            //     $position = $key2 + 1;
-            //     $data->fill(['DCTO' . $position => $discounts[$key][$key2]['value']]);
-            // }
-            // $data->save();
-
-            // $sumTotal = $sumTotal + $total[$key]['TOTAL'];
+            $data = new CreditBusines();
+            $data->fill($products[$key]);
+            $data->fill($aval[$key]);
+            $data->fill($total[$key]);
+            $data->fill($feeInitial[$key]);
+            $data->fill($fees[$key]);
+            $data->fill($plans[$key]);
+            $data->fill(['TOT_DCTO' => $totalDiscounts[$key]]);
+            $data->fill(['BONO' => 1]);
+            $data->fill(['STATE' => 'A']);
+            $data->fill(['PAPELERIA' => 'A']);
+            $data->fill(['FPAGOINI' => $dateInitial]);
+            $dateEnd = $date->addMonth($fees[$key]['PLAZO']);
+            $dateEnd = $dateEnd->format('Y-m-d');
+            $data->fill(['FPAGOFIN' => $dateEnd]);
+            $data->fill(['FEC_AUR' => '1900-01-01']);
+            $data->fill(['PRIMER_PAGO' => '1900-01-01']);
+            foreach ($discounts[$key] as $key2 => $value2) {
+                $position = $key2 + 1;
+                $data->fill(['DCTO' . $position => $discounts[$key][$key2]['value']]);
+            }
+            $data->save();
+            $sumTotal = $sumTotal + $total[$key]['TOTAL'];
         }
-        dd($quoatations);
 
         $user  = auth()->user()->codeOportudata;
         $super2 = [];
@@ -283,8 +281,9 @@ class CreditLiquidatorController extends Controller
 
         if (!empty($quoatations)) {
             foreach ($quoatations as $key => $quoatation) {
+                $dataValue =   $this->assessorQuotationInterface->updateAssessorQuotationsValues(['id' => $quoatation, 'status' => '1']);
 
-                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $quoatation, 'state' => '1']);
+                $this->assessorQuotationRepositoryInterface->updateAssessorQuotations(['id' => $dataValue->assessor_quotation_id, 'state' => '1', 'solic_fab_id' => $liquidation[1][0]['SOLICITUD']]);
             }
         }
 
