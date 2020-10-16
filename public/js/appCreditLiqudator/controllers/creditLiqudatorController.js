@@ -206,10 +206,12 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 let promise = $timeout();
                 angular.forEach($scope.quotation_push_items, function (value, key) {
                     promise = promise.then(function () {
+                        console.log(value.item)
                         $scope.addItem();
                         value.item = JSON.parse(value.item);
                         $scope.items.key = key;
                         $scope.items.COD_PROCESO = '1';
+                        $scope.items.quotation = value.item.id
                         $scope.items.LISTA = value.item.list;
                         $scope.items.CODIGO = value.item.sku.toString();
                         $scope.items.SELECCION = '01';

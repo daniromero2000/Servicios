@@ -76,6 +76,7 @@ class AssesorQuotationController extends Controller
             $customer = $this->leadInterface->findLeadById($quotations[2]);
             $customer->lead_id = $quotations[2];
             $customer->state = 0;
+            $customer->assessor_id = auth()->user()->id;
             $customer = $customer->toArray();
         } else {
             $customer = [
@@ -129,9 +130,9 @@ class AssesorQuotationController extends Controller
 
         $dataOpo = [
             'modulo' => 'Cotizador',
-            'proceso' => 'Cotizacion del cliente ' .  $quotations[1]['CEDULA'],
+            'proceso' => 'Cotizacion del cliente ' .  $customer['identificationNumber'],
             'accion' => 'Crear',
-            'identificacion' =>  $quotations[1]['CEDULA'],
+            'identificacion' =>  $customer['identificationNumber'],
             'fecha' => date('Y-m-d H:i:s'),
             'usuario' => auth()->user()->codeOportudata,
             'state' => 'A'
