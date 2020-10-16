@@ -7,6 +7,7 @@ use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotati
 use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
 use App\Entities\AssessorQuotationValues\AssessorQuotationValue;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -127,10 +128,22 @@ class AssesorQuotationController extends Controller
             $sumTotal = $sumTotal + $total[$key]['total'];
         }
 
+        $dataOpo = [
+            'modulo' => 'Cotizador',
+            'proceso' => 'Cotizacion del cliente ' .  $quotations[1]['CEDULA'],
+            'accion' => 'Crear',
+            'identificacion' =>  $quotations[1]['CEDULA'],
+            'fecha' => date('Y-m-d H:i:s'),
+            'usuario' => auth()->user()->codeOportudata,
+            'state' => 'A'
+        ];
+
         $data = [
             'id'      => $customerQuotation->id,
             'total'   => $sumTotal,
         ];
+
+        OportudataLog::create($dataOpo);
 
         $customerQuotation = $this->assessorQuotationRepositoryInterface->updateAssessorQuotations($data);
 

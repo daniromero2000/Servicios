@@ -201,7 +201,8 @@ angular.module('appAssessorStep1', [])
 				linea: response.data.line,
 				cedula: cedula,
 				datos: (response.datos) ? response.datos : [],
-				origen: 'assessorStep1'
+				origen: 'assessorStep1',
+				navegador: navigator.userAgent
 			}
 
 			var data = {

@@ -150,7 +150,8 @@ angular.module('appStep2', ['moment-picker', 'ng-currency'])
 				linea: response.data.line,
 				cedula: cedula,
 				datos: (response.datos) ? response.datos : [],
-				origen: 'step2'
+				origen: 'step2',
+				navegador: navigator.userAgent
 			}
 
 			var data = {

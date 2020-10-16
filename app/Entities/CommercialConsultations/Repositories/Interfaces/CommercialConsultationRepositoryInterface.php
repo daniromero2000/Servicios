@@ -12,5 +12,7 @@ interface CommercialConsultationRepositoryInterface
 
     public function ConsultarInformacionComercial($identificationNumber);
 
+    public function execConsultaSaveXml($oportudataLead);
+
     public function validateDateConsultaComercial($identificationNumber, $daysToIncrement);
 }

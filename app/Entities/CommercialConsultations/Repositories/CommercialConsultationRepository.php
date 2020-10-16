@@ -53,6 +53,21 @@ class CommercialConsultationRepository implements CommercialConsultationReposito
         }
     }
 
+    public function execConsultaSaveXml($oportudataLead)
+    {
+        $obj = new \stdClass();
+        $obj->typeDocument = '1';
+        $obj->identificationNumber = trim($oportudataLead);
+        try {
+            $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
+            $result = $ws->GuardarXML($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            dd($th);
+            return 0;
+        }
+    }
+
     public function ConsultarInformacionComercial($identificationNumber)
     {
         $obj = new \stdClass();

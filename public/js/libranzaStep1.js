@@ -276,7 +276,8 @@ angular.module('appLibranzaStep1', [])
 				linea: response.data.line,
 				cedula: cedula,
 				datos: (response.datos) ? response.datos : [],
-				origen: 'libranzaStep1'
+				origen: 'libranzaStep1',
+				navegador: navigator.userAgent
 			}
 
 			var data = {
