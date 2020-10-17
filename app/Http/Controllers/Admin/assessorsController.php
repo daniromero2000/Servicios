@@ -118,7 +118,7 @@ class assessorsController extends Controller
 		$this->temporaryCustomerInterface      = $temporaryCustomerRepositoryInterface;
 		$this->customerProfessionInterface     = $customerProfessionRepositoryInterface;
 		$this->assessorInterface               = $AssessorRepositoryInterface;
-		$this->factoryRequestInterface                = $factoryRequestRepositoryInterface;
+		$this->factoryRequestInterface         = $factoryRequestRepositoryInterface;
 		$this->toolsInterface                  = $toolRepositoryInterface;
 		$this->consultationValidityInterface   = $consultationValidityRepositoryInterface;
 		$this->customerInterface               = $customerRepositoryInterface;
