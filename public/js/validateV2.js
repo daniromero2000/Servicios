@@ -96,7 +96,7 @@ $(document).ready(function () {
 		}
 
 		function validateTelephone(input) {
-			var patt = "(\\+57)?\\s?((\\d{7})|(\\d{7}))";
+			var patt = "(\\+57)?\\s?((\\d{1})|(\\d{7}))";
 			setAttributePatternInput(input, patt);
 		}
 
