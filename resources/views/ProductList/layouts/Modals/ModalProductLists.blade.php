@@ -181,6 +181,7 @@
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
                                 <option value="VOLANTE"> VOLANTE </option>
+                                <option value="VOLANTE ESPECIAL"> VOLANTE ESPECIAL </option>
                             </select>
                         </div>
                         <div class="col-sm-6 col-12  form-group">
