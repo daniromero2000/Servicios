@@ -34,6 +34,7 @@
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
                                 <option value="VOLANTE"> VOLANTE </option>
+                                <option value="VOLANTE ESPECIAL"> VOLANTE ESPECIAL </option>
                             </select>
                         </div>
 

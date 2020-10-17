@@ -195,6 +195,34 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond) /  0.95);
                 $blackBondOnPrice                 = round($blackPublicPrice * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
+            } else if ($productList['zone'] == 'VOLANTE ESPECIAL') {
+                //Volante Especial
+                if ($percentageProtectionDividedPriceProteccion == 0) {
+                    $percentageProtection = 0;
+                } elseif ($percentageProtectionDividedPriceProteccion <= 10) {
+                    $percentageProtection = 70;
+                } elseif ($percentageProtectionDividedPriceProteccion > 10 && $percentageProtectionDividedPriceProteccion <= 20) {
+                    $percentageProtection = 80;
+                } else {
+                    $percentageProtection = 90;
+                }
+                $cost = $product['iva_cost'] + 30000;
+                $cashPromotion                    = round(($cost - $applyProteccion) / ((100 - $productList['cash_margin']) / 100));
+                $promotionPublicPrice             = round(($cost - ($applyProteccion * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100));;
+                $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
+                $traditionalCreditPrice           = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
+                $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
+                $traditionalCreditBondPrice       = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
+                $basePublicPriceOportuyaCustomer  = round(($cost - $applyProteccion) / ((100 - $productList['percentage_base_oportuya_customer']) / 100));
+                $percentageBaseOportuyaCustomer   = round(100 - (($basePublicPriceOportuyaCustomer * 100) / $normalPublicPrice), 2);
+                $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
+                $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
+                $blueBondPrice                    = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) /  0.95);
+                $blueBondOnPrice                  = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
+                $blackPublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100));
+                $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
+                $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) /  0.95);
+                $blackBondOnPrice                 = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
             } else {
                 //Volanteo
                 $cashPromotion                    = round(($product['iva_cost'] - $applyProteccion) / ((100 - $productList['cash_margin']) / 100));
