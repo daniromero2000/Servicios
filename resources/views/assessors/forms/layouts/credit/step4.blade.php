@@ -92,28 +92,10 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label" for="dirEmpresa">Sector económico*</label>
-                        <select id="my-select" class="form-control" name="RAZON_IND" ng-model="lead.RAZON_IND">
-                            <option value="Agricultura / ganadería">Agricultura / ganadería</option>
-                            <option value="Avícola / porcino">Avícola / porcino</option>
-                            <option value="Alimentos y bebidas preparados">Alimentos y bebidas preparados</option>
-                            <option value="Construcción">Construcción</option>
-                            <option value="Carpintería / ebanistería">Carpintería / ebanistería</option>
-                            <option value="Educación">Educación</option>
-                            <option value="Electricidad">Electricidad</option>
-                            <option value="Graneros / tiendas / misceláneas">Graneros / tiendas / misceláneas</option>
-                            <option value="Hotelería / Turismo">Hotelería / Turismo</option>
-                            <option value="Mecánica automotriz">Mecánica automotriz</option>
-                            <option value="Manufactura / textil">Manufactura / textil</option>
-                            <option value="Rentista de Capital / arrendatarios">Rentista de Capital / arrendatarios
-                            </option>
-                            <option value="Servicios domésticos">Servicios domésticos</option>
-                            <option value="Salud y belleza">Salud y belleza</option>
-                            <option value="Transporte público (taxi / moto taxi/ bus)">Transporte público (taxi / moto
-                                taxi/ bus)</option>
-                            <option value="Transporte de carga">Transporte de carga</option>
-                            <option value="Tecnología / informática">Tecnología / informática</option>
-                            <option value="Vestuario / calzado / ventas catalogo">Vestuario / calzado / ventas catalogo
-                            </option>
+                        <select class="inputs form-control" ng-model="lead.RAZON_IND" id="RAZON_IND">
+                            <option value="" selected>Seleccione</option>
+                            <option ng-repeat="(key, economicSector) in economicSectors" value="@{{economicSector.id}}">
+                                @{{economicSector.name}}</option>
                         </select>
                     </div>
                     <div class="col-sm-12 col-md-4">

@@ -6,31 +6,14 @@
         <div class="col-12 mt-2">
             <form action="{{$route}}" method="get" id="admin-search">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="col-12">
                         <label for="q">Buscar (Cédula, Teléfono, Nombre y Apellido)</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
 
-                    <div class="col-6 col-md-2">
-                        <div class="form-group">
-                            <label for="city">Ciudad </label>
-                            <select name="city" class="form-control select2 select2-hidden-accessible"
-                                style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
-                                @if(!empty($cities))
-                                <option data-select3-id="" selected value> Selecciona Ciudad </option>
-                                @foreach($cities as $city)
-                                <option data-select3-id="{{ $city->NOMBRE }}" @if ($_GET && !empty($_GET['city']) &&
-                                    $_GET['city']==$city->NOMBRE) selected @endif value="{{ $city->NOMBRE }}">
-                                    {{ $city->NOMBRE }}
-                                </option>
-                                @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
                     @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 18)
-                    <div class="col-6 col-md-2">
+                    <div class="col-12">
                         <div class="form-group">
                             <label for="channel">Canal </label>
                             <select name="channel" id="channel" class="form-control select2 select2-hidden-accessible"
@@ -48,18 +31,58 @@
                         </div>
                     </div>
                     @endif
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="col-12">
                         <label for="from">Desde</label>
                         <input type="date" name="from" class="form-control " value="{!! request()->input('from') !!}">
                     </div>
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="col-12">
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
+                    </div>
+                    @if(auth()->user()->idProfile == 1 || auth()->user()->idProfile == 2 || auth()->user()->idProfile ==
+                    16 ||
+                    auth()->user()->idProfile == 8)
+                    <div class="col-12 mt-2">
+                        <div class="form-group">
+                            <label for="channel">Canal de Adquisición </label>
+                            <select name="channel" class="form-control select2 select2-hidden-accessible"
+                                style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
+                                @if(!empty($channels))
+                                <option data-select3-id="" selected value> Selecciona </option>
+                                @foreach($channels as $channel)
+                                <option {{request()->input('channel') == $channel->id ? 'selected' : ''}}
+                                    value="{{ $channel->id }}">
+                                    {{ $channel->channel }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="city">Ciudad </label>
+                            <select name="city" class="form-control select2 select2-hidden-accessible"
+                                style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
+                                @if(!empty($cities))
+                                <option data-select3-id="" selected value> Selecciona Ciudad </option>
+                                @foreach($cities as $city)
+                                <option data-select3-id="{{ $city->NOMBRE }}" @if ($_GET && !empty($_GET['city']) &&
+                                    $_GET['city']==$city->
+                                    NOMBRE) selected @endif value="{{ $city->NOMBRE }}">
+                                    {{ $city->NOMBRE }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <div class="row d-flex w-102 justify-content-center">
-                            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label for="typeAreaSelectFilter">Selecciona Area </label>
                                     <select name="lead_area_id" id="typeAreaSelectFilter"
@@ -77,7 +100,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-4 col-lg-3 col-xl-2 ml-xl-1" id="subsidiaryFilter">
+                            <div class="col-12 ml-xl-1" id="subsidiaryFilter">
                                 <div class="form-group">
                                     <label for="expirationDateSoat">Sucursal</label>
                                     <select name="subsidiary_id" id="subsidiaryCode"
@@ -96,7 +119,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class=" col-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class=" col-12">
                                 <div class="form-group">
                                     <label for="typeServiceFilter">Selecciona Servicio</label>
                                     <select name="typeService" id="typeServiceFilter"
@@ -114,7 +137,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label for="typeProductFilter">Selecciona Producto</label>
                                     <select name="typeProduct" id="typeProductFilter"
@@ -135,7 +158,7 @@
                                 </div>
                             </div>
                             @if ($route != '/Administrator/DigitalChannelLeadSlopes')
-                            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label for="stateSelectFilter">Selecciona Estado </label>
                                     <select name="state" id="stateSelectFilter"
@@ -158,7 +181,7 @@
                             @endif
 
                             @if ($route != '/Administrator/DigitalChannelLeadSlopes')
-                            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label for="assessorSelectFilter">Asesor</label>
                                     <select name="assessor_id" id="assessorSelectFilter"

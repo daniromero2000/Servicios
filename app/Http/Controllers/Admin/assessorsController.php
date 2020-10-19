@@ -22,7 +22,6 @@ use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterfa
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\CustomerProfessions\Repositories\Interfaces\CustomerProfessionRepositoryInterface;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
-use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
@@ -48,10 +47,13 @@ use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectReposit
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\CreditCards\Black;
 use App\Entities\CreditCards\Gray;
+use App\Entities\EconomicSectors\Repositories\Interfaces\EconomicSectorRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\Policies\PolicyTrait;
+
+
 
 class assessorsController extends Controller
 {
@@ -69,7 +71,7 @@ class assessorsController extends Controller
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $policyInterface, $OportuyaTurnInterface;
 	private $confrontaSelectinterface, $ubicaMailInterface, $ubicaCellPhoneInterfac, $confrontaResultInterface;
-	private $userInterface, $customerCellPhoneInterface;
+	private $userInterface, $customerCellPhoneInterface, $economicSectorInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -110,7 +112,8 @@ class assessorsController extends Controller
 		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
 		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
 		UserRepositoryInterface $userRepositoryInterface,
-		CustomerCellPhoneRepositoryInterface $customerCellPhoneInterface
+		CustomerCellPhoneRepositoryInterface $customerCellPhoneInterface,
+		EconomicSectorRepositoryInterface $economicSectorRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -151,6 +154,7 @@ class assessorsController extends Controller
 		$this->confrontaResultInterface        = $confrontaResultRepositoryInterface;
 		$this->userInterface                   = $userRepositoryInterface;
 		$this->customerCellPhoneInterface      = $customerCellPhoneInterface;
+		$this->economicSectorInterface         = $economicSectorRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -1266,6 +1270,11 @@ class assessorsController extends Controller
 		];
 
 		return $this->addSolicCredit($customer, $policyCredit, 1, $data);
+	}
+
+	public function getEconomicsSectors()
+	{
+		return $this->economicSectorInterface->listEconomicSector();
 	}
 
 	public function getFormVentaContado()

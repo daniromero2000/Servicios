@@ -36,15 +36,20 @@ use Carbon\Carbon;
           {{ $data->leadAssessor['name'] }}
           @endif
         </td>
+        @if(auth()->user()->idProfile == 1 || auth()->user()->idProfile == 2 || auth()->user()->idProfile == 16 ||
+        auth()->user()->idProfile == 8)
         <td>
-            {{ $data->subsidiary_id }}
-          </td>
+          {{ $data->subsidiary_id }}
+        </td>
+        @endif
         <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
             title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
         <td>{{ $data->telephone}}</td>
         <td>{{ $data->city}}/{{ $data->nearbyCity}}</td>
+        @if(auth()->user()->idProfile == 1 || auth()->user()->idProfile == 2 || auth()->user()->idProfile == 16 )
         <td> {{$data->leadChannel->channel}}
         </td>
+        @endif
         <td> {{$data->leadArea->name}}
         </td>
         <td> @if($data->leadService) {{ $data->leadService->service}} @else

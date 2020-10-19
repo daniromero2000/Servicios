@@ -77,7 +77,7 @@ $(function () {
 
 function dataLead(dataId) {
     user = $("#idProfile").val();
-    if (user != 16 && user != 4 && user != 2) {
+    if (user != 16 && user != 4 && user != 2 && user != 21 && user != 1 && user != 4 && user != 24) {
         $("#typeAreaSelectEdit" + dataId).prop("disabled", true);
         $("#channel" + dataId).prop("disabled", true);
     }
