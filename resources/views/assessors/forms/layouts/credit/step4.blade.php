@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label" for="dirEmpresa">Sector económico*</label>
-                        <select id="my-select" class="form-control" name="RAZON_IND">
+                        <select id="my-select" class="form-control" name="RAZON_IND" ng-model="lead.RAZON_IND">
                             <option value="Agricultura / ganadería">Agricultura / ganadería</option>
                             <option value="Avícola / porcino">Avícola / porcino</option>
                             <option value="Alimentos y bebidas preparados">Alimentos y bebidas preparados</option>
