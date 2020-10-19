@@ -67,7 +67,7 @@
                             <label for="my-select" class="pb-2">**Servicio de crédito vigente únicamente para las
                                 ciudades
                                 disponibles en este listado</label>
-                            <select id="my-select" class="custom-select" name="city">
+                            <select id="my-select" class="custom-select" name="city" required>
                                 <option value="">Selecciona</option>
                                 <option value="MEDIA">ACACIAS</option>
                                 <option value="BAJA">ARMENIA</option>
