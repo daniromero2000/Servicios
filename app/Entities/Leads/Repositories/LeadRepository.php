@@ -31,7 +31,8 @@ class LeadRepository implements LeadRepositoryInterface
         'identificationNumber',
         'lead_area_id',
         'expirationDateSoat',
-        'subsidiary_id'
+        'subsidiary_id',
+        'statusManagement'
     ];
 
 

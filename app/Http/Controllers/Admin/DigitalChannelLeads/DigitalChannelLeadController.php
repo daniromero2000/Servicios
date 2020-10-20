@@ -26,11 +26,12 @@ use App\Entities\OportudataLogs\OportudataLog;
 use App\Events\LeadNotification;
 use App\Liquidator;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
 
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
-    private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
+    private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface, $statusManagementInterface;
     private $leadProductInterface, $UserInterface, $LeadPriceInterface, $assessorInterface, $assessorQuotationInterface;
 
     public function __construct(
@@ -48,7 +49,8 @@ class DigitalChannelLeadController extends Controller
         LeadAreaRepository $LeadAreaRepositoryInterface,
         CityRepositoryInterface $CityRepositoryInterface,
         AssessorQuotationRepositoryInterface $assessorQuotationRepositoryInterface,
-        AssessorRepositoryInterface $AssessorRepositoryInterface
+        AssessorRepositoryInterface $AssessorRepositoryInterface,
+        StatusManagementRepositoryInterface $StatusManagementRepositoryInterface
     ) {
         $this->leadInterface              = $LeadRepositoryInterface;
         $this->toolsInterface             = $toolRepositoryInterface;
@@ -65,6 +67,7 @@ class DigitalChannelLeadController extends Controller
         $this->cityInterface              = $CityRepositoryInterface;
         $this->assessorInterface          = $AssessorRepositoryInterface;
         $this->assessorQuotationInterface = $assessorQuotationRepositoryInterface;
+        $this->statusManagementInterface  = $StatusManagementRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -133,6 +136,7 @@ class DigitalChannelLeadController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'statusManagements'   => $this->statusManagementInterface->getAllStatusManagements(),
             'listAssessors'       => $this->UserInterface->listUser($profile),
             'subsidaries'         => $subsidary
         ]);
@@ -151,6 +155,10 @@ class DigitalChannelLeadController extends Controller
             $lead->leadStatus()->attach(3, ['user_id' => auth()->user()->id]);
             $lead['STATE'] = 3;
             $lead->save();
+        }
+
+        if (!empty($request->input('statusManagement'))) {
+            $lead->statusManagements()->attach($request->input('statusManagement'), ['user_id' => auth()->user()->id]);
         }
 
         event(new LeadNotification($lead));
@@ -194,6 +202,7 @@ class DigitalChannelLeadController extends Controller
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'statusManagements'  => $this->statusManagementInterface->getAllStatusManagements(),
             'product_quotations' => auth()->user()->leadArea->leadProduct,
             'leadPriceStatus'    => $leadPriceStatus,
             'liquidators'        => $liquidators,
@@ -211,6 +220,10 @@ class DigitalChannelLeadController extends Controller
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];
             $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
+        }
+
+        if (!empty($request->input('statusManagement'))) {
+            $lead->statusManagements()->attach($request->input('statusManagement'), ['user_id' => auth()->user()->id]);
         }
 
         $leadRerpo = new leadRepository($lead);

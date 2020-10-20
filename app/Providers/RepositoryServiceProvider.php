@@ -178,6 +178,8 @@ use App\Entities\EconomicSectors\Repositories\EconomicSectorRepository;
 use App\Entities\EconomicSectors\Repositories\Interfaces\EconomicSectorRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustomerRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\PaymentTimeCustomerRepository;
+use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
+use App\Entities\StatusManagements\Repositories\StatusManagementRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -627,6 +629,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             EconomicSectorRepositoryInterface::class,
             EconomicSectorRepository::class
+        );
+
+        $this->app->bind(
+            StatusManagementRepositoryInterface::class,
+            StatusManagementRepository::class
         );
     }
 }

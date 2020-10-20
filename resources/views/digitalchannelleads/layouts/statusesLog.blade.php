@@ -1,5 +1,5 @@
 <div class="col-md-4">
-    <h2 class="text-center">Historial</h2>
+    <h4 class="text-center">Historial</h4>
     <ul class="timeline">
         @if(!Empty($datas))
         @foreach($datas as $data)

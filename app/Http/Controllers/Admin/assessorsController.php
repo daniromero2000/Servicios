@@ -53,8 +53,6 @@ use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositor
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\Policies\PolicyTrait;
 
-
-
 class assessorsController extends Controller
 {
 	use PolicyTrait;

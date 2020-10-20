@@ -112,8 +112,8 @@ use Carbon\Carbon;
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="card card-success">
-                            <div class="card-header bg-success">
-                              <h3 class="card-title">Asignación</h3>
+                            <div class="card-header bg-primary">
+                              <h3 class="card-title">Información Básica</h3>
 
                               <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -200,8 +200,8 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-lg-6">
                           <div class="card card-success">
-                            <div class="card-header bg-primary">
-                              <h3 class="card-title">Información Básica</h3>
+                            <div class="card-header bg-success">
+                              <h3 class="card-title">Asignación</h3>
 
                               <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -296,14 +296,6 @@ use Carbon\Carbon;
                                 </div>
 
                                 <div class="col-12 col-sm-6 no-padding-right">
-                                  <label for="telephone{{$data->id}}">Observación </label>
-                                  <input type="textarea" name="description" id="description{{$data->id}}"
-                                    validation-pattern="text" placeholder="Observación" class="form-control"
-                                    value="{!! $data->description ?: old('description')  !!}">
-                                </div>
-
-                                <div class="col-12 col-sm-6 no-padding-right">
-
                                   <div class="form-group" style="width: 100%;">
                                     <label for="stateSelectEdit{{$data->id}}">Selecciona Estado </label>
                                     <select name="state" id="stateSelectEdit{{$data->id}}" class="form-control "
@@ -329,6 +321,34 @@ use Carbon\Carbon;
                                     @endif
                                   </select>
                                 </div>
+                                @if( auth()->user()->idProfile == 2 ||
+                                auth()->user()->idProfile == 16 ||
+                                auth()->user()->idProfile == 24)
+                                <div class="col-12 form-group no-padding-right">
+                                  <label for="statusManagement">Estado de Gestión<span
+                                      class="text-danger">*</span></label>
+                                  <select id="statusManagementCreate" name="statusManagement" class="form-control"
+                                    required>
+                                    @if(!empty($statusManagements))
+                                    <option selected value> -- Selecciona Estado -- </option>
+                                    @foreach($statusManagements as $statusManagement)
+                                    <option value="{{ $statusManagement->consec }}" @if($data->statusManagement ==
+                                      $statusManagement->consec)
+                                      selected="selected" @endif>
+                                      {{ $statusManagement->indicador }}
+                                    </option>
+                                    @endforeach
+                                    @endif
+                                  </select>
+                                </div>
+                                @endif
+
+                                <div class="col-12 no-padding-right">
+                                  <label for="telephone{{$data->id}}">Observación </label>
+                                  <textarea name="description" class="form-control" id="description{{$data->id}}"
+                                    cols="30" rows="6">{!! $data->description ?: old('description') !!}</textarea>
+                                </div>
+
                               </div>
                             </div>
                             <!-- /.card-body -->

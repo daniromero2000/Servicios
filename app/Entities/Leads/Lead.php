@@ -12,11 +12,14 @@ use App\Entities\AssessorQuotations\AssessorQuotation;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\LeadStatusesLogs\LeadStatusesLog;
 use App\Entities\Services\Service;
+use App\Entities\StatusManagements\StatusManagement;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use App\Entities\StatusManagementLogs\StatusManagementLog;
+
 
 class Lead extends Model
 {
@@ -42,7 +45,8 @@ class Lead extends Model
         'description',
         'lead_area_id',
         'expirationDateSoat',
-        'subsidiary_id'
+        'subsidiary_id',
+        'statusManagement'
     ];
 
     protected $guarded = [
@@ -91,6 +95,11 @@ class Lead extends Model
         return $this->belongsToMany(LeadStatus::class, 'lead_status', 'lead_id', 'lead_status_id')->withTimestamps();
     }
 
+    public function statusManagements()
+    {
+        return $this->belongsToMany(StatusManagement::class, 'lead_status_management', 'lead_id', 'status_management_id')->withTimestamps();
+    }
+
     public function leadStatuses()
     {
         return $this->belongsTo(LeadStatus::class, 'state', 'id');
@@ -119,6 +128,11 @@ class Lead extends Model
     public function leadStatusesLogs()
     {
         return $this->hasMany(LeadStatusesLog::class, 'lead_id');
+    }
+
+    public function statusManagementLog()
+    {
+        return $this->hasMany(StatusManagementLog::class, 'lead_id');
     }
 
     public function leadProduct()
