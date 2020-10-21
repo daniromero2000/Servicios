@@ -49,7 +49,7 @@ class LeadsController extends Controller
             'qfechaInicialTR' => $request->get('qfechaInicialTR'),
             'qfechaFinalTR'   => $request->get('qfechaFinalTR'),
             'qOrigenTR'       => $request->get('qOrigenTR'),
-            'qcityAprobados'  => $request->get('qcityAprobados'),
+            'qcityAprobados'  => $request->get('qcityAprobados')
         ]);
 
         $getLeadsDigital = $this->getLeadsCanalDigital([
