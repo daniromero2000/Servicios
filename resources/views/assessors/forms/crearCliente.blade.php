@@ -36,6 +36,7 @@
                 </div>
             </div>
             <div ng-show="tipoCliente == 'CREDITO'">
+
                 @include('assessors.forms.layouts.credit.step1')
                 @include('assessors.forms.layouts.credit.step2')
                 @include('assessors.forms.layouts.credit.step3')

@@ -139,7 +139,6 @@
                     class="form-control"></textarea>
                 </div>
               </div>
-
               <div class="form-group text-right mb-0 mt-2">
                 <button class="btn btn-primary">Agregar</button>
                 <button class=" btn btn-danger" data-dismiss="modal" aria-label="Close">Cancelar</button>

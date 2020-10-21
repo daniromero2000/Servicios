@@ -212,20 +212,39 @@
                               @endif
                             </select>
                           </div>
-                          <div class="col-12 col-sm-12 no-padding-right">
-                            <label for="telephone">Observación <span class="text-danger">*</span></label>
-                            <input type="textarea" name="description" id="description" validation-pattern="text"
-                              placeholder="Observación" class="form-control"
-                              value="{!! $digitalChannelLead->description ?: old('description')  !!}">
+                          @if( auth()->user()->idProfile == 2 ||
+                          auth()->user()->idProfile == 16 ||
+                          auth()->user()->idProfile == 24)
+                          <div class="col-12 form-group no-padding-right">
+                            <label for="statusManagement">Estado de Gestión<span class="text-danger">*</span></label>
+                            <select id="statusManagementCreate" name="statusManagement" class="form-control" required>
+                              @if(!empty($statusManagements))
+                              <option selected value> -- Selecciona Estado -- </option>
+                              @foreach($statusManagements as $statusManagement)
+                              <option value="{{ $statusManagement->consec }}" @if($digitalChannelLead->statusManagement
+                                ==
+                                $statusManagement->consec)
+                                selected="selected" @endif>
+                                {{ $statusManagement->indicador }}
+                              </option>
+                              @endforeach
+                              @endif
+                            </select>
+                          </div>
+                          @endif
+                          <div class="col-12 no-padding-right">
+                            <label for="telephone{{$digitalChannelLead->id}}">Observación </label>
+                            <textarea name="description" class="form-control"
+                              id="description{{$digitalChannelLead->id}}" cols="30"
+                              rows="6">{!! $digitalChannelLead->description ?: old('description') !!}</textarea>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="form-group text-left w-100 d-flex mb-0">
-                  <button class="btn btn-primary ml-auto">Actualizar</button>
-                </div>
+                  <div class="form-group text-left w-100 d-flex mb-0">
+                    <button class="btn btn-primary ml-auto">Actualizar</button>
+                  </div>
               </form>
             </div>
           </div>

@@ -17,6 +17,7 @@ use App\Entities\ConfrontaResults\ConfrontaResult;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
+use App\Entities\EconomicSectors\EconomicSector;
 use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
 use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
@@ -336,6 +337,11 @@ class Customer extends Model
     public function customerType()
     {
         return $this->hasOne(CustomerType::class, 'identificationNumber');
+    }
+
+    public function customerEconomicSector()
+    {
+        return $this->belongsTo(EconomicSector::class, 'RAZON_IND');
     }
 
     public function customerQuotations()

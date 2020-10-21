@@ -35,52 +35,8 @@
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
-        <div class="container-fluid">
-            <div class="card  mb-4 border-0 shadow-lg">
-                <div class="row form-group" ng-if="filtros">
-                    <div class="col-12">
-                        <div class="card-header">
-                            @include('layouts.admin.filter_digital_channel_leads', ['route' =>
-                            route('callcenterleads.index')])
-                        </div>
-                        <div class=" mt-2 col-12 col-sm-12 col-md-12">
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6">
-                                    <!-- /.info-box -->
-                                    <div class="small-box ">
-                                        <div class="inner">
-                                            <h2>{{ $listCount }}</h2>
-                                            @if ($_GET)
-                                            <p>Total de Solicitudes</p>
-                                            @else
-                                            <p>Solicitudes en este mes</p>
-                                            @endif
-                                        </div>
-                                        <div class="icon">
-                                            <i class="ion ion-stats-bars"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        @php
-                        @endphp
-                        <div class="card-body pt-0 pb-0 ">
-                            @if($digitalChannelLeads)
-                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' =>
-                            $digitalChannelLeads, 'cities' => $cities, 'channels' => $channels, 'services' => $services,
-                            'campaigns' => $campaigns, 'lead_products' => $lead_products, 'lead_statuses' =>
-                            $lead_statuses, ])
-                            @include('layouts.admin.pagination.pagination', [$skip])
-                            @else
-                            @include('layouts.admin.pagination.pagination_null', [$skip])
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('layouts.admin.leads.template_list',['data' => $digitalChannelLeads , 'route' =>
+        'callcenterleads.index'])
         <div class="row row-reset text-right">
             <div class="col-12">
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
