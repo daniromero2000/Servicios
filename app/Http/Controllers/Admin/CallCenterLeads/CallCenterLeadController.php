@@ -18,7 +18,7 @@ use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
-
+use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
 
 class CallCenterLeadController extends Controller
 {
@@ -39,7 +39,8 @@ class CallCenterLeadController extends Controller
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
         UserRepositoryInterface $UserRepositoryInterface,
         LeadAreaRepository $LeadAreaRepositoryInterface,
-        CityRepositoryInterface $CityRepositoryInterface
+        CityRepositoryInterface $CityRepositoryInterface,
+        StatusManagementRepositoryInterface $StatusManagementRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -54,6 +55,7 @@ class CallCenterLeadController extends Controller
         $this->UserInterface         = $UserRepositoryInterface;
         $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
         $this->cityInterface         = $CityRepositoryInterface;
+        $this->statusManagementInterface  = $StatusManagementRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -123,6 +125,7 @@ class CallCenterLeadController extends Controller
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
             'listAssessors'       => $this->UserInterface->listUser($profile),
+            'statusManagements'   => $this->statusManagementInterface->getAllStatusManagements(),
             'subsidaries'         => $subsidary
 
         ]);

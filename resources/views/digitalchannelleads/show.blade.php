@@ -43,6 +43,7 @@
 </div>
 <section class="content border-0 m-2">
     @include('layouts.errors-and-messages')
+    @include('digitalchannelleads.layouts.create_lead_modal')
     <div class="card border-0 ">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
@@ -52,6 +53,10 @@
                 <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
                     aria-controls="profile">Seguimiento</a>
             </li>
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#management" role="tab" aria-controls="profile">Indicadores
+                    de gestión</a>
+            </li>
         </ul>
         <div class="tab-content" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
@@ -59,7 +64,8 @@
                 @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 3)
                 @include('digitalchannelleads.layouts.lead_libranza')
                 @endif
-                @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 8 || auth()->user()->idProfile == 15 || auth()->user()->idProfile == 16 || auth()->user()->idProfile == 23 )
+                @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 8 || auth()->user()->idProfile == 15
+                || auth()->user()->idProfile == 16 || auth()->user()->idProfile == 23 )
                 @include('digitalchannelleads.layouts.lead_prices')
                 @endif
             </div>
@@ -74,14 +80,19 @@
                     $digitalChannelLead->leadStatusesLogs])
                 </div>
             </div>
-
+            <div role="tabpanel" class="tab-pane" id="management">
+                <div class="row">
+                    @include('digitalchannelleads.layouts.status_management_log', ['datas' =>
+                    $digitalChannelLead->statusManagementLog])
+                </div>
+            </div>
         </div>
         <div class="row row-reset border-0">
             <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto btn-sm mr-3 mb-2 ">Regresar</a>
         </div>
+    </div>
 </section>
 @include('digitalchannelleads.layouts.update_lead_modal')
-@include('digitalchannelleads.layouts.create_lead_modal')
 @endsection
 @section('scriptsJs')
 <script src="{{ asset('js/selectDigitalChanel.js') }}"></script>

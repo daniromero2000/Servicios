@@ -174,8 +174,12 @@ use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotati
 use App\Entities\AssessorQuotationValues\Repositories\AssessorQuotationValueRepository;
 use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuotationDiscountRepositoryInterface;
 use App\Entities\AssessorQuotationDiscounts\Repositories\AssessorQuotationDiscountRepository;
+use App\Entities\EconomicSectors\Repositories\EconomicSectorRepository;
+use App\Entities\EconomicSectors\Repositories\Interfaces\EconomicSectorRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustomerRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\PaymentTimeCustomerRepository;
+use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
+use App\Entities\StatusManagements\Repositories\StatusManagementRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -620,6 +624,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             AssessorQuotationValueRepositoryInterface::class,
             AssessorQuotationValueRepository::class
+        );
+
+        $this->app->bind(
+            EconomicSectorRepositoryInterface::class,
+            EconomicSectorRepository::class
+        );
+
+        $this->app->bind(
+            StatusManagementRepositoryInterface::class,
+            StatusManagementRepository::class
         );
     }
 }

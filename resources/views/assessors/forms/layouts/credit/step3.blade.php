@@ -39,11 +39,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-4">
                     <label for="DIRECCION" class="labels">Dirección</label>
                     <input type="text" class="inputs form-control" ng-model="lead.DIRECCION" id="DIRECCION" />
                 </div>
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-4">
+                    <label for="ESTRATO" class="labels">Tipo de población</label>
+                    <select class="form-control inputs select2bs4" ng-model="lead.DIRECCION3" id="DIRECCION3" required>
+                        <option value="" selected>Seleccione</option>
+                        <option value="Sector urbano">Sector urbano</option>
+                        <option value="Sector rural">Sector rural</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-4">
                     <label for="ESTRATO" class="labels">Estrato</label>
                     <select class="form-control inputs select2bs4" ng-model="lead.ESTRATO" id="ESTRATO"
                         ng-options="strat.value as strat.label for strat in stratum"></select>

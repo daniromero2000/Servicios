@@ -195,6 +195,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
             if (response.data.leadsDigital != false) {
                 $scope.q.initFrom += response.data.leadsDigital.length;
+                console.log(response.data.leadsDigital);
                 angular.forEach(response.data.leadsDigital, function (value, key) {
                     $scope.leads.push(value);
                 });

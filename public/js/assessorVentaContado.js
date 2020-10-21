@@ -15,6 +15,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.totalErrorData = 0;
 		$scope.validateNum = 0;
 		$scope.numError = 0;
+		$scope.economicSectors = [];
 		$scope.decisionCredit = "";
 		$scope.disabledDecisionCredit = false;
 		$scope.disabledButton = false;
@@ -639,6 +640,16 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			});
 		};
 
+		$scope.getEconomicsSectors = function () {
+			$http({
+				method: 'GET',
+				url: '/assessor/api/getEconomicsSectors/',
+			}).then(function successCallback(response) {
+				$scope.economicSectors = response.data;
+			});
+		};
+
+
 		$scope.desistCredit = function () {
 			var opcion = confirm("Desea desistir la solicitud de crédito ?");
 			if (opcion == true) {
@@ -853,6 +864,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		};
 
 		$scope.getInfoVentaContado();
+		$scope.getEconomicsSectors();
 		$scope.resetInfo();
 	})
 
