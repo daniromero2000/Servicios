@@ -7,6 +7,7 @@
         max-width: 1300px !important;
         margin: auto;
     }
+
 </style>
 
 <nav>
@@ -131,7 +132,7 @@
                                 <td>@{{ lead.ORIGEN }} <span
                                         ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
-                               <td ng-if="lead.sku != null">@{{ lead.sku }}</td>
+                                <td ng-if="lead.sku != null">@{{ lead.sku }}</td>
                                 <td ng-if="lead.sku == null"> Sin Producto</td>
                                 <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHASOL }}</td>
@@ -340,6 +341,7 @@
                     @include('layouts.filters_search_button')
                 </div>
             </div>
+
             <div class="card-body">
                 <div class="table reset-table">
                     <table id="example2"
