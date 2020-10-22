@@ -10,6 +10,7 @@
                 <tr>
                     <th class="text-center" scope="col">Consulta</th>
                     <th class="text-center" scope="col">Fecha de Consulta</th>
+                    <th class="text-center" scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody class="body-table">
@@ -18,9 +19,12 @@
                 <tr>
                     <td class="text-center"><a href="" data-toggle="modal"
                             data-target="#customerDataCifin{{$cifinWebService->consec}}">
-                            {{$cifinWebService->consec  }}</a>
+                            {{$cifinWebService->consec }}</a>
                     </td>
                     <td class="text-center">{{ $cifinWebService->fecha  }}</td>
+                    <td class="text-center"><a target="_blank"
+                            href="/Administrator/customer/printCifin/{{$cifinWebService->consec}}"
+                            class="badge badge-primary">Imprimir</a></td>
                 </tr>
                 @endforeach
             </tbody class="body-table">

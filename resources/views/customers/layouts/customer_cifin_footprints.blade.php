@@ -3,7 +3,7 @@
         <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Historial de Consultas</h2>
     </div>
     @if($cifin_footprints->isNotEmpty())
-    <div class="card-body table-responsive pt-0 header-table-responsive">
+    <div class="card-body table-responsive pt-0 ">
         <table class="table table-head-fixed table-hover table-stripped leadTable">
             <thead class="header-table">
                 <tr>

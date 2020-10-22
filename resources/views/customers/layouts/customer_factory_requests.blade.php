@@ -24,7 +24,7 @@
           </td>
           <td class="text-center">{{ $factory_request->SUCURSAL }}</td>
           <td class="text-center">{{ $factory_request->FactoryRequestStatus->name }}</td>
-          <td class="text-center">$ {{  number_format ($factory_request->GRAN_TOTAL) }}</td>
+          <td class="text-center">$ {{ number_format ($factory_request->GRAN_TOTAL) }}</td>
         </tr>
         @endforeach
       </tbody>

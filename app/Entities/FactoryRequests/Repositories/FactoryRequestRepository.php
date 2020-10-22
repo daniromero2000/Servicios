@@ -4,6 +4,7 @@ namespace App\Entities\FactoryRequests\Repositories;
 
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'ESTADO',
         'GRAN_TOTAL',
         'CODEUDOR1',
-        'SOLICITUD_WEB'
+        'SOLICITUD_WEB',
+        'STATE'
     ];
 
     public function __construct(
@@ -965,20 +967,15 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     public function listFactoryRequestsRecovering()
     {
-        $data = $this->model->where('ESTADO', 8)
-            ->orWhere('ESTADO', 18)
-            ->where('state', 'A')
-            ->with(['recoveringStatesReset' => function ($query) {
-                return $query->orderBy('created_at', 'desc')->get();
-            }])->get($this->columns);
-
-        dd($data->toArray());
         try {
-            return  $this->model->where('ESTADO', 8)
+            return $this->model->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
-                ->with(['recoveringStates' => function ($query) {
-                    $query->orderBy('pivot_created_at', 'desc')->first();
-                }])->where('state', 'A')->get($this->columns);
+                ->where('STATE', 'A')
+                ->with('recoveringStatesReset')
+                ->whereHas('recoveringStatesReset', function (Builder $query) {
+                    $query->orderBy('created_at', 'desc');
+                })
+                ->get($this->columns);
         } catch (QueryException $e) {
             dd($e);
             abort(503, $e->getMessage());

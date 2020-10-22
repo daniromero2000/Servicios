@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Customers;
 
 use App\codeUserVerificationOportudata;
+use App\Entities\CifinWebServices\CifinWebService;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
@@ -212,6 +213,16 @@ class CustomerController extends Controller
         $notification = '0';
         return view('customers.updateCodeVerification', compact('notification'));
     }
+
+    public function printCifin($id)
+    {
+        $cifinWebService = CifinWebService::where('consec', $id)->get();
+
+        return view('customers.layouts.print_customer_cifin', [
+            'cifinWebService' => $cifinWebService[0]
+        ]);
+    }
+
     public function getCodeVerification($identificationNumber)
     {
         $to = Carbon::now()->endOfDay();
