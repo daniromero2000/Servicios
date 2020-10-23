@@ -42,7 +42,6 @@ class FactoryRequesTurnController extends Controller
         $list = $this->factoryRequestInterface->listFactoryRequestsTurns($skip * 30);
         $recovering = $this->factoryRequestInterface->listFactoryRequestsRecovering($skip * 30);
 
-
         if (request()->has('skip')) {
             $list = $this->factoryRequestInterface->listFactoryRequestsTurns(request()->input('skip') * 30);
         }
