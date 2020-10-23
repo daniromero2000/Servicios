@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StatusManagement extends Model
 {
-    protected $table = 'cob_gestion_call';
+    protected $table = 'status_management';
 
     protected $connection = 'oportudata';
 

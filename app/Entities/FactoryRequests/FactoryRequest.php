@@ -38,7 +38,7 @@ class FactoryRequest extends Model
         'STATE',
         'GRAN_TOTAL',
         'SOLICITUD_WEB',
-        'CODEUDOR1',
+        'CODEUDOR1'
     ];
 
     protected $table = 'SOLIC_FAB';
@@ -185,7 +185,7 @@ class FactoryRequest extends Model
 
     public function recoveringStatesReset()
     {
-        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
+        return $this->hasOne(FactoryRequestStatusesLog::class, 'solic_fab_id');
     }
 
     public function recoveringStates1()
