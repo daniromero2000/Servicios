@@ -183,6 +183,11 @@ class FactoryRequest extends Model
         return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id')->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18)->withPivot('created_at');
     }
 
+    public function recoveringStatesReset()
+    {
+        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
+    }
+
     public function recoveringStates1()
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id');

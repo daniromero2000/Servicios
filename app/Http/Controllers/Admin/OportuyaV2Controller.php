@@ -472,10 +472,10 @@ class OportuyaV2Controller extends Controller
 			return -3; // Es empleado
 		}
 
-		$existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
-		if ($existDefault == true) {
-			return -4; // Esta Castigado
-		}
+		// $existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
+		// if ($existDefault == true) {
+		// 	return -4; // Esta Castigado
+		// }
 
 		$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
 		if ($existCard == true) {

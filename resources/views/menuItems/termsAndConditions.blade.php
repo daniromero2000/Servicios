@@ -4,7 +4,7 @@
 
 @section('content')
 <div id="termsAndConditions">
-	<h1 class="menuItem-title text-center">CAMPAÑAS VIGENTES</h1>
+	{{-- <h1 class="menuItem-title text-center">CAMPAÑAS VIGENTES</h1>
 	<div class="container">
 		<h2 class="menuItem-subtitle">CAMPAÑA $1.000 PESITOS Y BONO DE $100.000 POR COMPRAS A CRÉDITO.</h2>
 		<li type="disc">Vigencia: del 01 al 31 de Enero de 2020</li>
@@ -129,7 +129,7 @@
 			forma sobre el costo que deberá asumir para tal fin. En cualquier caso la entrega del premio se llevara a
 			cabo dentro de los 8 días hábiles siguientes a la fecha del sorteo.
 		</p>
-	</div>
+	</div> --}}
 
 	<h1 class="menuItem-title text-center">TÉRMINOS Y CONDICIONES GENERALES</h1>
 	<div class="container">

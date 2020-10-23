@@ -220,6 +220,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/customer/CodeVerification', 'CustomerController@codeVerification');
         Route::get('/api/customer/CodeVerification/{identification}', 'CustomerController@getCodeVerification');
         Route::get('/getPoliceDebtors/{id}', 'CustomerController@getPoliceDebtors');
+        Route::get('/Administrator/customer/printCifin/{id}', 'CustomerController@printCifin');
         Route::get('/searchCustomer/{id}', 'CustomerController@searchCustomer');
         Route::get('/getPoliceDebtorOportuyas/{id}', 'CustomerController@getPoliceDebtorOportuyas');
     });

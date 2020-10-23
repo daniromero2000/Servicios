@@ -4,6 +4,7 @@ namespace App\Entities\FactoryRequests\Repositories;
 
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'ESTADO',
         'GRAN_TOTAL',
         'CODEUDOR1',
-        'SOLICITUD_WEB'
+        'SOLICITUD_WEB',
+        'STATE'
     ];
 
     public function __construct(
@@ -963,21 +965,22 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     }
 
 
-    public function listFactoryRequestsRecovering(): Support
+    public function listFactoryRequestsRecovering()
     {
         try {
-            return  $this->model->with(['recoveringStates' => function ($query) {
-                $query->orderBy('pivot_created_at', 'desc');
-            }])->where('state', 'A')
-                ->where('ESTADO', 8)
+            return $this->model->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
+                ->where('STATE', 'A')
+                ->with('recoveringStatesReset')
+                ->whereHas('recoveringStatesReset', function (Builder $query) {
+                    $query->orderBy('created_at', 'desc');
+                })
                 ->get($this->columns);
         } catch (QueryException $e) {
             dd($e);
             abort(503, $e->getMessage());
         }
     }
-
 
     public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null, $action = null): Collection
     {

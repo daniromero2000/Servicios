@@ -94,7 +94,8 @@
                         <label class="ventaContado-label" for="dirEmpresa">Sector económico*</label>
                         <select class="inputs form-control" ng-model="lead.RAZON_IND" id="RAZON_IND">
                             <option value="" selected>Seleccione</option>
-                            <option ng-repeat="(key, economicSector) in economicSectors" value="@{{economicSector.id}}">
+                            <option ng-repeat="(key, economicSector) in economicSectors"
+                                value="@{{economicSector.name}}">
                                 @{{economicSector.name}}</option>
                         </select>
                     </div>
