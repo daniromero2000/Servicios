@@ -36,4 +36,6 @@ interface CustomerRepositoryInterface
   public function calculateCustomerCompanyTime($fechaIngreso);
 
   public function getcustomerFirstLastName($lastName);
+
+  public function listCustomersLeads();
 }

@@ -150,6 +150,8 @@ class LeadsController extends Controller
 
     private function getLeadsTradicional($request)
     {
+
+
         $queryTradicional = "SELECT
     cf.`NOMBRES`,
     cf.`APELLIDOS`,

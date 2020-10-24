@@ -52,6 +52,19 @@ class CustomerRepository implements CustomerRepositoryInterface
             ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
     }
 
+
+    public function listCustomersLeads()
+    {
+        return $this->model->with([
+            'creditCard',
+            'factoryRequests',
+            'latestIntention'
+        ])->whereHas('factoryRequests', function ($q) {
+        })->where('ESTADO', 'APROBADO')
+            ->take(30)
+            ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'EMAIL', 'CIUD_UBI', 'CEDULA', 'CREACION', 'ORIGEN', 'PLACA']);
+    }
+
     public function findCustomerByIdForFosyga($identificationNumber): Customer
     {
         try {

@@ -137,9 +137,9 @@
                                 <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHASOL }}</td>
                                 <td>
-                                    <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor"
+                                    <i class="fas fa-comment cursor"
                                         ng-click="viewCommentsFactoryRequest(lead.NOMBRES, lead.APELLIDOS, lead.SOLICITUD)"></i>
-                                    <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-check cursor"
+                                    <i class="fas fa-check cursor"
                                         ng-click="assignAssesorDigitalToLead(lead.SOLICITUD)"></i>
                                 </td>
                             </tr>
