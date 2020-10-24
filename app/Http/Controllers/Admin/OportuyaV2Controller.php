@@ -849,21 +849,22 @@ class OportuyaV2Controller extends Controller
 			$resultUbica = $this->doUbica($customer, $lastName);
 			$estadoSolic = 1;
 			if ($resultUbica == 0) {
-				$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
-				$confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
-				if ($confronta == 1) {
-					$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
-					if (empty($form)) {
-						$estadoSolic = 1;
-					} else {
-						return [
-							'form' => $form,
-							'resp' => 'confronta'
-						];
-					}
-				} else {
-					$estadoSolic = 1;
-				}
+				$estadoSolic = 1;
+				// $fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
+				// $confronta = $this->webServiceInterface->execConsultaConfronta($customer, $fechaExpIdentification, $lastName);
+				// if ($confronta == 1) {
+				// 	$form = $this->toolsInterface->getFormConfronta($customer->CEDULA);
+				// 	if (empty($form)) {
+				// 		$estadoSolic = 1;
+				// 	} else {
+				// 		return [
+				// 			'form' => $form,
+				// 			'resp' => 'confronta'
+				// 		];
+				// 	}
+				// } else {
+				// 	$estadoSolic = 1;
+				// }
 			} else {
 				$estadoSolic = 19;
 			}

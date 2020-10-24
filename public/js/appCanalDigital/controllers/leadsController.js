@@ -192,7 +192,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             $scope.totalLeadsRejected = response.data.totalLeadsRejected;
             $scope.totalLeadsTR = response.data.totalLeadsTR;
 
-
             if (response.data.leadsDigital != false) {
                 $scope.q.initFrom += response.data.leadsDigital.length;
                 console.log(response.data.leadsDigital);
@@ -207,6 +206,9 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 angular.forEach(response.data.leadsTR, function (value, key) {
                     $scope.leadsTR.push(value);
                 });
+
+                console.log($scope.leadsTR);
+
                 $scope.cargandoTR = false;
             }
             hideLoader();
