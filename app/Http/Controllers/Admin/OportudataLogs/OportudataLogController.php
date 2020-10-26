@@ -32,9 +32,6 @@ class OportudataLogController extends Controller
             'usuario' => auth()->user()->codeOportudata,
             'state' => 'A'
         ];
-
-        dd($data);
-
-        OportudataLog::create($data);
+        return OportudataLog::create($data);
     }
 }
