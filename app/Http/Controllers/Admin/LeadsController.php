@@ -42,7 +42,6 @@ class LeadsController extends Controller
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
         $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
-
         $getLeadsTR = $this->getLeadsTradicional([
             'q'               => $request->get('q'),
             'initFromTR'      => $request->get('initFromTR'),
@@ -76,6 +75,8 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
+        ini_set('memory_limit', "512M");
+
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`ORIGEN`, sb.`SOLICITUD`, sb.`ASESOR_DIG`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb,  TB_INTENCIONES as ti
         LEFT JOIN  productsv2 ON `ti`.product_id = productsv2.id
@@ -151,6 +152,7 @@ class LeadsController extends Controller
     private function getLeadsTradicional($request)
     {
 
+        ini_set('memory_limit', "512M");
 
         $queryTradicional = "SELECT
     cf.`NOMBRES`,
@@ -336,6 +338,11 @@ WHERE
     public function getFactoryRequestComments($solicitud)
     {
         return $this->factoryRequestInterface->findFactoryRequestById($solicitud)->comments;
+    }
+
+    public function getCustomerComments($id)
+    {
+        return $this->customerInterface->findCustomerCommentsById($id)->customerComments;
     }
 
     public function deniedRequest($idLead, $comment)

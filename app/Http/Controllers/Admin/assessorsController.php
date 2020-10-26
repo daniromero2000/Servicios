@@ -371,6 +371,8 @@ class assessorsController extends Controller
 				$getNameCiudadExp = $this->cityInterface->getCityByCode($request->get('CIUD_EXP'));
 			}
 
+			$age = 0;
+
 			if ($request->get('FEC_NAC') != '' && $request->get('FEC_NAC') != '1900-01-01') {
 				$age = $this->customerInterface->calculateCustomerAge($request->get('FEC_NAC'));
 			}

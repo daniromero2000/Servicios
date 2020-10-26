@@ -15,6 +15,7 @@ use App\Entities\CifinWebServices\CifinWebService;
 use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\ConfrontaResult;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
+use App\Entities\CustomerComments\CustomerComment;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\EconomicSectors\EconomicSector;
@@ -176,7 +177,7 @@ class Customer extends Model
 
     public function factoryRequests()
     {
-        return $this->hasOne(FactoryRequest::class, 'CLIENTE')->where('ESTADO', 'APROBADO')->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('FECHASOL');
+        return $this->hasOne(FactoryRequest::class, 'CLIENTE')->where('ESTADO', 19)->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('FECHASOL');
     }
 
     public function customersFactoryRequests()
@@ -347,5 +348,10 @@ class Customer extends Model
     public function customerQuotations()
     {
         return $this->hasMany(AssessorQuotation::class, 'identificationNumber')->where('state', '!=', '1')->with('quotationValues');
+    }
+
+    public function customerComments()
+    {
+        return $this->hasMany(CustomerComment::class, 'customer_id');
     }
 }

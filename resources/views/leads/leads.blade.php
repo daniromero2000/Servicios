@@ -266,9 +266,9 @@
                                 <td>@{{ lead.PERFIL_CREDITICIO }}</td>
                                 <td>
                                     <i class="fas fa-comment cursor"
-                                        ng-click="viewCommentsFactoryRequest(lead.NOMBRES, lead.APELLIDOS, lead.SOLICITUD)"></i>
-                                    <i class="fas fa-check cursor"
-                                        ng-click="assignAssesorDigitalToLead(lead.SOLICITUD)"></i>
+                                        ng-click="viewCommentsCustomer(lead.NOMBRES, lead.APELLIDOS, lead.CEDULA)"></i>
+                                    {{-- <i class="fas fa-check cursor"
+                                        ng-click="assignAssesorDigitalToLead(lead.CEDULA)"></i> --}}
                                 </td>
                             </tr>
                         </tbody>
@@ -298,6 +298,61 @@
                     <div class="row resetRow " ng-if="viewAddComent">
                         <div class="col-12 form-group">
                             <form ng-submit="addFactoryRequestComment()">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="comment">Comentario</label>
+                                    <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control"
+                                        required></textarea>
+                                </div>
+                                <div class="form-group text-left">
+                                    <button class="btn btn-primary">Agregar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row resetRow">
+                        <div class="col-12 text-right form-group">
+                            <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="containerCommentsLeads">
+                        <div ng-repeat="comment in comments" class="row resetRow form-group contianerCommentLead">
+                            <div class="col-12 text-left resetCol">
+                                <i class="fas fa-user iconoUserLead"></i>
+                                <span class="nameAdminLead">@{{ comment.name }}</span>
+                            </div>
+                            <div class="col-12">
+                                <p class="commentUserLead">
+                                    @{{ comment.comment }}
+                                </p>
+                            </div>
+                            <div class="col-12 text-right">
+                                <span class="fechaUserLead">@{{ comment.created_at }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewCustomerComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row resetRow " ng-if="viewAddComent">
+                        <div class="col-12 form-group">
+                            <form ng-submit="addCustomerComment()">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="comment">Comentario</label>
