@@ -199,6 +199,7 @@ Route::get('/googledd6db54bffdd55e4.html', function () {
 /* Admin Leads */
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
 Route::get('/api/leads/getFactoryRequestComments/{solicitud}', 'Admin\LeadsController@getFactoryRequestComments');
+Route::get('/api/leads/getCustomerComments/{customer}', 'Admin\LeadsController@getCustomerComments');
 
 /* Apis */
 Route::group(['prefix' => 'api/'], function () {
@@ -529,6 +530,9 @@ Route::get('/campaigns/auteco2');
 Route::namespace('Admin')->group(function () {
     Route::namespace('FactoryRequestsComments')->group(function () {
         Route::resource('factoryRequestsComments', 'FactoryRequestsCommentController');
+    });
+    Route::namespace('CustomerComments')->group(function () {
+        Route::resource('customerComments', 'CustomerCommentController');
     });
 });
 

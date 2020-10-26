@@ -19,6 +19,8 @@ interface CustomerRepositoryInterface
 
   public function listCustomersTotal($from, $to);
 
+  public function findCustomerCommentsById($identificationNumber): Customer;
+
   public function checkIfExists($identificationNumber);
 
   public function updateOrCreateCustomer($data);

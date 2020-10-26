@@ -402,6 +402,33 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         });
     };
 
+    $scope.viewCommentsCustomer = function (name, lastName, customer, init = true) {
+        $scope.comment = {};
+        $scope.comments = [];
+        $scope.customer = customer;
+        showLoader();
+        $http({
+            method: 'GET',
+            url: '/api/leads/getCustomerComments/' + customer
+        }).then(function successCallback(response) {
+            if (response.data != false) {
+                angular.forEach(response.data, function (value, key) {
+                    $scope.comments.push(value);
+                });
+            }
+
+            if (init) {
+                $("#viewCustomerComments").modal("show");
+                $scope.nameLead = name;
+                $scope.lastNameLead = lastName;
+            }
+            hideLoader();
+        }, function errorCallback(response) {
+            console.log(response);
+            hideLoader();
+        });
+    };
+
     $scope.viewComments = function (name, lastName, state, idLead, init = true) {
         $scope.comment = {};
         $scope.comments = [];
@@ -448,6 +475,24 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             console.log(response);
         });
     };
+
+    $scope.addCustomerComment = function () {
+        $scope.comment.customer_id = $scope.customer;
+        $http({
+            method: 'POST',
+            data: $scope.comment,
+            url: '/customerComments'
+        }).then(function successCallback(response) {
+            if (response.data != false) {
+                $scope.viewCommentsCustomer($scope.lead.name, $scope.lead.lastName, $scope.customer, false);
+                $scope.comment.comment = "";
+                $scope.viewAddComent = false;
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
 
     $scope.addComment = function () {
         $scope.comment.idLead = $scope.idLead;
@@ -511,10 +556,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         });
     }
 
-
     $scope.getLeads();
     $scope.getCities();
 })
-
-
-// 5691

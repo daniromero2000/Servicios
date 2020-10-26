@@ -56,11 +56,10 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function listCustomersLeads()
     {
         return $this->model->with([
-            'creditCard',
             'factoryRequests',
             'latestIntention'
-        ])->whereHas('factoryRequests', function ($q) {
-        })->where('ESTADO', 'APROBADO')
+        ])->has('factoryRequests')
+            ->where('ESTADO', 'APROBADO')
             ->take(30)
             ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'EMAIL', 'CIUD_UBI', 'CEDULA', 'CREACION', 'ORIGEN', 'PLACA']);
     }
@@ -72,6 +71,18 @@ class CustomerRepository implements CustomerRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
             abort(503, $e->getMessage());
+        }
+    }
+
+    public function findCustomerCommentsById($identificationNumber): Customer
+    {
+
+        try {
+            return $this->model->with([
+                'customerComments'
+            ])->findOrFail($identificationNumber);
+        } catch (ModelNotFoundException $e) {
+            abort(404, $e->getMessage());
         }
     }
 
