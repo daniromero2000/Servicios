@@ -553,7 +553,33 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
         $scope.alterTypeQuatation = function (key, id) {
             $scope.quotations[key][3].typeQuotation = id;
+
+            if (id == 1) {
+                var type = 'Contado'
+            } else if (id == 9) {
+                var type = 'Tradicional'
+            } else if (id == 10) {
+                var type = 'Tarjeta Blue o Gray'
+            } else {
+                var type = 'Tarjeta Black'
+            }
+
             $scope.refreshQuotations(key);
+            var dataOpo = {
+                'modulo': 'Cotizador',
+                'proceso': 'Simulacion de credito tipo ' + type,
+                'accion': 'Simulacion',
+                'identificacion': type,
+            };
+            $http({
+                method: 'POST',
+                url: '/api/oportudataLog',
+                data: dataOpo,
+            }).then(function successCallback(response) {
+
+            }, function errorCallback(response) {
+                console.log(response);
+            });
         }
 
         $scope.sumDiscount = function (key) {
