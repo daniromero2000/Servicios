@@ -131,6 +131,8 @@ Route::get('/view-products', function () {
     return view('oportuya.viewProducts');
 });
 
+Route::post('api/oportudataLog', 'Admin\OportudataLogs\OportudataLogController@store');
+
 //Catalogo de clientes
 Route::get('/credito-electrodomesticos/catalogo', 'Front\Catalog\CatalogController@getSubsidiaryCustomer');
 Route::get('/credito-electrodomesticos/catalogo/{zona}', 'Front\Catalog\CatalogController@catalog')->name('catalogo.zona');
