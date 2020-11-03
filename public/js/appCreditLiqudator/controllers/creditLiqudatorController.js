@@ -114,7 +114,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             case 'Nominal vencida':
                                 $scope.tasanom = value.value
                                 break;
-                            case 'Mensual vencida':
+                            case 'Tasa Mora':
                                 $scope.tasamora = value.value
                                 break;
                             case 'Tasa maxima legal':
@@ -919,7 +919,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.searchTerms = function (key) {
             $scope.liquidator[key][3].TASAEA = $scope.tasaea;
-            $scope.liquidator[key][3].TASAMORA = $scope.tasaea;
+            $scope.liquidator[key][3].TASAMORA = $scope.tasamora;
             $scope.liquidator[key][3].TASANOM = $scope.tasanom;
             $scope.liquidator[key][3].TASAMAX = $scope.tasamax;
             $scope.liquidator[key][3].TASA_INT = $scope.tasaint;
