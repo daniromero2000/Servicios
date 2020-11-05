@@ -115,6 +115,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 $scope.tasanom = value.value
                                 break;
                             case 'Tasa Mora':
+                                console.log(value.value)
                                 $scope.tasamora = value.value
                                 break;
                             case 'Tasa maxima legal':
