@@ -68,7 +68,6 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         $buffer = curl_exec($curl_handle);
         curl_close($curl_handle);
         $persona = json_decode($buffer, true);
-
         return response()->json($persona);
     }
 
