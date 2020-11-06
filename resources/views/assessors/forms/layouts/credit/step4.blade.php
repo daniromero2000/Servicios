@@ -92,7 +92,6 @@
                             <option ng-repeat="(key, economicSector) in economicSectors"
                                 value="@{{economicSector.name}}">
                                 @{{economicSector.name}}</option>
-                            <option value="NA" selected>NA</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
