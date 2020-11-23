@@ -380,7 +380,6 @@ class assessorsController extends Controller
 				'PROFESION_CONYU'     		=> ($request->get('PROFESION_CONYU') != '') ? trim($request->get('PROFESION_CONYU')) : 'NA',
 				'SALARIO_CONYU'       		=> ($request->get('SALARIO_CONYU') != '') ? trim($request->get('SALARIO_CONYU')) : '0',
 				'CELULAR_CONYU'       		=> ($request->get('CELULAR_CONYU') != '') ? trim($request->get('CELULAR_CONYU')) : '0',
-				'MIGRADO'      				=> 0,
 				'STATE' 				 	=> 'A'
 			];
 
@@ -391,7 +390,6 @@ class assessorsController extends Controller
 
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
-
 			$dataOportudata = [
 				'TIPO_DOC' 				=> trim($request->get('TIPO_DOC')),
 				'CEDULA'   				=> trim($request->get('CEDULA')),
@@ -490,7 +488,6 @@ class assessorsController extends Controller
 				'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
 				'CLIENTE_WEB'           => $clienteWeb,
 				'USUARIO_CREACION'      => $usuarioCreacion,
-				'MIGRADO'      			=> 0,
 				'USUARIO_ACTUALIZACION' => $assessorCode
 			];
 
