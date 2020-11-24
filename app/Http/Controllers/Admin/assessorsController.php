@@ -380,7 +380,6 @@ class assessorsController extends Controller
 				'PROFESION_CONYU'     		=> ($request->get('PROFESION_CONYU') != '') ? trim($request->get('PROFESION_CONYU')) : 'NA',
 				'SALARIO_CONYU'       		=> ($request->get('SALARIO_CONYU') != '') ? trim($request->get('SALARIO_CONYU')) : '0',
 				'CELULAR_CONYU'       		=> ($request->get('CELULAR_CONYU') != '') ? trim($request->get('CELULAR_CONYU')) : '0',
-				'MIGRADO'      				=> 0,
 				'STATE' 				 	=> 'A'
 			];
 
@@ -391,7 +390,6 @@ class assessorsController extends Controller
 
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
-
 			$dataOportudata = [
 				'TIPO_DOC' 				=> trim($request->get('TIPO_DOC')),
 				'CEDULA'   				=> trim($request->get('CEDULA')),
@@ -455,7 +453,7 @@ class assessorsController extends Controller
 				'DIRECCION2'       	  	=> ($request->get('DIRECCION2') != '') ? trim($request->get('DIRECCION2')) : 'NA',
 				'DIRECCION3'          	=> ($request->get('DIRECCION3') != '') ? trim($request->get('DIRECCION3')) : 'NA',
 				'DIRECCION4'          	=> ($request->get('DIRECCION4') != '') ? trim($request->get('DIRECCION4')) : 'NA',
-				'CIUD_NAC'          	=> ($request->get('CIUD_NAC') != '') ? trim($request->get('CIUD_NAC')) : 'NA',
+				'CIUD_NAC'          	=> ($request->get('CIUD_NAC') != '') ? trim($request->get('CIUD_NAC')) : '',
 				'NOMBRE_CONYU'   		=> ($request->get('NOMBRE_CONYU') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRE_CONYU')))) : 'NA',
 				'CELULAR_CONYU'         => ($request->get('CELULAR_CONYU') != '') ? trim($request->get('CELULAR_CONYU')) : '0',
 				'TRABAJO_CONYU'         => ($request->get('TRABAJO_CONYU') != '') ? trim($request->get('TRABAJO_CONYU')) : 'NA',
@@ -490,7 +488,6 @@ class assessorsController extends Controller
 				'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
 				'CLIENTE_WEB'           => $clienteWeb,
 				'USUARIO_CREACION'      => $usuarioCreacion,
-				'MIGRADO'      			=> 0,
 				'USUARIO_ACTUALIZACION' => $assessorCode
 			];
 
@@ -1060,7 +1057,6 @@ class assessorsController extends Controller
 		$customer                           = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerIntention                  = $customer->latestIntention;
 		$customerIntention->CREDIT_DECISION = 'Tarjeta Oportuya';
-		$customerIntention->save();
 		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
 			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
@@ -1101,7 +1097,6 @@ class assessorsController extends Controller
 		$lastName    = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$resultUbica = $this->doUbica($customer, $lastName);
 		$estadoSolic = 1;
-
 		if ($resultUbica == 0) {
 			$estadoSolic = 1;
 			// $fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
@@ -1122,6 +1117,7 @@ class assessorsController extends Controller
 		} else {
 			$estadoSolic = 19;
 		}
+		$customerIntention->save();
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 1 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;

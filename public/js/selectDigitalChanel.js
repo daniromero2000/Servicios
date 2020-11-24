@@ -190,6 +190,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
     });
 
 };
+
 $(function () {
     $("#typeAreaSelectFilter").on('change', ontypeAreaSelectFilter)
 });
