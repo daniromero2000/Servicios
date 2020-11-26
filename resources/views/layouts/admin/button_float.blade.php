@@ -10,6 +10,14 @@ auth()->user()->Assessor->subsidiary->CODIGO == '155' ||
 auth()->user()->Assessor->subsidiary->CODIGO == '149' ||
 auth()->user()->Assessor->subsidiary->CODIGO == '151' ||
 auth()->user()->Assessor->subsidiary->CODIGO == '138' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '108' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '111' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '117' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '121' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '123' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
+auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
 auth()->user()->Assessor->subsidiary->CODIGO == '1')
 <div class="button-absolute">
     <input type="checkbox" id="btn-mas">
@@ -29,6 +37,14 @@ auth()->user()->Assessor->subsidiary->CODIGO == '1')
     auth()->user()->Assessor->subsidiary->CODIGO == '149' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '151' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '138' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '108' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '111' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '117' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '121' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '123' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '1')
     <div class="redes" data-toggle="tooltip" data-placement="top" title="Crear cotización">
         <a href="/Administrator/assessorquotations/create" class="icon-success"> <i class="fas fa-store m-auto"></i></a>
