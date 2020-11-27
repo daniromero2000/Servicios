@@ -71,6 +71,7 @@ $modules = session('modules');
             auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '140' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
