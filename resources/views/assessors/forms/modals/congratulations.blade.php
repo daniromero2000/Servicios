@@ -35,6 +35,12 @@
                         auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '1')
                         <p class="textTnakYouModal">
                             Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
@@ -88,6 +94,12 @@
                         auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '1')
                         <p class="textTnakYouModal">
                             Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
@@ -126,6 +138,12 @@
                         auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '1')
                         <p class="textTnakYouModal">
                             Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
@@ -187,6 +205,12 @@
                         auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
+                        auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '1')
                         <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO' || estadoCliente == 'APROBADO'"
                             href="/Administrator/creditLiquidator/@{{lead.CEDULA}}"

@@ -70,6 +70,12 @@ $modules = session('modules');
             auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
+            auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '1'))
                     <div class="col-10 col-sm-6 col-lg-4 col-xl-3">
                         <a class="cursor" data-toggle="tooltip" data-placement="top" title="Ir al panel"
