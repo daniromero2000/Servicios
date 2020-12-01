@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin\PortfolioCollections;
 
 use App\Entities\PortfolioCollections\Repositories\Interfaces\PortfolioCollectionRepositoryInterface;
+use App\Entities\PortfolioCollectionTokens\Repositories\Interfaces\PortfolioCollectionTokenRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class PortfolioCollectionController extends Controller
 {
-    private $PortfolioCollectionInterface;
+    private $portfolioCollectionInterface, $portfolioCollectionTokenInterface;
 
     public function __construct(
-        PortfolioCollectionRepositoryInterface $PortfolioCollectionRepositoryInterface
+        PortfolioCollectionRepositoryInterface $PortfolioCollectionRepositoryInterface,
+        PortfolioCollectionTokenRepositoryInterface $portfolioCollectionTokenRepositoryInterface
     ) {
-        $this->PortfolioCollectionInterface = $PortfolioCollectionRepositoryInterface;
-        // $this->middleware('auth');
+        $this->portfolioCollectionInterface = $PortfolioCollectionRepositoryInterface;
+        $this->portfolioCollectionTokenInterface = $portfolioCollectionTokenRepositoryInterface;
+        $this->middleware('auth');
     }
     public function index(Request $request)
     {
@@ -38,6 +41,8 @@ class PortfolioCollectionController extends Controller
 
     public function test(Request $request)
     {
-       
+        $token = $this->portfolioCollectionTokenInterface->getPortfolioCollectionToken();
+        
+        return $this->portfolioCollectionInterface->sendPortfolioCollection(['token' => $token->token]);
     }
 }

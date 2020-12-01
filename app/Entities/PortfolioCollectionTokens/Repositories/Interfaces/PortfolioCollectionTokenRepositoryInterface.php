@@ -4,6 +4,8 @@ namespace App\Entities\PortfolioCollectionTokens\Repositories\Interfaces;
 
 interface PortfolioCollectionTokenRepositoryInterface
 {
+    public function getPortfolioCollectionToken();
+
     public function createPortfolioCollectionToken($data);
 
     public function getAllPortfolioCollectionTokens();

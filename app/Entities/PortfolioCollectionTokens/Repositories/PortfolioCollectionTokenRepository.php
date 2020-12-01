@@ -20,6 +20,15 @@ class PortfolioCollectionTokenRepository implements PortfolioCollectionTokenRepo
         $this->model = $PortfolioCollectionToken;
     }
 
+    public function getPortfolioCollectionToken()
+    {
+        try {
+            return $this->model->orderBy('created_at', 'desc')->first();
+        } catch (QueryException $e) {
+            throw $e;
+        }
+    }
+
     public function createPortfolioCollectionToken($data)
     {
         try {
