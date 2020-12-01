@@ -49,12 +49,10 @@ class FactorRepository implements FactorRepositoryInterface
         $date = Carbon::now();
         $search = ['Tasa', 'Efectiva anual', 'Nominal vencida', 'Mensual vencida', 'Tasa maxima legal', 'Tasa Mora'];
         try {
-            $data = $this->model->whereIn('name', $search)->get(['name', 'value', 'checked', 'end_date']);
+            $data = $this->model->whereIn('name', $search)->get(['name', 'value']);
             $request = [];
             foreach ($data as $key => $value) {
-                if ($data[$key]->end_date >= $date && $data[$key]->checked == 1) {
-                    $request[] = $data[$key];
-                }
+                $request[] = $data[$key];
             }
             return $request;
         } catch (QueryException $e) {
