@@ -180,6 +180,8 @@ use App\Entities\EconomicSectors\Repositories\EconomicSectorRepository;
 use App\Entities\EconomicSectors\Repositories\Interfaces\EconomicSectorRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustomerRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\PaymentTimeCustomerRepository;
+use App\Entities\PortfolioCollections\Repositories\Interfaces\PortfolioCollectionRepositoryInterface;
+use App\Entities\PortfolioCollections\Repositories\PortfolioCollectionRepository;
 use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
 use App\Entities\StatusManagements\Repositories\StatusManagementRepository;
 
@@ -641,6 +643,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CustomerCommentRepositoryInterface::class,
             CustomerCommentRepository::class
+        );
+
+        $this->app->bind(
+            PortfolioCollectionRepositoryInterface::class,
+            PortfolioCollectionRepository::class
         );
     }
 }

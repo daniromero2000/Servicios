@@ -252,6 +252,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/directorZona1', 'DirectorController@dashboardZona1')->name('directors_dashboardZona1');
         Route::get('/Administrator/director/zona/1', 'DirectorController@directorZona1');
     });
+
+    Route::namespace('PortfolioCollections')->group(function () {
+        Route::resource('Administrator/portfolioCollections', 'PortfolioCollectionController');
+    });
+
     //asesores
     Route::resource('Administrator/assessors', 'assessorsController');
     Route::get('/Administrator/dashboard/assessors', 'assessorsController@dashboard')->name('assessors.dashboard');
