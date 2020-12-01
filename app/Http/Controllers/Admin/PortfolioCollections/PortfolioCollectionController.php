@@ -16,8 +16,9 @@ class PortfolioCollectionController extends Controller
         $this->PortfolioCollectionInterface = $PortfolioCollectionRepositoryInterface;
         // $this->middleware('auth');
     }
-    public function index(Request $request)
+    public function index()
     {
+        return view('portfoliocollection::index');
     }
 
     public function store(Request $request)

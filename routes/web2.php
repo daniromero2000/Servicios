@@ -254,7 +254,7 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('PortfolioCollections')->group(function () {
-        Route::resource('Administrator/portfolioCollections', 'PortfolioCollectionController');
+        Route::resource('Administrator/portfolioCollections', 'PortfolioCollectionController@index');
         Route::get('Administrator/portfolioCollections/test/test', 'PortfolioCollectionController@test');
     });
 
