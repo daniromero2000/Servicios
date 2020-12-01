@@ -41,5 +41,8 @@ class PortfolioCollectionController extends Controller
    
     }
 
-  
+    public function test(Request $request)
+    {
+        dd('hola');
+    }
 }
