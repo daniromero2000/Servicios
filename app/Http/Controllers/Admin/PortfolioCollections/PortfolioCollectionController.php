@@ -14,35 +14,30 @@ class PortfolioCollectionController extends Controller
         PortfolioCollectionRepositoryInterface $PortfolioCollectionRepositoryInterface
     ) {
         $this->PortfolioCollectionInterface = $PortfolioCollectionRepositoryInterface;
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
     public function index(Request $request)
     {
-   
     }
 
     public function store(Request $request)
     {
-       
     }
 
     public function show($id)
     {
-    
     }
 
     public function update(Request $request, $id)
     {
-      
     }
 
     public function destroy($id)
     {
-   
     }
 
     public function test(Request $request)
     {
-        dd('hola');
+       
     }
 }

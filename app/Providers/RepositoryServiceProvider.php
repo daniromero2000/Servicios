@@ -182,6 +182,8 @@ use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustome
 use App\Entities\PaymentTimeCustomers\Repositories\PaymentTimeCustomerRepository;
 use App\Entities\PortfolioCollections\Repositories\Interfaces\PortfolioCollectionRepositoryInterface;
 use App\Entities\PortfolioCollections\Repositories\PortfolioCollectionRepository;
+use App\Entities\PortfolioCollectionTokens\Repositories\Interfaces\PortfolioCollectionTokenRepositoryInterface;
+use App\Entities\PortfolioCollectionTokens\Repositories\PortfolioCollectionTokenRepository;
 use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
 use App\Entities\StatusManagements\Repositories\StatusManagementRepository;
 
@@ -648,6 +650,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PortfolioCollectionRepositoryInterface::class,
             PortfolioCollectionRepository::class
+        );
+
+        $this->app->bind(
+            PortfolioCollectionTokenRepositoryInterface::class,
+            PortfolioCollectionTokenRepository::class
         );
     }
 }

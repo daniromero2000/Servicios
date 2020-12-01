@@ -14,4 +14,6 @@ interface PortfolioCollectionRepositoryInterface
 
     public function deletePortfolioCollection($id);
 
+    public function sendPortfolioCollection($data);
+
 }
