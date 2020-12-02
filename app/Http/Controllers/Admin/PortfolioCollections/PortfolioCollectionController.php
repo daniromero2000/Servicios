@@ -19,13 +19,13 @@ class PortfolioCollectionController extends Controller
         $this->portfolioCollectionTokenInterface = $portfolioCollectionTokenRepositoryInterface;
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
-        return view('portfoliocollection::index');
+        return view('portfoliocollections.index');
     }
 
     public function store(Request $request)
-    {
+    {        
     }
 
     public function show($id)
