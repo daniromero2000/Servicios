@@ -25,7 +25,10 @@ class PortfolioCollectionController extends Controller
     }
 
     public function store(Request $request)
-    {        
+    {
+        $token = $this->portfolioCollectionTokenInterface->getPortfolioCollectionToken();
+
+        return $this->portfolioCollectionInterface->sendPortfolioCollection(['token' => $token->token , 'reference' => $request->input('reference'), 'amount' => $request->input('amount'), 'date-payment' => $request->input('date-payment')]);
     }
 
     public function show($id)

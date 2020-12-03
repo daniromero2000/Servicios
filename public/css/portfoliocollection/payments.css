@@ -1,17 +1,13 @@
-.container-payments{
-    background: rgb(249, 250, 252);   
-    border: 1px solid rgb(211, 211, 216);
-    display: block;
- }
+.container-payments {
+    max-width : 720px;
+    display   : block;
+    margin    : auto;
+}
 
-.title-payments{
+.title-payments {
     background: rgb(241, 239, 239);
- }
+}
 
- #notes-input{
-     margin-left: 10.5vw;
- }
-
- 
-
- 
+#notes-input {
+    margin-left: 35%;
+}

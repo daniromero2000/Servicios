@@ -46,7 +46,6 @@ class FactorRepository implements FactorRepositoryInterface
 
     public function getFactorsForLiquidator()
     {
-        $date = Carbon::now();
         $search = ['Tasa', 'Efectiva anual', 'Nominal vencida', 'Mensual vencida', 'Tasa maxima legal', 'Tasa Mora'];
         try {
             $data = $this->model->whereIn('name', $search)->get(['name', 'value']);

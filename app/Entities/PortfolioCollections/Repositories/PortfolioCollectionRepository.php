@@ -10,9 +10,7 @@ use Illuminate\Support\Collection as Support;
 
 class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInterface
 {
-    private $columns = [
-     
-    ];
+    private $columns = [];
 
     public function __construct(
         PortfolioCollection $PortfolioCollection
@@ -70,6 +68,68 @@ class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInte
     {
         $curl = curl_init();
 
+
+        $dataSend = [
+            "ProjectId" => "1018",
+            "ApplicationId" => "13",
+            "ButtonId" => "46820",
+            "Table" => "false",
+            "Controls" => [
+                [
+                    "Id" => "numeroTransaccion",
+                    "Valor" => "201912160278133129"
+                ],
+                [
+                    "Id" => "nombreEmpresa",
+                    "Valor" => "CREDICORP CAPITAL COLOMBIA S.A."
+                ],
+                [
+                    "Id" => "nitEmpresa",
+                    "Valor" => "8600681825"
+                ],
+                [
+                    "Id" => "referenciaPago",
+                    "Valor" => $data['reference']
+                ],
+                [
+                    "Id" => "nombreBanco",
+                    "Valor" => "Bancolombia"
+                ],
+                [
+                    "Id" => "tipoEntidad",
+                    "Valor" => "ENTIDAD BANCARIA"
+                ],
+                [
+                    "Id" => "codigoBanco",
+                    "Valor" => "19"
+                ],
+                [
+                    "Id" => "oficina",
+                    "Valor" => "PLAZA DE LAS AMERICAS"
+                ],
+                [
+                    "Id" => "ciudad",
+                    "Valor" => "BOGOTA"
+                ],
+                [
+                    "Id" => "codigoCuenta",
+                    "Valor" => "24651"
+                ],
+                [
+                    "Id" => "fechaPago",
+                    "Valor" => $data['date-payment']
+                ],
+                [
+                    "Id" => "valorPago",
+                    "Valor" => $data['amount']
+                ],
+                [
+                    "Id" => "origen",
+                    "Valor" => "4"
+                ]
+            ]
+        ];
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => "http://200.13.195.48:9980/api/form/process/",
             CURLOPT_RETURNTRANSFER => true,
@@ -78,10 +138,10 @@ class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInte
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{ 'ProjectId': '1018', 'ApplicationId': '13', 'ButtonId': '46820', 'Table': 'false', 'Controls': [ { 'Id': 'numeroTransaccion', 'Valor': '201912160278133129' }, { 'Id': 'nombreEmpresa', 'Valor': 'CREDICORP CAPITAL COLOMBIA S.A.' }, { 'Id': 'nitEmpresa', 'Valor': '8600681825' }, { 'Id': 'referenciaPago', 'Valor': '123234234' }, { 'Id': 'nombreBanco', 'Valor': 'Bancolombia' }, { 'Id': 'tipoEntidad', 'Valor': 'ENTIDAD BANCARIA' }, { 'Id': 'codigoBanco', 'Valor': '19' }, { 'Id': 'oficina', 'Valor': 'PLAZA DE LAS AMERICAS' }, { 'Id': 'ciudad', 'Valor': 'BOGOTA' }, { 'Id': 'codigoCuenta', 'Valor': '24651' }, { 'Id': 'fechaPago', 'Valor': '10/09/2020' }, { 'Id': 'valorPago', 'Valor': '500000' }, { 'Id': 'origen', 'Valor': '4' } ] }",
+            CURLOPT_POSTFIELDS => json_encode($dataSend),
             CURLOPT_HTTPHEADER => array(
                 "accept: application/json",
-                "authorization: Bearer ". $data['token'],
+                "authorization: Bearer " . $data['token'],
                 "content-type: application/json"
             ),
         ));
@@ -93,5 +153,4 @@ class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInte
 
         return $response;
     }
-
 }
