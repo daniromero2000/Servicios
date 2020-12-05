@@ -26,6 +26,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'STATE'
     ];
 
+    private $columnsTurns = [
+        'CLIENTE',
+        'SOLICITUD',
+        'CODASESOR',
+        'SUCURSAL',
+        'FECHASOL',
+        'ESTADO',
+        'GRAN_TOTAL',
+        'CODEUDOR1',
+        'SOLICITUD_WEB',
+        'STATE',
+        'created_at',
+        'solic_fab_id'
+    ];
+
     public function __construct(
         FactoryRequest $factoryRequest
     ) {
@@ -64,7 +79,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function findFactoryRequestByIdFull(int $id): FactoryRequest
+    public function findFactoryRequestByIdFull(int $id)
     {
         try {
             return $this->model
@@ -168,7 +183,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->where('state', 'A')
-                ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -953,12 +967,27 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryRequestsTurns($totalView): Support
     {
         try {
+            // $data = $this->model->where('state', 'A')
+            //     ->where('ESTADO', '!=', 1)
+            //     ->with('factoryRequestStatusesLogsFirst')
+            //     ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+            //     // ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+            //     // ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', '1')
+            //     ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'asc')
+            //     ->skip($totalView)
+            //     ->take(30)
+            //     ->get();
+            // dd($data->toArray());
+
             return  $this->model->where('state', 'A')
                 ->where('ESTADO', '!=', 1)
-                ->orderBy('SOLICITUD', 'desc')
+                ->with('factoryRequestStatusesLogsFirst')
+                ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
                 ->skip($totalView)
                 ->take(30)
-                ->get($this->columns);
+                ->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -1001,7 +1030,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     if (is_null($from) || is_null($to)) {
@@ -1044,7 +1077,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
@@ -1086,8 +1123,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->skip($totalView)->take(50);
                             }
                         })
-                        ->orderBy('FECHASOL', 'desc')
-                        ->get($this->columns);
+                        ->with('factoryRequestStatusesLogsFirst')
+                        ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                        ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                        ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                        ->get($this->columnsTurns);
                     break;
 
                 case ($groupStatus == 'PENDIENTES'):
@@ -1104,7 +1144,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     if (is_null($from) || is_null($to)) {
@@ -1147,7 +1191,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
@@ -1190,7 +1238,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             }
                         })
                         ->orderBy('FECHASOL', 'desc')
-                        ->get($this->columns);
+                        ->with('factoryRequestStatusesLogsFirst')
+                        ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                        ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                        ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                        ->get($this->columnsTurns);
                     break;
 
                 case ($groupStatus == 'DESISTIDOS'):
@@ -1206,7 +1258,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     if (is_null($from) || is_null($to)) {
@@ -1249,7 +1305,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
@@ -1290,8 +1350,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->skip($totalView)->take(50);
                             }
                         })
-                        ->orderBy('FECHASOL', 'desc')
-                        ->get($this->columns);
+                        ->with('factoryRequestStatusesLogsFirst')
+                        ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                        ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                        ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                        ->get($this->columnsTurns);
                     break;
                 default:
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
@@ -1305,7 +1368,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     if (is_null($from) || is_null($to)) {
@@ -1348,7 +1415,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                     return $q->skip($totalView)->take(50);
                                 }
                             })
-                            ->get($this->columns);
+                            ->with('factoryRequestStatusesLogsFirst')
+                            ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                            ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                            ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                            ->get($this->columnsTurns);
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
@@ -1390,8 +1461,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->skip($totalView)->take(50);
                             }
                         })
-                        ->orderBy('FECHASOL', 'desc')
-                        ->get($this->columns);
+                    ->with('factoryRequestStatusesLogsFirst')
+                    ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                    ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                    ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                    ->get($this->columnsTurns);
                     break;
             }
         }
@@ -1407,7 +1481,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         return $q->skip($totalView)->take(50);
                     }
                 })
-                ->get($this->columns);
+                ->with('factoryRequestStatusesLogsFirst')
+                ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                ->get($this->columnsTurns);
         }
         if (is_null($from) || is_null($to)) {
             return  $this->model->searchFactoryRequestTurns($text, null, true, true)
@@ -1446,14 +1524,17 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                 })
-                // ->where('state', 'A')
-                ->orderBy('FECHASOL', 'desc')
                 ->when($action, function ($q) use ($totalView, $action) {
                     if ($action != 'export') {
                         return $q->skip($totalView)->take(50);
                     }
                 })
-                ->get($this->columns);
+                ->with('factoryRequestStatusesLogsFirst')
+                ->leftJoin('ESTADOSOLICITUDESSOLIC_FAB', 'SOLIC_FAB.SOLICITUD', '=', 'ESTADOSOLICITUDESSOLIC_FAB.solic_fab_id')
+                ->where('ESTADOSOLICITUDESSOLIC_FAB.estadosolicitudes_id', '!=', null)
+                ->orderBy('ESTADOSOLICITUDESSOLIC_FAB.created_at', 'desc')
+                ->get($this->columnsTurns);
+
         }
 
         return $this->model->searchFactoryRequestTurns($text, null, true, true)

@@ -14,7 +14,7 @@ interface FactoryRequestRepositoryInterface
 
   public function findFactoryRequestById(int $id): FactoryRequest;
 
-  public function findFactoryRequestByIdFull(int $id): FactoryRequest;
+  public function findFactoryRequestByIdFull(int $id);
 
   public function getCustomerFactoryRequest($identificationNumber): FactoryRequest;
 

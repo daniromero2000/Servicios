@@ -309,7 +309,7 @@ class FactoryRequesTurnController extends Controller
             'Subsidiarys'                 => $Subsidiarys,
             'analysts'                    => $analysts,
             'statuses'                    => $statuses,
-            'recovering' => $recovering
+            'recovering'                  => $recovering
         ]);
     }
 
@@ -326,14 +326,14 @@ class FactoryRequesTurnController extends Controller
         $from = Carbon::now()->startOfMonth();
         $assessor = '';
         $subsidiary = '';
-        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatusesTurn($from, $to);
-        $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
-        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotalTurn($from, $to);
-        $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array(19, 20));
-        $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, 16);
-        $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array(15, 13));
-        $estadosComites = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, 14);
-        $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array(13, 15, 19, 16, 20, 14, 1));
+        $estadosNames          = $this->factoryRequestInterface->countFactoryRequestsStatusesTurn($from, $to);
+        $webCounts             = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
+        $factoryRequestsTotal  = $this->factoryRequestInterface->getFactoryRequestsTotalTurn($from, $to);
+        $estadosAprobados      = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array(19, 20));
+        $estadosNegados        = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, 16);
+        $estadosDesistidos     = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array(15, 13));
+        $estadosComites        = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, 14);
+        $estadosPendientes     = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array(13, 15, 19, 16, 20, 14, 1));
 
         $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
         $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);

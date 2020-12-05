@@ -143,9 +143,14 @@ class FactoryRequest extends Model
         return $this->hasMany(FactoryRequestProduct2::class, 'SOLICITUD');
     }
 
+    public function factoryRequestStatusesLogsFirst()
+    {
+        return $this->belongsTo(FactoryRequestStatusesLog::class, 'SOLICITUD', 'solic_fab_id')->orderBy('created_at', 'desc');
+    }
+
     public function factoryRequestStatusesLogs()
     {
-        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->orderBy('created_at', 'DESC')->with('oportudataUser');
+        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->orderBy('created_at', 'DESC');
     }
 
     public function turnoTradicional()

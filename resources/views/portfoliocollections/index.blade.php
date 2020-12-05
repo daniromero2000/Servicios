@@ -1,63 +1,167 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
-    <link rel="stylesheet"
-        href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
-    <link rel="stylesheet" href="{{ asset('css/portfoliocollection/payments.css') }}">
 @endsection
 @section('content')
-    <form action="/Administrator/portfolioCollections" method="POST">
-        @csrf
-        <div class="container-payments shadow mt-4">
-         <div class="p-4">
-              <div class="form-group row">
-                <div class="col-12 ">
-                    <h2>Recibos de Caja<h2>
+    <section>
+        @include('layouts.errors-and-messages')
+        @if (!is_null($portfolioCollections))
+            <div class="mx-auto" style="max-width: 1450px;">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-9 order-sm-last">
+                                <ol class="breadcrumb bradcrumb-reset float-sm-right">
+                                    <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                                    <li class="breadcrumb-item active"><a
+                                            href="/Administrator/dashboard/factoryrequestTurns">Dashboard
+                                            Turnos Fábrica</a>
+                                    <li class="breadcrumb-item active"><a href="/Administrator/factoryrequestTurns">Turnos
+                                            Fábrica</a></li>
+                                </ol>
+                            </div>
+                            <div class="col-sm-3 mt-2 order-sm-first">
+                                <a href="{{ URL::previous() }}"
+                                    class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="identification-input" class="col-3 col-form-label">Identificación</label>
-                <div class="col-9">
-                    <input class="form-control" name="identification" type="text" id="identification-payments">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="name-input" class="col-3 col-form-label">Nombre Cliente</label>
-                <div class="col-9">
-                    <input class="form-control" name="customer" type="text" id="customer-payments">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="reference-input" class="col-3 col-form-label">No. Credito</label>
-                <div class="col-9">
-                    <input class="form-control" name="reference" type="text" id="reference-payments">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="amount-input" class="col-3 col-form-label">Valor a Pagar</label>
-                <div class="col-9">
-                    <input class="form-control" name="amount" type="number" id="amount-payments">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="date-input" class="col-3 col-form-label">Fecha Recibo</label>
-                <div class="col-9">
-                    <input class="form-control" name="date-payment" value="{{ date('d/m/Y') }}" type="datetime"
-                        id="date-payments" readonly>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="area-input" class=" col-form-label">Observaciones</label>
-                <div class="col-9">
-                    <textarea class="form-control" name="note" id="notes-input" rows="4"></textarea>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-12 d-flex mt-4">
-                    <button type="submit" class="btn btn-primary ml-auto">Guardar</button>
-                </div>
-            </div>
-         </div>
-        </div>
-    </form>
+                <div class="card">
+                    <div>
+                        <div class="card-body">
+                            <div class="row">
+                                {{-- <div class="col-md-12">
+                                    <div class="card card-default">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Reportes</h3>
 
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                        class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6 col-sm-6 col-md-6">
+                                                    <div class="small-box ">
+                                                        <div class="inner">
+                                                            <h2 class="titleCardNumber">
+                                                                {{ $listCount }}
+                                                            </h2>
+                                                            @if (request()->input())
+                                                                <p class="textCardNumber">Total de Recibos</p>
+                                                            @else
+                                                                <p class="textCardNumber">Recibos en este mes</p>
+                                                            @endif
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="ion ion-stats-bars"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-sm-6 col-md-6">
+                                                    <div class="small-box ">
+                                                        <div class="inner">
+                                                            <h2 class="titleCardNumber">Total</h2>
+                                                            <p>
+                                                                ${{ number_format($portfolioCollectionsTotal) }}</p>
+                                                           
+                                                        </div>
+                                                        <div class="icon">
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-4 col-xl-3">
+                                    <div class="card card-default">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Filtros</h3>
+
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                        class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            {{-- @include('layouts.admin.search_turns',
+                                            ['route' => route('factoryrequestTurns.index')])
+                                            --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-xl-9">
+                                    <div class="card card-default">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Recibos</h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                        class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body px-0">
+                                            @if ($portfolioCollections)
+                                                <div class="container-fluid mb-4">
+                                                    <div class="card-body table-responsive p-0 height-table">
+                                                        <table class="table table-head-fixed">
+                                                            <thead class="header-table">
+                                                                <tr>
+                                                                    @foreach ($headers as $header)
+                                                                        <th  class="text-center" scope="col">{{ $header }}</th>
+                                                                    @endforeach
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="body-table">
+                                                                @foreach ($portfolioCollections as $data)
+                                                                    <tr>
+                                                                        <td class="text-center">{{ $data->customer_id }}
+                                                                        </td>
+                                                                        <td class="text-center">{{ $data->user_id }} </td>
+                                                                        <td class="text-center">$
+                                                                            {{ number_format($data->amount) }}
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            {{ $data->payment_reference }}
+                                                                        </td>
+                                                                        @if ($data->status == 0)
+                                                                            <td class="text-center"><span
+                                                                                    class="badge badge-warning">Pendiente</span>
+                                                                            </td>
+                                                                        @elseif($data->status == 1)
+                                                                            <td class="text-center"><span
+                                                                                    class="badge badge-success">Registrado</span>
+                                                                            </td>
+                                                                        @elseif($data->status == 2)
+                                                                            <td class="text-center"><span
+                                                                                    class="badge badge-danger">Error al
+                                                                                    procesar</span> </td>
+                                                                        @else
+                                                                            <td class="text-center"><span
+                                                                                    class="badge badge-primary">Anulado</span>
+                                                                            </td>
+                                                                        @endif
+                                                                        <td class="text-center">{{ $data->created_at }}
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                @include('layouts.admin.pagination.pagination', [$skip])
+                                            @else
+                                                @include('layouts.admin.pagination.pagination_null', [$skip])
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        @endif
+    </section>
 @endsection

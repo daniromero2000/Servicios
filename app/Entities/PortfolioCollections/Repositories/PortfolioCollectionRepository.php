@@ -18,21 +18,22 @@ class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInte
         $this->model = $PortfolioCollection;
     }
 
+    public function listPortfolioCollection()
+    {
+        try {
+            return $this->model->where('subsidiary_id', auth()->user()->Assessor->SUCURSAL)
+            ->orderBy('created_at', 'desc')->get();
+        } catch (QueryException $e) {
+            throw $e;
+        }
+    }
+
     public function createPortfolioCollection($data)
     {
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
             throw $e;
-        }
-    }
-
-    public function getAllPortfolioCollections()
-    {
-        try {
-            return $this->model->with('userChecked')->get();
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
         }
     }
 
@@ -89,7 +90,7 @@ class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInte
                 ],
                 [
                     "Id" => "referenciaPago",
-                    "Valor" => $data['reference']
+                    "Valor" => $data['payment_reference']
                 ],
                 [
                     "Id" => "nombreBanco",
@@ -117,7 +118,7 @@ class PortfolioCollectionRepository implements PortfolioCollectionRepositoryInte
                 ],
                 [
                     "Id" => "fechaPago",
-                    "Valor" => $data['date-payment']
+                    "Valor" => $data['payment_date']
                 ],
                 [
                     "Id" => "valorPago",

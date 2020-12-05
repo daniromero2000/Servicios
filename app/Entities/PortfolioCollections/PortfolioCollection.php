@@ -16,7 +16,6 @@ class PortfolioCollection extends Model
        'user_id',
        'subsidiary_id',
        'amount',
-       'payment_date',
        'payment_reference',
        'notes',
        'status'

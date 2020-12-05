@@ -4,9 +4,9 @@ namespace App\Entities\PortfolioCollections\Repositories\Interfaces;
 
 interface PortfolioCollectionRepositoryInterface
 {
-    public function createPortfolioCollection($data);
+    public function listPortfolioCollection();
 
-    public function getAllPortfolioCollections();
+    public function createPortfolioCollection($data);
 
     public function findPortfolioCollectionById($id);
 
