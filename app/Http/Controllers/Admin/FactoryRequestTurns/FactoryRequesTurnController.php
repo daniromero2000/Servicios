@@ -262,7 +262,7 @@ class FactoryRequesTurnController extends Controller
                             $value->customer['CELULAR'],
                             $value->customer['ACTIVIDAD'],
                             $value->FECHASOL,
-                            $value->factoryRequestStatus ? $value->factoryRequestStatus->created_at : '',
+                            $value->factoryRequestStatusesLogsFirst ? $value->factoryRequestStatusesLogsFirst->created_at : '',
                             trim($value->FactoryRequestStatus->name),
                             $tipoOportuya,
                             $subTipoOportuya,
