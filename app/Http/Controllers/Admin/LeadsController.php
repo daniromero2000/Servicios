@@ -170,47 +170,34 @@ class LeadsController extends Controller
         ini_set('memory_limit', "512M");
 
         $queryTradicional = "SELECT
-    cf.`NOMBRES`,
-    cf.`APELLIDOS`,
-    cf.`CELULAR`,
-    cf.`EMAIL`,
-    cf.`CIUD_UBI`,
-    TB_INTENCIONES.`CEDULA`,
-    cf.`ORIGEN`,
-    cf.`PLACA`,
-    TB_DEFINICIONES.`DESCRIPCION`,
-    TB_INTENCIONES.`PERFIL_CREDITICIO`,
-    TB_INTENCIONES.FECHA_INTENCION,
-    productsv2.sku,
-    productsv2.name
-FROM
-    CLIENTE_FAB AS cf,
-    TB_INTENCIONES
-        LEFT JOIN
-    TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
-        LEFT JOIN
-    productsv2 ON `TB_INTENCIONES`.product_id = productsv2.id
-        LEFT JOIN
-    SOLIC_FAB ON TB_INTENCIONES.CEDULA = SOLIC_FAB.CLIENTE
-WHERE
-    TB_INTENCIONES.FECHA_INTENCION = (SELECT
-            MAX(`FECHA_INTENCION`)
-        FROM
-            `TB_INTENCIONES`
-        WHERE
-            `CEDULA` = `cf`.`CEDULA`)
-        AND TB_INTENCIONES.CREDIT_DECISION IS NULL
-        AND `TB_INTENCIONES`.`deleted_at` IS NULL
-        AND `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
-        AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
-        AND (`TB_INTENCIONES`.`ASESOR` = 998877
-        OR `TB_INTENCIONES`.`ASESOR` = 1088315168
-        OR `TB_INTENCIONES`.`ASESOR` = 1088308622)
-        AND (SOLIC_FAB.ESTADO = 1
-        OR SOLIC_FAB.ESTADO = 19
-        OR SOLIC_FAB.ESTADO = 20
-        OR SOLIC_FAB.ESTADO IS NULL)
-        AND cf.`CIUD_UBI` != 'BOGOTÁ'";
+                            	cf.`NOMBRES`,
+                            	cf.`APELLIDOS`,
+                            	cf.`CELULAR`,
+                            	cf.`EMAIL`,
+                            	cf.`CIUD_UBI`,
+                            	TB_INTENCIONES.`CEDULA`,
+                            	cf.`ORIGEN`,
+                            	cf.`PLACA`,
+                            	TB_DEFINICIONES.`DESCRIPCION`,
+                            	TB_INTENCIONES.`PERFIL_CREDITICIO`,
+                            	TB_INTENCIONES.FECHA_INTENCION,
+                            	productsv2.sku,
+                            	productsv2.NAME 
+                            FROM
+                            	CLIENTE_FAB AS cf
+                            	LEFT JOIN TB_INTENCIONES  ON cf.CEDULA = TB_INTENCIONES.CEDULA
+                            	LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
+                            	LEFT JOIN productsv2 ON `TB_INTENCIONES`.product_id = productsv2.id
+                            	LEFT JOIN SOLIC_FAB ON TB_INTENCIONES.CEDULA = SOLIC_FAB.CLIENTE 
+                            WHERE
+                            	( `TB_INTENCIONES`.`ASESOR` = 998877 OR `TB_INTENCIONES`.`ASESOR` = 1088315168 OR `TB_INTENCIONES`.`ASESOR` = 1088308622 ) 
+                            	AND TB_INTENCIONES.CREDIT_DECISION IS NULL 
+                            	AND `TB_INTENCIONES`.`deleted_at` IS NULL 
+                            	AND `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional' 
+                            	AND ( SOLIC_FAB.ESTADO = 1 OR SOLIC_FAB.ESTADO = 19 OR SOLIC_FAB.ESTADO = 20 OR SOLIC_FAB.ESTADO IS NULL ) 
+                            	AND TB_INTENCIONES.FECHA_INTENCION = ( SELECT MAX( `FECHA_INTENCION` ) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA` ) 
+                                AND cf.`CIUD_UBI` != 'BOGOTÁ'
+                                GROUP BY cf.CEDULA";
 
         if ($request['q'] != '') {
             $queryTradicional .= sprintf(
