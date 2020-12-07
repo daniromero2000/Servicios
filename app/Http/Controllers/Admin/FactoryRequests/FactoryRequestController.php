@@ -148,6 +148,7 @@ class FactoryRequestController extends Controller
     {
 
         $datas = $this->factoryRequestInterface->findFactoryRequestByIdFull($id)->factoryRequestStatusesLogs;
+
         $data = [
             'fabrica' => 0,
             'sucursal' => 0
@@ -166,7 +167,7 @@ class FactoryRequestController extends Controller
             $date1 =  $datas[$key]->created_at;
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
-                $secondsDays = $date1->diffInSeconds($date2) / 28800;
+                $secondsDays = ($date1->diffInSeconds($date2)) / 28800;
                 if ($weekMap[$date1->dayOfWeek] != 'SU') {
                     if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
                         if ($secondsDays > 1 && $secondsDays < 3) {

@@ -972,7 +972,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->orWhere('ESTADO', 18)
                 ->where('STATE', 'A')
                 ->with('recoveringStatesReset')
-                ->whereHas('recoveringStatesReset', function (Builder $query) {
+                ->whereHas('factoryRequestStatusesLogsFirst', function (Builder $query) {
                     $query->orderBy('created_at', 'desc');
                 })
                 ->get($this->columns);

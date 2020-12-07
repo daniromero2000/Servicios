@@ -40,7 +40,7 @@ class FactoryRequesTurnController extends Controller
         $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequestsTurns($skip * 30);
-        $recovering = $this->factoryRequestInterface->listFactoryRequestsRecovering($skip * 30);
+        $recovering = $this->factoryRequestInterface->listFactoryRequestsRecovering($skip * 60);
 
         if (request()->has('skip')) {
             $list = $this->factoryRequestInterface->listFactoryRequestsTurns(request()->input('skip') * 30);
@@ -112,6 +112,7 @@ class FactoryRequesTurnController extends Controller
                                 'CELULAR',
                                 'ACTIVIDAD',
                                 'FECHA SOLICITUD',
+                                'FECHA DE ESTADO',
                                 'ESTADO',
                                 'TIPO',
                                 'SUBTIPO',
@@ -261,6 +262,7 @@ class FactoryRequesTurnController extends Controller
                             $value->customer['CELULAR'],
                             $value->customer['ACTIVIDAD'],
                             $value->FECHASOL,
+                            $value->factoryRequestStatus->name,
                             trim($value->FactoryRequestStatus->name),
                             $tipoOportuya,
                             $subTipoOportuya,
@@ -302,7 +304,7 @@ class FactoryRequesTurnController extends Controller
         return view('factoryrequestsTurns.list', [
             'factoryRequests'             => $list,
             'optionsRoutes'               => (request()->segment(2)),
-            'headers'                     => ['Sucursal', 'Solicitud', 'Fecha de solicitud', 'Estado', 'Cliente',  'Tipo de Cliente', 'Subtipo de Cliente', 'Analista',  'Fecha de analisis',  'Fecha de asignación', 'Calificación del cliente', 'Total',  'Prioridad'],
+            'headers'                     => ['Sucursal', 'Solicitud', 'Fecha de solicitud', 'Fecha de estado', 'Estado', 'Cliente',  'Tipo de Cliente', 'Subtipo de Cliente', 'Analista',  'Fecha de analisis',  'Fecha de asignación', 'Calificación del cliente', 'Total',  'Prioridad'],
             'listCount'                   => $listCount,
             'skip'                        => $skip,
             'factoryRequestsTotal'        => $factoryRequestsTotal,
