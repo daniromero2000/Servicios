@@ -197,7 +197,7 @@ class LeadsController extends Controller
                             	AND ( SOLIC_FAB.ESTADO = 1 OR SOLIC_FAB.ESTADO = 19 OR SOLIC_FAB.ESTADO = 20 OR SOLIC_FAB.ESTADO IS NULL ) 
                             	AND TB_INTENCIONES.FECHA_INTENCION = ( SELECT MAX( `FECHA_INTENCION` ) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA` ) 
                                 AND cf.`CIUD_UBI` != 'BOGOTÁ'
-                                GROUP BY cf.CEDULA";
+                                GROUP BY cf.CEDULA ";
 
         if ($request['q'] != '') {
             $queryTradicional .= sprintf(
