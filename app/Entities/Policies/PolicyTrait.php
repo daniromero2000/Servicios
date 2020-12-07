@@ -152,8 +152,6 @@ trait PolicyTrait
       $customerIntention = $customer->latestIntention;
       $customerIntention->ESTADO_INTENCION = 4;
       $customerIntention->save();
-
-
       $existCard = $this->creditCardInterface->checkCustomerHasCreditCard($customer->CEDULA);
       if ($existCard == true) {
       } else {
