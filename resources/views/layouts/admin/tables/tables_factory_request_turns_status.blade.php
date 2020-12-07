@@ -17,7 +17,7 @@
                         <a data-toggle="tooltip" title="Ver Solicitud"
                             href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a></td>
                     <td class="text-center">{{ $data->FECHASOL }} </td>
-                    <td class="text-center">{{ $data->factoryRequestStatusesLogsFirst->created_at }} </td>
+                    <td class="text-center">{{ $data->factoryRequestStatusesLogsFirst ? $data->factoryRequestStatusesLogsFirst->created_at : '' }} </td>
                     <td class="text-center"> {{ $data->factoryRequestStatus->name }} </td>
                     <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
                             href="{{ route('customers.show', $data->CLIENTE) }}">
