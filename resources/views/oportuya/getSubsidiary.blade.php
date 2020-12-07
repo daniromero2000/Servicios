@@ -70,16 +70,23 @@
                             <select id="my-select" class="custom-select" name="city" required>
                                 <option value="">Selecciona</option>
                                 <option value="MEDIA">ACACIAS</option>
-                                <option value="BAJA">ARMENIA</option>
+                                <option value="ALTA">ARMENIA</option>
+                                <option value="MEDIA">CERETÉ</option>
                                 <option value="MEDIA">GARZÓN</option>
-                                <option value="BAJA">MANIZALES</option>
+                                <option value="MEDIA">GRANADA</option>
+                                <option value="ALTA">IBAGUÉ</option>
+                                <option value="MEDIA">LA DORADA</option>
+                                <option value="MEDIA">MAGANGUÉ</option>
+                                <option value="ALTA">MANIZALES</option>
                                 <option value="MEDIA">MARIQUITA</option>
-                                <option value="BAJA">LA DORADA</option>
-                                <option value="BAJA">PEREIRA</option>
-                                <option value="ALTA">PUERTO LÓPEZ</option>
-                                <option value="MEDIA">VILLAVICENCIO</option>
+                                <option value="MEDIA">MONTERIA</option>
+                                <option value="MEDIA">NEIVA</option>
+                                <option value="ALTA">TULUÁ</option>
+                                <option value="ALTA">PEREIRA</option>
+                                <option value="MEDIA">PUERTO LÓPEZ</option>
+                                <option value="ALTA">VILLAVICENCIO</option>
                                 <option value="MEDIA">VILLANUEVA</option>
-                                <option value="MEDIA">YOPAL</option>
+                                <option value="ALTA">YOPAL</option>
                             </select>
                         </div>
                         <div class="mx-auto text-center pt-2">

@@ -77,23 +77,38 @@ class LeadsController extends Controller
     {
         ini_set('memory_limit', "512M");
 
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`ORIGEN`, sb.`SOLICITUD`, sb.`ASESOR_DIG`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
-        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb,  TB_INTENCIONES as ti
-        LEFT JOIN  productsv2 ON `ti`.product_id = productsv2.id
-        WHERE sb.`CLIENTE` = cf.`CEDULA`
-        AND sb.ESTADO = 19
-        AND sb.`GRAN_TOTAL` = 0
-        AND sb.SOLICITUD_WEB >= 1
-        AND sb.STATE = 'A'
-        AND sb.ASESOR_DIG is null
-        AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
-        AND ti.CEDULA = cf.CEDULA
-        AND ti.deleted_at is null
-        AND (ti.ASESOR = 998877
-        OR ti.ASESOR =  1088315168
-        OR ti.ASESOR =  1088308622)
-        AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
-        AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
+        $query = sprintf("SELECT
+        	cf.NOMBRES,
+        	cf.APELLIDOS,
+        	cf.CELULAR,
+        	cf.CIUD_UBI,
+        	cf.CEDULA,
+        	cf.ORIGEN,
+        	sb.SOLICITUD,
+        	sb.ASESOR_DIG,
+        	sb.SUCURSAL,
+        	ti.TARJETA,
+        	sb.FECHASOL,
+        	productsv2.sku,
+        	productsv2.`NAME` 
+        FROM
+        	CLIENTE_FAB AS cf
+        	LEFT JOIN SOLIC_FAB AS sb ON cf.CEDULA = sb.CLIENTE
+        	LEFT JOIN TB_INTENCIONES AS ti ON cf.CEDULA = ti.CEDULA
+        	LEFT JOIN productsv2 ON ti.product_id = productsv2.id
+        WHERE
+        	sb.CLIENTE = cf.CEDULA 
+        	AND sb.ESTADO = 19 
+        	AND sb.GRAN_TOTAL = 0 
+        	AND sb.SOLICITUD_WEB >= 1 
+        	AND sb.STATE = 'A' 
+        	AND sb.ASESOR_DIG IS NULL 
+        	AND ( cf.ESTADO = 'APROBADO' OR cf.ESTADO = 'PREAPROBADO' ) 
+        	AND ti.CEDULA = cf.CEDULA 
+        	AND ti.deleted_at IS NULL 
+        	AND ( ti.ASESOR = 998877 OR ti.ASESOR = 1088315168 OR ti.ASESOR = 1088308622 ) 
+        	AND ti.FECHA_INTENCION = ( SELECT MAX( `FECHA_INTENCION` ) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA` )
+            AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         if ($request['q'] != '') {
             $query .= sprintf(
