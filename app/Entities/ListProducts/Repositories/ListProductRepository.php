@@ -131,6 +131,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageProtectionDividedPriceProteccion = 0;
             }
             $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
+            $normalPublicPrice = round(1000 * ceil($normalPublicPrice / 1000));
             if ($productList['zone'] == 'ALTA') {
                 //Especial
                 if ($percentageProtectionDividedPriceProteccion == 0) {
@@ -226,7 +227,8 @@ class ListProductRepository implements ListProductRepositoryInterface
             } else {
                 //Volanteo
                 $cashPromotion                    = round(($product['iva_cost'] - $applyProteccion) / ((100 - $productList['cash_margin']) / 100));
-                $promotionPublicPrice             = round(($product['iva_cost'] - ($applyProteccion * 0.5)) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
+                $promotionPublicPrice             = round(($product['iva_cost'] - ($applyProteccion * 0.5)) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond, -1, PHP_ROUND_HALF_UP);
+                // dd($promotionPublicPrice, $normalPublicPrice);
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
@@ -244,9 +246,9 @@ class ListProductRepository implements ListProductRepositoryInterface
             }
 
             $dataProduct[$productList['name']] = [
-                'normal_public_price'                 => round(1000 * ceil($normalPublicPrice / 1000)),
+                'normal_public_price'                 => $normalPublicPrice,
                 'cash_promotion'                      => $cashPromotion,
-                'promotion_public_price'              => round($promotionPublicPrice, -1, PHP_ROUND_HALF_UP),
+                'promotion_public_price'              => $promotionPublicPrice,
                 'percentage_promotion_public_price'   => $percentagePublicPrice,
                 'traditional_credit_price'            => $traditionalCreditPrice * 12,
                 'percentage_traditional_credit_price' => $percentageTraditionalCreditPrice,
