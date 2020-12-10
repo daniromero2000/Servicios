@@ -763,16 +763,16 @@ class assessorsController extends Controller
 			$statusAfiliationCustomer
 		);
 
-		// 5 Definiciones cliente
-		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
-			$customer->ESTADO = 'PREAPROBADO';
-			$customer->save();
-			$customerIntention->TARJETA          = 'Crédito Tradicional';
-			$customerIntention->ID_DEF           = '13';
-			$customerIntention->ESTADO_INTENCION = '2';
-			$customerIntention->save();
-			return ['resp' =>  "-2"];
-		}
+		// // 5 Definiciones cliente
+		// if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
+		// 	$customer->ESTADO = 'PREAPROBADO';
+		// 	$customer->save();
+		// 	$customerIntention->TARJETA          = 'Crédito Tradicional';
+		// 	$customerIntention->ID_DEF           = '13';
+		// 	$customerIntention->ESTADO_INTENCION = '2';
+		// 	$customerIntention->save();
+		// 	return ['resp' =>  "-2"];
+		// }
 
 		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($statusAfiliationCustomer == true) {
