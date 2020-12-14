@@ -17,6 +17,26 @@ class ToolRepository implements ToolRepositoryInterface
     }
   }
 
+  public function getPaginate($paginate, $skip)
+  {
+    $count = ceil($paginate  / 30);
+    $pageList = ($skip + 1) / 5;
+    if (is_int($pageList) || $pageList > 1) {
+      $page = $skip - 5;
+      $max  = $skip + 6 > $count ? intval($skip + ($count - $skip)) : $skip + 6;
+    } else {
+      $page = 0;
+      $max  = $skip + 5 > $count ? intval($skip + ($count - $skip)) : $skip + 5;
+    }
+
+    return [
+      'paginate'  => $count,
+      'position'  => $page,
+      'page'      => $pageList,
+      'limit'     => $max
+    ];
+  }
+
   public function getDataPercentage($data)
   {
     $totalData = $data->sum('total');

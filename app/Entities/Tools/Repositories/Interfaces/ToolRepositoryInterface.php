@@ -16,4 +16,7 @@ interface ToolRepositoryInterface
   public function getFormConfronta($identificationNumber);
 
   public function getConfrontaDateFormat($fecha);
+
+  public function getPaginate($paginate, $skip);
+
 }

@@ -176,6 +176,10 @@ use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuot
 use App\Entities\AssessorQuotationDiscounts\Repositories\AssessorQuotationDiscountRepository;
 use App\Entities\CustomerComments\Repositories\CustomerCommentRepository;
 use App\Entities\CustomerComments\Repositories\Interfaces\CustomerCommentRepositoryInterface;
+use App\Entities\DocumentCategories\Repositories\DocumentCategoryRepository;
+use App\Entities\DocumentCategories\Repositories\Interfaces\DocumentCategoryRepositoryInterface;
+use App\Entities\Documents\Repositories\DocumentRepository;
+use App\Entities\Documents\Repositories\Interfaces\DocumentRepositoryInterface;
 use App\Entities\EconomicSectors\Repositories\EconomicSectorRepository;
 use App\Entities\EconomicSectors\Repositories\Interfaces\EconomicSectorRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustomerRepositoryInterface;
@@ -655,6 +659,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PortfolioCollectionTokenRepositoryInterface::class,
             PortfolioCollectionTokenRepository::class
+        );
+
+        $this->app->bind(
+            DocumentCategoryRepositoryInterface::class,
+            DocumentCategoryRepository::class
+        );
+
+        $this->app->bind(
+            DocumentRepositoryInterface::class,
+            DocumentRepository::class
         );
     }
 }
