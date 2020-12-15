@@ -55,13 +55,14 @@ class DocumentController extends Controller
             'documents'       => $list,
             'skip'            => $skip,
             'headers'         => ['Nombre', 'Fecha', 'Estado', 'Opciones'],
-            'routeEdit'       => 'admin.documents.update',
-            'optionsRoutes'   => 'admin.' . (request()->segment(2)),
+            'routeEdit'       => 'documents.update',
+            'optionsRoutes'   => '' . (request()->segment(2)),
             'title'           => 'Documentos',
             'attached'        => $attached,
             'inputs' => [
                 ['label' => 'Nombres', 'type' => 'text', 'name' => 'name'],
                 ['label' => 'Estado', 'type' => 'select', 'name' => 'is_active', 'options' => [['id' => 1, 'name' => 'Activo'], ['id' => '0', 'name' => 'Inactivo']], 'option' => 'name'],
+                ['label' => 'Documento', 'type' => 'file', 'name' => 'src'],
                 ['title' => 'Categorias', 'label' => 'name', 'type' => 'checkbox', 'array' => $this->documentCategoryInterface->findDocumentCategories(), 'name' => 'categories[]']
             ],
             'paginate'        => $getPaginate['paginate'],
@@ -74,7 +75,7 @@ class DocumentController extends Controller
     public function create()
     {
         return view('documents.create', [
-            'categories' => $this->documentCategoryInterface->findDocumentCategoriesForCompany(auth()->guard('employee')->user()->company_id)
+            'categories' => $this->documentCategoryInterface->findDocumentCategories()
         ]);
     }
 
@@ -89,7 +90,7 @@ class DocumentController extends Controller
         $data['slug'] = str_slug($request->input('name'));
         $finance      = $this->documentInterface->createDocument(['data' => $data, 'categories' => $request->input('categories')]);
 
-        return redirect()->route('admin.documents.index')->with('message', 'Creación Exitosa');
+        return redirect()->route('documents.index')->with('message', 'Creación Exitosa');
     }
 
     public function show($id)
@@ -101,7 +102,7 @@ class DocumentController extends Controller
 
         return view('documents.show', [
             'breadcrumb' => [
-                ['route' => 'admin.documents.index', 'status' => '', 'name' => 'Indicadores'],
+                ['route' => 'documents.index', 'status' => '', 'name' => 'Indicadores'],
                 ['route' => '', 'status' => 'active', 'name' => $data->name]
             ],
             'inputs' => [
@@ -122,13 +123,16 @@ class DocumentController extends Controller
     {
         $data = $request->except('_token', '_method');
 
+        dd($request->hasFile('src') instanceof UploadedFile);
+
         if ($request->hasFile('src') && $request->file('src') instanceof UploadedFile) {
             $data['src'] = $this->documentInterface->saveDocumentFile($request->file('src'));
         }
+
         $data['slug'] = str_slug($request->input('name'));
         $finance      = $this->documentInterface->updateDocument(['data' => $data, 'categories' => $request->input('categories'), 'id' => $id]);
 
-        return redirect()->route('admin.documents.index')->with('message', 'Actualización  Exitosa');
+        return redirect()->route('documents.index')->with('message', 'Actualización  Exitosa');
     }
 
     public function destroy($id)
@@ -136,6 +140,6 @@ class DocumentController extends Controller
         $document = $this->documentInterface->findDocumentById($id);
         $document->delete();
 
-        return redirect()->route('admin.documents.index')->with('message', 'Se ha eliminado correctamente');
+        return redirect()->route('documents.index')->with('message', 'Se ha eliminado correctamente');
     }
 }

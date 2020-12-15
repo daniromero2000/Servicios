@@ -1,29 +1,25 @@
 @extends(' layouts.admin.app')
-@section('header')
-    <div class="header pb-2">
-        <div class="container-fluid">
-            <div class="header-body">
-                <div class="row align-items-center py-4">
-                    <div class="col-lg-6 col-7">
-                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                            <ol class="breadcrumb breadcrumb-links">
-                                {{-- <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li> --}}
-                                <li class="breadcrumb-item " active aria-current="page">Empleados</li>
-                                <li class="breadcrumb-item active">Crear Empleado</li>
-                            </ol>
-                        </nav>
+@section('content')
+    <section class="content">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <ol class="breadcrumb bradcrumb-reset float-sm-right">
+                            <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="/Administrator/documents">Indicadores</a></li>
+                        </ol>
+                    </div>
+                    <div class="col-12">
+                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-@section('content')
-    <section class="content">
         @include(' layouts.errors-and-messages')
-        <form action="{{ route('admin.documents.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="row">
+            <div class="row mx-0 px-2">
                 <div class="col-xl-4 order-xl-2">
                     <div class="card">
                         <div class="card-header">

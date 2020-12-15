@@ -1,13 +1,11 @@
-<div class="alert alert-primary" role="alert">
-    No hay datos. <a href="{{ route("$optionsRoutes.create") }}">Crear uno
-</div>
-@php
-$search3['skip'] = ($skip - 1);
-@endphp
+<p class="alert alert-warning">No hay datos. <a href="{{ route("$optionsRoutes.create") }}">Crear uno</a>
+</p>
 
-<ul class="pagination  d-flex justify-content-center">
+<ul class="pagination justify-content-star ">
     <li class="page-item">
-        <a id="previous" name="previous" type="submit" class="page-link" href="{{ route("$optionsRoutes.index", $search3 ) }}" @if ($skip<1 ) hidden @endif>Anterior</a>
-
+        <a class="page-link" id="previous" name="previous" type="submit" href="{{ URL::previous() }}">
+            <i class="fas fa-angle-left"></i>
+            <span class="sr-only">Previous</span>
+        </a>
     </li>
 </ul>

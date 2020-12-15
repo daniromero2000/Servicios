@@ -21,7 +21,6 @@ class DocumentCategoryRepository implements DocumentCategoryRepositoryInterface
 
     private $columns2 = [
         'name',
-        'company_id',
         'is_active'
     ];
 

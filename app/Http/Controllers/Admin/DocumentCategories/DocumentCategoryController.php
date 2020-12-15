@@ -44,8 +44,8 @@ class DocumentCategoryController extends Controller
             'documentCategory' => $list,
             'skip'              => $skip,
             'headers'           => ['#', 'Nombre', 'Fecha', 'Estado', 'Opciones'],
-            'routeEdit'         => 'admin.document-categories.update',
-            'optionsRoutes'     => 'admin.' . (request()->segment(2)),
+            'routeEdit'         => 'document-categories.update',
+            'optionsRoutes'     => '' . (request()->segment(2)),
             'title'             => 'Documentos',
             'inputs' => [
                 ['label' => 'Nombre', 'type' => 'text', 'name' => 'name'],
@@ -66,10 +66,10 @@ class DocumentCategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('_token', '_method');
-        $data['company_id'] = auth()->guard('employee')->user()->company_id;
+        $data['company_id'] = 1;
         $this->documentCategoryInterface->createDocumentCategory($data);
 
-        return redirect()->route('admin.document-categories.index')->with('message', 'Creación Exitosa');
+        return redirect()->route('document-categories.index')->with('message', 'Creación Exitosa');
     }
 
     public function show($id)
@@ -90,13 +90,13 @@ class DocumentCategoryController extends Controller
         $data['id'] = $id;
         $this->documentCategoryInterface->updateDocumentCategory($data);
 
-        return redirect()->route('admin.document-categories.index')->with('message', 'Actualización Exitosa');
+        return redirect()->route('document-categories.index')->with('message', 'Actualización Exitosa');
     }
 
     public function destroy($id)
     {
         $this->documentCategoryInterface->deleteDocumentCategory($id);
 
-        return redirect()->route('admin.document-categories.index')->with('message', 'Eliminado Exitosamente');
+        return redirect()->route('document-categories.index')->with('message', 'Eliminado Exitosamente');
     }
 }

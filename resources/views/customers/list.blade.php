@@ -26,10 +26,6 @@
         <div>
             <div class="p-3" style="max-width: 1450px;margin: auto;">
                 <div class="row" ng-if="filtros">
-                    {{-- <div class="card-header">
-              @include('layouts.admin.filter_customers', ['route' => route('customers.index')])
-            </div> --}}
-
                     <div class="col-md-4 col-xl-3">
                         <div class="card card-default">
                             <div class="card-header">

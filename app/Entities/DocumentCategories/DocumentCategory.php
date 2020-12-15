@@ -15,7 +15,6 @@ class DocumentCategory extends Authenticatable
 
     protected $fillable = [
        'name',
-       'company_id',
        'is_active'
     ];
 
