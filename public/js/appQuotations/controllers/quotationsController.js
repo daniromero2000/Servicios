@@ -517,6 +517,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     }
                     $scope.quotations[key][7].push({ 'term': $scope.quotations[key][3].term, 'value_fee': $scope.quotations[key][3].value_fee });
                 }
+                
                 if ($scope.quotations[key][3].typeQuotation != 1) {
                     $scope.quotations[key][5].total = Math.round((parseInt($scope.quotations[key][3].value_fee) * parseInt($scope.quotations[key][3].term)) + parseInt($scope.quotations[key][3].initial_fee))
                 } else {
@@ -584,15 +585,15 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
 
         $scope.sumDiscount = function (key) {
 
-            var total = 0;
-            var precio = 0;
-            var product = 0;
-            var cuotaIni = 0
-            var hasRetanqueoIva1 = 0;
-            var hasRetanqueoIva2 = 0;
-            var hasRetanqueo1 = 0;
-            var hasRetanqueo2 = 0;
-            var list = $scope.quotations[key][0][0].list;
+            let total = 0;
+            let precio = 0;
+            let product = 0;
+            let cuotaIni = 0
+            let hasRetanqueoIva1 = 0;
+            let hasRetanqueoIva2 = 0;
+            let hasRetanqueo1 = 0;
+            let hasRetanqueo2 = 0;
+            let list = $scope.quotations[key][0][0].list;
 
             $scope.quotations[key][2] = 0;
             $scope.quotations[key][1] = [];

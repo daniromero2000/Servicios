@@ -11,7 +11,8 @@
                         </ol>
                     </div>
                     <div class="col-12">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
+                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm">Regresar</a>
+                        <a href="/Administrator/document-categories/create" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm">Crear Categoria</a>
                     </div>
                 </div>
             </div>
@@ -35,14 +36,14 @@
                                     <div class="mb-4">
                                         <div class=" table-responsive p-0 height-table">
                                             <table class="table table-head-fixed">
-                                                <thead class="text-center">
+                                                <thead class="text-center header-table">
                                                     <tr>
                                                         @foreach ($headers as $header)
                                                             <th scope="col">{{ $header }}</th>
                                                         @endforeach
                                                     </tr>
                                                 </thead>
-                                                <tbody >
+                                                <tbody class="body-table">
                                                     @foreach ($documentCategory as $data)
                                                         <tr>
                                                             <td class="text-center"> {{ $data->id }} </td>

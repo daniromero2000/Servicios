@@ -429,7 +429,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     item.PRECIO = response.data.product[0].cash_cost;
                     item.PRECIO_P = item.PRECIO;
                 }
-                // item.LISTA = response.data.price.list;
                 $scope.buttonDisabled = false;
                 item.type_product = response.data.product[0].type_product;
                 $scope.createItemLiquidator()
@@ -698,7 +697,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[key][7] = []
 
             if ((typeProduct == 2 && $scope.liquidator[key][3].PLAZO <= 12) || typeProduct != 2) {
-                if (typeProduct != 3) {
+                if (typeProduct != 3 && $scope.liquidator[key][3].COD_PLAN != 22) {
                     $scope.numberOfFees.forEach(e => {
                         if (e.CUOTA == $scope.liquidator[key][3].PLAZO) {
                             factor = e.FACTOR;
@@ -829,6 +828,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 case '21':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.08)
                     break;
+                case '22':
+                    cuotaIni = 1
+                    break;
                 default:
                     break;
             }
@@ -873,8 +875,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.storeTerms = function (key, typeProduct, precio, totalAval, factor) {
             if ($scope.liquidator[key][3].PLAZO != null) {
-                if (typeProduct != 3) {
+                if (typeProduct != 3 && factor != 1) {
                     $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor));
+                } else if (typeProduct != 3 && factor == 1){
+                    $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) / $scope.liquidator[key][3].PLAZO)));
                 } else {
                     $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) / parseInt($scope.liquidator[key][3].PLAZO)));
                 }

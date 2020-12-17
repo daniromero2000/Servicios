@@ -117,8 +117,6 @@ class DocumentRepository implements DocumentRepositoryInterface
             if ($params['categories']) {
                 $data->categories()->sync($params['categories']);
             }
-            dd($params['data']);
-
             $data->update($params['data']);
           
             return $data;

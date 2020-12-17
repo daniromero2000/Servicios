@@ -8,11 +8,12 @@
                     <div class="col-12">
                         <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a href="/Administrator/customers">Indicadores</a></li>
+                            <li class="breadcrumb-item active"><a href="/Administrator/documents">Indicadores</a></li>
                         </ol>
                     </div><!-- /.col -->
                     <div class="col-12">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
+                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm">Regresar</a>
+                        <a href="/Administrator/documents/create" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm">Crear Indicador</a>
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -37,14 +38,14 @@
                                     <div class="mb-4">
                                         <div class=" table-responsive p-0 height-table">
                                             <table class="table table-head-fixed">
-                                                <thead class="text-center">
+                                                <thead class="text-center header-table">
                                                     <tr>
                                                         @foreach ($headers as $header)
                                                             <th scope="col">{{ $header }}</th>
                                                         @endforeach
                                                     </tr>
                                                 </thead>
-                                                <tbody >
+                                                <tbody class="body-table">
                                                     @foreach ($documents as $data)
                                                         <tr>
                                                             <td class="text-center"> {{ $data->name }} </td>

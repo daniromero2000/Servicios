@@ -121,12 +121,11 @@ class DocumentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->except('_token', '_method');
-
-        dd($request->hasFile('src') instanceof UploadedFile);
-
         if ($request->hasFile('src') && $request->file('src') instanceof UploadedFile) {
+            $data = $request->except('_token', '_method');
             $data['src'] = $this->documentInterface->saveDocumentFile($request->file('src'));
+        }else{
+            $data = $request->except('_token', '_method', 'src');
         }
 
         $data['slug'] = str_slug($request->input('name'));
