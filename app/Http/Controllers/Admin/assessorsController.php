@@ -711,7 +711,7 @@ class assessorsController extends Controller
 			}
 		}
 
-		$idDef = $this->creditCardInterface->validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef);
+		$idDef = $this->creditCardInterface->validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef, $customerStatusDenied);
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {

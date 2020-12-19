@@ -10,5 +10,5 @@ interface CreditCardRepositoryInterface
 
   public function checkCustomerHasCreditCardActive($identificationNumber);
 
-  public function validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef);
+  public function validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef, $customerStatusDenied);
 }

@@ -872,7 +872,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             showAlert("success", "La liquidación ha sido actualizada");
         };
 
-
         $scope.storeTerms = function (key, typeProduct, precio, totalAval, factor) {
             if ($scope.liquidator[key][3].PLAZO != null) {
                 if (typeProduct != 3 && factor != 1) {
