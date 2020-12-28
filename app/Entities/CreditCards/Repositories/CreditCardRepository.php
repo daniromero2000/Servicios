@@ -106,7 +106,7 @@ class CreditCardRepository implements CreditCardRepositoryInterface
 
 	public function validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef, $customerStatusDenied)
 	{
-		if ($aprobado) {
+		if ($aprobado && $customerStatusDenied == false) {
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {
 					$idDef     = 26;
@@ -114,9 +114,10 @@ class CreditCardRepository implements CreditCardRepositoryInterface
 					$idDef     = 25;
 				}
 			}
-		} else if($aprobado == false && $customerStatusDenied == true) {
-		
-		}else{
+		} else if ($aprobado == false && $customerStatusDenied == true) {
+		} else if ($aprobado == false && $customerStatusDenied == false) {
+		} else if ($aprobado == true && $customerStatusDenied == true) {
+		} else {
 			if ($customer->creditCard) {
 				if ($customer->creditCard->ESTADO == 'B') {
 					$idDef     = 26;

@@ -710,7 +710,7 @@ class assessorsController extends Controller
 				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
 			}
 		}
-
+		
 		$idDef = $this->creditCardInterface->validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef, $customerStatusDenied);
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
