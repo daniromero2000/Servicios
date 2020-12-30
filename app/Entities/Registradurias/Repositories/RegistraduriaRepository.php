@@ -83,18 +83,18 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
             $estadoCedula->save();
             return -1;
         }
-        $estadoCedula->cedula = $infoEstadoCedula['personaVO']['numeroDocumento'];
-        $estadoCedula->tipoDocumento = $infoEstadoCedula['personaVO']['tipoDocumento'];
-        $estadoCedula->pais = $infoEstadoCedula['personaVO']['pais'];
-        $estadoCedula->primerNombre = $infoEstadoCedula['personaVO']['nombres']['ESTADO-CEDULA-COLOMBIA']['primerNombre'];
-        $estadoCedula->tipoNombre = $infoEstadoCedula['personaVO']['nombres']['ESTADO-CEDULA-COLOMBIA']['tipoNombre'];
-        $estadoCedula->fechaExpedicion = $infoEstadoCedula['fechaExpedicion'];
-        $estadoCedula->lugarExpedicion = $infoEstadoCedula['lugarExpedicion'];
-        $estadoCedula->estado = $infoEstadoCedula['estado'];
-        $estadoCedula->resolucion = $infoEstadoCedula['resolucion'];
-        $estadoCedula->fechaResolucion = $infoEstadoCedula['fechaResolucion'];
-        $estadoCedula->fechaConsulta = $infoEstadoCedula['fechaConsulta'];
-        $estadoCedula->fuenteFallo = $infoEstadoCedula['fuenteFallo'];
+        $estadoCedula->cedula           = $infoEstadoCedula['personaVO']['numeroDocumento'];
+        $estadoCedula->tipoDocumento    = $infoEstadoCedula['personaVO']['tipoDocumento'];
+        $estadoCedula->pais             = $infoEstadoCedula['personaVO']['pais'];
+        $estadoCedula->primerNombre     = $infoEstadoCedula['personaVO']['nombres']['ESTADO-CEDULA-COLOMBIA']['primerNombre'];
+        $estadoCedula->tipoNombre       = $infoEstadoCedula['personaVO']['nombres']['ESTADO-CEDULA-COLOMBIA']['tipoNombre'];
+        $estadoCedula->fechaExpedicion  = $infoEstadoCedula['fechaExpedicion'];
+        $estadoCedula->lugarExpedicion  = $infoEstadoCedula['lugarExpedicion'];
+        $estadoCedula->estado           = $infoEstadoCedula['estado'];
+        $estadoCedula->resolucion       = $infoEstadoCedula['resolucion'];
+        $estadoCedula->fechaResolucion  = $infoEstadoCedula['fechaResolucion'];
+        $estadoCedula->fechaConsulta    = $infoEstadoCedula['fechaConsulta'];
+        $estadoCedula->fuenteFallo      = $infoEstadoCedula['fuenteFallo'];
         $estadoCedula->save();
 
         return 1;

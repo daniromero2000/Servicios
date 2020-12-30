@@ -16,17 +16,17 @@
          </div>
          <div class="col-12 col-sm-6">
              <label class="labels" for="identificationNumberContado">Número de documento*</label>
-             <input class="inputs" ng-model="lead.CEDULA" ng-blur="getValidationLead()" type="text" validation-pattern="identificationNumber" id="identificationNumberContado" />
+             <input class="inputs" ng-model="lead.CEDULA" ng-blur="getValidationLead()" required type="text" validation-pattern="IdentificationNumber" id="identificationNumberContado" />
          </div>
      </div>
      <div class="row">
          <div class="col-12 col-md-4">
              <label class="labels" for="nombresContado">Nombres*</label>
-             <input class="inputs" ng-model="lead.NOMBRES" validation-pattern="name" type="text" id="nombresContado" />
+             <input class="inputs" required ng-model="lead.NOMBRES" validation-pattern="name" type="text" id="nombresContado" />
          </div>
          <div class="col-12 col-md-4">
              <label class="labels" for="apellidosContado">Apellidos*</label>
-             <input class="inputs" ng-model="lead.APELLIDOS" type="text" validation-pattern="name" id="apellidosContado" />
+             <input class="inputs" required ng-model="lead.APELLIDOS" type="text" validation-pattern="name" id="apellidosContado" />
          </div>
          <div class="col-12 col-md-4">
              <label class="labels" for="emailContado">Correo electrónico*</label>
@@ -40,21 +40,21 @@
          </div>
          <div class="col-12 col-md-4">
              <label class="ventaContado-label labels" for="celularCotado">Celular*</label>
-             <input class="inputs" ng-model="lead.CELULAR" type="text" id="celularCotado" validation-pattern="telephone" />
+             <input class="inputs" required ng-model="lead.CELULAR" type="text" id="celularCotado" validation-pattern="telephone" />
          </div>
          <div class="col-12 col-md-4">
              <label class="ventaContado-label labels" for="genero">Género</label>
-             <select class="inputs select2bs4" ng-model="lead.SEXO" id="genero" ng-options="gender.label as gender.value for gender in genders"></select>
+             <select class="inputs select2bs4" required ng-model="lead.SEXO" id="genero" ng-options="gender.label as gender.value for gender in genders"></select>
          </div>
      </div>
      <div class="row">
          <div class="col-12 col-sm-6">
              <label class="ventaContado-label labels">Dirección de residencia*</label>
-             <input class="inputs" ng-model="lead.DIRECCION" type="text" />
+             <input class="inputs" ng-model="lead.DIRECCION" required type="text" />
          </div>
          <div class="col-12 col-sm-6">
              <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de sucursal*</label>
-             <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubiContado" ng-options="city.value as city.label for city in citiesUbi"></select>
+             <select class="inputs form-control select2bs4" required ng-model="lead.CIUD_UBI" id="ciud_ubiContado" ng-options="city.value as city.label for city in citiesUbi"></select>
              <div class="alert alert-danger" role="alert" ng-show="showAlertCiudUbiContado" style="margin-top: 10px;">
                  Debe seleccionar una ciudad
              </div>
