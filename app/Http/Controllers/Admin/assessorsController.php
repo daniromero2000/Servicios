@@ -710,7 +710,7 @@ class assessorsController extends Controller
 				$quotaApprovedAdvance = $tarjetaGray->getQuotaApprovedAdvance();
 			}
 		}
-		
+
 		$idDef = $this->creditCardInterface->validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef, $customerStatusDenied);
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
@@ -763,19 +763,9 @@ class assessorsController extends Controller
 			$statusAfiliationCustomer
 		);
 
-		// // 5 Definiciones cliente
-		// if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
-		// 	$customer->ESTADO = 'PREAPROBADO';
-		// 	$customer->save();
-		// 	$customerIntention->TARJETA          = 'Crédito Tradicional';
-		// 	$customerIntention->ID_DEF           = '13';
-		// 	$customerIntention->ESTADO_INTENCION = '2';
-		// 	$customerIntention->save();
-		// 	return ['resp' =>  "-2"];
-		// }
-
 		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($statusAfiliationCustomer == true) {
+
 				if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
@@ -798,6 +788,7 @@ class assessorsController extends Controller
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
+
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
 					if ($idDef == 25  || $idDef == 26) {
@@ -839,6 +830,7 @@ class assessorsController extends Controller
 					];
 				}
 
+
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 					if ($customerIntention->HISTORIAL_CREDITO == 1) {
 						$customer->ESTADO           = 'PREAPROBADO';
@@ -879,6 +871,7 @@ class assessorsController extends Controller
 				return ['resp' => "-2"];
 			}
 		}
+
 
 		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 			if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
@@ -976,6 +969,17 @@ class assessorsController extends Controller
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
+		}
+
+		// 5 Definiciones cliente
+		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
+			$customer->ESTADO = 'PREAPROBADO';
+			$customer->save();
+			$customerIntention->TARJETA          = 'Crédito Tradicional';
+			$customerIntention->ID_DEF           = '13';
+			$customerIntention->ESTADO_INTENCION = '2';
+			$customerIntention->save();
+			return ['resp' =>  "-2"];
 		}
 
 		$customerIntention->save();
