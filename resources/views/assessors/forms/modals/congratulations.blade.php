@@ -18,6 +18,7 @@
                         <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
                         @if (auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
+                        auth()->user()->codeOportudata == '10027766' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '146' ||
@@ -78,6 +79,7 @@
                         </p>
                         @if (auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
+                        auth()->user()->codeOportudata == '10027766' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '146' ||
@@ -123,6 +125,7 @@
                         <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                         @if (auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
+                        auth()->user()->codeOportudata == '10027766' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '146' ||
@@ -191,6 +194,7 @@
                             Registro</a>
                         @if (auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
+                        auth()->user()->codeOportudata == '10027766' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
                         auth()->user()->Assessor->subsidiary->CODIGO == '146' ||
