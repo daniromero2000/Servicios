@@ -27,10 +27,6 @@ Route::get('/', function () {
         ->with('sliderPrincipal', $sliders->all());
 })->name('start');
 
-Route::get('/test/email', function () {
-    event(new SendEmailEvent());
-});
-
 Route::get('/LIB_gracias_FRM', function () {
     return view('libranza.thankYouPage');
 })->name('thankYouPageLibranza');
