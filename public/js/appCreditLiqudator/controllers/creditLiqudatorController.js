@@ -857,7 +857,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[key][3].initialFeeFeedback = cuotaIni;
                     }
                 }
-
             }
 
             $scope.liquidator[key][6].push({ 'CUOTAINI': $scope.liquidator[key][3].CUOTAINI });
@@ -1012,7 +1011,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.updateIva(key);
             }, 500);
         }
-
+        
         $scope.updateIva = function (key) {
             var e = $scope.liquidator[key][0];
             if ($("#typeLiquidator").val() != '3') {

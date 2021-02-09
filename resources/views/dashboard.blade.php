@@ -50,7 +50,6 @@ $modules = session('modules');
                 @if (auth()->user()->Assessor &&
         (auth()->user()->codeOportudata == '1088247299' ||
             auth()->user()->codeOportudata == '98587878' ||
-            auth()->user()->codeOportudata == '10027766' ||
             auth()->user()->codeOportudata == '998877' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
             auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
