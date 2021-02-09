@@ -1,6 +1,7 @@
 @if (auth()->user()->Assessor)
     @if (auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
+    auth()->user()->codeOportudata == '10027766' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '146' ||
