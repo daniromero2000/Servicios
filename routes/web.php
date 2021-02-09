@@ -8,6 +8,7 @@
     | contains the "web" middleware group. Now create something great!
 */
 
+use App\Events\Email\SendEmailEvent;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,10 @@ Route::get('/', function () {
     return view('index')
         ->with('sliderPrincipal', $sliders->all());
 })->name('start');
+
+Route::get('/test/email', function () {
+    event(new SendEmailEvent());
+});
 
 Route::get('/LIB_gracias_FRM', function () {
     return view('libranza.thankYouPage');
