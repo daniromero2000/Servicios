@@ -89,7 +89,12 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::namespace('NewAdmin')->group(function () {
-        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+
+        Route::namespace('BillPayments')->group(function () {
+            Route::resource('gestion-facturas', 'BillPaymentController');
+        });
+        
     });
 });
 

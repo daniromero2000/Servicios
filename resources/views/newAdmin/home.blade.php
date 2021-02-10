@@ -16,7 +16,7 @@
 @endsection
 @section('content')
     <section class="content">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-gradient-primary border-0">
                     <!-- Card body -->
@@ -249,7 +249,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </section>
 @endsection
 
