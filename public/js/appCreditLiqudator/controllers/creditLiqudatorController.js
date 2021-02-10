@@ -207,7 +207,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 let promise = $timeout();
                 angular.forEach($scope.quotation_push_items, function (value, key) {
                     promise = promise.then(function () {
-                        console.log(value.item)
                         $scope.addItem();
                         value.item = JSON.parse(value.item);
                         $scope.items.key = key;
@@ -531,6 +530,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             if ($("#typeLiquidator").val() == '3' || $("#typeLiquidator").val() == '2') {
                 $scope.items.LISTA = $scope.fixedList;
                 $scope.items.SELECCION = $scope.fixedSeleccion;
+
+                if ($scope.items.COD_PROCESO == 7){
+                    $scope.items.PRECIO_P = $scope.items.PRECIO
+                }
             }
             var key = $scope.items.key ? $scope.items.key : 0;
             $scope.liquidator[key][0].push($scope.items);
@@ -588,6 +591,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
                 $scope.addIva(key, list, 'IVAV', '1', '01', 'IVA AVAL 19 %', e);
             }
+
             $scope.items = {};
             $scope.sumDiscount(key);
         };

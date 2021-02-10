@@ -412,11 +412,11 @@
 }
 
 .card .overlay {
-    background: rgba(255, 255, 255, .9) !important;
+        background: #ffffff !important;
 }
 
 .overlay {
-    opacity: 0.8 !important;
+    opacity: 1 !important;
 }
 
 @-webkit-keyframes spin {
@@ -438,3 +438,43 @@
         transform: rotate(360deg);
     }
 }
+
+
+.google-loader {
+    display: block;
+}
+
+.google-loader span {
+    display      : inline-block;
+    margin-top   : 10px;
+    height       : 20px;
+    width        : 20px;
+    border-radius: 50%;
+}
+
+.google-loader span:nth-child(1) {
+    background: #DB4437;
+    animation : move 0.7s ease-in-out -0.25s infinite alternate;
+}
+
+.google-loader span:nth-child(2) {
+    background: #4285F4;
+    animation : move 0.7s ease-in-out -0.5s infinite alternate;
+}
+
+.google-loader span:nth-child(3) {
+    background: #f7d513;
+    animation : move 0.7s ease-in-out -0.75s infinite alternate;
+}
+
+
+@keyframes move {
+    from {
+        transform: translateY(-10px);
+    }
+
+    to {
+        transform: translateY(5px);
+    }
+}
+

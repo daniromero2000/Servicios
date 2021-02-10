@@ -258,6 +258,7 @@ class CreditLiquidatorController extends Controller
             foreach ($products2[$key] as $key2 => $value) {
                 $position = $key2 + 1;
                 $products2[$key][$key2]['CONSEC']       = $products2[$key][$key2]['key'] + 1;
+                $products2[$key][$key2]['COD_PROCESO']  = $products2[$key][$key2]['COD_PROCESO'] == 7 ? 1 : ($products2[$key][$key2]['COD_PROCESO'] == 5 ? 2 : $products2[$key][$key2]['COD_PROCESO']) ;
                 $products2[$key][$key2]['CONSEC2']      = $position;
                 $products2[$key][$key2]['COD_ARTIC']    = $products2[$key][$key2]['CODIGO'];
                 $products2[$key][$key2]['SOLICITUD']    = $products2[$key][$key2]['SOLICITUD'];
