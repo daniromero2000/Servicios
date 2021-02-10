@@ -836,6 +836,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     cuotaIni = 1
                     break;
                 default:
+                    cuotaIni = 1
                     break;
             }
 
