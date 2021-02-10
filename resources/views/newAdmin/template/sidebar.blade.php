@@ -1,12 +1,12 @@
   <ul class="navbar-nav">
       <li class="nav-item">
-          <a class="nav-link {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}" >
+          {{-- <a class="nav-link {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}" >
               <i class="ni ni-shop text-primary"></i>
               <span class="nav-link-text">Dashboards</span>
-          </a>
+          </a> --}}
       </li>
       <li class="nav-item">
-          <a class="nav-link {{ request()->segment(2) == 'answers' ? 'active' : '' }}" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="{{ request()->segment(2) == 'answers' ? 'true' : 'false' }}"
+          {{-- <a class="nav-link {{ request()->segment(2) == 'answers' ? 'active' : '' }}" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="{{ request()->segment(2) == 'answers' ? 'true' : 'false' }}"
               aria-controls="navbar-examples">
               <i class="ni ni-ungroup text-orange"></i>
               <span class="nav-link-text">Preguntas</span>
@@ -20,7 +20,7 @@
                       <a href="{{route('admin.answers.create')}}" class="nav-link">Crear Pregunta</a>
                   </li>
               </ul>
-          </div>
+          </div> --}}
       </li>
       <li class="nav-item">
           <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false"

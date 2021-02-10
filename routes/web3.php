@@ -81,6 +81,22 @@ Route::group(['prefix' => '/digitalWarranty/'], function () {
 /**
  * Admin routes
  */
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::namespace('Auth')->group(function () {
+        Route::get('loginform', 'LoginAdminController@showLoginFormAdmin')->name('loginform');
+        Route::post('loginform', 'LoginAdminController@login');
+    });
+
+    Route::namespace('NewAdmin')->group(function () {
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    });
+});
+
+// Route::get('admin/loginform', 'Auth\LoginAdminController@showLoginFormAdmin')->name('loginform');
+// Route::post('admin/loginform', 'Auth\LoginAdminController@login');
+
+
 Route::namespace('Admin')->group(function () {
 
     Route::namespace('Products')->group(function () {
