@@ -483,7 +483,7 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
     });
 
     // Administrador de modulos
-    Route::resource('modules', 'Admin\ModulesController');
+    // Route::resource('modules', 'Admin\ModulesController');
     Route::group(['prefix' => '/Modules/'], function () {
         Route::get('/', function () {
             return view('modules.index');

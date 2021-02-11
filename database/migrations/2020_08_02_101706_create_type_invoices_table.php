@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCallCenterCallQualificationsTable extends Migration
+class CreateTypeInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCallCenterCallQualificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('call_center_call_qualifications', function (Blueprint $table) {
+        Schema::create('type_invoices', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('qualification',100);
-            $table->tinyInteger('status')->default(0)->comment("0= Inactivo, 1= Activo");
-            $table->tinyInteger('type')->default(0)->comment("0=Todas, 1=Cobranzas, 2=Comercial, 3=Fabrica");
+            $table->string('name');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +29,6 @@ class CreateCallCenterCallQualificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_center_call_qualifications');
+        Schema::dropIfExists('type_invoices');
     }
 }

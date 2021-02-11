@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCallCenterManagementIndicatorsTable extends Migration
+class CreateBillPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateCallCenterManagementIndicatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('call_center_management_indicators', function (Blueprint $table) {
+        Schema::create('bill_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('indicator',200);
-            $table->tinyInteger('status')->default(0)->comment("0= Inactivo, 1= Activo");
-            $table->tinyInteger('type')->default(0)->comment("0=Todas, 1=Cobranzas, 2=Comercial, 3=Fabrica");
+            $table->string('address');
+            $table->date('deadline');
+            $table->string('status')->default('0');
+            $table->string('subsidiary_id');
+            $table->integer('type_of_invoice');
+            $table->string('contract_number');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +33,6 @@ class CreateCallCenterManagementIndicatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_center_management_indicators');
+        Schema::dropIfExists('bill_payments');
     }
 }

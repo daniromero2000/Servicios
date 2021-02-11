@@ -62,7 +62,7 @@
                             <div class="text-center text-muted mb-4">
                                 <h2 style="color:#434350" class="">Inicia sesión</h2>
                             </div>
-                            <form action="{{ route('loginform') }}" method="post">@csrf<div
+                            <form action="{{ route('admin.loginform') }}" method="post">@csrf<div
                                     class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
                                     <div class="form-group mb-3">
                                         <div class="input-group input-group-merge input-group-alternative">

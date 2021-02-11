@@ -174,6 +174,10 @@ use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotati
 use App\Entities\AssessorQuotationValues\Repositories\AssessorQuotationValueRepository;
 use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuotationDiscountRepositoryInterface;
 use App\Entities\AssessorQuotationDiscounts\Repositories\AssessorQuotationDiscountRepository;
+use App\Entities\BillPayments\Repositories\BillPaymentRepository;
+use App\Entities\BillPayments\Repositories\BillPaymentRepositoryInterface;
+use App\Entities\BillPayments\Services\BillPaymentService;
+use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
 use App\Entities\CustomerComments\Repositories\CustomerCommentRepository;
 use App\Entities\CustomerComments\Repositories\Interfaces\CustomerCommentRepositoryInterface;
 use App\Entities\DocumentCategories\Repositories\DocumentCategoryRepository;
@@ -190,6 +194,10 @@ use App\Entities\PortfolioCollectionTokens\Repositories\Interfaces\PortfolioColl
 use App\Entities\PortfolioCollectionTokens\Repositories\PortfolioCollectionTokenRepository;
 use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
 use App\Entities\StatusManagements\Repositories\StatusManagementRepository;
+use App\Entities\TypeInvoices\Repositories\TypeInvoiceRepository;
+use App\Entities\TypeInvoices\Repositories\TypeInvoiceRepositoryInterface;
+use App\Entities\TypeInvoiceServices\Repositories\TypeInvoiceServiceRepository;
+use App\Entities\TypeInvoiceServices\Repositories\TypeInvoiceServiceRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -669,6 +677,27 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             DocumentRepositoryInterface::class,
             DocumentRepository::class
+        );
+
+        $this->app->bind(
+            BillPaymentRepositoryInterface::class,
+            BillPaymentRepository::class
+        );
+
+        $this->app->bind(
+            TypeInvoiceRepositoryInterface::class,
+            TypeInvoiceRepository::class
+        );
+
+        $this->app->bind(
+            TypeInvoiceServiceRepositoryInterface::class,
+            TypeInvoiceServiceRepository::class
+        );
+
+        //Service BillPayment
+        $this->app->bind(
+            BillPaymentServiceInterface::class,
+            BillPaymentService::class
         );
     }
 }

@@ -1,53 +1,56 @@
 <?php
 
-namespace App\Entities\BillPayments\Repositories;
+namespace App\Entities\TypeInvoiceServices\Repositories;
 
-use App\Entities\BillPayments\BillPayment;
-use App\Entities\BillPayments\Exceptions\BillPaymentNotFoundErrorException;
-use App\Entities\BillPayments\Exceptions\CreateBillPaymentErrorException;
+use App\Entities\TypeInvoiceServices\TypeInvoiceService;
+use App\Entities\TypeInvoiceServices\Exceptions\TypeInvoiceServiceNotFoundErrorException;
+use App\Entities\TypeInvoiceServices\Exceptions\CreateTypeInvoiceServiceErrorException;
 use Illuminate\Database\QueryException;
 
-class BillPaymentRepository implements BillPaymentRepositoryInterface
+class TypeInvoiceServiceRepository implements TypeInvoiceServiceRepositoryInterface
 {
    protected $model;
     private $columns = [
-        'id',
-        'address',
-        'deadline',
-        'status',
-        'subsidiary_id',
-        'type_of_invoice',
-        'contract_number'
+        'name',
+        'status'
     ];
 
-    public function __construct(BillPayment $billPayment)
+    public function __construct(TypeInvoiceService $billPayment)
     {
         $this->model = $billPayment;
     }
 
-    public function listBillPayments($id)
+    public function listTypeInvoiceServices($id): array
     {
-        return $this->model->get($this->columns);
+        $billPaymentList = $this->model->get($this->columns);
+
+        return (empty($billPaymentList)) ? [] : $billPaymentList->toArray();
     }
 
-    public function createBillPayment(array $data): BillPayment
+
+    public function listAllTypeInvoiceServices()
+    {
+      return $this->model->where('status', '1')->get();
+    }
+
+    public function createTypeInvoiceService(array $data): TypeInvoiceService
     {
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
-            throw new CreateBillPaymentErrorException($e);
+            // throw new ($e);
         }
     }
 
-    public function searchBillPayment(string $text = null, int $totalView, $from = null, $to = null): array
+    public function searchTypeInvoiceService(string $text = null, int $totalView, $from = null, $to = null): array
     {
         try {
             if (empty($text) && is_null($from) && is_null($to)) {
-                return $this->listBillPayments($totalView);
+                return $this->listTypeInvoiceServices($totalView);
             }
 
             if (!empty($text) && (is_null($from) || is_null($to))) {
-                $billPaymentList = $this->model->searchBillPayment($text, null, true, true)
+                $billPaymentList = $this->model->searchTypeInvoiceService($text, null, true, true)
                     ->skip($totalView)
                     ->take(30)
                     ->get($this->columns);
@@ -62,7 +65,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
                 return (empty($billPaymentList)) ? [] : $billPaymentList->toArray();
             }
 
-            $billPaymentList = $this->model->searchBillPayment($text, null, true, true)
+            $billPaymentList = $this->model->searchTypeInvoiceService($text, null, true, true)
                 ->whereBetween('created_at', [$from, $to])
                 ->orderBy('created_at', 'desc')
                 ->skip($totalView)
@@ -74,14 +77,14 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
-    public function countBillPayments(string $text = null,  $from = null, $to = null)
+    public function countTypeInvoiceServices(string $text = null,  $from = null, $to = null)
     {
         if (empty($text) && is_null($from) && is_null($to)) {
             return $this->model->count('id');
         }
 
         if (!empty($text) && (is_null($from) || is_null($to))) {
-            return $this->model->searchBillPayment($text, null, true, true)
+            return $this->model->searchTypeInvoiceService($text, null, true, true)
                 ->count('id');
         }
 
@@ -90,24 +93,24 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
                 ->count('id');
         }
 
-        return $this->model->searchBillPayment($text, null, true, true)
+        return $this->model->searchTypeInvoiceService($text, null, true, true)
             ->whereBetween('created_at', [$from, $to])
             ->count('id');
     }
 
-    public function findBillPaymentById(int $id): BillPayment
+    public function findTypeInvoiceServiceById(int $id): TypeInvoiceService
     {
         try {
             return $this->model->findOrFail($id, $this->columns);
         } catch (QueryException $e) {
-            throw new BillPaymentNotFoundErrorException($e);
+            // throw new TypeInvoiceServiceNotFoundErrorException($e);
         }
     }
 
     public function deleteNotificationById($id): bool
     {
         try {
-            $data = $this->findBillPaymentById($id);
+            $data = $this->findTypeInvoiceServiceById($id);
             return $data->delete();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

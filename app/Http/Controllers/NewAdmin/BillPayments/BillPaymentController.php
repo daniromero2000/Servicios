@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\NewAdmin\BillPayments;
 
+use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 
 class BillPaymentController extends Controller
 {
-    private $appErrorInterface, $toolsInterface;
+    private $billPaymentInterface, $toolsInterface;
 
     public function __construct(
-      
+        BillPaymentServiceInterface $BillPaymentServiceInterface
     ) {
-       
+        $this->billPaymentInterface = $BillPaymentServiceInterface;
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +23,13 @@ class BillPaymentController extends Controller
      */
     public function index(Request $request)
     {
-       dd('hola');
+        $response = $this->billPaymentInterface->listBillPayments(['search' => request()->input()]);
+
+        if ($response['search']) {
+            $request->session()->flash('message', 'Resultado de la Busqueda');
+        }
+
+        return view('newAdmin.billPayments.list', $response['data']);
     }
 
     /**
@@ -32,7 +39,8 @@ class BillPaymentController extends Controller
      */
     public function create()
     {
-        //
+        $data =  $this->billPaymentInterface->createBillPayment();
+        return view('newAdmin.billPayments.create', $data['data']);
     }
 
     /**
@@ -43,9 +51,10 @@ class BillPaymentController extends Controller
      */
     public function store(Request $request)
     {
-       
-    }
+        $this->billPaymentInterface->saveBillPayment($request->except('_token', '_method'));
 
+        return redirect()->route('admin.invoiceManagement.index')->with('message', 'Creación Exitosa');
+    }
     /**
      * Display the specified resource.
      *
