@@ -24,8 +24,9 @@
             <form action="{{ route('admin.invoiceManagement.store') }}" method="post" enctype="multipart/form-data"
                 class="form">
                 <div class="card-body">
-                    @csrf
-                    <h2>Crear Factura</h2>
+                        @csrf
+                    <h2 class="mb-4">Crear recordatorio de factura</h2>
+                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -46,36 +47,29 @@
                                 <label class="form-control-label" for="name">Tipo de servicio<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group  mb-3">
-                                    <select name="type_of_invoice" id="type_of_invoice" class="form-control" required>
+                                    <select name="type_of_service" id="type_of_service" class="form-control" required>
                                         <option value="">Seleccione</option>
-                                        <option value="1">Internet</option>
-                                        <option value="2">Telefonia (Fijo)</option>
-                                        <option value="3">Telefonia (Movil)</option>
+                                        <option value="Internet">Internet</option>
+                                        <option value="Telefonia (Fijo)">Telefonia (Fijo)</option>
+                                        <option value="Telefonia (Movil)">Telefonia (Movil)</option>
+                                        <option value="Energia">Energia</option>
+                                        <option value="Agua">Agua</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-control-label" for="name">Dirección<span
+                                <label class="form-control-label" for="name">Referencia de pago<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group  mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-check"></i></span>
                                     </div>
-                                    <input type="text" name="address" id="address" placeholder="Nombre"
-                                        validation-pattern="name" class="form-control" value="{{ old('address') }}"
+                                    <input type="text" name="payment_reference" id="payment_reference" placeholder="Nombre"
+                                        validation-pattern="name" class="form-control" value="{{ old('payment_reference') }}"
                                         required>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-control-label" for="script">N° de contrato <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" name="contract_number" id="contract_number" placeholder="Nombre"
-                                    validation-pattern="name" class="form-control" value="{{ old('contract_number') }}"
-                                    required>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -92,15 +86,24 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-control-label" for="name">Fecha limite de pago<span
+                                <label class="form-control-label" for="name">Dia limite de pago<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group  mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-check"></i></span>
                                     </div>
-                                    <input type="date" name="deadline" id="deadline" placeholder="Nombre"
-                                        validation-pattern="name" class="form-control" value="{{ old('deadline') }}"
+                                    <input type="number" max="31" name="payment_deadline" id="payment_deadline" placeholder="Nombre"
+                                        validation-pattern="name" class="form-control" value="{{ old('payment_deadline') }}"
                                         required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="name">Descripción<span
+                                        class=""> <small>(opcional)</small> </span></label>
+                                <div class="input-group  mb-3">
+                                  <textarea name="description" class="form-control" id="description" cols="10" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>

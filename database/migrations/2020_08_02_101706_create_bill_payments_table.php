@@ -15,12 +15,14 @@ class CreateBillPaymentsTable extends Migration
     {
         Schema::create('bill_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('address');
-            $table->date('deadline');
+            $table->string('payment_deadline');
             $table->string('status')->default('0');
             $table->string('subsidiary_id');
             $table->integer('type_of_invoice');
-            $table->string('contract_number');
+            $table->string('type_of_service');
+            $table->string('payment_reference');
+            $table->integer('user_id');
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

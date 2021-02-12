@@ -4,7 +4,7 @@
           <h3 class="mb-0">{{ $title }}</h3>
           @include('newAdmin.layouts.search.search', ['route' => route("$optionsRoutes.index")])
       </div>
-      @if (!empty($list))
+      @if (!empty($list->toArray()))
           <div class="table-responsive">
               <table class="table align-items-center table-flush table-hover">
                   <thead class="thead-light">

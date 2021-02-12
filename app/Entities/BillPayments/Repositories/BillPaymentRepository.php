@@ -12,12 +12,13 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
    protected $model;
     private $columns = [
         'id',
-        'address',
-        'deadline',
+        'payment_deadline',
         'status',
         'subsidiary_id',
         'type_of_invoice',
-        'contract_number'
+        'type_of_service',
+        'payment_reference',
+        'description'
     ];
 
     public function __construct(BillPayment $billPayment)

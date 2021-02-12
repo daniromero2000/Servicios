@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a href="{{ $module->route }}" class=" nav-link">Ver modulo</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ $module->route.'/create' }}" class=" nav-link">Crear registo</a>
+                        </li>
                     </ul>
                 </div>
             </li>

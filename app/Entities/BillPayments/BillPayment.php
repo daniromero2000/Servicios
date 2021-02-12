@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class BillPayment extends Model
 {
     protected $fillable = [
-        'address',
-        'deadline',
+        'payment_deadline',
         'status',
         'subsidiary_id',
         'type_of_invoice',
-        'contract_number'
+        'type_of_service',
+        'payment_reference',
+        'description',
+        'user_id'
     ];
- 
 }
