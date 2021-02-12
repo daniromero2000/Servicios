@@ -23,21 +23,29 @@ class LoginAdminController extends Controller
 
     use AuthenticatesUsers;
 
+    protected $guard = 'admins';
+
+    protected $loginView = 'newAdmin.auth.login';
+
+    protected $redirectTo = '/admin/dashboard';
+
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/admin/dashboard';
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+   
+
+    // public function authenticated()
+    // {
+    //     return redirect('/admin/dashboard');
+    // }
 
     public function login(Request $request)
     {
