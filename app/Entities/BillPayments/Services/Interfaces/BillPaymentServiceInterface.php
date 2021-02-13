@@ -13,4 +13,7 @@ interface BillPaymentServiceInterface
     public function saveBillPayment(array $data): bool;
 
     public function deleteNotificationById($id): bool;
+
+    public function updateBillPayment(array $data): bool;
+
 }

@@ -43,8 +43,10 @@
                                   @endif
                               @endforeach
                               <td class="text-center">
-                                  @include('newAdmin.layouts.tables.table_options', [$data, 'optionsRoutes' =>
-                                  $optionsRoutes])
+                                  <a data-toggle="modal" data-target="#modal{{ $data->id }}" href=""
+                                      class="table-action table-action" data-toggle="tooltip"
+                                      data-original-title="{{ $data->id }}">
+                                      <i class="fas fa-edit"></i></a>
                               </td>
                           </tr>
                           @include('newAdmin.layouts.modals.modal_update')

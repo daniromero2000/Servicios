@@ -186,6 +186,8 @@ use App\Entities\Documents\Repositories\DocumentRepository;
 use App\Entities\Documents\Repositories\Interfaces\DocumentRepositoryInterface;
 use App\Entities\EconomicSectors\Repositories\EconomicSectorRepository;
 use App\Entities\EconomicSectors\Repositories\Interfaces\EconomicSectorRepositoryInterface;
+use App\Entities\MailsBillPayments\Repositories\MailsBillPaymentRepository;
+use App\Entities\MailsBillPayments\Repositories\MailsBillPaymentRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\Interfaces\PaymentTimeCustomerRepositoryInterface;
 use App\Entities\PaymentTimeCustomers\Repositories\PaymentTimeCustomerRepository;
 use App\Entities\PortfolioCollections\Repositories\Interfaces\PortfolioCollectionRepositoryInterface;
@@ -692,6 +694,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             TypeInvoiceServiceRepositoryInterface::class,
             TypeInvoiceServiceRepository::class
+        );
+
+        $this->app->bind(
+            MailsBillPaymentRepositoryInterface::class,
+            MailsBillPaymentRepository::class
         );
 
         //Service BillPayment
