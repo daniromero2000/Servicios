@@ -134,14 +134,23 @@ class BillPaymentService implements BillPaymentServiceInterface
 
     public function updateBillPayment(array $data): bool
     {
+        $this->billPaymentInterface->updateBillPayment($data['data']);
 
-        $this->billPaymentInterface->updateBillPayment($data);
+        foreach ($data['data']['emails'] as $key => $value) {
+            $mails = ['bill_payment_id' => $data['id'], 'email' => $value];
+
+            $this->mailsBillPaymentInterface->createMailsBillPayment($mails);
+        }
         return true;
     }
 
     public function findBillPaymentById(int $id)
     {
-        return '';
+        return ['data' => [
+            'typeInvoices' => $this->typeInvoice->listAllTypeInvoices(),
+            'subsidiaries' => $this->subsidiaryInterface->getSubsidiares(),
+            'billPayment'  => $this->billPaymentInterface->findBillPaymentById($id)
+        ]];
     }
 
     public function deleteNotificationById($id): bool

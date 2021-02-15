@@ -17,7 +17,6 @@
                   <tbody class="list">
                       @foreach ($list as $data)
                           <tr class="text-center">
-
                               @foreach ($data->toArray() as $index => $value)
                                   @if (!is_array($value) && $index != 'id')
                                       @if ($index == 'created_at')
@@ -46,7 +45,13 @@
                                   <a data-toggle="modal" data-target="#modal{{ $data->id }}" href=""
                                       class="table-action table-action" data-toggle="tooltip"
                                       data-original-title="{{ $data->id }}">
-                                      <i class="fas fa-edit"></i></a>
+                                      <i class="fas fa-edit"></i>
+                                  </a>
+                                  <a href="{{ route($optionsRoutes.'.show', $data->id) }}"
+                                      class=" table-action table-action" data-toggle="tooltip"
+                                      data-original-title="Ver">
+                                      <i class="fas fa-eye"></i>
+                                  </a>
                               </td>
                           </tr>
                           @include('newAdmin.layouts.modals.modal_update')

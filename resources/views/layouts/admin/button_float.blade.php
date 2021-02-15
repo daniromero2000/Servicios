@@ -27,6 +27,7 @@
     auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
+    auth()->user()->Assessor->subsidiary->CODIGO == '602' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '1')
         <div class="button-absolute">
             <input type="checkbox" id="btn-mas">

@@ -100,7 +100,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     public function findBillPaymentById(int $id): BillPayment
     {
         try {
-            return $this->model->findOrFail($id, $this->columns);
+            return $this->model->with('mailBillPayment')->findOrFail($id, $this->columns);
         } catch (QueryException $e) {
             throw new BillPaymentNotFoundErrorException($e);
         }

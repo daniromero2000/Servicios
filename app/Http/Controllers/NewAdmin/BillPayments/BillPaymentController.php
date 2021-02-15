@@ -63,7 +63,8 @@ class BillPaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $data =  $this->billPaymentInterface->findBillPaymentById($id);
+        return view('newAdmin.billPayments.edit', $data['data']);
     }
 
     /**
@@ -74,7 +75,7 @@ class BillPaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+      
     }
 
     /**
