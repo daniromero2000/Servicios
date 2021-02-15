@@ -1,7 +1,6 @@
 @if (auth()->user()->Assessor)
     @if (auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
-    auth()->user()->codeOportudata == '10027766' ||
     auth()->user()->codeOportudata == '111000' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
@@ -38,7 +37,6 @@
             @if (auth()->user()->codeOportudata == '1088247299' ||
     auth()->user()->codeOportudata == '98587878' ||
     auth()->user()->codeOportudata == '998877' ||
-    auth()->user()->codeOportudata == '10027766' ||
     auth()->user()->codeOportudata == '111000' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
     auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
