@@ -4,6 +4,7 @@ namespace App\Entities\BillPayments\Services;
 
 use App\Entities\BillPayments\Repositories\BillPaymentRepositoryInterface;
 use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
+use App\Entities\BillPaymentStatusesLogs\Repositories\BillPaymentStatusesLogRepositoryInterface;
 use App\Entities\MailsBillPayments\Repositories\MailsBillPaymentRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface as InterfacesToolRepositoryInterface;
@@ -19,13 +20,15 @@ class BillPaymentService implements BillPaymentServiceInterface
         InterfacesToolRepositoryInterface $toolRepositoryInterface,
         TypeInvoiceRepositoryInterface $TypeInvoiceRepositoryInterface,
         SubsidiaryRepositoryInterface $SubsidiaryRepositoryInterface,
-        MailsBillPaymentRepositoryInterface $mailsBillPaymentRepositoryInterface
+        MailsBillPaymentRepositoryInterface $mailsBillPaymentRepositoryInterface,
+        BillPaymentStatusesLogRepositoryInterface $BillPaymentStatusesLogRepositoryInterface
     ) {
         $this->billPaymentInterface      = $BillPaymentRespositoryInterface;
         $this->toolsInterface            = $toolRepositoryInterface;
         $this->typeInvoice               = $TypeInvoiceRepositoryInterface;
         $this->subsidiaryInterface       = $SubsidiaryRepositoryInterface;
         $this->mailsBillPaymentInterface = $mailsBillPaymentRepositoryInterface;
+        $this->statusesLogInterface      = $BillPaymentStatusesLogRepositoryInterface;
     }
 
     public function listBillPayments(array $data): array
@@ -128,18 +131,43 @@ class BillPaymentService implements BillPaymentServiceInterface
 
             $this->mailsBillPaymentInterface->createMailsBillPayment($data);
         }
+        
+        $user = auth()->user()->id;
+        $status = [
+            'bill_payment_id' => $billPayment->id,
+            'status'          => 0,
+            'user_id'         => $user
+        ];
+
+        $this->statusesLogInterface->createBillPaymentStatusesLog($status);
 
         return true;
     }
 
     public function updateBillPayment(array $data): bool
     {
-        $this->billPaymentInterface->updateBillPayment($data['data']);
+        $this->billPaymentInterface->updateBillPayment($data);
 
-        foreach ($data['data']['emails'] as $key => $value) {
-            $mails = ['bill_payment_id' => $data['id'], 'email' => $value];
+        if (array_key_exists('emails', $data['data'])) {
 
-            $this->mailsBillPaymentInterface->createMailsBillPayment($mails);
+            $this->mailsBillPaymentInterface->destroyMailsBillPaymen($data['id']);
+
+            foreach ($data['data']['emails'] as $key => $value) {
+                $mails = ['bill_payment_id' => $data['id'], 'email' => $value];
+                $this->mailsBillPaymentInterface->createMailsBillPayment($mails);
+            }
+        }
+
+        if (array_key_exists('status', $data['data'])){
+            $user = auth()->user()->id;
+            $status = [
+                'bill_payment_id' => $data['id'],
+                'status'          => $data['data']['status'],
+                'user_id'         => $user
+            ];
+
+            $this->statusesLogInterface->createBillPaymentStatusesLog($status);
+
         }
         return true;
     }
@@ -156,5 +184,11 @@ class BillPaymentService implements BillPaymentServiceInterface
     public function deleteNotificationById($id): bool
     {
         return true;
+    }
+
+    public function checkInvoices()
+    {
+        $date = Carbon::now();
+        return $this->billPaymentInterface->lookUpPastDueBills($date->day);
     }
 }

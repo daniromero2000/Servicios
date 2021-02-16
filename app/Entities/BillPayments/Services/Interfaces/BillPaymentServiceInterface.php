@@ -16,4 +16,6 @@ interface BillPaymentServiceInterface
 
     public function updateBillPayment(array $data): bool;
 
+    public function checkInvoices();
+
 }

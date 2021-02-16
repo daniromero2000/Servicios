@@ -178,6 +178,8 @@ use App\Entities\BillPayments\Repositories\BillPaymentRepository;
 use App\Entities\BillPayments\Repositories\BillPaymentRepositoryInterface;
 use App\Entities\BillPayments\Services\BillPaymentService;
 use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
+use App\Entities\BillPaymentStatusesLogs\Repositories\BillPaymentStatusesLogRepository;
+use App\Entities\BillPaymentStatusesLogs\Repositories\BillPaymentStatusesLogRepositoryInterface;
 use App\Entities\CustomerComments\Repositories\CustomerCommentRepository;
 use App\Entities\CustomerComments\Repositories\Interfaces\CustomerCommentRepositoryInterface;
 use App\Entities\DocumentCategories\Repositories\DocumentCategoryRepository;
@@ -699,6 +701,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             MailsBillPaymentRepositoryInterface::class,
             MailsBillPaymentRepository::class
+        );
+
+        $this->app->bind(
+            BillPaymentStatusesLogRepositoryInterface::class,
+            BillPaymentStatusesLogRepository::class
         );
 
         //Service BillPayment

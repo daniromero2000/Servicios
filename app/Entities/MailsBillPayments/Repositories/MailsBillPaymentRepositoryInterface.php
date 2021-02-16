@@ -14,6 +14,8 @@ interface MailsBillPaymentRepositoryInterface
 
     public function countMailsBillPayments(string $text = null,  $from = null, $to = null);
 
+    public function destroyMailsBillPaymen($id): bool;
+
     public function findMailsBillPaymentById(int $id): MailsBillPayment;
 
     public function deleteNotificationById($id): bool;

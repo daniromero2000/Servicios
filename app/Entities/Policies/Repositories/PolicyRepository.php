@@ -99,7 +99,6 @@ class PolicyRepository implements PolicyRepositoryInterface
             }
 
             if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
-
                 if ($customer->EDAD >= 18 && $customer->EDAD <= 70) {
                     $edad = 1;
                 } else {

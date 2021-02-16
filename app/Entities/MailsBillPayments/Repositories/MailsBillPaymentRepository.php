@@ -38,6 +38,15 @@ class MailsBillPaymentRepository implements MailsBillPaymentRepositoryInterface
         }
     }
 
+    public function destroyMailsBillPaymen($id): bool
+    {
+        try {
+            return $this->model->where('bill_payment_id', $id)->delete();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function searchMailsBillPayment(string $text = null, int $totalView, $from = null, $to = null)
     {
         try {

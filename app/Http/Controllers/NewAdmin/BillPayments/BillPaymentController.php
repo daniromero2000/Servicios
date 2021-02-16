@@ -5,7 +5,7 @@ namespace App\Http\Controllers\NewAdmin\BillPayments;
 use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use Carbon\Carbon;
 
 class BillPaymentController extends Controller
 {
@@ -75,7 +75,6 @@ class BillPaymentController extends Controller
      */
     public function edit($id)
     {
-      
     }
 
     /**
@@ -101,5 +100,13 @@ class BillPaymentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function verifyInvoiceExpiration(Request $request)
+    {
+        $data = $this->billPaymentInterface->checkInvoices();
+        $date = Carbon::now();
+        return view('mail.billPayment.mail', ['data' => $data[0], 'date' => $date]);
+        return $this->billPaymentInterface->checkInvoices();
     }
 }

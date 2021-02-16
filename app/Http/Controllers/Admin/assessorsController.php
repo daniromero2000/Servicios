@@ -651,13 +651,13 @@ class assessorsController extends Controller
 		$mora                 = $obligaciones['arreas'];
 		$customerIntention->ESTADO_OBLIGACIONES = $obligaciones['arreas'];
 
-		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
+		$realDoubtful 							= $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
 		$customerStatusDenied                   = $realDoubtful['customerStatusDenied'];
 		$idDef                                  = $realDoubtful['idDef'];
-		$mora = $realDoubtful['doubtful'];
+		$mora 									= $realDoubtful['doubtful'];
 		$customerIntention->ESTADO_OBLIGACIONES = $realDoubtful['doubtful'];
 
-		$finDoubtful = $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
+		$finDoubtful 							= $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
 		$customerStatusDenied                   = $finDoubtful['customerStatusDenied'];
 		$idDef                                  = $finDoubtful['idDef'];
 		$customerIntention->ESTADO_OBLIGACIONES = $finDoubtful['doubtful'];
@@ -677,6 +677,7 @@ class assessorsController extends Controller
 		$customerStatusDenied            = $labor['customerStatusDenied'];
 		$idDef                           = $labor['idDef'];
 		$customerIntention->TIEMPO_LABOR = $labor['labor'];
+
 
 		$customerIntention->INSPECCION_OCULAR = $this->policyInterface->validaOccularInspection($customer, $customerIntention);
 		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
@@ -712,6 +713,7 @@ class assessorsController extends Controller
 		}
 
 		$idDef = $this->creditCardInterface->validateCreditCardStatus($aprobado, $customer, $customerIntention, $idDef, $customerStatusDenied);
+
 
 		if ($aprobado == false && $customerIntention->PERFIL_CREDITICIO == 'TIPO A' && $customerStatusDenied == false && $customer->ACTIVIDAD != 'SOLDADO-MILITAR-POLICÍA') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -765,7 +767,6 @@ class assessorsController extends Controller
 
 		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO A') {
 			if ($statusAfiliationCustomer == true) {
-
 				if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
@@ -871,7 +872,6 @@ class assessorsController extends Controller
 				return ['resp' => "-2"];
 			}
 		}
-
 
 		if ($customerIntention->PERFIL_CREDITICIO == 'TIPO B') {
 			if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES') {

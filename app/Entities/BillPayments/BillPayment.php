@@ -2,6 +2,7 @@
 
 namespace App\Entities\BillPayments;
 
+use App\Entities\BillPaymentStatusesLogs\BillPaymentStatusesLog;
 use App\Entities\MailsBillPayments\MailsBillPayment;
 use App\Entities\Products\Product;
 use App\Entities\TypeInvoices\TypeInvoice;
@@ -44,5 +45,10 @@ class BillPayment extends Model
     public function mailBillPayment()
     {
         return $this->hasMany(MailsBillPayment::class);
+    }
+
+    public function statusLogs()
+    {
+        return $this->hasMany(BillPaymentStatusesLog::class);
     }
 }
