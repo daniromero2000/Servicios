@@ -5,7 +5,9 @@ namespace App\Entities\BillPayments\Repositories;
 use App\Entities\BillPayments\BillPayment;
 use App\Entities\BillPayments\Exceptions\BillPaymentNotFoundErrorException;
 use App\Entities\BillPayments\Exceptions\CreateBillPaymentErrorException;
+use App\Mail\BillPayments\Mail as BillPaymentsMail;
 use App\Mail\SendEmail;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Mail;
 
@@ -133,12 +135,12 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         $data = $this->checkOverdueInvoices($day);
 
-        return $data;
+        // return $data;
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 $emails = [];
                 foreach ($value->mailBillPayment as $key => $mail) {
-                    dd($this->sendNotificationOfPastDueInvoice($mail->email, $value));
+                   $this->sendNotificationOfPastDueInvoice($mail->email, $value);
                 }
                
             }
@@ -151,6 +153,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
             return $this->model->whereBetween('payment_deadline', [$day, $day + 7])
                 ->where('status', 0)
                 ->with('mailBillPayment')
+                ->with('typeInvoice')
                 ->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
@@ -163,7 +166,10 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         //     'desarrollador1.syc@gmail.com',
         //     'financiero0.syc@gmail.com'
         // ])
-        Mail::to(['email' => $mail])->send(new SendEmail());
+        // Mail::to(['email' => $mail])->send(new SendEmail());
+
+        $date = Carbon::now();
+        Mail::to(['email' => $mail])->send(new BillPaymentsMail(['data' => $data, 'date' => $date]));
 
         // Mail::send(new SendEmail(), [], function ($message) use ($mails) {
         //     $message->to($mails)->subject('This is test e-mail');

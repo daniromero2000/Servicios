@@ -1,12 +1,13 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
-    xmlns:o="urn:schemas-microsoft-com:office:office">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="x-apple-disable-message-reformatting">
-    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order Invoice</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
     <style>
@@ -112,10 +113,6 @@
             }
         }
 
-    </style>
-
-
-    <style>
         .primary {
             background: #52c8ff;
         }
@@ -189,7 +186,6 @@
             color: #52c8ff;
         }
 
-        table {}
 
         /*LOGO*/
 
@@ -248,7 +244,6 @@
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#033fff', endColorstr='#52c8ff', GradientType=1);
         }
 
-        .hero .icon {}
 
         .hero .icon a {
             display: block;
@@ -269,7 +264,6 @@
 
 
         /*HEADING SECTION*/
-        .heading-section {}
 
         .heading-section h2 {
             color: #000000;
@@ -330,7 +324,6 @@
             text-align: center;
         }
 
-        .icon img {}
 
 
         /*SERVICES*/
@@ -533,9 +526,10 @@
 </head>
 
 <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #222222;">
-    <body width="100%"
+
+    <div width="100%"
         style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #222222;">
-        <center style="width: 100%; background-color: #f1f1f1;">
+        <div style="width: 100%; background-color: #f1f1f1;">
             <div
                 style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
                 ‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
@@ -545,7 +539,9 @@
                 <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
                     style="margin: auto;">
                     <tbody>
-                        <tr>
+                        <img src="{{asset('images/Front/header.png')}}" alt="">
+
+                        {{-- <tr>
                             <td valign="top" class="bg_white" style="padding: 1em 2.5em;">
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tbody>
@@ -581,53 +577,54 @@
                                                 <div class="text" style="padding: 0 3em; text-align: center;">
                                                     <h2>Notificación de pago</h2>
                                                     <p>La siguiente factura esta próxima a vencer, por favor gestionar o
-                                                        notificar a la persona responsable.</p>
+                                                        notifica a la persona responsable.</p>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="bg_white">
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tbody>
-                                       <tr>
-                                        <td class="bg_white email-section">
-                                            <div class="heading-section" style="text-align: center; padding: 0 30px;">
-                                                <h2>Factura</h2>
-                                            </div>
-                                            <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-                                                width="100%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td valign="top" width="100%" style="padding-top: 20px;">
-                                                            <table role="presentation" cellspacing="0" cellpadding="10"
-                                                                border="0" width="100%">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        @php
-                                                                            // dd($data);
-                                                                        @endphp
-                                                                        <td class="text-services"
-                                                                            style="text-align: center;">
-                                                                            <p class="meta"><span>{{$data->payment_deadline}} / {{$date->month}} / {{$date->year}}</span> <span>Food</span></p>
-                                                                            <h3>Web Design Technique</h3>
-                                                                            <p>Far far away, behind the word mountains,
-                                                                                far from the countries</p>
-                                                                            <p><a href="#" class="btn btn-primary">Read
-                                                                                    more</a></p>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td class="bg_white email-section">
+                                                <div class="heading-section"
+                                                    style="text-align: center; padding: 0 30px;">
+                                                    <h2>{{ $data->typeInvoice->name }}</h2>
+                                                </div>
+                                                <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                                    width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top" width="100%">
+                                                                <table role="presentation" cellspacing="0"
+                                                                    cellpadding="10" border="0" width="100%">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="text-services"
+                                                                                style="text-align: center;">
+                                                                                <p class="meta"><span>Fecha limite de
+                                                                                        pago <b>
+                                                                                            {{ $data->payment_deadline }}/{{ $date->month }}/{{ $date->year }}
+                                                                                        </b> </span> </p>
+                                                                                <h3>Servicio de:
+                                                                                    {{ $data->type_of_service }}</h3>
+                                                                                <p>Referencia de pago:
+                                                                                    <b>{{ $data->payment_reference }}</b>
+                                                                                </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </td>
@@ -636,22 +633,10 @@
                     </tbody>
                 </table>
             </div>
-        </center>
+        </div>
 
-        <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
-        <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
 
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-
-            gtag('config', 'UA-23581568-13');
-
-        </script>
-
-    </body>
+    </div>
+</body>
 
 </html>
