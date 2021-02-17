@@ -539,9 +539,10 @@
                 <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
                     style="margin: auto;">
                     <tbody>
-                        <img style="width: 100%" src="{{asset('images/Front/header.png')}}" alt="">
 
-                        {{-- <tr>
+                        {{-- <img style="width: 100%" src="{{asset('images/Front/header.png')}}" alt=""> --}}
+
+                        <tr>
                             <td valign="top" class="bg_white" style="padding: 1em 2.5em;">
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tbody>
@@ -584,7 +585,10 @@
                                     </tbody>
                                 </table>
                             </td>
-                        </tr> --}}
+                        </tr>
+                        @php
+                            $datas;
+                        @endphp
                         <tr>
                             <td class="bg_white">
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
