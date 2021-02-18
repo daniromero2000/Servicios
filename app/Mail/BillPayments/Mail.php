@@ -26,6 +26,6 @@ class Mail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.billPayment.mail', $this->billpayment);
+        return $this->subject('Alerta pago de factura')->view('mail.billPayment.mail', $this->billpayment);
     }
 }

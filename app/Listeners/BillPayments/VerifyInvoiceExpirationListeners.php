@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Email;
+namespace App\Listeners\BillPayments;
 
 use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
 
