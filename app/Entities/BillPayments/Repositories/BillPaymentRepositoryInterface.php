@@ -18,12 +18,16 @@ interface BillPaymentRepositoryInterface
 
     public function deleteNotificationById($id): bool;
 
-    public function updateBillPayment(array $params): bool;
+    public function updateBillPayment(array $params);
 
     public function lookUpPastDueBills($day);
 
     public function checkOverdueInvoices($day);
 
     public function sendNotificationOfPastDueInvoice($mails, $data);
+
+    public function sendNotificationOfInvoicePaid($mail, $data);
+
+    public function getInvoicesPaid();
 
 }

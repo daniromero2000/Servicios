@@ -131,7 +131,7 @@ class BillPaymentService implements BillPaymentServiceInterface
 
             $this->mailsBillPaymentInterface->createMailsBillPayment($data);
         }
-        
+
         $user = auth()->user()->id;
         $status = [
             'bill_payment_id' => $billPayment->id,
@@ -146,6 +146,8 @@ class BillPaymentService implements BillPaymentServiceInterface
 
     public function updateBillPayment(array $data): bool
     {
+        $billPayment = $this->billPaymentInterface->findBillPaymentById($data['id']);
+
         $this->billPaymentInterface->updateBillPayment($data);
 
         if (array_key_exists('emails', $data['data'])) {
@@ -158,16 +160,23 @@ class BillPaymentService implements BillPaymentServiceInterface
             }
         }
 
-        if (array_key_exists('status', $data['data'])){
-            $user = auth()->user()->id;
-            $status = [
-                'bill_payment_id' => $data['id'],
-                'status'          => $data['data']['status'],
-                'user_id'         => $user
-            ];
+        if (array_key_exists('status', $data['data'])) {
+            if ($data['data']['status'] != $billPayment->status) {
+                $user = auth()->user()->id;
+                $status = [
+                    'bill_payment_id' => $data['id'],
+                    'status'          => $data['data']['status'],
+                    'user_id'         => $user
+                ];
 
-            $this->statusesLogInterface->createBillPaymentStatusesLog($status);
+                $this->statusesLogInterface->createBillPaymentStatusesLog($status);
 
+                if ($data['data']['status'] == 2) {
+                    foreach ($billPayment->mailBillPayment as $key => $mail) {
+                        $this->billPaymentInterface->sendNotificationOfInvoicePaid($mail->email, $billPayment);
+                    }
+                }
+            }
         }
         return true;
     }
@@ -190,5 +199,29 @@ class BillPaymentService implements BillPaymentServiceInterface
     {
         $date = Carbon::now();
         return $this->billPaymentInterface->lookUpPastDueBills($date->day);
+    }
+
+
+    public function enableInvoicesForPayment()
+    {
+        $data = $this->billPaymentInterface->getInvoicesPaid();
+        $date2 = Carbon::now();
+
+        foreach ($data as $key => $value) {
+            $date = Carbon::createMidnightDate($value->statusLogsPayment->updated_at->year, $value->statusLogsPayment->updated_at->month, $value->payment_deadline);
+            $diff  = $date->diffInDays($date2);
+            if ($diff >= 10) {
+                $value->status = 0;
+                $value->update();
+
+                $status = [
+                    'bill_payment_id' => $value->id,
+                    'status'          => 3,
+                    'user_id'         => 1
+                ];
+
+                $this->statusesLogInterface->createBillPaymentStatusesLog($status);
+            }
+        }
     }
 }

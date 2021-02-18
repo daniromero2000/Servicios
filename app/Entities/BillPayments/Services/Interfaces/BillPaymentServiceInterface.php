@@ -18,4 +18,6 @@ interface BillPaymentServiceInterface
 
     public function checkInvoices();
 
+    public function enableInvoicesForPayment();
+
 }

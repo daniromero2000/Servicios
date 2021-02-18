@@ -214,10 +214,12 @@
                                             @php
                                                 if ($data->status == 0) {
                                                     $data->statuses = ['status' => 'Pendiente', 'color' => '#FFFFFF', 'background' => '#ff8d00'];
-                                                } elseif ($data->statuses == 1) {
+                                                } elseif ($data->status == 1) {
                                                     $data->statuses = ['status' => 'Gestionado', 'color' => '#FFFFFF', 'background' => '#007bff'];
-                                                } else {
+                                                } elseif ($data->status == 2) {
                                                     $data->statuses = ['status' => 'Pagado', 'color' => '#FFFFFF', 'background' => '#2ec76b'];
+                                                } else {
+                                                    $data->statuses = ['status' => 'Habilitado para pago', 'color' => '#FFFFFF', 'background' => '#c72ebb'];
                                                 }
                                             @endphp
                                             <div class="timeline timeline-one-side" data-timeline-content="axis"

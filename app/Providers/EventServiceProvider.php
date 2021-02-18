@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\BillPayments\EnableInvoicesForPayment;
 use App\Events\BillPayments\VerifyInvoiceExpiration;
 use App\Events\Email\SendEmailEvent;
+use App\Listeners\BillPayments\EnableInvoicesForPaymentListeners;
 use App\Listeners\Email\SendEmailListeners;
 use App\Listeners\BillPayments\VerifyInvoiceExpirationListeners;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
 
         VerifyInvoiceExpiration::class => [
             VerifyInvoiceExpirationListeners::class,
+        ],
+
+        EnableInvoicesForPayment::class => [
+            EnableInvoicesForPaymentListeners::class,
         ]
     ];
 

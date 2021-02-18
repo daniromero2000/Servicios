@@ -6,6 +6,7 @@ use App\Entities\BillPayments\BillPayment;
 use App\Entities\BillPayments\Exceptions\BillPaymentNotFoundErrorException;
 use App\Entities\BillPayments\Exceptions\CreateBillPaymentErrorException;
 use App\Mail\BillPayments\Mail as BillPaymentsMail;
+use App\Mail\BillPayments\SendNotificationOfInvoicePaid;
 use App\Mail\SendEmail;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -110,12 +111,14 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
-    public function updateBillPayment(array $params): bool
+    public function updateBillPayment(array $params)
     {
         try {
-            $billPayment = $this->findBillPaymentById($params['id']);
 
-            return $billPayment->update($params['data']);
+            $billPayment = $this->findBillPaymentById($params['id']);
+            $billPayment->update($params['data']);
+
+            return $billPayment;
         } catch (QueryException $e) {
             // throw new UpdateCampaignErrorException($e);
         }
@@ -139,9 +142,8 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
             foreach ($data as $key => $value) {
                 $emails = [];
                 foreach ($value->mailBillPayment as $key => $mail) {
-                   $this->sendNotificationOfPastDueInvoice($mail->email, $value);
+                    $this->sendNotificationOfPastDueInvoice($mail->email, $value);
                 }
-               
             }
         }
     }
@@ -159,19 +161,24 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
+    public function getInvoicesPaid()
+    {
+        try {
+            return $this->model->where('status', 2)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function sendNotificationOfPastDueInvoice($mail, $data)
     {
-        // ->cc([
-        //     'desarrollador1.syc@gmail.com',
-        //     'financiero0.syc@gmail.com'
-        // ])
-        // Mail::to(['email' => $mail])->send(new SendEmail());
-
         $date = Carbon::now();
         Mail::to(['email' => $mail])->send(new BillPaymentsMail(['data' => $data, 'date' => $date]));
+    }
 
-        // Mail::send(new SendEmail(), [], function ($message) use ($mails) {
-        //     $message->to($mails)->subject('This is test e-mail');
-        // });
+    public function sendNotificationOfInvoicePaid($mail, $data)
+    {
+        $date = Carbon::now();
+        Mail::to(['email' => $mail])->send(new SendNotificationOfInvoicePaid(['data' => $data, 'date' => $date]));
     }
 }

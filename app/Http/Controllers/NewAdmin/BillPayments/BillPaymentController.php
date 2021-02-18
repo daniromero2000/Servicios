@@ -109,4 +109,9 @@ class BillPaymentController extends Controller
         return view('mail.billPayment.mail', ['data' => $data[0], 'date' => $date]);
         return $this->billPaymentInterface->checkInvoices();
     }
+
+    public function resetPaymentStatuses()
+    {
+        return $this->billPaymentInterface->enableInvoicesForPayment();
+    }
 }
