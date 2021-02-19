@@ -30,7 +30,7 @@ class TypeInvoiceRepository implements TypeInvoiceRepositoryInterface
 
     public function listAllTypeInvoices()
     {
-      return $this->model->where('status', '1')->get();
+      return $this->model->where('status', '1')->orderBy('name', 'ASC')->get();
     }
 
     public function createTypeInvoice(array $data): TypeInvoice

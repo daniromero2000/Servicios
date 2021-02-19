@@ -49,11 +49,15 @@
                                 <div class="input-group  mb-3">
                                     <select name="type_of_service" id="type_of_service" class="form-control" required>
                                         <option value="">Seleccione</option>
+                                        <option value="Acueducto">Acueducto</option>
+                                        <option value="Bolsa de minutos">Bolsa de minutos</option>
+                                        <option value="Energia">Energia</option>
                                         <option value="Internet">Internet</option>
+                                        <option value="Internet y telefonía">Internet y telefonía</option>
+                                        <option value="Paquete de servicios">Paquete de servicios</option>
+                                        <option value="PDTI">PDTI</option>
                                         <option value="Telefonia (Fijo)">Telefonia (Fijo)</option>
                                         <option value="Telefonia (Movil)">Telefonia (Movil)</option>
-                                        <option value="Energia">Energia</option>
-                                        <option value="Agua">Agua</option>
                                     </select>
                                 </div>
                             </div>

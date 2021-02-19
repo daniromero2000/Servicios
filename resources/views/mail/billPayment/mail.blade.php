@@ -940,7 +940,8 @@
                                                                                                                         <span
                                                                                                                             style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 16px; color: rgb(255, 255, 255);">
                                                                                                                             <a style="color:#FFFFFF;text-decoration:none;"
-                                                                                                                                target="_blank">{{ $data->typeInvoice->name }}</a></span>
+                                                                                                                                target="_blank">Factura:
+                                                                                                                                {{ $data->typeInvoice->name }}</a></span>
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                             </tbody>
@@ -954,12 +955,22 @@
                                                                                                 <tr>
                                                                                                     <td class="text-services"
                                                                                                         style="text-align: center;">
-
                                                                                                         <p
                                                                                                             style="font-family: Arial, Helvetica, sans-serif;font-size: 16px;font-weight: 400;color: rgb(56, 56, 56);">
                                                                                                             Servicio
                                                                                                             de:
-                                                                                                           <b> {{ $data->type_of_service }}</b>
+                                                                                                            <b>
+                                                                                                                {{ $data->type_of_service }}</b>
+                                                                                                        </p>
+                                                                                                        <p
+                                                                                                            style="font-family: Arial, Helvetica, sans-serif;font-size: 16px;font-weight: 400;color: rgb(56, 56, 56);">
+                                                                                                            Fecha limite de pago:
+                                                                                                            <b>
+                                                                                                                {{ $data->payment_deadline }}
+                                                                                                                /
+                                                                                                                {{ $date->month }}
+                                                                                                                /
+                                                                                                                {{ $date->year }}</b>
                                                                                                         </p>
                                                                                                         <p
                                                                                                             style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 400;color: rgb(56, 56, 56);">
@@ -972,11 +983,18 @@
                                                                                                         <p
                                                                                                             style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 400;color: rgb(56, 56, 56);">
                                                                                                             Sucursal:
-                                                                                                            <b>{{ $data->subsidiary_id }}</b>
+                                                                                                            <b>{{ $data->subsidiary_id == 1 ? 'Oficina' : $data->subsidiary_id }}</b>
                                                                                                         </p>
+                                                                                                        @if ($data->description)
+                                                                                                            <p
+                                                                                                                style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 400;color: rgb(56, 56, 56);">
+                                                                                                                Descripción:
+                                                                                                                <b>{{ $data->description }}</b>
+                                                                                                            </p>
+                                                                                                        @endif
                                                                                                     </td>
                                                                                                 </tr>
-                                                                                                 <tr>
+                                                                                                <tr>
                                                                                                     <td height="20">
                                                                                                     </td>
                                                                                                 </tr>

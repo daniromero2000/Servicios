@@ -21,7 +21,8 @@ class BillPayment extends Model
         'type_of_service',
         'payment_reference',
         'description',
-        'user_id'
+        'user_id',
+        'date_of_notification'
     ];
 
     protected $searchable = [

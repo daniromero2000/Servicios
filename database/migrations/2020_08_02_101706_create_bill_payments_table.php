@@ -22,6 +22,7 @@ class CreateBillPaymentsTable extends Migration
             $table->string('type_of_service');
             $table->string('payment_reference');
             $table->integer('user_id');
+            $table->timestamp('date_of_notification')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

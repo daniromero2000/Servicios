@@ -93,8 +93,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth',  'as' => 'admin.'], f
 
         Route::namespace('BillPayments')->group(function () {
             Route::resource('invoiceManagement', 'BillPaymentController');
-            // Route::get('verifyInvoiceExpiration', 'BillPaymentController@verifyInvoiceExpiration');
-            // Route::get('resetPaymentStatuses', 'BillPaymentController@resetPaymentStatuses');
+            Route::get('verifyInvoiceExpiration', 'BillPaymentController@verifyInvoiceExpiration');
+            Route::get('resetPaymentStatuses', 'BillPaymentController@resetPaymentStatuses');
         });
     });
 });

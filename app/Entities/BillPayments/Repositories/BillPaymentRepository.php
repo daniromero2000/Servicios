@@ -138,12 +138,15 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         $data = $this->checkOverdueInvoices($day);
 
+        // dd($data);
         if (!empty($data)) {
             foreach ($data as $key => $value) {
-                $emails = [];
                 foreach ($value->mailBillPayment as $key => $mail) {
                     $this->sendNotificationOfPastDueInvoice($mail->email, $value);
                 }
+
+                $value->date_of_notification = Carbon::now();
+                $value->update();
             }
         }
     }
@@ -151,10 +154,12 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     public function checkOverdueInvoices($day)
     {
         try {
-            return $this->model->whereBetween('payment_deadline', [$day, $day + 7])
+            return $this->model->whereBetween('payment_deadline', [$day, $day + 5])
+                ->orWhereBetween('payment_deadline', [$day - 5, $day])
                 ->where('status', 0)
                 ->with('mailBillPayment')
                 ->with('typeInvoice')
+                ->orderBy('payment_deadline', 'ASC')
                 ->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

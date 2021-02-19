@@ -97,11 +97,14 @@ class BillPaymentService implements BillPaymentServiceInterface
                         ['id' => '2', 'name' => 'Pagado']
                     ], 'option' => 'name'],
                     ['label' => 'Tipo de servicio', 'type' => 'select', 'name' => 'type_of_service', 'options' => [
-                        ['id' => 'Internet', 'name' => 'Internet'],
-                        ['id' => 'Telefonia (Fijo)', 'name' => 'Telefonia (Fijo)'],
-                        ['id' => 'Telefonia (Movil)', 'name' => 'Telefonia (Movil)'],
+                        ['id' => 'Acueducto', 'name' => 'Acueducto'],
+                        ['id' => 'Bolsa de minutos', 'name' => 'Bolsa de minutos'],
                         ['id' => 'Energia', 'name' => 'Energia'],
-                        ['id' => 'Agua', 'name' => 'Agua']
+                        ['id' => 'Internet', 'name' => 'Internet'],
+                        ['id' => 'Internet y telefonía', 'name' => 'Internet y telefonía'],
+                        ['id' => 'PDTI', 'name' => 'PDTI'],
+                        ['id' => 'Telefonia (Fijo)', 'name' => 'Telefonia (Fijo)'],
+                        ['id' => 'Telefonia (Movil)', 'name' => 'Telefonia (Movil)']
                     ], 'option' => 'name'],
                 ],
                 'skip'               => $skip,
@@ -208,8 +211,9 @@ class BillPaymentService implements BillPaymentServiceInterface
         $date2 = Carbon::now();
 
         foreach ($data as $key => $value) {
-            $date = Carbon::createMidnightDate($value->statusLogsPayment->updated_at->year, $value->statusLogsPayment->updated_at->month, $value->payment_deadline);
-            $diff  = $date->diffInDays($date2);
+            $dateUpdate = Carbon::parse($value->date_of_notification);
+            $diff  = $dateUpdate->diffInDays($date2);
+
             if ($diff >= 10) {
                 $value->status = 0;
                 $value->update();
