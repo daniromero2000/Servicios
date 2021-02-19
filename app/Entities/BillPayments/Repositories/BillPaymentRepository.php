@@ -138,7 +138,6 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         $data = $this->checkOverdueInvoices($day);
 
-        // dd($data);
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 foreach ($value->mailBillPayment as $key => $mail) {
