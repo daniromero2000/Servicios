@@ -22,7 +22,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         'type_of_service',
         'subsidiary_id',
         'payment_deadline',
-        'status',
+        'status'
         // 'description'
     ];
 
@@ -154,7 +154,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         try {
             return $this->model->whereBetween('payment_deadline', [$day, $day + 5])
-                ->orWhereBetween('payment_deadline', [$day - 5, $day])
+                // ->orWhereBetween('payment_deadline', [$day - 5, $day])
                 ->where('status', 0)
                 ->with('mailBillPayment')
                 ->with('typeInvoice')

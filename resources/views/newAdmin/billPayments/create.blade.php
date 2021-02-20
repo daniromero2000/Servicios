@@ -58,6 +58,7 @@
                                         <option value="PDTI">PDTI</option>
                                         <option value="Telefonia (Fijo)">Telefonia (Fijo)</option>
                                         <option value="Telefonia (Movil)">Telefonia (Movil)</option>
+                                        <option value="Todos los servicios">Todos los servicios</option>
                                     </select>
                                 </div>
                             </div>

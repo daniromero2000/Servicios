@@ -104,7 +104,8 @@ class BillPaymentService implements BillPaymentServiceInterface
                         ['id' => 'Internet y telefonía', 'name' => 'Internet y telefonía'],
                         ['id' => 'PDTI', 'name' => 'PDTI'],
                         ['id' => 'Telefonia (Fijo)', 'name' => 'Telefonia (Fijo)'],
-                        ['id' => 'Telefonia (Movil)', 'name' => 'Telefonia (Movil)']
+                        ['id' => 'Telefonia (Movil)', 'name' => 'Telefonia (Movil)'],
+                        ['id' => 'Todos los servicios', 'name' => 'Todos los servicios']
                     ], 'option' => 'name'],
                 ],
                 'skip'               => $skip,
