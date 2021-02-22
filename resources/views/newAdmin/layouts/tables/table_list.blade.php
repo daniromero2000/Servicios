@@ -47,11 +47,24 @@
                                       data-original-title="{{ $data->id }}">
                                       <i class="fas fa-edit"></i>
                                   </a>
-                                  <a href="{{ route($optionsRoutes.'.show', $data->id) }}"
+                                  <a href="{{ route($optionsRoutes . '.show', $data->id) }}"
                                       class=" table-action table-action" data-toggle="tooltip"
                                       data-original-title="Ver">
                                       <i class="fas fa-eye"></i>
                                   </a>
+                              </td>
+                              <td>
+                                  {{-- @if (isset($button)) --}}
+                                  <form method="POST" action="{{ route($optionsRoutes . '.update', $data->id) }}">
+                                      @csrf
+                                      @method('PUT')
+                                      <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                      <input type="hidden" name="status" value="2">
+                                      <button type="submit" data-toggle="tooltip"
+                                          data-original-title="Confirmar pago de factura"
+                                          class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
+                                  </form>
+                                  {{-- @endif --}}
                               </td>
                           </tr>
                           @include('newAdmin.layouts.modals.modal_update')

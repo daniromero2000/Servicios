@@ -80,7 +80,7 @@ class BillPaymentService implements BillPaymentServiceInterface
             'data' => [
                 'list'               =>  collect($list),
                 'optionsRoutes'      => 'admin.' . (request()->segment(2)),
-                'headers'            => ['Referencia de pago', 'Proveedor', 'Servicio', 'Sucursal', 'Dia de corte', 'Estado', 'Opciones'],
+                'headers'            => ['Referencia de pago', 'Proveedor', 'Servicio', 'Sucursal', 'Dia de corte', 'Estado', 'Opciones', ' '],
                 'searchInputs'       => [
                     ['label' => 'Buscar', 'type' => 'text', 'name' => 'q'],
                     ['label' => 'Desde', 'type' => 'date', 'name' => 'from'],
