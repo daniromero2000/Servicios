@@ -30,4 +30,7 @@ interface BillPaymentRepositoryInterface
 
     public function getInvoicesPaid();
 
+    public function getManagedInvoices();
+
+    public function sendManagedInvoiceNotification($data);
 }

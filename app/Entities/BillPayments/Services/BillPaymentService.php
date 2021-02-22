@@ -206,7 +206,6 @@ class BillPaymentService implements BillPaymentServiceInterface
         return $this->billPaymentInterface->lookUpPastDueBills($date->day);
     }
 
-
     public function enableInvoicesForPayment()
     {
         $data = $this->billPaymentInterface->getInvoicesPaid();
@@ -230,4 +229,20 @@ class BillPaymentService implements BillPaymentServiceInterface
             }
         }
     }
+
+    public function verifyManagedInvoices()
+    {
+        $data = $this->billPaymentInterface->getManagedInvoices();
+        $date2 = Carbon::now();
+
+        foreach ($data as $key => $value) {
+            $dateUpdate = Carbon::parse($value->statusLog->created_at);
+            $diff  = $dateUpdate->diffInDays($date2);
+
+            if ($diff >= 5) {
+                $this->billPaymentInterface->sendManagedInvoiceNotification($value);
+            }
+        }
+    }
+
 }

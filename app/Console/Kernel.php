@@ -25,8 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('sitemap:generate')->weekly();
-        $schedule->command('enableInvoicesForPayment')->dailyAt('06:00')->days([1, 2, 3, 4, 5, 6]);;
-        $schedule->command('verifyInvoiceExpiration')->dailyAt('07:00')->days([1, 2, 3, 4, 5, 6]);;
+        $schedule->command('enableInvoicesForPayment')->dailyAt('06:00')->days([1, 2, 3, 4, 5, 6]);
+        $schedule->command('verifyInvoiceExpiration')->dailyAt('07:00')->days([1, 2, 3, 4, 5, 6]);
+        $schedule->command('verifyManagedInvoices')->dailyAt('08:00')->days([1, 2, 3, 4, 5, 6]);
     }
 
     /**

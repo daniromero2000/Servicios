@@ -6,6 +6,7 @@ use App\Entities\BillPayments\BillPayment;
 use App\Entities\BillPayments\Exceptions\BillPaymentNotFoundErrorException;
 use App\Entities\BillPayments\Exceptions\CreateBillPaymentErrorException;
 use App\Mail\BillPayments\Mail as BillPaymentsMail;
+use App\Mail\BillPayments\SendManagedInvoiceNotification;
 use App\Mail\BillPayments\SendNotificationOfInvoicePaid;
 use App\Mail\SendEmail;
 use Carbon\Carbon;
@@ -174,6 +175,15 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
+    public function getManagedInvoices()
+    {
+        try {
+            return $this->model->with('statusLog')->where('status', 1)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function sendNotificationOfPastDueInvoice($mail, $data)
     {
         $date = Carbon::now();
@@ -184,5 +194,11 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         $date = Carbon::now();
         Mail::to(['email' => $mail])->send(new SendNotificationOfInvoicePaid(['data' => $data, 'date' => $date]));
+    }
+
+    public function sendManagedInvoiceNotification($data)
+    {
+        $date = Carbon::now();
+        Mail::to(['email' => 'auditoria05-per@lagobo.com'])->send(new SendManagedInvoiceNotification(['data' => $data, 'date' => $date]));
     }
 }

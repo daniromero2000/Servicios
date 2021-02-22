@@ -57,4 +57,9 @@ class BillPayment extends Model
     {
         return $this->hasOne(BillPaymentStatusesLog::class)->orderBy('created_at', 'desc')->where('status', 2);
     }
+
+    public function statusLog()
+    {
+        return $this->hasOne(BillPaymentStatusesLog::class)->orderBy('created_at', 'desc')->where('status', 1);
+    }
 }

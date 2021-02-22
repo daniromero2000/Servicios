@@ -105,7 +105,7 @@ class BillPaymentController extends Controller
 
     public function verifyInvoiceExpiration(Request $request)
     {
-        // $data = $this->billPaymentInterface->checkInvoices();
+        $data = $this->billPaymentInterface->verifyManagedInvoices();
         // $date = Carbon::now();
         // return view('mail.billPayment.mail', ['data' => $data[0], 'date' => $date]);
         // return $this->billPaymentInterface->checkInvoices();
