@@ -41,7 +41,7 @@
                                       @endif
                                   @endif
                               @endforeach
-                              <td class="text-center">
+                              <td class="text-center d-flex">
                                   <a data-toggle="modal" data-target="#modal{{ $data->id }}" href=""
                                       class="table-action table-action" data-toggle="tooltip"
                                       data-original-title="{{ $data->id }}">
@@ -52,6 +52,17 @@
                                       data-original-title="Ver">
                                       <i class="fas fa-eye"></i>
                                   </a>
+                                  <form id="form_{{ $data->id }}"
+                                      action="{{ route($optionsRoutes . '.destroy', $data->id) }}" method="post"
+                                      class="form-horizontal">
+                                      @csrf
+                                      <button onclick="return confirm('¿Estás seguro de eliminar este registro?')"
+                                          style="background: transparent; border: 0;" type="submit" class="table-action"
+                                          data-toggle="tooltip" data-original-title="Eliminar registro">
+                                         <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <input type="hidden" name="_method" value="delete">
+                                  </form>
                               </td>
                               <td>
                                   {{-- @if (isset($button)) --}}

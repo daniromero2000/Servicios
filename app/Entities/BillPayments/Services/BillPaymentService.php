@@ -194,9 +194,10 @@ class BillPaymentService implements BillPaymentServiceInterface
         ]];
     }
 
-    public function deleteNotificationById($id): bool
+    public function deleteBillPayment($id): bool
     {
-        return true;
+        $document = $this->billPaymentInterface->findBillPaymentById($id);
+        return  $document->delete();
     }
 
     public function checkInvoices()

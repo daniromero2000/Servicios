@@ -99,19 +99,20 @@ class BillPaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->billPaymentInterface->deleteBillPayment($id);
+        return redirect()->route('admin.invoiceManagement.index')->with('message', 'Se ha eliminado correctamente');
     }
 
     public function verifyInvoiceExpiration(Request $request)
     {
-        $data = $this->billPaymentInterface->checkInvoices();
-        $date = Carbon::now();
-        return view('mail.billPayment.mail', ['data' => $data[0], 'date' => $date]);
-        return $this->billPaymentInterface->checkInvoices();
+        // $data = $this->billPaymentInterface->checkInvoices();
+        // $date = Carbon::now();
+        // return view('mail.billPayment.mail', ['data' => $data[0], 'date' => $date]);
+        // return $this->billPaymentInterface->checkInvoices();
     }
 
     public function resetPaymentStatuses()
     {
-        return $this->billPaymentInterface->enableInvoicesForPayment();
+        // return $this->billPaymentInterface->enableInvoicesForPayment();
     }
 }
