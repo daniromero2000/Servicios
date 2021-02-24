@@ -10,9 +10,9 @@ interface BillPaymentRepositoryInterface
 
     public function createBillPayment(array $data): BillPayment;
 
-    public function searchBillPayment(string $text = null, int $totalView, $from = null, $to = null);
+    public function searchBillPayment(string $text = null, int $totalView, $status = null, $payment_deadline = null , $subsidiary_id = null);
 
-    public function countBillPayments(string $text = null,  $from = null, $to = null);
+    public function countBillPayments(string $text = null,  $status = null, $payment_deadline = null , $subsidiary_id = null);
 
     public function findBillPaymentById(int $id): BillPayment;
 

@@ -33,21 +33,16 @@ class BillPaymentService implements BillPaymentServiceInterface
 
     public function listBillPayments(array $data): array
     {
-        $skip        = array_key_exists('skip', $data['search']) ? $data['search']['skip'] : 0;
-        $fromOrigin  = array_key_exists('from', $data['search']) &&  $data['search']['from'] != '' ? $data['search']['from'] . " 00:00:01" : '';
-        $toOrigin    = array_key_exists('to', $data['search']) &&  $data['search']['to'] != '' ? $data['search']['to'] . " 23:59:59" : '';
-        $q           = array_key_exists('q', $data['search']) ? $data['search']['q'] : '';
+        $skip               = array_key_exists('skip', $data['search']) ? $data['search']['skip'] : 0;
+        $q                  = array_key_exists('q', $data['search']) ? $data['search']['q'] : '';
+        $status             = array_key_exists('status', $data['search']) ? $data['search']['status'] : '';
+        $payment_deadline   = array_key_exists('payment_deadline', $data['search']) ? $data['search']['payment_deadline'] : '';
+        $subsidiary_id      = array_key_exists('subsidiary_id', $data['search']) ? $data['search']['subsidiary_id'] : '';
         $search      = false;
 
-        if ($q != '' && ($fromOrigin == '' || $toOrigin == '')) {
-            $list     = $this->billPaymentInterface->searchBillPayment($q, $skip * 30);
-            $paginate = $this->billPaymentInterface->countBillPayments($q);
-            $search = true;
-        } elseif (($q != '' || $fromOrigin != '' || $toOrigin != '')) {
-            $from     = $fromOrigin != '' ? $fromOrigin : Carbon::now()->subMonths(1);
-            $to       = $toOrigin != '' ? $toOrigin : Carbon::now();
-            $list     = $this->billPaymentInterface->searchBillPayment($q, $skip * 30, $from, $to);
-            $paginate = $this->billPaymentInterface->countBillPayments($q, $from, $to);
+        if ($q != '' || $status != '' || $payment_deadline != '' ||  $subsidiary_id != '') {
+            $list     = $this->billPaymentInterface->searchBillPayment($q, $skip * 30, $status, $payment_deadline, $subsidiary_id);
+            $paginate = $this->billPaymentInterface->countBillPayments($q, $status, $payment_deadline, $subsidiary_id);
             $search = true;
         } else {
             $list     = $this->billPaymentInterface->listBillPayments($skip * 30);
@@ -80,11 +75,18 @@ class BillPaymentService implements BillPaymentServiceInterface
             'data' => [
                 'list'               =>  collect($list),
                 'optionsRoutes'      => 'admin.' . (request()->segment(2)),
-                'headers'            => ['Referencia de pago', 'Proveedor', 'Servicio', 'Sucursal', 'Dia de corte', 'Estado', 'Opciones', ' '],
+                'headers'            => ['Referencia de pago', 'Proveedor', 'Servicio', 'Sucursal', 'Dia de pago', 'Estado', 'Opciones', ' '],
                 'searchInputs'       => [
                     ['label' => 'Buscar', 'type' => 'text', 'name' => 'q'],
-                    ['label' => 'Desde', 'type' => 'date', 'name' => 'from'],
-                    ['label' => 'Hasta', 'type' => 'date', 'name' => 'to']
+                    [
+                        'label' => 'Estado', 'type' => 'select', 'name' => 'status',  'option' => 'name', 'options' => [
+                            ['id' => '0', 'name' => 'Pendiente'],
+                            ['id' => '1', 'name' => 'Gestionado'],
+                            ['id' => '2', 'name' => 'Pagado'],
+                        ]
+                    ],
+                    ['label' => 'Dia de pago', 'type' => 'number', 'name' => 'payment_deadline'],
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'CODIGO']
                 ],
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
@@ -244,5 +246,4 @@ class BillPaymentService implements BillPaymentServiceInterface
             }
         }
     }
-
 }

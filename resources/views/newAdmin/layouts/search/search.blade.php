@@ -22,12 +22,16 @@
                             </div>
                         @elseif($input['type'] == 'select')
                             <div class="col-sm-6 col-md-4 col-12 form-group">
-                                <label for="{{ $input['name'] }}"
-                                    class="form-control-label">{{ $input['label'] }}</label>
+                                <label class="form-control-label"
+                                    for="{{ $input['name'] }}">{{ $input['label'] }}</label>
                                 <select class="form-control form-control-sm" name="{{ $input['name'] }}"
                                     id="{{ $input['name'] }}">
+                                    <option value="">Seleccione</option>
                                     @foreach ($input['options'] as $option)
-                                        <option value="{{ $option['id'] }}">{{ $option['label'] }}</option>
+                                        <option
+                                            {{ request()->input($input['name']) == $option['id'] ? 'selected' : '' }}
+                                            value="{{ $option['id'] }}">{{ $option[$input['option']] }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

@@ -47,51 +47,6 @@ $modules = session('modules');
                         </a>
                     </div>
                 @endforeach
-                @if (auth()->user()->Assessor &&
-        (auth()->user()->codeOportudata == '1088247299' ||
-            auth()->user()->codeOportudata == '98587878' ||
-            auth()->user()->codeOportudata == '998877' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '109' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '115' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '139' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '144' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '146' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '147' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '133' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '155' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '149' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '151' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '138' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '108' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '111' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '117' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '121' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '123' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '124' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '125' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '132' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '141' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '140' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '150' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '154' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '158' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '159' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '152' ||
-            auth()->user()->Assessor->subsidiary->CODIGO == '1'))
-                    <div class="col-10 col-sm-6 col-lg-4 col-xl-3">
-                        <a class="cursor" data-toggle="tooltip" data-placement="top" title="Ir al panel"
-                            href="/Administrator/assessorquotations">
-                            <div class="info-box info-box-reset">
-                                <span class="info-box-icon info-icon-reset bg-primary elevation-1 container-icon"><i
-                                        class="fas fa-store"></i></span>
-
-                                <div class="card-body px-3 py-2">
-                                    <p class="card-text wellcomeDashboard text-dark">Cotizador</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endif
             </div>
         </div>
     </section>

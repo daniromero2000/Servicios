@@ -49,31 +49,24 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
-    public function searchBillPayment(string $text = null, int $totalView, $from = null, $to = null)
+    public function searchBillPayment(string $text = null, int $totalView, $status = null, $payment_deadline = null, $subsidiary_id = null)
     {
         try {
 
-            if (empty($text) && is_null($from) && is_null($to)) {
+            if (empty($text) && is_null($status) && is_null($payment_deadline) && is_null($subsidiary_id)) {
                 return $this->listBillPayments($totalView);
             }
 
-            if (!empty($text) && (is_null($from) || is_null($to))) {
-                return $this->model->searchBillPayment($text, null, true, true)
-                    ->skip($totalView)
-                    ->take(30)
-                    ->get($this->columns);
-            }
-
-            if (empty($text) && (!is_null($from) || !is_null($to))) {
-                return $this->model->whereBetween('created_at', [$from, $to])
-                    ->skip($totalView)
-                    ->take(30)
-                    ->get($this->columns);
-            }
-
             return $this->model->searchBillPayment($text, null, true, true)
-                ->whereBetween('created_at', [$from, $to])
-                ->orderBy('created_at', 'desc')
+                ->when($status, function ($q, $status) {
+                    return $q->where('status', $status);
+                })
+                ->when($payment_deadline, function ($q, $payment_deadline) {
+                    return $q->where('payment_deadline', $payment_deadline);
+                })
+                ->when($subsidiary_id, function ($q, $subsidiary_id) {
+                    return $q->where('subsidiary_id', $subsidiary_id);
+                })
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -82,25 +75,16 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
-    public function countBillPayments(string $text = null,  $from = null, $to = null)
+    public function countBillPayments(string $text = null, $status = null, $payment_deadline = null, $subsidiary_id = null)
     {
-        if (empty($text) && is_null($from) && is_null($to)) {
+        if (empty($text)) {
             return $this->model->count('id');
         }
 
-        if (!empty($text) && (is_null($from) || is_null($to))) {
+        if (!empty($text)) {
             return $this->model->searchBillPayment($text, null, true, true)
                 ->count('id');
         }
-
-        if (empty($text) && (!is_null($from) || !is_null($to))) {
-            return $this->model->whereBetween('created_at', [$from, $to])
-                ->count('id');
-        }
-
-        return $this->model->searchBillPayment($text, null, true, true)
-            ->whereBetween('created_at', [$from, $to])
-            ->count('id');
     }
 
     public function findBillPaymentById(int $id): BillPayment

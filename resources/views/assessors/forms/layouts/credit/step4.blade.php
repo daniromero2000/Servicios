@@ -80,11 +80,6 @@
                             <option value="NO">No</option>
                         </select>
                     </div>
-                    {{-- <div class="col-sm-12 col-md-4">
-                        <label class="ventaContado-label" for="RAZON_IND">Nombre de la empresa *</label>
-                        <input class="form-control inputs" type="text" id="RAZON_IND" ng-model="lead.RAZON_IND"
-                            required />
-                    </div> --}}
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label" for="dirEmpresa">Sector económico*</label>
                         <select class="inputs form-control" ng-model="lead.RAZON_IND" id="RAZON_IND">
