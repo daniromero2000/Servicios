@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Preguntas</li>
+                            <li class="breadcrumb-item active" aria-current="page">Facturas</li>
                         </ol>
                     </nav>
                 </div>
@@ -19,6 +19,6 @@
 @endsection
 @section('content')
 <section class="content">
-    @include('newAdmin.layouts.tables.table_list', ['list' => $list, 'title' => 'Preguntas'])
+    @include('newAdmin.layouts.tables.table_list', ['list' => $list, 'title' => 'Facturas'])
 </section>
 @endsection
