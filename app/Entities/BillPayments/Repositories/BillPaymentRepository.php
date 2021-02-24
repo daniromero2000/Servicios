@@ -127,7 +127,8 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 foreach ($value->mailBillPayment as $key => $mail) {
-                    $this->sendNotificationOfPastDueInvoice($mail->email, $value);
+                    $email = $mail->email ? $mail->email : 'auditoria05-per@lagobo.com';
+                    $this->sendNotificationOfPastDueInvoice($email, $value);
                 }
 
                 $value->date_of_notification = Carbon::now();

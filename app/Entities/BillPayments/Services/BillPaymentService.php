@@ -185,7 +185,8 @@ class BillPaymentService implements BillPaymentServiceInterface
 
                 if ($data['data']['status'] == 2) {
                     foreach ($billPayment->mailBillPayment as $key => $mail) {
-                        $this->billPaymentInterface->sendNotificationOfInvoicePaid($mail->email, $billPayment);
+                        $email = $mail->email ? $mail->email : 'desarrolladorjunior@lagobo.com';
+                        $this->billPaymentInterface->sendNotificationOfInvoicePaid($email, $billPayment);
                     }
                 }
             }
@@ -225,6 +226,7 @@ class BillPaymentService implements BillPaymentServiceInterface
 
             if ($diff >= 10) {
                 $value->status = 0;
+                $value->date_of_notification = null;
                 $value->update();
 
                 $status = [
