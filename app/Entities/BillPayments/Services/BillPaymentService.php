@@ -63,6 +63,12 @@ class BillPaymentService implements BillPaymentServiceInterface
                 $item->status = ['status' => 'Pagado', 'color' => '#FFFFFF', 'background' => '#2ec76b'];
             }
             $item->status = collect($item->status);
+
+            if($item->date_of_notification){
+                $item->notification = 'SI';
+            }else{
+                $item->notification = 'NO';
+            }
             return $item;
         })->all();
 
@@ -75,7 +81,7 @@ class BillPaymentService implements BillPaymentServiceInterface
             'data' => [
                 'list'               =>  collect($list),
                 'optionsRoutes'      => 'admin.' . (request()->segment(2)),
-                'headers'            => ['Referencia de pago', 'Proveedor', 'Servicio', 'Sucursal', 'Dia de pago', 'Estado', 'Opciones', ' '],
+                'headers'            => ['Referencia de pago', 'Proveedor', 'Servicio', 'Sucursal', 'Dia de pago', 'Estado', 'Notificado',  'Opciones', ' '],
                 'searchInputs'       => [
                     ['label' => 'Buscar', 'type' => 'text', 'name' => 'q'],
                     [
