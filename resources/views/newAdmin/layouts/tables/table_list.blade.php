@@ -18,7 +18,7 @@
                       @foreach ($list as $data)
                           <tr class="text-center">
                               @foreach ($data->toArray() as $index => $value)
-                                  @if (!is_array($value) && $index != 'id')
+                                  @if (!is_array($value) && $index != 'id' && $index != 'date_of_notification')
                                       @if ($index == 'created_at')
                                           <td class="text-center">{{ $data->created_at }}</td>
                                       @elseif($index == 'is_active')

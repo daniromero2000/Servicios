@@ -23,7 +23,8 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         'type_of_service',
         'subsidiary_id',
         'payment_deadline',
-        'status'
+        'status',
+        'date_of_notification'
         // 'description'
     ];
 
