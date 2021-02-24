@@ -88,7 +88,7 @@ class BillPaymentController extends Controller
     {
         $this->billPaymentInterface->updateBillPayment(['data' => $request->except('_token', '_method'), 'id' => $id]);
 
-        return redirect()->route('admin.invoiceManagement.index')->with('message', 'Actualización Exitosa');
+        return redirect()->back();
     }
 
     /**
