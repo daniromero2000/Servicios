@@ -174,6 +174,8 @@ use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotati
 use App\Entities\AssessorQuotationValues\Repositories\AssessorQuotationValueRepository;
 use App\Entities\AssessorQuotationDiscounts\Repositories\Interfaces\AssessorQuotationDiscountRepositoryInterface;
 use App\Entities\AssessorQuotationDiscounts\Repositories\AssessorQuotationDiscountRepository;
+use App\Entities\BillPaymentAttachmentLogs\Repositories\BillPaymentAttachmentLogRepository;
+use App\Entities\BillPaymentAttachmentLogs\Repositories\BillPaymentAttachmentLogRepositoryInterface;
 use App\Entities\BillPayments\Repositories\BillPaymentRepository;
 use App\Entities\BillPayments\Repositories\BillPaymentRepositoryInterface;
 use App\Entities\BillPayments\Services\BillPaymentService;
@@ -198,6 +200,8 @@ use App\Entities\PortfolioCollectionTokens\Repositories\Interfaces\PortfolioColl
 use App\Entities\PortfolioCollectionTokens\Repositories\PortfolioCollectionTokenRepository;
 use App\Entities\StatusManagements\Repositories\Interfaces\StatusManagementRepositoryInterface;
 use App\Entities\StatusManagements\Repositories\StatusManagementRepository;
+use App\Entities\TelephoneBillPayments\Repositories\TelephoneBillPaymentRepository;
+use App\Entities\TelephoneBillPayments\Repositories\TelephoneBillPaymentRepositoryInterface;
 use App\Entities\TypeInvoices\Repositories\TypeInvoiceRepository;
 use App\Entities\TypeInvoices\Repositories\TypeInvoiceRepositoryInterface;
 use App\Entities\TypeInvoiceServices\Repositories\TypeInvoiceServiceRepository;
@@ -706,6 +710,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             BillPaymentStatusesLogRepositoryInterface::class,
             BillPaymentStatusesLogRepository::class
+        );
+
+        $this->app->bind(
+            BillPaymentAttachmentLogRepositoryInterface::class,
+            BillPaymentAttachmentLogRepository::class
+        );
+
+        $this->app->bind(
+            TelephoneBillPaymentRepositoryInterface::class,
+            TelephoneBillPaymentRepository::class
         );
 
         //Service BillPayment

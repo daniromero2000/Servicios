@@ -6,6 +6,8 @@ interface BillPaymentServiceInterface
 {
     public function listBillPayments(array $data): array;
 
+    public function listBillPaymentsForArea(array $data): array;
+
     public function createBillPayment();
 
     public function findBillPaymentById(int $id);
@@ -14,7 +16,9 @@ interface BillPaymentServiceInterface
 
     public function deleteBillPayment($id): bool;
 
-    public function updateBillPayment(array $data): bool;
+    public function saveDocumentFile($data): string;
+
+    public function updateBillPayment(array $data);
 
     public function checkInvoices();
 

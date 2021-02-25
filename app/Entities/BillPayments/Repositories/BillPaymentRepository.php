@@ -8,10 +8,10 @@ use App\Entities\BillPayments\Exceptions\CreateBillPaymentErrorException;
 use App\Mail\BillPayments\Mail as BillPaymentsMail;
 use App\Mail\BillPayments\SendManagedInvoiceNotification;
 use App\Mail\BillPayments\SendNotificationOfInvoicePaid;
-use App\Mail\SendEmail;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\UploadedFile;
 
 class BillPaymentRepository implements BillPaymentRepositoryInterface
 {
@@ -24,7 +24,8 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         'subsidiary_id',
         'payment_deadline',
         'status',
-        'date_of_notification'
+        'date_of_notification',
+        'src_invoice'
         // 'description'
     ];
 
@@ -48,6 +49,11 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         } catch (QueryException $e) {
             throw new CreateBillPaymentErrorException($e);
         }
+    }
+
+    public function saveDocumentFile(UploadedFile $file): string
+    {
+        return $file->store('invoices', ['disk' => 'public']);
     }
 
     public function searchBillPayment(string $text = null, int $totalView, $status = null, $payment_deadline = null, $subsidiary_id = null)
@@ -140,7 +146,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     public function checkOverdueInvoices($day)
     {
         try {
-            return $this->model->whereBetween('payment_deadline', [$day, $day + 5])
+            return $this->model->whereBetween('payment_deadline', [$day, $day + 7])
                 // ->orWhereBetween('payment_deadline', [$day - 5, $day])
                 ->where('status', 0)
                 ->with('mailBillPayment')

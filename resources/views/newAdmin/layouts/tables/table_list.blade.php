@@ -18,7 +18,7 @@
                       @foreach ($list as $data)
                           <tr class="text-center">
                               @foreach ($data->toArray() as $index => $value)
-                                  @if (!is_array($value) && $index != 'id' && $index != 'date_of_notification')
+                                  @if (!is_array($value) && $index != 'id' && $index != 'date_of_notification' && $index != 'src_invoice')
                                       @if ($index == 'created_at')
                                           <td class="text-center">{{ $data->created_at }}</td>
                                       @elseif($index == 'is_active')
@@ -65,7 +65,7 @@
                                   </form>
                               </td>
                               <td>
-                                  {{-- @if (isset($button)) --}}
+                                  @if (isset($button))
                                   <form method="POST" action="{{ route($optionsRoutes . '.update', $data->id) }}">
                                       @csrf
                                       @method('PUT')
@@ -75,7 +75,7 @@
                                           data-original-title="Confirmar pago de factura"
                                           class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
                                   </form>
-                                  {{-- @endif --}}
+                                  @endif
                               </td>
                           </tr>
                           @include('newAdmin.layouts.modals.modal_update')

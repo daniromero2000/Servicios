@@ -6,6 +6,7 @@ use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 
 class BillPaymentController extends Controller
 {
@@ -23,7 +24,19 @@ class BillPaymentController extends Controller
      */
     public function index(Request $request)
     {
-        $response = $this->billPaymentInterface->listBillPayments(['search' => request()->input()]);
+        $user = auth()->user()->idProfile;
+        $status = 0;
+
+        if ($user == 28  || $user == 31) {
+            $response = $this->billPaymentInterface->listBillPayments(['search' => request()->input()]);
+        } else {
+            if ($user == 29) {
+                $status = 1;
+            } elseif ($user == 30) {
+                $status = 3;
+            }
+            $response = $this->billPaymentInterface->listBillPaymentsForArea(['search' => request()->input(), 'status' => $status]);
+        }
 
         if ($response['search']) {
             $request->session()->flash('message', 'Resultado de la Busqueda');
@@ -86,7 +99,14 @@ class BillPaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->billPaymentInterface->updateBillPayment(['data' => $request->except('_token', '_method'), 'id' => $id]);
+        if ($request->hasFile('src_invoice') && $request->file('src_invoice') instanceof UploadedFile) {
+            $data = $request->except('_token', '_method');
+            $data['src_invoice'] = $this->billPaymentInterface->saveDocumentFile($request->file('src_invoice'));
+        } else {
+            $data = $request->except('_token', '_method', 'src_invoice');
+        }
+
+        $this->billPaymentInterface->updateBillPayment(['data' => $data, 'id' => $id]);
 
         return redirect()->back();
     }

@@ -71,8 +71,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-check"></i></span>
                                     </div>
-                                    <input type="text" name="payment_reference" id="payment_reference" placeholder="Nombre"
-                                        validation-pattern="name" class="form-control"
+                                    <input type="text" name="payment_reference" id="payment_reference"
+                                        placeholder="Referencia" validation-pattern="name" class="form-control"
                                         value="{{ old('payment_reference') }}" required>
                                 </div>
                             </div>
@@ -98,12 +98,26 @@
                                         <span class="input-group-text"><i class="fa fa-check"></i></span>
                                     </div>
                                     <input type="number" max="31" name="payment_deadline" id="payment_deadline"
-                                        placeholder="Nombre" validation-pattern="name" class="form-control"
+                                        placeholder="Dia" validation-pattern="name" class="form-control"
                                         value="{{ old('payment_deadline') }}" required>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="name">Tiempo de vigencia (meses)<span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group  mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-check"></i></span>
+                                    </div>
+                                    <input type="number" name="time_of_validity" id="time_of_validity" placeholder="1"
+                                        validation-pattern="name" class="form-control"
+                                        value="{{ old('time_of_validity') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-control-label" for="name">Descripción<span class="">
                                         <small>(opcional)</small> </span></label>
@@ -126,6 +140,22 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="name">Correo</label>
                                     <input type="text" class="form-control" name="emails[]" required value="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <h6 class="heading-small text-muted mb-4">Números de teléfono asociados</h6>
+                        </div>
+                        <div class="field_wrapper2 row mx-0 w-100">
+                            <div class="col-12 mb-3 ">
+                                <span class=" heading-small text-muted">Agregar número</span>
+                                <a href="javascript:void(0);" class="add_button2" title="Add field"> <i
+                                        class="fas fa-plus-circle"></i></a>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="name">Número</label>
+                                    <input type="text" class="form-control" name="telephones[]" value="" />
                                 </div>
                             </div>
                         </div>
@@ -153,12 +183,12 @@
             var wrapper = $('.field_wrapper'); //Input field wrapper
             var fieldHTML =
                 `<div class="col-sm-6">
-                     <div class="form-group">
-                     <label class="form-control-label" for="name">Correo</label>
-                       <input type="text" class="form-control" name="emails[]" value="" required />
-                       <a href="javascript:void(0);" class=" ml-auto remove_button" title="Remove field"><i class="fas fa-minus-circle"></i></a>
-                     </div>
-                 </div>`; //New input field html 
+                                                     <div class="form-group">
+                                                     <label class="form-control-label" for="name">Correo</label>
+                                                       <input type="text" class="form-control" name="emails[]" value="" required />
+                                                       <a href="javascript:void(0);" class=" ml-auto remove_button" title="Remove field"><i class="fas fa-minus-circle"></i></a>
+                                                     </div>
+                                                 </div>`; //New input field html 
             var x = 1; //Initial field counter is 1
             $(addButton).click(function() { //Once add button is clicked
                 if (x < maxField) { //Check maximum number of input fields
@@ -167,6 +197,35 @@
                 }
             });
             $(wrapper).on('click', '.remove_button', function(e) { //Once remove button is clicked
+                e.preventDefault();
+                $(this).parent('div').remove(); //Remove field html
+                x--; //Decrement field counter
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var maxField = 10; //Input fields increment limitation
+            var addButton = $('.add_button2'); //Add button selector
+            var wrapper = $('.field_wrapper2'); //Input field wrapper
+            var fieldHTML =
+                `<div class="col-sm-6">
+                                                     <div class="form-group">
+                                                     <label class="form-control-label" for="name">Correo</label>
+                                                       <input type="text" class="form-control" name="telephones[]" value="" required />
+                                                       <a href="javascript:void(0);" class=" ml-auto remove_button2" title="Remove field"><i class="fas fa-minus-circle"></i></a>
+                                                     </div>
+                                                 </div>`; //New input field html 
+            var x = 1; //Initial field counter is 1
+            $(addButton).click(function() { //Once add button is clicked
+                if (x < maxField) { //Check maximum number of input fields
+                    x++; //Increment field counter
+                    $(wrapper).append(fieldHTML); // Add field html
+                }
+            });
+            $(wrapper).on('click', '.remove_button2', function(e) { //Once remove button is clicked
                 e.preventDefault();
                 $(this).parent('div').remove(); //Remove field html
                 x--; //Decrement field counter

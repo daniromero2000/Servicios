@@ -3,6 +3,7 @@
 namespace App\Entities\BillPayments\Repositories;
 
 use App\Entities\BillPayments\BillPayment;
+use Illuminate\Http\UploadedFile;
 
 interface BillPaymentRepositoryInterface
 {
@@ -15,6 +16,8 @@ interface BillPaymentRepositoryInterface
     public function countBillPayments(string $text = null,  $status = null, $payment_deadline = null , $subsidiary_id = null);
 
     public function findBillPaymentById(int $id): BillPayment;
+
+    public function saveDocumentFile(UploadedFile $file): string;
 
     public function deleteNotificationById($id): bool;
 

@@ -2,9 +2,11 @@
 
 namespace App\Entities\BillPayments;
 
+use App\Entities\BillPaymentAttachmentLogs\BillPaymentAttachmentLog;
 use App\Entities\BillPaymentStatusesLogs\BillPaymentStatusesLog;
 use App\Entities\MailsBillPayments\MailsBillPayment;
 use App\Entities\Products\Product;
+use App\Entities\TelephoneBillPayments\TelephoneBillPayment;
 use App\Entities\TypeInvoices\TypeInvoice;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -22,7 +24,9 @@ class BillPayment extends Model
         'payment_reference',
         'description',
         'user_id',
-        'date_of_notification'
+        'date_of_notification',
+        'time_of_validity',
+        'src_invoice'
     ];
 
     protected $searchable = [
@@ -46,6 +50,16 @@ class BillPayment extends Model
     public function mailBillPayment()
     {
         return $this->hasMany(MailsBillPayment::class);
+    }
+
+    public function telephoneBillPayment()
+    {
+        return $this->hasMany(TelephoneBillPayment::class);
+    }
+
+    public function documentBillPayment()
+    {
+        return $this->hasMany(BillPaymentAttachmentLog::class);
     }
 
     public function statusLogs()
