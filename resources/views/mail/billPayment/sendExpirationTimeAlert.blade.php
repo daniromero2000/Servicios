@@ -769,7 +769,7 @@
                                                                                                                                 style="font-size: 30px; color: #ffffff; line-height: 125%;">
                                                                                                                                 <em><strong>Notificación
                                                                                                                                         de
-                                                                                                                                        pago</strong></em></span>
+                                                                                                                                        Factura</strong></em></span>
                                                                                                                         </div>
                                                                                                                     </td>
                                                                                                                 </tr>
@@ -819,22 +819,7 @@
                                                                                                                         <div
                                                                                                                             style="line-height: 150%; text-align: center; padding: 0px 25px;">
                                                                                                                             <span
-                                                                                                                                style="font-size: 16px; color: #ffffff; line-height: 150%;">La
-                                                                                                                                siguiente
-                                                                                                                                factura
-                                                                                                                                esta
-                                                                                                                                próxima
-                                                                                                                                a
-                                                                                                                                vencer,
-                                                                                                                                por
-                                                                                                                                favor
-                                                                                                                                gestionar
-                                                                                                                                o
-                                                                                                                                notificar
-                                                                                                                                a
-                                                                                                                                la
-                                                                                                                                persona
-                                                                                                                                responsable.</span>
+                                                                                                                                style="font-size: 16px; color: #ffffff; line-height: 150%;">La siguiente factura ha excedido su tiempo de vigencia, por favor realizar el procedimiento necesario.</span>
                                                                                                                         </div>
                                                                                                                     </td>
                                                                                                                 </tr>
@@ -940,8 +925,7 @@
                                                                                                                         <span
                                                                                                                             style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 16px; color: rgb(255, 255, 255);">
                                                                                                                             <a style="color:#FFFFFF;text-decoration:none;"
-                                                                                                                                target="_blank">Factura:
-                                                                                                                                {{ $data->typeInvoice->name }}</a></span>
+                                                                                                                                target="_blank">{{ $data->typeInvoice->name }}</a></span>
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                             </tbody>
@@ -955,22 +939,12 @@
                                                                                                 <tr>
                                                                                                     <td class="text-services"
                                                                                                         style="text-align: center;">
+
                                                                                                         <p
                                                                                                             style="font-family: Arial, Helvetica, sans-serif;font-size: 16px;font-weight: 400;color: rgb(56, 56, 56);">
                                                                                                             Servicio
                                                                                                             de:
-                                                                                                            <b>
-                                                                                                                {{ $data->type_of_service }}</b>
-                                                                                                        </p>
-                                                                                                        <p
-                                                                                                            style="font-family: Arial, Helvetica, sans-serif;font-size: 16px;font-weight: 400;color: rgb(56, 56, 56);">
-                                                                                                            Fecha limite de pago:
-                                                                                                            <b>
-                                                                                                                {{ $date->day }}
-                                                                                                                /
-                                                                                                                {{ $date->month }}
-                                                                                                                /
-                                                                                                                {{ $date->year }}</b>
+                                                                                                           <b> {{ $data->type_of_service }}</b>
                                                                                                         </p>
                                                                                                         <p
                                                                                                             style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 400;color: rgb(56, 56, 56);">
@@ -983,18 +957,11 @@
                                                                                                         <p
                                                                                                             style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 400;color: rgb(56, 56, 56);">
                                                                                                             Sucursal:
-                                                                                                            <b>{{ $data->subsidiary_id == 1 ? 'Oficina' : $data->subsidiary_id }}</b>
+                                                                                                            <b>{{ $data->subsidiary_id }}</b>
                                                                                                         </p>
-                                                                                                        @if ($data->description)
-                                                                                                            <p
-                                                                                                                style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 400;color: rgb(56, 56, 56);">
-                                                                                                                Descripción:
-                                                                                                                <b>{{ $data->description }}</b>
-                                                                                                            </p>
-                                                                                                        @endif
                                                                                                     </td>
                                                                                                 </tr>
-                                                                                                <tr>
+                                                                                                 <tr>
                                                                                                     <td height="20">
                                                                                                     </td>
                                                                                                 </tr>
@@ -1025,3 +992,5 @@
 </body>
 
 </html>
+
+

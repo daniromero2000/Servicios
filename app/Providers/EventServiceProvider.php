@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Events\BillPayments\EnableInvoicesForPayment;
 use App\Events\BillPayments\VerifyInvoiceExpiration;
 use App\Events\BillPayments\VerifyManagedInvoices;
+use App\Events\BillPayments\CheckValidityTimeEvent;
 use App\Events\Email\SendEmailEvent;
+use App\Listeners\BillPayments\CheckValidityTimeListeners;
 use App\Listeners\BillPayments\EnableInvoicesForPaymentListeners;
 use App\Listeners\Email\SendEmailListeners;
 use App\Listeners\BillPayments\VerifyInvoiceExpirationListeners;
@@ -34,6 +36,10 @@ class EventServiceProvider extends ServiceProvider
 
         VerifyManagedInvoices::class => [
             VerifyManagedInvoicesListeners::class,
+        ],
+
+        CheckValidityTimeEvent::class => [
+            CheckValidityTimeListeners::class,
         ]
     ];
 

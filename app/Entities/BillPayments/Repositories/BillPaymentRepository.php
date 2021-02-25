@@ -6,6 +6,7 @@ use App\Entities\BillPayments\BillPayment;
 use App\Entities\BillPayments\Exceptions\BillPaymentNotFoundErrorException;
 use App\Entities\BillPayments\Exceptions\CreateBillPaymentErrorException;
 use App\Mail\BillPayments\Mail as BillPaymentsMail;
+use App\Mail\BillPayments\SendExpirationTimeAlert;
 use App\Mail\BillPayments\SendManagedInvoiceNotification;
 use App\Mail\BillPayments\SendNotificationOfInvoicePaid;
 use Carbon\Carbon;
@@ -106,7 +107,6 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     public function updateBillPayment(array $params)
     {
         try {
-
             $billPayment = $this->findBillPaymentById($params['id']);
             $billPayment->update($params['data']);
 
@@ -132,9 +132,15 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
 
         if (!empty($data)) {
             foreach ($data as $key => $value) {
+                $diff = $value->payment_deadline - $day;
+                if ($diff > 0) {
+                    $date = Carbon::now()->addDays($diff);
+                } else {
+                    $date = Carbon::now();
+                }
                 foreach ($value->mailBillPayment as $key => $mail) {
                     $email = $mail->email ? $mail->email : 'auditoria05-per@lagobo.com';
-                    $this->sendNotificationOfPastDueInvoice($email, $value);
+                    $this->sendNotificationOfPastDueInvoice($email, $value, $date);
                 }
 
                 $value->date_of_notification = Carbon::now();
@@ -149,6 +155,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
             return $this->model->whereBetween('payment_deadline', [$day, $day + 7])
                 // ->orWhereBetween('payment_deadline', [$day - 5, $day])
                 ->where('status', 0)
+                ->where('is_active', 1)
                 ->with('mailBillPayment')
                 ->with('typeInvoice')
                 ->orderBy('payment_deadline', 'ASC')
@@ -161,7 +168,9 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     public function getInvoicesPaid()
     {
         try {
-            return $this->model->where('status', 2)->get();
+            return $this->model->where('status', 2)
+                ->where('is_active', 1)
+                ->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -176,9 +185,27 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
         }
     }
 
-    public function sendNotificationOfPastDueInvoice($mail, $data)
+    public function checkValidityTime($date)
     {
-        $date = Carbon::now();
+        try {
+            $data = $this->model->where('is_active', 1)->get();
+            foreach ($data as $key => $value) {
+                if ($value->time_of_validity) {
+                    $this->sendExpirationTimeAlert($value);
+                    // $value->is_active = 0;
+                    // $value->update();
+                }
+            }
+
+            return $data;
+        } catch (QueryException $e) {
+            dd($e->getMessage());
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function sendNotificationOfPastDueInvoice($mail, $data, $date)
+    {
         Mail::to(['email' => $mail])->send(new BillPaymentsMail(['data' => $data, 'date' => $date]));
     }
 
@@ -192,5 +219,11 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         $date = Carbon::now();
         Mail::to(['email' => 'auditoria05-per@lagobo.com'])->send(new SendManagedInvoiceNotification(['data' => $data, 'date' => $date]));
+    }
+
+    public function sendExpirationTimeAlert($data)
+    {
+        $date = Carbon::now();
+        Mail::to(['email' => '123romerod@gmail.com'])->send(new SendExpirationTimeAlert(['data' => $data, 'date' => $date]));
     }
 }

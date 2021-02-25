@@ -107,7 +107,7 @@ class BillPaymentService implements BillPaymentServiceInterface
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
                     ['label' => 'Dia limite de pago', 'type' => 'number', 'name' => 'payment_deadline'],
-                    ['label' => 'Tiempo de vigencia (meses)', 'type' => 'number', 'name' => 'time_of_validity'],
+                    ['label' => 'Fecha de vigencia', 'type' => 'date', 'name' => 'time_of_validity'],
                     ['label' => 'Proveedor', 'type' => 'select', 'options' => $this->typeInvoice->listAllTypeInvoices(), 'name' => 'type_of_invoice', 'option' => 'name'],
                     ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'CODIGO'],
                     ['label' => 'Estado', 'type' => 'select', 'name' => 'status', 'options' => [
@@ -424,5 +424,11 @@ class BillPaymentService implements BillPaymentServiceInterface
                 $this->billPaymentInterface->sendManagedInvoiceNotification($value);
             }
         }
+    }
+
+    public function checkValidityTime()
+    {
+        $date = Carbon::now();
+        $data = $this->billPaymentInterface->checkValidityTime($date);
     }
 }

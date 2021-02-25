@@ -22,6 +22,8 @@ interface BillPaymentServiceInterface
 
     public function checkInvoices();
 
+    public function checkValidityTime();
+
     public function enableInvoicesForPayment();
 
     public function verifyManagedInvoices();

@@ -105,13 +105,13 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-control-label" for="name">Tiempo de vigencia (meses)<span
+                                <label class="form-control-label" for="name">Fecha de vigencia<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group  mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-check"></i></span>
                                     </div>
-                                    <input type="number" name="time_of_validity" id="time_of_validity" placeholder="1"
+                                    <input type="date" name="time_of_validity" id="time_of_validity" placeholder="1"
                                         validation-pattern="name" class="form-control"
                                         value="{{ old('time_of_validity') }}">
                                 </div>
