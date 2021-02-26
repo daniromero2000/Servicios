@@ -39,21 +39,24 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
                         aria-labelledby="tabs-icons-text-1-tab">
-                        <form action="{{ route('admin.invoiceManagement.update', $billPayment->id) }}" method="post"
-                            enctype="multipart/form-data" class="form">
-                            <div class="card-body">
-                                @method('PUT')
-                                @csrf
-                                <div class="row">
+                         <div class="row">
                                     <div class="col-6">
                                         <h2 class="mb-4">Editar recordatorio de factura</h2>
                                     </div>
                                     <div class="col-6 text-right">
                                         @if ($billPayment->src_invoice)
-                                            <button type="button" class="btn btn-primary btn-sm">Descargar Factura</button>
+                                        <form action="{{ route('admin.downloadDocument', $billPayment->id)}}" enctype="multipart/form-data" method="GET">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-sm">Descargar Factura</button>
+                                        </form>
                                         @endif
                                     </div>
                                 </div>
+                        <form action="{{ route('admin.invoiceManagement.update', $billPayment->id) }}" method="post"
+                            enctype="multipart/form-data" class="form">
+                            <div class="card-body">
+                                @method('PUT')
+                                @csrf
                                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                 <div class="row">
                                     <div class="col-sm-6">

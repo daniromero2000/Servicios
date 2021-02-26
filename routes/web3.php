@@ -95,6 +95,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth',  'as' => 'admin.'], f
             Route::resource('invoiceManagement', 'BillPaymentController');
             Route::get('verifyInvoiceExpiration', 'BillPaymentController@verifyInvoiceExpiration');
             Route::get('resetPaymentStatuses', 'BillPaymentController@resetPaymentStatuses');
+            Route::get('downloadDocument/{id}', 'BillPaymentController@downloadDocument')->name('downloadDocument');
         });
     });
 });

@@ -111,6 +111,11 @@ class BillPaymentController extends Controller
         return redirect()->back();
     }
 
+    public function downloadDocument($id)
+    {
+        return $this->billPaymentInterface->downloadDocument($id);
+    }
+    
     /**
      * Remove the specified resource from storage.
      *

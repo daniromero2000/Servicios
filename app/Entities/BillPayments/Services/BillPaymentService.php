@@ -12,6 +12,7 @@ use App\Entities\TelephoneBillPayments\Repositories\TelephoneBillPaymentReposito
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface as InterfacesToolRepositoryInterface;
 use App\Entities\TypeInvoices\Repositories\TypeInvoiceRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
 
 class BillPaymentService implements BillPaymentServiceInterface
 {
@@ -431,6 +432,18 @@ class BillPaymentService implements BillPaymentServiceInterface
     public function checkValidityTime()
     {
         $date = Carbon::now();
-        $data = $this->billPaymentInterface->checkValidityTime($date);
+        $this->billPaymentInterface->checkValidityTime($date);
+    }
+
+    public function downloadDocument($id)
+    {
+        $billPayment = $this->billPaymentInterface->findBillPaymentById($id);
+
+        $file = "storage/" . $billPayment->src_invoice;
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $billPayment->payment_reference . '.pdf', $headers);
     }
 }

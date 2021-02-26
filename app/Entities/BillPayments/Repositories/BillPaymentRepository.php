@@ -157,7 +157,7 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     {
         try {
             return $this->model->whereBetween('payment_deadline', [$day, $day + 7])
-                // ->orWhereBetween('payment_deadline', [$day - 5, $day])
+                ->orWhereBetween('payment_deadline', [$day - 5, $day])
                 ->where('status', 0)
                 ->where('is_active', 1)
                 ->with('mailBillPayment')
