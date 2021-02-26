@@ -456,6 +456,6 @@ class BillPaymentService implements BillPaymentServiceInterface
             'Content-Type: application/pdf',
         );
 
-        return Response::download($file, $billPayment->payment_reference . '.pdf', $headers);
+        return Response::download($file, $billPayment->created_at . '.pdf', $headers);
     }
 }
