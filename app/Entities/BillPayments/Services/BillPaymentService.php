@@ -392,21 +392,23 @@ class BillPaymentService implements BillPaymentServiceInterface
         $date2 = Carbon::now();
 
         foreach ($data as $key => $value) {
-            $dateUpdate = Carbon::parse($value->date_of_notification);
-            $diff  = $dateUpdate->diffInDays($date2);
+            if ($value->date_of_notification) {
+                $dateUpdate = Carbon::parse($value->date_of_notification);
+                $diff  = $dateUpdate->diffInDays($date2);
 
-            if ($diff >= 10) {
-                $value->status = 0;
-                $value->date_of_notification = null;
-                $value->update();
+                if ($diff >= 10) {
+                    $value->status = 0;
+                    $value->date_of_notification = null;
+                    $value->update();
 
-                $status = [
-                    'bill_payment_id' => $value->id,
-                    'status'          => 6,
-                    'user_id'         => 1
-                ];
+                    $status = [
+                        'bill_payment_id' => $value->id,
+                        'status'          => 6,
+                        'user_id'         => 1
+                    ];
 
-                $this->statusesLogInterface->createBillPaymentStatusesLog($status);
+                    $this->statusesLogInterface->createBillPaymentStatusesLog($status);
+                }
             }
         }
     }

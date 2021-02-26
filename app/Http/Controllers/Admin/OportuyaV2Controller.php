@@ -495,7 +495,7 @@ class OportuyaV2Controller extends Controller
 		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerification)->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
-		return $this->webServiceInterface->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
+		return $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
 	}
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
@@ -527,8 +527,8 @@ class OportuyaV2Controller extends Controller
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
 		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
-		$data = $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
-		$data = json_decode($data, true);
+		// $data = $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
+		// $data = json_decode($data, true);
 		$dataCode = json_decode($dataCode, true);
 		$codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
 		$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name

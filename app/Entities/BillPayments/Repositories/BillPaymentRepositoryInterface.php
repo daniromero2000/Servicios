@@ -40,4 +40,6 @@ interface BillPaymentRepositoryInterface
     public function sendManagedInvoiceNotification($data);
 
     public function sendExpirationTimeAlert($data);
+
+    public function sendMessageSmsInfobip($code, $date, $celNumber);
 }
