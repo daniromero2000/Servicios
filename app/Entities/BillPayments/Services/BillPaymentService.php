@@ -446,4 +446,16 @@ class BillPaymentService implements BillPaymentServiceInterface
 
         return Response::download($file, $billPayment->payment_reference . '.pdf', $headers);
     }
+
+    public function downloadDocumentLog($id)
+    {
+        $billPayment = $this->billPaymentAttachmentInterface->findBillPaymentAttachmentLogById($id);
+
+        $file = "storage/" . $billPayment->src_invoice;
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $billPayment->payment_reference . '.pdf', $headers);
+    }
 }

@@ -39,19 +39,20 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
                         aria-labelledby="tabs-icons-text-1-tab">
-                         <div class="row">
-                                    <div class="col-6">
-                                        <h2 class="mb-4">Editar recordatorio de factura</h2>
-                                    </div>
-                                    <div class="col-6 text-right">
-                                        @if ($billPayment->src_invoice)
-                                        <form action="{{ route('admin.downloadDocument', $billPayment->id)}}" enctype="multipart/form-data" method="GET">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary btn-sm">Descargar Factura</button>
-                                        </form>
-                                        @endif
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <h2 class="mb-4">Editar recordatorio de factura</h2>
+                            </div>
+                            <div class="col-6 text-right">
+                                @if ($billPayment->src_invoice)
+                                    <form action="{{ route('admin.downloadDocument', $billPayment->id) }}"
+                                        enctype="multipart/form-data" method="GET">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary btn-sm">Descargar Factura</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
                         <form action="{{ route('admin.invoiceManagement.update', $billPayment->id) }}" method="post"
                             enctype="multipart/form-data" class="form">
                             <div class="card-body">
@@ -268,10 +269,10 @@
                                             <a href="javascript:void(0);" class="add_button2" title="Add field"> <i
                                                     class="fas fa-plus-circle"></i></a>
                                         </div>
-                                         @foreach ($billPayment->telephoneBillPayment as $item)
+                                        @foreach ($billPayment->telephoneBillPayment as $item)
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                               <label class="form-control-label" for="name">Número</label>
+                                                    <label class="form-control-label" for="name">Número</label>
                                                     <input type="text" class="form-control" name="telephones[]" required
                                                         value="{{ $item->telephone }}" />
                                                     <a href="javascript:void(0);" class=" ml-auto remove_button"
@@ -294,58 +295,94 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                    <div class="col-md-6 mx-auto">
-                        <div class="card-header bg-transparent">
-                            <h3 class="mb-0">Historial</h3>
-                        </div>
-                        @if (!empty($billPayment->statusLogs))
-                            <div class="card-body" style=" max-height: 500px; overflow: auto; ">
-                                @foreach ($billPayment->statusLogs as $data)
-                                    @php
-                                        if ($data->status == 0) {
-                                            $data->statuses = ['status' => 'Pendiente', 'color' => '#FFFFFF', 'background' => '#ff8d00'];
-                                        } elseif ($data->status == 1) {
-                                            $data->statuses = ['status' => 'Gestionado', 'color' => '#FFFFFF', 'background' => '#007bff'];
-                                        } elseif ($data->status == 2) {
-                                            $data->statuses = ['status' => 'Pagado', 'color' => '#FFFFFF', 'background' => '#2ec76b'];
-                                        } elseif ($data->status == 3) {
-                                            $data->statuses = ['status' => 'Aprobado', 'color' => '#FFFFFF', 'background' => '#2ec76b'];
-                                        } elseif ($data->status == 4) {
-                                            $data->statuses = ['status' => 'Revisado por contabilidad', 'color' => '#FFFFFF', 'background' => '#ff8d00'];
-                                        } else {
-                                            $data->statuses = ['status' => 'Habilitado para pago', 'color' => '#FFFFFF', 'background' => '#c72ebb'];
-                                        }
-                                    @endphp
-                                    <div class="timeline timeline-one-side" data-timeline-content="axis"
-                                        data-timeline-axis-style="dashed">
-                                        <div class="timeline-block">
-                                            <span class="timeline-step"
-                                                style="color: {{ $data->statuses['color'] }}; background:{{ $data->statuses['background'] }}">
-                                                <i class="fa fa-clock"></i>
-                                            </span>
-                                            <div class="timeline-content">
-                                                <small
-                                                    class="text-muted font-weight-bold">{{ $data->created_at->format('M d, Y h:i a') }}</small>
-                                                <h5 class=" mt-3 mb-0"><span class="badge"
-                                                        style="color: {{ $data->statuses['color'] }}; background:{{ $data->statuses['background'] }}">{{ $data->statuses['status'] }}</span>
-                                                </h5>
-                                                <p class=" text-sm mt-1 mb-0"><b>Usuario:</b>
-                                                    {{ $data->user->name }}</p>
-                                                <div class="mt-3 mb-3">
-                                                    @if ($data->diffTime)
-                                                        <span class="badge badge-pill "
-                                                            style="color: {{ $data->statuses['color'] }}; background:{{ $data->statuses['background'] }}">
-                                                            {{ $data->diffTime }}
-                                                            Después </span>
-                                                    @endif
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="card-header bg-transparent">
+                                <h3 class="mb-0">Historial</h3>
+                            </div>
+                            @if (!empty($billPayment->statusLogs))
+                                <div class="card-body" style=" max-height: 500px; overflow: auto; ">
+                                    @foreach ($billPayment->statusLogs as $data)
+                                        @php
+                                            if ($data->status == 0) {
+                                                $data->statuses = ['status' => 'Pendiente', 'color' => '#FFFFFF', 'background' => '#ff8d00'];
+                                            } elseif ($data->status == 1) {
+                                                $data->statuses = ['status' => 'Gestionado', 'color' => '#FFFFFF', 'background' => '#007bff'];
+                                            } elseif ($data->status == 2) {
+                                                $data->statuses = ['status' => 'Pagado', 'color' => '#FFFFFF', 'background' => '#2ec76b'];
+                                            } elseif ($data->status == 3) {
+                                                $data->statuses = ['status' => 'Aprobado', 'color' => '#FFFFFF', 'background' => '#2ec76b'];
+                                            } elseif ($data->status == 4) {
+                                                $data->statuses = ['status' => 'Revisado por contabilidad', 'color' => '#FFFFFF', 'background' => '#ff8d00'];
+                                            } else {
+                                                $data->statuses = ['status' => 'Habilitado para pago', 'color' => '#FFFFFF', 'background' => '#c72ebb'];
+                                            }
+                                        @endphp
+                                        <div class="timeline timeline-one-side" data-timeline-content="axis"
+                                            data-timeline-axis-style="dashed">
+                                            <div class="timeline-block">
+                                                <span class="timeline-step"
+                                                    style="color: {{ $data->statuses['color'] }}; background:{{ $data->statuses['background'] }}">
+                                                    <i class="fa fa-clock"></i>
+                                                </span>
+                                                <div class="timeline-content">
+                                                    <small
+                                                        class="text-muted font-weight-bold">{{ $data->created_at->format('M d, Y h:i a') }}</small>
+                                                    <h5 class=" mt-3 mb-0"><span class="badge"
+                                                            style="color: {{ $data->statuses['color'] }}; background:{{ $data->statuses['background'] }}">{{ $data->statuses['status'] }}</span>
+                                                    </h5>
+                                                    <p class=" text-sm mt-1 mb-0"><b>Usuario:</b>
+                                                        {{ $data->user->name }}</p>
+                                                    <div class="mt-3 mb-3">
+                                                        @if ($data->diffTime)
+                                                            <span class="badge badge-pill "
+                                                                style="color: {{ $data->statuses['color'] }}; background:{{ $data->statuses['background'] }}">
+                                                                {{ $data->diffTime }}
+                                                                Después </span>
+                                                        @endif
+                                                    </div>
+                                                    <hr>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-6 mx-auto">
+                            <div class="card-header bg-transparent">
+                                <h3 class="mb-0">Historial de documentos cargados</h3>
                             </div>
-                        @endif
+                            @if (!empty($billPayment->statusLogs))
+                                <div class="card-body" style=" max-height: 500px; overflow: auto; ">
+                                    @foreach ($billPayment->documentAttachment as $data)
+                                        <div class="timeline timeline-one-side" data-timeline-content="axis"
+                                            data-timeline-axis-style="dashed">
+                                            <div class="timeline-block">
+                                                <span class="timeline-step" style="color: #fff; background: #007bff">
+                                                    <i class="fa fa-clock"></i>
+                                                </span>
+                                                <div class="timeline-content">
+                                                    <small
+                                                        class="text-muted font-weight-bold">{{ $data->created_at->format('M d, Y h:i a') }}</small>
+                                                    <form
+                                                        action="{{ route('admin.downloadDocumentLog', $data->id) }}"
+                                                        enctype="multipart/form-data" method="GET">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm mt-3 mb-2">Descargar
+                                                            archivo</button>
+                                                    </form>
+                                                    <p class=" text-sm mt-1 mb-0"><b>Usuario:</b>
+                                                        {{ $data->user->name }}</p>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -356,56 +393,56 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            var maxField = 10; //Input fields increment limitation
-            var addButton = $('.add_button'); //Add button selector
-            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var maxField = 10; 
+            var addButton = $('.add_button'); 
+            var wrapper = $('.field_wrapper');
             var fieldHTML =
                 `<div class="col-sm-6">
-                    <div class="form-group">
-                    <label class="form-control-label" for="name">Correo</label>
-                      <input type="text" class="form-control" name="emails[]" value="" required />
-                      <a href="javascript:void(0);" class=" ml-auto remove_button" title="Remove field"><i class="fas fa-minus-circle"></i></a>
-                    </div>
-                </div>`; //New input field html 
-            var x = 1; //Initial field counter is 1
-            $(addButton).click(function() { //Once add button is clicked
-                if (x < maxField) { //Check maximum number of input fields
-                    x++; //Increment field counter
-                    $(wrapper).append(fieldHTML); // Add field html
+                                    <div class="form-group">
+                                    <label class="form-control-label" for="name">Correo</label>
+                                      <input type="text" class="form-control" name="emails[]" value="" required />
+                                      <a href="javascript:void(0);" class=" ml-auto remove_button" title="Remove field"><i class="fas fa-minus-circle"></i></a>
+                                    </div>
+                                </div>`; 
+            var x = 1; 
+            $(addButton).click(function() { 
+                if (x < maxField) { 
+                    x++;
+                    $(wrapper).append(fieldHTML); 
                 }
             });
-            $(wrapper).on('click', '.remove_button', function(e) { //Once remove button is clicked
+            $(wrapper).on('click', '.remove_button', function(e) {
                 e.preventDefault();
-                $(this).parent('div').remove(); //Remove field html
-                x--; //Decrement field counter
+                $(this).parent('div').remove();
+                x--; 
             });
         });
 
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            var maxField = 10; //Input fields increment limitation
-            var addButton = $('.add_button2'); //Add button selector
-            var wrapper = $('.field_wrapper2'); //Input field wrapper
+            var maxField = 10; 
+            var addButton = $('.add_button2'); 
+            var wrapper = $('.field_wrapper2');
             var fieldHTML =
-               `<div class="col-sm-6">
-                 <div class="form-group">
-                 <label class="form-control-label" for="name">Correo</label>
-                   <input type="text" class="form-control" name="telephones[]" value="" required />
-                   <a href="javascript:void(0);" class=" ml-auto remove_button2" title="Remove field"><i class="fas fa-minus-circle"></i></a>
-                 </div>
-              </div>`; //New input field html 
-            var x = 1; //Initial field counter is 1
-            $(addButton).click(function() { //Once add button is clicked
-                if (x < maxField) { //Check maximum number of input fields
-                    x++; //Increment field counter
-                    $(wrapper).append(fieldHTML); // Add field html
+                `<div class="col-sm-6">
+                                 <div class="form-group">
+                                 <label class="form-control-label" for="name">Correo</label>
+                                   <input type="text" class="form-control" name="telephones[]" value="" required />
+                                   <a href="javascript:void(0);" class=" ml-auto remove_button2" title="Remove field"><i class="fas fa-minus-circle"></i></a>
+                                 </div>
+                              </div>`; 
+            var x = 1; 
+            $(addButton).click(function() { 
+                if (x < maxField) { 
+                    x++;
+                    $(wrapper).append(fieldHTML); 
                 }
             });
-            $(wrapper).on('click', '.remove_button2', function(e) { //Once remove button is clicked
+            $(wrapper).on('click', '.remove_button2', function(e) {
                 e.preventDefault();
-                $(this).parent('div').remove(); //Remove field html
-                x--; //Decrement field counter
+                $(this).parent('div').remove();
+                x--; 
             });
         });
 

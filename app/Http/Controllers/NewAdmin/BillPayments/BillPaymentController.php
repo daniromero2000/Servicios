@@ -115,6 +115,11 @@ class BillPaymentController extends Controller
     {
         return $this->billPaymentInterface->downloadDocument($id);
     }
+
+    public function downloadDocumentLog($id)
+    {
+        return $this->billPaymentInterface->downloadDocumentLog($id);
+    }
     
     /**
      * Remove the specified resource from storage.

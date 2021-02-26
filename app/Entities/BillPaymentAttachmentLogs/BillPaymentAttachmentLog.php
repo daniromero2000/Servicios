@@ -10,7 +10,7 @@ class BillPaymentAttachmentLog extends Model
     protected $table = 'bill_payment _attachment_logs';
     protected $fillable = [
         'bill_payment_id',
-        'src',
+        'src_invoice',
         'user_id'
     ];
 

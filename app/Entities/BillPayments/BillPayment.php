@@ -52,6 +52,11 @@ class BillPayment extends Model
         return $this->hasMany(MailsBillPayment::class);
     }
 
+    public function documentAttachment()
+    {
+        return $this->hasMany(BillPaymentAttachmentLog::class)->orderBy('created_at', 'desc');
+    }
+
     public function telephoneBillPayment()
     {
         return $this->hasMany(TelephoneBillPayment::class);

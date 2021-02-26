@@ -13,7 +13,7 @@ class BillPaymentAttachmentLogRepository implements BillPaymentAttachmentLogRepo
     private $columns = [
         'id',
         'bill_payment_id',
-        'src',
+        'src_invoice',
         'user_id'
         // 'description'
     ];
@@ -43,7 +43,7 @@ class BillPaymentAttachmentLogRepository implements BillPaymentAttachmentLogRepo
     public function findBillPaymentAttachmentLogById(int $id): BillPaymentAttachmentLog
     {
         try {
-            return $this->model->with('mailBillPaymentAttachmentLog')->findOrFail($id, $this->columns);
+            return $this->model->findOrFail($id, $this->columns);
         } catch (QueryException $e) {
             // throw new BillPaymentAttachmentLogNotFoundErrorException($e);
         }

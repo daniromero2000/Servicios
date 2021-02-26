@@ -29,4 +29,6 @@ interface BillPaymentServiceInterface
     public function verifyManagedInvoices();
 
     public function downloadDocument($id);
+
+    public function downloadDocumentLog($id);
 }
