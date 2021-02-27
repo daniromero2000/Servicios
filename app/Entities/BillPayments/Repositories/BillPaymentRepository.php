@@ -156,8 +156,8 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
     public function checkOverdueInvoices($day)
     {
         try {
-            return $this->model->whereBetween('payment_deadline', [$day, $day + 7])
-                ->orWhereBetween('payment_deadline', [$day - 5, $day])
+            return $this->model->whereBetween('payment_deadline', [1, 1 + 7])
+                // ->orWhereBetween('payment_deadline', [$day - 5, $day])
                 ->where('status', 0)
                 ->where('is_active', 1)
                 ->with('mailBillPayment')
