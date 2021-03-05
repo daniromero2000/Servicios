@@ -252,8 +252,10 @@ class BillPaymentService implements BillPaymentServiceInterface
 
         if (array_key_exists('telephones', $data)) {
             foreach ($data['telephones'] as $key => $value) {
-                $dataTelephones = ['bill_payment_id' => $billPayment->id, 'telephone' => $value];
-                $this->telephoneBillPaymentInterface->createTelephoneBillPayment($dataTelephones);
+                if ($value) {
+                    $dataTelephones = ['bill_payment_id' => $billPayment->id, 'telephone' => $value];
+                    $this->telephoneBillPaymentInterface->createTelephoneBillPayment($dataTelephones);
+                }
             }
         }
 

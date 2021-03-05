@@ -195,9 +195,9 @@ class BillPaymentRepository implements BillPaymentRepositoryInterface
             $data = $this->model->where('is_active', 1)->get();
             foreach ($data as $key => $value) {
                 if ($value->time_of_validity) {
-                    $this->sendExpirationTimeAlert($value);
-                    $value->is_active = 0;
-                    $value->update();
+                    // $this->sendExpirationTimeAlert($value);
+                    // $value->is_active = 0;
+                    // $value->update();
                 }
             }
 

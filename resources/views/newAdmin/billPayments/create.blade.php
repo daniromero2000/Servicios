@@ -105,8 +105,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-control-label" for="name">Fecha de vigencia<span
-                                        class="text-danger">*</span></label>
+                                <label class="form-control-label" for="name">Fecha de vigencia <small>(opcional)</small></label>
                                 <div class="input-group  mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-check"></i></span>
@@ -144,11 +143,11 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <h6 class="heading-small text-muted mb-4">Números de teléfono asociados</h6>
+                            <h6 class="heading-small text-muted mb-4">Números de teléfono asociados </h6>
                         </div>
                         <div class="field_wrapper2 row mx-0 w-100">
                             <div class="col-12 mb-3 ">
-                                <span class=" heading-small text-muted">Agregar número</span>
+                                <span class=" heading-small text-muted">Agregar número <small>(opcional)</small></span>
                                 <a href="javascript:void(0);" class="add_button2" title="Add field"> <i
                                         class="fas fa-plus-circle"></i></a>
                             </div>
