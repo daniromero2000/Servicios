@@ -106,20 +106,20 @@ class ListProductRepository implements ListProductRepositoryInterface
 
     public function getPriceProductForAllCurrentList($product_id)
     {
-        $dataProduct = [];
-        $product = $this->findListProductById($product_id);
-        $product = $product->toArray();
+        $dataProduct         = [];
+        $product             = $this->findListProductById($product_id);
+        $product             = $product->toArray();
         $currentProductLists = $this->productListInterface->getAllCurrentProductLists();
         $currentProductLists = $currentProductLists->toArray();
-        $priceGiveAway = $this->giveAwayInterface->getPriceGiveAwayProduct($product['iva_cost']);
-        $priceGiveAway = $priceGiveAway->total;
-        $protectionVat = $product['protection'] * 1.19;
-        $factors = $this->factorInterface->getAllFactors();
-        $factors = $factors->toArray();
-        $monthlyRate = ($factors[0]['value'] / 100);
-        $bond = 1 - ($factors[1]['value'] / 100);
-        $optionalIncrement = 1 - ($factors[2]['value'] / 100);
-        // $cashPromotionLowZone = 0;
+        $priceGiveAway       = $this->giveAwayInterface->getPriceGiveAwayProduct($product['iva_cost']);
+        $priceGiveAway       = $priceGiveAway->total;
+        $protectionVat       = $product['protection'] * 1.19;
+        $factors             = $this->factorInterface->getAllFactors();
+        $factors             = $factors->toArray();
+        $monthlyRate         = ($factors[0]['value'] / 100);
+        $bond                = 1 - ($factors[1]['value'] / 100);
+        $optionalIncrement   = 1 - ($factors[2]['value'] / 100);
+
         $product['iva_cost'] = $product['iva_cost'] == 0 ? 1 : $product['iva_cost'];
         $percentageProtectionDividedPrice = round(($protectionVat / $product['iva_cost']) * 100, 2);
         foreach ($currentProductLists as $key => $productList) {
@@ -144,7 +144,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                     $percentageProtection = 90;
                 }
                 $cashPromotion                    = round(($product['iva_cost'] - $applyProteccion) / ((100 - $productList['cash_margin']) / 100));
-                $promotionPublicPrice             = round(($product['iva_cost'] - ($applyProteccion * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100));;
+                $promotionPublicPrice             = round(($product['iva_cost'] - ($applyProteccion * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100));
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);

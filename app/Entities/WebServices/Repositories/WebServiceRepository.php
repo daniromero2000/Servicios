@@ -41,7 +41,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
     {
         $text = 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 15 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date;
         $username = "Lagobo.Distribuciones";
-        $password = "Distribuciones2020";
+        $password = "Distribuciones2020*";
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -64,6 +64,8 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         $err = curl_error($curl);
 
         curl_close($curl);
+
+        dd($response);
         return $response;
     }
 
