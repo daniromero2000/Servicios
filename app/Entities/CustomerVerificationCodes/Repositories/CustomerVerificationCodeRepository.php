@@ -122,7 +122,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
 
         foreach ($data as $key => $value) {
             $minutesDiff = $date->diffInMinutes($value->created_at);
-            if ($value->attempt == 1 && $minutesDiff <= 3) {
+            if ($value->attempt == 1 && ($minutesDiff >= 1 && $minutesDiff <= 3)) {
                 $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
                 $value->attempt = 2;
                 $value->update();
@@ -142,7 +142,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 $value->state = 2;
                 $value->update();
             }else{
-                
+
             }
         }
     }
