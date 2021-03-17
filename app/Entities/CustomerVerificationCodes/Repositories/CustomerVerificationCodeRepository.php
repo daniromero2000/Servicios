@@ -133,7 +133,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($token));
                 $token->attempt = 3;
                 $token->update();
-            } elseif (($token->attempt == 1 || $token->attempt == 2) && $minutesDiff >= 15) {
+            } elseif ($minutesDiff >= 15) {
                 $token->state = 2;
                 $token->update();
             } else {
