@@ -8,31 +8,39 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 {
     public function sendMessageSms($code, $date, $celNumber)
     {
-        $url = 'https://api.hablame.co/sms/envio/';
-        $data = array(
-            'cliente' => 10013280, //Numero de cliente
-            'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
-            'numero' => '57' . $celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-            'sms' => 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date, //Mensaje de texto a enviar
-            'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
-            'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
-        );
+        $ch = curl_init();
 
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        $context  = stream_context_create($options);
-        $result = json_decode((file_get_contents($url, false, $context)), true);
+        $post = array(
+                'account'           => '10013280', //número de usuario
+                'apiKey'            => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //clave API del usuario
+                'token'             => '31f19ba5696fe82b68f44c026078af7b', // Token de usuario
+                'toNumber'          => '57' . $celNumber, //número de destino
+                'sms'               => 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date, // mensaje de texto
+                'flash'             => '0', //mensaje tipo flash
+                'sendDate'          => time(), //fecha de envío del mensaje
+                'isPriority'        => 1, //mensaje prioritario
+                'sc'                => '899991', //código corto para envío del mensaje de texto
+                'request_dlvr_rcpt' => 0, //mensaje de texto con confirmación de entrega al celular
+            );
 
-        if ($result["resultado"] === 0) {
-            $mensaje = 'Se ha enviado el SMS exitosamente';
-        } else {
-            $mensaje = 'ha ocurrido un error!!';
-        }
+        $url = "https://api101.hablame.co/api/sms/v2.1/send/"; //endPoint: Primario
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response, true);
+
+        //La respuesta estará alojada en la variable $response
+
+        // if ($response["status"] == '1x000') {
+        //     dd( 'El SMS se ha enviado exitosamente con el ID: ' . $response["smsId"] . PHP_EOL);
+        // } else {
+        //     dd( 'Ha ocurrido un error:' . $response["error_description"] . '(' . $response["status"] . ')' . PHP_EOL);
+        // }
 
         return response()->json(true);
     }
