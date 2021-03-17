@@ -502,9 +502,19 @@ class OportuyaV2Controller extends Controller
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
+		$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
+		if ($getCode) {
+			$dateNow = Carbon::now();
+			$diffeDates = $getCode->created_at->diffInMinutes($dateNow);
+			if ($diffeDates < 15) {
+				return 'true';
+			}
+		}
+
 		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
 		}
+
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
 		$codeUserVerificationOportudata                         = [];
 		$codeUserVerificationOportudata['token']                = $code;
@@ -512,63 +522,13 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerificationOportudata['telephone']            = $celNumber;
 		$codeUserVerificationOportudata['type']                 = $type;
 
-		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
+		$codeVerification = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata);
+		$date = $codeVerification->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
-		return $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
+		return $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
 	}
-
-
-	public function reSendMessage(){
- $username = "Lagobo.Distribuciones";
-        $password = "Distribuciones2020*";
-		dd(base64_encode($username . ":" . $password));
-		return $this->customerVerificationCodeInterface->reSendMessage('test');
-
-	}
-
 	
-	// public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
-	// {
-	// 	$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-	// 	$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
-	// 	$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
-	// 	if ($getCode) {
-	// 		$dateNow = Carbon::now();
-	// 		$diffeDates = $getCode->created_at->diffInMinutes($dateNow);
-	// 		if ($diffeDates < 15) {
-	// 			return 'true';
-	// 		}
-	// 	}
-
-	// 	if ($checkCustomerCodeVerified == 'false') {
-	// 		return -1;
-	// 	}
-
-	// 	$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
-	// 	$codeUserVerificationOportudata                         = [];
-	// 	$codeUserVerificationOportudata['token']                = $code;
-	// 	$codeUserVerificationOportudata['identificationNumber'] = $identificationNumber;
-	// 	$codeUserVerificationOportudata['telephone']            = $celNumber;
-	// 	$codeUserVerificationOportudata['type']                 = $type;
-
-	// 	$codeVerification = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata);
-	// 	$date = $codeVerification->created_at;
-	// 	$dateNew = date('Y-m-d H:i:s', strtotime($date));
-
-	// 	$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
-	// 	// $dataCode = $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
-	// 	// $data = json_decode($data, true);
-	// 	$dataCode = json_decode($dataCode, true);
-	// 	$codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
-	// 	$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
-	// 	$codeVerification['sms_send_description'] = $dataCode['messages'][0]['status']['description']; // description
-	// 	$codeVerification['sms_id'] = $dataCode['messages'][0]['messageId']; // messageId
-	// 	$codeVerification = $codeVerification->toArray();
-	// 	$this->customerVerificationCodeInterface->updateCustomerVerificationCode($codeVerification);
-	// 	return "true";
-	// }
-
 	public function verificationCode($code, $identificationNumber)
 	{
 		$getCode 	  = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);

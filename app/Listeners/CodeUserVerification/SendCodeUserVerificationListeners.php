@@ -3,7 +3,6 @@
 namespace App\Listeners\CodeUserVerification;
 
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
-use App\Mail\BillPayments\SendExpirationTimeAlert;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 

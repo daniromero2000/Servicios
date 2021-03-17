@@ -120,27 +120,21 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         $data = $this->model->where('state', '0')->orderBy('created_at', 'Desc')->get();
         $date = Carbon::now();
 
-        foreach ($data as $key => $value) {
-            $minutesDiff = $date->diffInMinutes($value->created_at);
-            if ($value->attempt == 1 && ($minutesDiff >= 1 && $minutesDiff <= 3)) {
-                $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
-                $value->attempt = 2;
-                $value->update();
-            } elseif ($value->attempt == 2 && $minutesDiff >= 5) {
-                $email = $value->customer->subsidiary->CORREO;
+        foreach ($data as $key => $token) {
+            $minutesDiff = $date->diffInMinutes($token->created_at);
+            if ($token->attempt == 1 && ($minutesDiff >= 1 && $minutesDiff <= 3)) {
+                $this->webServiceInterface->sendMessageSms($token->token, $date, $token->telephone);
+                $token->attempt = 2;
+                $token->update();
+            } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff >= 5) {
+                $email = $token->customer->subsidiary->CORREO;
                 $date = Carbon::now();
-                Mail::to(['email' => $email])->send(new SendCodeUserVerification($value));
-                $value->attempt = 3;
-                $value->update();
-            } elseif ($value->attempt == 1 && $minutesDiff >= 5) {
-                $email = $value->customer->subsidiary->CORREO;
-                $date = Carbon::now();
-                Mail::to(['email' => $email])->send(new SendCodeUserVerification($value));
-                $value->attempt = 3;
-                $value->update();
-            }elseif (($value->attempt == 1 || $value->attempt == 2) && $minutesDiff >= 15){
-                $value->state = 2;
-                $value->update();
+                Mail::to(['email' => $email])->send(new SendCodeUserVerification($token));
+                $token->attempt = 3;
+                $token->update();
+            }elseif (($token->attempt == 1 || $token->attempt == 2) && $minutesDiff >= 15){
+                $token->state = 2;
+                $token->update();
             }else{
 
             }

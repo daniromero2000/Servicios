@@ -73,8 +73,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         curl_close($curl);
 
-        dd($response);
-        return $response;
+        return response()->json(true);
     }
 
     public function execCheckCutomerPays($identificationNumber)
