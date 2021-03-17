@@ -73,7 +73,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
     {
         try {
             return $this->model->where('identificationNumber', $identificationNumber)
-                ->where('state', 0)->get()->first();
+                ->where('state', 0)->where('type', 'SOLICITUD')->orderBy('identificador', 'DESC')->get()->first();
         } catch (QueryException $e) {
             //throw $th;
         }
@@ -132,11 +132,10 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($token));
                 $token->attempt = 3;
                 $token->update();
-            }elseif (($token->attempt == 1 || $token->attempt == 2) && $minutesDiff >= 15){
+            } elseif (($token->attempt == 1 || $token->attempt == 2) && $minutesDiff >= 15) {
                 $token->state = 2;
                 $token->update();
-            }else{
-
+            } else {
             }
         }
     }

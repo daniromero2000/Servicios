@@ -498,16 +498,38 @@ class OportuyaV2Controller extends Controller
 		return $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
 	}
 
+	// public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
+	// {
+	// 	$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+	// 	$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
+	// 	if ($checkCustomerCodeVerified == 'false') {
+	// 		return -1;
+	// 	}
+	// 	$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
+	// 	$codeUserVerificationOportudata                         = [];
+	// 	$codeUserVerificationOportudata['token']                = $code;
+	// 	$codeUserVerificationOportudata['identificationNumber'] = $identificationNumber;
+	// 	$codeUserVerificationOportudata['telephone']            = $celNumber;
+	// 	$codeUserVerificationOportudata['type']                 = $type;
+
+	// 	$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
+	// 	$dateNew = date('Y-m-d H:i:s', strtotime($date));
+
+	// 	return $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
+	// }
+
+
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
 		$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
+
 		if ($getCode) {
 			$dateNow = Carbon::now();
 			$diffeDates = $getCode->created_at->diffInMinutes($dateNow);
 			if ($diffeDates < 15) {
-				return 'true';
+				return response()->json(true);
 			}
 		}
 
@@ -528,7 +550,7 @@ class OportuyaV2Controller extends Controller
 
 		return $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
 	}
-	
+
 	public function verificationCode($code, $identificationNumber)
 	{
 		$getCode 	  = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
