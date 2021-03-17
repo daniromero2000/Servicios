@@ -28,6 +28,7 @@ class Subsidiary extends Model
     'STATE',
     'ALMACEN',
     'DEPARTAMENTO_ID',
+    'CORREO'
   ];
 
   protected $guarded = [

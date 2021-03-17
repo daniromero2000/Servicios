@@ -28,6 +28,7 @@ use App\Entities\FosygaTemps\FosygaTemp;
 use App\Entities\Intentions\Intention;
 use App\Entities\Leads\Lead;
 use App\Entities\Registradurias\Registraduria;
+use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Ubicas\Ubica;
 use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
 use App\Entities\UpToDateRealCifins\UpToDateRealCifin;
@@ -353,5 +354,10 @@ class Customer extends Model
     public function customerComments()
     {
         return $this->hasMany(CustomerComment::class, 'customer_id');
+    }
+
+    public function subsidiary()
+    {
+        return $this->belongsTo(Subsidiary::class, 'SUC');
     }
 }

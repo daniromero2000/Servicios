@@ -486,7 +486,7 @@ class OportuyaV2Controller extends Controller
 
 	public function getCodeVerification($identificationNumber, $celNumber)
 	{
-		$code = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
+		$code 				  = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
 		$codeUserVerification = new CodeUserVerification;
 		$codeUserVerification->code = $code;
 		$codeUserVerification->identificationNumber = $identificationNumber;
@@ -517,6 +517,14 @@ class OportuyaV2Controller extends Controller
 
 		return $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
 	}
+
+
+	public function reSendMessage(){
+
+		return $this->customerVerificationCodeInterface->reSendMessage('test');
+
+	}
+
 	
 	// public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	// {

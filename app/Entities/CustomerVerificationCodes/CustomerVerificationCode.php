@@ -2,6 +2,7 @@
 
 namespace App\Entities\CustomerVerificationCodes;
 
+use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 class CustomerVerificationCode extends Model
@@ -23,10 +24,16 @@ class CustomerVerificationCode extends Model
         'sms_status',
         'sms_response',
         'sms_send_description',
-        'sms_id'
+        'sms_id',
+        'attempt'
     ];
 
 protected $dates = [
     'created_at',
 ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'identificationNumber')->select('CEDULA', 'SUC');
+    }
 }

@@ -4,14 +4,21 @@ namespace App\Entities\CustomerVerificationCodes\Repositories;
 
 use App\Entities\CustomerVerificationCodes\CustomerVerificationCode;
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
+use Carbon\Carbon;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use App\Mail\BillPayments\SendExpirationTimeAlert;
+use App\Mail\CodeUserVerification\SendCodeUserVerification;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepositoryInterface
 {
     public function __construct(
-        CustomerVerificationCode $customerVerificationCode
+        CustomerVerificationCode $customerVerificationCode,
+        WebServiceRepositoryInterface $WebServiceRepositoryInterface
     ) {
         $this->model = $customerVerificationCode;
+        $this->webServiceInterface  = $WebServiceRepositoryInterface;
     }
 
     public function createCustomerVerificationCode($data): CustomerVerificationCode
@@ -99,8 +106,6 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         }
     }
 
-
-
     public function checkIfCodeExists($code)
     {
         try {
@@ -108,5 +113,28 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         } catch (\Throwable $th) {
             //throw $th;
         }
+    }
+
+
+    public function reSendMessage($code)
+    {
+        $data = $this->model->where('state', '0')->orderBy('created_at', 'Desc')->get();
+        $date = Carbon::now();
+
+        foreach ($data as $key => $value) {
+            $minutesDiff = $date->diffInMinutes($value->created_at);
+            if ($value->attempt == 1 && $minutesDiff <= 3) {
+                $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
+                $value->attempt = 2;
+                $value->update();
+            } elseif ($value->attempt == 2 && $minutesDiff >= 5) {
+                $email = $value->customer->subsidiary->CORREO;
+                $date = Carbon::now();
+                Mail::to(['email' => $email])->send(new SendCodeUserVerification($value));
+                $value->attempt = 3;
+                $value->update();
+            }
+        }
+
     }
 }

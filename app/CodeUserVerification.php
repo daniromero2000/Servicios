@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 class CodeUserVerification extends Model
@@ -10,8 +11,11 @@ class CodeUserVerification extends Model
 
     protected $fillable = [
         'code',
-        'identification',
+        'identificationNumber',
         'type',
-        'telephone'
+        'telephone',
+        'attempt'
     ];
+
+  
 }

@@ -516,6 +516,8 @@ Route::group(['prefix' => '/libranza'], function () {
 // Servicios Oportudata
 Route::get('/api/oportudata/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerificationOportudata');
 Route::get('/api/oportudata/getCodeVerification/{identificationNumber}/{celNumber}/{type}', 'Admin\OportuyaV2Controller@getCodeVerificationOportudata');
+Route::get('/test', 'Admin\OportuyaV2Controller@reSendMessage');
+
 
 // Campañas Marketing
 Route::group(['prefix' => '/campaigns'], function () {
@@ -538,7 +540,6 @@ Route::namespace('Admin')->group(function () {
         Route::resource('customerComments', 'CustomerCommentController');
     });
 });
-
 
 include "web2.php";
 include "web3.php";

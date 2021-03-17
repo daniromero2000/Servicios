@@ -17,4 +17,7 @@ interface CustomerVerificationCodeRepositoryInterface
   public function generateVerificationCode($identificationNumber);
 
   public function checkCustomerVerificationCode($identificationNumber, $daysToIncrement);
+
+  public function reSendMessage($code);
+
 }
