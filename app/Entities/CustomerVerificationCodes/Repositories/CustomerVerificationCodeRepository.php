@@ -123,10 +123,16 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         foreach ($data as $key => $value) {
             $minutesDiff = $date->diffInMinutes($value->created_at);
             if ($value->attempt == 1 && $minutesDiff <= 3) {
-                // $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
-                // $value->attempt = 2;
-                // $value->update();
+                $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
+                $value->attempt = 2;
+                $value->update();
             } elseif ($value->attempt == 2 && $minutesDiff >= 5) {
+                $email = $value->customer->subsidiary->CORREO;
+                $date = Carbon::now();
+                Mail::to(['email' => $email])->send(new SendCodeUserVerification($value));
+                $value->attempt = 3;
+                $value->update();
+            } elseif ($value->attempt == 1 && $minutesDiff >= 5) {
                 $email = $value->customer->subsidiary->CORREO;
                 $date = Carbon::now();
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($value));
@@ -134,6 +140,5 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 $value->update();
             }
         }
-
     }
 }
