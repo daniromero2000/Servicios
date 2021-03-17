@@ -138,6 +138,11 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($value));
                 $value->attempt = 3;
                 $value->update();
+            }elseif (($value->attempt == 1 || $value->attempt == 2) && $minutesDiff >= 15){
+                $value->state = 2;
+                $value->update();
+            }else{
+                
             }
         }
     }
