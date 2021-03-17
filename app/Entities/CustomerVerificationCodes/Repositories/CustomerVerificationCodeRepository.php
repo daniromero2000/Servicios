@@ -24,6 +24,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
     public function createCustomerVerificationCode($data): CustomerVerificationCode
     {
         try {
+            $data['assesor'] = auth()->user()->codeOportudata;
             return $this->model->create($data);
         } catch (QueryException $e) {
             //throw $th;
@@ -127,7 +128,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 $token->attempt = 2;
                 $token->update();
             } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff >= 5) {
-                $email = $token->customer->subsidiary->CORREO;
+                $email = $token->assesorOrigin->subsidiary->CORREO;
                 $date = Carbon::now();
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($token));
                 $token->attempt = 3;

@@ -4,6 +4,7 @@ namespace App\Entities\Customers;
 
 use App\codeUserVerificationOportudata;
 use App\Entities\AssessorQuotations\AssessorQuotation;
+use App\Entities\Assessors\Assessor;
 use App\Entities\CurrentCredits\PaymentTime;
 use App\Entities\CurrentCredits\CustomerType;
 use App\Entities\CurrentCredits\CurrentCredit;
@@ -159,6 +160,11 @@ class Customer extends Model
     public function searchCustomers($term)
     {
         return self::search($term);
+    }
+
+    public function assesor()
+    {
+        return $this->belongsTo(Assessor::class, 'USUARIO_CREACION');
     }
 
     public function latestCifinScore()

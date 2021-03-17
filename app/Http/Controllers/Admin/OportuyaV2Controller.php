@@ -551,6 +551,11 @@ class OportuyaV2Controller extends Controller
 		return $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
 	}
 
+	public function reSendMessage()
+	{
+		return $this->customerVerificationCodeInterface->reSendMessage('test');
+	}
+
 	public function verificationCode($code, $identificationNumber)
 	{
 		$getCode 	  = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);

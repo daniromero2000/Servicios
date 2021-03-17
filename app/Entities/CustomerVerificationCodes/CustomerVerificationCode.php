@@ -2,7 +2,9 @@
 
 namespace App\Entities\CustomerVerificationCodes;
 
+use App\Entities\Assessors\Assessor;
 use App\Entities\Customers\Customer;
+use App\Entities\TemporaryCustomers\TemporaryCustomer;
 use Illuminate\Database\Eloquent\Model;
 
 class CustomerVerificationCode extends Model
@@ -25,7 +27,8 @@ class CustomerVerificationCode extends Model
         'sms_response',
         'sms_send_description',
         'sms_id',
-        'attempt'
+        'attempt',
+        'assesor'
     ];
 
 protected $dates = [
@@ -34,6 +37,17 @@ protected $dates = [
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'identificationNumber')->select('CEDULA', 'SUC');
+        return $this->belongsTo(Customer::class, 'identificationNumber')->select('CEDULA', 'SUC', 'USUARIO_CREACION');
     }
+
+    public function temporaryCustomer()
+    {
+        return $this->belongsTo(TemporaryCustomer::class, 'identificationNumber');
+    }
+
+    public function assesorOrigin()
+    {
+        return $this->belongsTo(Assessor::class, 'assesor');
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entities\TemporaryCustomers;
 
+use App\Entities\Assessors\Assessor;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -24,6 +25,7 @@ class TemporaryCustomer extends Model
         'FEC_ING',
         'CIUD_UBI',
         'FEC_CONST',
+        'ASESSOR',
         'CELULAR'
     ];
 
@@ -41,4 +43,9 @@ class TemporaryCustomer extends Model
     ];
 
     protected $searchable = [];
+
+    public function assesor()
+    {
+        return $this->belongsTo(Assessor::class, 'ASESSOR');
+    }
 }

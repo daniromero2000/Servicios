@@ -49,8 +49,9 @@ class TemporaryCustomerController extends Controller
         if(!isset($request['FEC_NAC']) || $request['FEC_NAC'] == ''){
             return "-1";
         }
-        $request['FEC_ING'] = ($request['FEC_ING'] != '') ? $request['FEC_ING'].'-01' : '' ;
+        $request['FEC_ING']   = ($request['FEC_ING'] != '') ? $request['FEC_ING'].'-01' : '' ;
         $request['FEC_CONST'] = ($request['FEC_CONST'] != '') ? $request['FEC_CONST'].'-01' : '' ;
+        $request['ASESSOR']    = auth()->user()->codeOportudata;
         return $this->temporaryCustomerInterface->updateOrCreateTemporaryCustomer($request->input());
     }
 
