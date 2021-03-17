@@ -2,13 +2,21 @@
 
 namespace App\Listeners\CodeUserVerification;
 
-use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
+use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
 use App\Mail\BillPayments\SendExpirationTimeAlert;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class SendCodeUserVerificationListeners
 {
+    private $customerVerificationCodeInterface;
+
+    public function __construct(
+        CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface
+    ) {
+        $this->customerVerificationCodeInterface = $customerVerificationCodeRepositoryInterface;
+    }
+
     /**
      * Handle the event.
      *
@@ -17,9 +25,6 @@ class SendCodeUserVerificationListeners
      */
     public function handle($event)
     {
-        dd('hola');
-
-        $date = Carbon::now();
-        Mail::to(['email' => '123romerod@gmail.com'])->send(new SendExpirationTimeAlert(['data' => $data, 'date' => $date]));
+        $this->customerVerificationCodeInterface->reSendMessage();
     }
 }

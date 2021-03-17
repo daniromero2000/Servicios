@@ -115,8 +115,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         }
     }
 
-
-    public function reSendMessage($code)
+    public function reSendMessage()
     {
         $data = $this->model->where('state', '0')->orderBy('created_at', 'Desc')->get();
         $date = Carbon::now();
@@ -124,9 +123,9 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         foreach ($data as $key => $value) {
             $minutesDiff = $date->diffInMinutes($value->created_at);
             if ($value->attempt == 1 && $minutesDiff <= 3) {
-                $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
-                $value->attempt = 2;
-                $value->update();
+                // $this->webServiceInterface->sendMessageSms($value->token, $date, $value->telephone);
+                // $value->attempt = 2;
+                // $value->update();
             } elseif ($value->attempt == 2 && $minutesDiff >= 5) {
                 $email = $value->customer->subsidiary->CORREO;
                 $date = Carbon::now();

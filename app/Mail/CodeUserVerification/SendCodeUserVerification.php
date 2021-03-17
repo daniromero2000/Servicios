@@ -23,6 +23,6 @@ class SendCodeUserVerification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Tiempo de vigencia excedido')->view('mail.codeUserVerification.sendCodeUserVerification', ['data' => $this->token]);
+        return $this->subject('Token de seguridad Almancenes Oportunidades')->view('mail.codeUserVerification.sendCodeUserVerification', ['data' => $this->token]);
     }
 }

@@ -520,7 +520,9 @@ class OportuyaV2Controller extends Controller
 
 
 	public function reSendMessage(){
-
+ $username = "Lagobo.Distribuciones";
+        $password = "Distribuciones2020*";
+		dd(base64_encode($username . ":" . $password));
 		return $this->customerVerificationCodeInterface->reSendMessage('test');
 
 	}

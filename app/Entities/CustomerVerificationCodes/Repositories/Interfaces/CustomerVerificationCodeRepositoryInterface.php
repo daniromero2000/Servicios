@@ -18,6 +18,6 @@ interface CustomerVerificationCodeRepositoryInterface
 
   public function checkCustomerVerificationCode($identificationNumber, $daysToIncrement);
 
-  public function reSendMessage($code);
+  public function reSendMessage();
 
 }

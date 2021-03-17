@@ -16,7 +16,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
                 'token'             => '31f19ba5696fe82b68f44c026078af7b', // Token de usuario
                 'toNumber'          => '57' . $celNumber, //número de destino
                 'sms'               => 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date, // mensaje de texto
-                'flash'             => '0', //mensaje tipo flash
+                'flash'             => '1', //mensaje tipo flash
                 'sendDate'          => time(), //fecha de envío del mensaje
                 'isPriority'        => 1, //mensaje prioritario
                 'sc'                => '899991', //código corto para envío del mensaje de texto
