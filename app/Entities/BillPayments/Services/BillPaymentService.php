@@ -104,7 +104,7 @@ class BillPaymentService implements BillPaymentServiceInterface
                         ]
                     ],
                     ['label' => 'Dia de pago', 'type' => 'number', 'name' => 'payment_deadline'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code']
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code', 'value' => 'code']
                 ],
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
