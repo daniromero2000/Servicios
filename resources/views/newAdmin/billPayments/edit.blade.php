@@ -126,9 +126,9 @@
                                             <select name="subsidiary_id" id="subsidiary_id" class="form-control" required>
                                                 <option value="">Seleccione</option>
                                                 @foreach ($subsidiaries as $item)
-                                                    <option value="{{ $item->CODIGO }}"
-                                                        {{ $billPayment->subsidiary_id == $item->CODIGO ? 'selected' : '' }}>
-                                                        {{ $item->CODIGO }}</option>
+                                                    <option value="{{ $item->code }}"
+                                                        {{ $billPayment->subsidiary_id == $item->code ? 'selected' : '' }}>
+                                                        {{ $item->code }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

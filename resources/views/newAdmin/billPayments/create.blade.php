@@ -84,7 +84,7 @@
                                 <select name="subsidiary_id" id="subsidiary_id" class="form-control" required>
                                     <option value="">Seleccione</option>
                                     @foreach ($subsidiaries as $item)
-                                        <option value="{{ $item->CODIGO }}">{{ $item->CODIGO }}</option>
+                                        <option value="{{ $item->code }}">{{ $item->code }}</option>
                                     @endforeach
                                 </select>
                             </div>

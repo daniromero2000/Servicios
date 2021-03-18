@@ -5,7 +5,6 @@ namespace App\Entities\BillPayments;
 use App\Entities\BillPaymentAttachmentLogs\BillPaymentAttachmentLog;
 use App\Entities\BillPaymentStatusesLogs\BillPaymentStatusesLog;
 use App\Entities\MailsBillPayments\MailsBillPayment;
-use App\Entities\Products\Product;
 use App\Entities\TelephoneBillPayments\TelephoneBillPayment;
 use App\Entities\TypeInvoices\TypeInvoice;
 use Illuminate\Database\Eloquent\Model;

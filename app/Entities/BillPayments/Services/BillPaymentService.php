@@ -6,6 +6,7 @@ use App\Entities\BillPaymentAttachmentLogs\Repositories\BillPaymentAttachmentLog
 use App\Entities\BillPayments\Repositories\BillPaymentRepositoryInterface;
 use App\Entities\BillPayments\Services\Interfaces\BillPaymentServiceInterface;
 use App\Entities\BillPaymentStatusesLogs\Repositories\BillPaymentStatusesLogRepositoryInterface;
+use App\Entities\BillPaymentSubsidiaries\BillPaymentSubsidiary;
 use App\Entities\MailsBillPayments\Repositories\MailsBillPaymentRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\TelephoneBillPayments\Repositories\TelephoneBillPaymentRepositoryInterface;
@@ -56,7 +57,7 @@ class BillPaymentService implements BillPaymentServiceInterface
             $paginate = $this->billPaymentInterface->countBillPayments('');
         }
 
-        $subsidiaries = $this->subsidiaryInterface->getSubsidiares();
+        $subsidiaries = BillPaymentSubsidiary::all();
         $getPaginate  = $this->toolsInterface->getPaginate($paginate, $skip);
 
         $list = $list->map(function ($item) {
@@ -83,11 +84,6 @@ class BillPaymentService implements BillPaymentServiceInterface
             return $item;
         })->all();
 
-        $subsidiaries = $subsidiaries->map(function ($item) {
-            $item->id = $item->CODIGO;
-            return $item;
-        })->all();
-
         return [
             'data' => [
                 'list'               =>  collect($list),
@@ -103,14 +99,14 @@ class BillPaymentService implements BillPaymentServiceInterface
                         ]
                     ],
                     ['label' => 'Dia de pago', 'type' => 'number', 'name' => 'payment_deadline'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'CODIGO']
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>$subsidiaries, 'name' => 'subsidiary_id', 'option' => 'code']
                 ],
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
                     ['label' => 'Dia limite de pago', 'type' => 'number', 'name' => 'payment_deadline'],
                     ['label' => 'Fecha de vigencia', 'type' => 'date', 'name' => 'time_of_validity'],
                     ['label' => 'Proveedor', 'type' => 'select', 'options' => $this->typeInvoice->listAllTypeInvoices(), 'name' => 'type_of_invoice', 'option' => 'name'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'CODIGO'],
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' => $subsidiaries, 'name' => 'subsidiary_id', 'option' => 'code'],
                     ['label' => 'Estado', 'type' => 'select', 'name' => 'status', 'options' => [
                         ['id' => '0', 'name' => 'Pendiente'],
                         ['id' => '1', 'name' => 'Gestionado'],
@@ -159,7 +155,7 @@ class BillPaymentService implements BillPaymentServiceInterface
             $paginate = $this->billPaymentInterface->countBillPayments('');
         }
 
-        $subsidiaries = $this->subsidiaryInterface->getSubsidiares();
+        $subsidiaries = BillPaymentSubsidiary::all();
         $getPaginate  = $this->toolsInterface->getPaginate($paginate, $skip);
 
         $list = $list->map(function ($item) {
@@ -187,11 +183,6 @@ class BillPaymentService implements BillPaymentServiceInterface
             return $item;
         })->all();
 
-        $subsidiaries = $subsidiaries->map(function ($item) {
-            $item->id = $item->CODIGO;
-            return $item;
-        })->all();
-
         return [
             'data' => [
                 'list'               =>  collect($list),
@@ -200,13 +191,13 @@ class BillPaymentService implements BillPaymentServiceInterface
                 'searchInputs'       => [
                     ['label' => 'Buscar', 'type' => 'text', 'name' => 'q'],
                     ['label' => 'Dia de pago', 'type' => 'number', 'name' => 'payment_deadline'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'CODIGO']
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' => $subsidiaries, 'name' => 'subsidiary_id', 'option' => 'code']
                 ],
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
                     ['label' => 'Dia limite de pago', 'type' => 'number', 'name' => 'payment_deadline'],
                     ['label' => 'Proveedor', 'type' => 'select', 'options' => $this->typeInvoice->listAllTypeInvoices(), 'name' => 'type_of_invoice', 'option' => 'name'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'CODIGO'],
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' => $subsidiaries, 'name' => 'subsidiary_id', 'option' => 'code'],
                     ['label' => 'Estado', 'type' => 'select', 'name' => 'status', 'options' => [
                         ['id' => '4', 'name' => 'Aprobado'],
                         ['id' => '5', 'name' => 'Revisado por contabilidad'],
@@ -237,7 +228,8 @@ class BillPaymentService implements BillPaymentServiceInterface
     {
         return ['data' => [
             'typeInvoices' => $this->typeInvoice->listAllTypeInvoices(),
-            'subsidiaries'   => $this->subsidiaryInterface->getSubsidiares()
+            'subsidiaries' => BillPaymentSubsidiary::all()
+
         ]];
     }
 
@@ -372,7 +364,7 @@ class BillPaymentService implements BillPaymentServiceInterface
 
         return ['data' => [
             'typeInvoices' => $this->typeInvoice->listAllTypeInvoices(),
-            'subsidiaries' => $this->subsidiaryInterface->getSubsidiares(),
+            'subsidiaries' => BillPaymentSubsidiary::all(),
             'billPayment'  => $data
         ]];
     }
