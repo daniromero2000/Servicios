@@ -111,7 +111,7 @@ class BillPaymentService implements BillPaymentServiceInterface
                     ['label' => 'Dia limite de pago', 'type' => 'number', 'name' => 'payment_deadline'],
                     ['label' => 'Fecha de vigencia', 'type' => 'date', 'name' => 'time_of_validity'],
                     ['label' => 'Proveedor', 'type' => 'select', 'options' => $this->typeInvoice->listAllTypeInvoices(), 'name' => 'type_of_invoice', 'option' => 'name'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code'],
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code', 'test' => 'code'],
                     ['label' => 'Estado', 'type' => 'select', 'name' => 'status', 'options' => [
                         ['id' => '0', 'name' => 'Pendiente'],
                         ['id' => '1', 'name' => 'Gestionado'],
@@ -193,7 +193,6 @@ class BillPaymentService implements BillPaymentServiceInterface
             return $item;
         })->all();
 
-
         return [
             'data' => [
                 'list'               =>  collect($list),
@@ -202,13 +201,13 @@ class BillPaymentService implements BillPaymentServiceInterface
                 'searchInputs'       => [
                     ['label' => 'Buscar', 'type' => 'text', 'name' => 'q'],
                     ['label' => 'Dia de pago', 'type' => 'number', 'name' => 'payment_deadline'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code']
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code', 'value' => 'code']
                 ],
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
                     ['label' => 'Dia limite de pago', 'type' => 'number', 'name' => 'payment_deadline'],
                     ['label' => 'Proveedor', 'type' => 'select', 'options' => $this->typeInvoice->listAllTypeInvoices(), 'name' => 'type_of_invoice', 'option' => 'name'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code'],
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' => collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code' ],
                     ['label' => 'Estado', 'type' => 'select', 'name' => 'status', 'options' => [
                         ['id' => '4', 'name' => 'Aprobado'],
                         ['id' => '5', 'name' => 'Revisado por contabilidad'],

@@ -29,8 +29,8 @@
                                     <option value="">Seleccione</option>
                                     @foreach ($input['options'] as $option)
                                         <option
-                                            {{ request()->input($input['name']) == $option['id'] ? 'selected' : '' }}
-                                            value="{{ $option['id'] }}">{{ $option[$input['option']] }}
+                                            {{  request()->input($input['name']) == ( array_key_exists('value', $input) ? $option[$input['value']] : $option['id']) ? 'selected' : '' }}
+                                            value="{{ array_key_exists('value', $input) ? $option[$input['value']] : $option['id'] }}">{{ $option[$input['option']] }}
                                         </option>
                                     @endforeach
                                 </select>
