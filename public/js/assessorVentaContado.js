@@ -29,6 +29,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.showAlertTelfijoContado = false;
 		$scope.showAlertSalary = false;
 		$scope.reSend = false;
+		$scope.reSendEmail = false;
 		$scope.step = 1;
 		$scope.typesDocuments = [
 			{
@@ -395,12 +396,13 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 							$timeout(function () {
 								$scope.reNewToken = true;
 							}, 900000);
-							// $timeout(function () {
-							// 	$scope.reSend = true;
-							// }, 65000);
-							// $timeout(function () {
-							// 	$scope.reSend = false;
-							// }, 185000);
+							$timeout(function () {
+								$scope.reSend = true;
+							}, 65000);
+							$timeout(function () {
+								$scope.reSend = false;
+								$scope.reSendEmail = true;
+							}, 185000);
 							$('#confirmCodeVerification').modal('show');
 						}
 					}

@@ -12,11 +12,8 @@
                              <button class="btn btn-primary" ng-disabled="disabledButtonCode">Confirmar
                                  Código</button>
                              <button type="button" ng-show="reNewToken" class="btn btn-warning" ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
-
                              <p ng-show="reSend" class="alert alert-success mt-4 mb-0">El token fue re enviado automaticanmente</p>
-
-                             <p ng-show="reSend" class="alert alert-success mt-4 mb-0">El token fue enviado al correo del director, por favor verificar</p>
-
+                             <p ng-show="reSendEmail" class="alert alert-success mt-4 mb-0">El token fue enviado al correo del director, por favor verificar</p>
                          </div>
                          <div class="col-12 text-center" ng-show="showAlertCode">
                              <div class="alert alert-danger" role="alert">
