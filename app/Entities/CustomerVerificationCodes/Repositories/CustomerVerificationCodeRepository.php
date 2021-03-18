@@ -128,8 +128,12 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 $token->attempt = 2;
                 $token->update();
             } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff >= 5) {
-                $email = $token->assesorOrigin->subsidiary->CORREO;
                 $date = Carbon::now();
+                if(!is_null($token->assesorOrigin)){
+                    $email = $token->assesorOrigin->subsidiary->CORREO;
+                }else{
+                    $email = $token->customer->subsidiary->CORREO;
+                }
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($token));
                 $token->attempt = 3;
                 $token->update();
