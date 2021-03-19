@@ -127,7 +127,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 $this->webServiceInterface->sendMessageSms($token->token, $date, $token->telephone);
                 $token->attempt = 2;
                 $token->update();
-            } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff >= 5) {
+            } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff > 3) {
                 $date = Carbon::now();
                 if(!is_null($token->assesorOrigin)){
                     $email = $token->assesorOrigin->subsidiary->CORREO;

@@ -392,17 +392,24 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 							$timeout(function () {
 								$scope.reNewToken = true;
 							}, 900000);
+							$timeout(function () {
+								$scope.reSend = true;
+							}, 60000);
+							$timeout(function () {
+								$scope.reSend = false;
+								$scope.reSendEmail = true;
+							}, 180000);
 						} else {
 							$timeout(function () {
 								$scope.reNewToken = true;
 							}, 900000);
 							$timeout(function () {
 								$scope.reSend = true;
-							}, 65000);
+							}, 60000);
 							$timeout(function () {
 								$scope.reSend = false;
 								$scope.reSendEmail = true;
-							}, 185000);
+							}, 180000);
 							$('#confirmCodeVerification').modal('show');
 						}
 					}
