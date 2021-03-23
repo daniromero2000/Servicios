@@ -36,7 +36,6 @@ class CommercialConsultationRepository implements CommercialConsultationReposito
         return $consultaComercial;
     }
 
-
     public function execConsultaComercial($oportudataLead)
     {
         $obj = new \stdClass();
