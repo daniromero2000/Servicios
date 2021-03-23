@@ -4,6 +4,7 @@ namespace App\Entities\BillPayments;
 
 use App\Entities\BillPaymentAttachmentLogs\BillPaymentAttachmentLog;
 use App\Entities\BillPaymentStatusesLogs\BillPaymentStatusesLog;
+use App\Entities\BillPaymentSubsidiaries\BillPaymentSubsidiary;
 use App\Entities\MailsBillPayments\MailsBillPayment;
 use App\Entities\TelephoneBillPayments\TelephoneBillPayment;
 use App\Entities\TypeInvoices\TypeInvoice;
@@ -44,6 +45,11 @@ class BillPayment extends Model
     public function typeInvoice()
     {
         return $this->belongsTo(TypeInvoice::class, 'type_of_invoice');
+    }
+
+    public function subsidiary()
+    {
+        return $this->belongsTo(BillPaymentSubsidiary::class, 'subsidiary_id');
     }
 
     public function mailBillPayment()

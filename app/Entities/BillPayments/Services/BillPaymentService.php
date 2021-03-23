@@ -74,6 +74,7 @@ class BillPaymentService implements BillPaymentServiceInterface
             } else {
                 $item->status = ['status' => 'Revisado por contabilidad', 'color' => '#FFFFFF', 'background' => '#ff8d00'];
             }
+
             $item->status = collect($item->status);
 
             if ($item->date_of_notification) {
@@ -81,11 +82,8 @@ class BillPaymentService implements BillPaymentServiceInterface
             } else {
                 $item->notification = 'NO';
             }
-            return $item;
-        })->all();
-
-        $subsidiaries = $subsidiaries->map(function ($item) {
-            $item->id = $item->code;
+            
+            $item->subsidiary_id = $item->subsidiary ?  $item->subsidiary->code : 'NA';
             return $item;
         })->all();
 
@@ -104,14 +102,14 @@ class BillPaymentService implements BillPaymentServiceInterface
                         ]
                     ],
                     ['label' => 'Dia de pago', 'type' => 'number', 'name' => 'payment_deadline'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code', 'value' => 'code']
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  $subsidiaries, 'name' => 'subsidiary_id', 'option' => 'code', 'value' => 'code']
                 ],
                 'inputs' => [
                     ['label' => 'Referencia de pago', 'type' => 'text', 'name' => 'payment_reference'],
                     ['label' => 'Dia limite de pago', 'type' => 'number', 'name' => 'payment_deadline'],
                     ['label' => 'Fecha de vigencia', 'type' => 'date', 'name' => 'time_of_validity'],
                     ['label' => 'Proveedor', 'type' => 'select', 'options' => $this->typeInvoice->listAllTypeInvoices(), 'name' => 'type_of_invoice', 'option' => 'name'],
-                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  collect($subsidiaries), 'name' => 'subsidiary_id', 'option' => 'code', 'test' => 'code'],
+                    ['label' => 'Sucursal', 'type' => 'select', 'options' =>  $subsidiaries, 'name' => 'subsidiary_id', 'option' => 'code', 'test' => 'code'],
                     ['label' => 'Estado', 'type' => 'select', 'name' => 'status', 'options' => [
                         ['id' => '0', 'name' => 'Pendiente'],
                         ['id' => '1', 'name' => 'Gestionado'],
@@ -291,7 +289,7 @@ class BillPaymentService implements BillPaymentServiceInterface
             $user = auth()->user()->id;
             $src_invoice = [
                 'bill_payment_id' => $billPayment->id,
-                'src_invoice'             => $data['data']['src_invoice'],
+                'src_invoice'     => $data['data']['src_invoice'],
                 'user_id'         => $user
             ];
 
