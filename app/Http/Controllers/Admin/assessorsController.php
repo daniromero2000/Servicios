@@ -593,6 +593,11 @@ class assessorsController extends Controller
 		$customerIntention         = $this->intentionInterface->checkIfHasIntention($intentionData,  $this->daysToIncrement);
 		$customerIntention->ASESOR = $intentionData['ASESOR'];
 
+		if ($customer->latestCifinScore && $customer->latestCifinScore->score) {
+		} else {
+			$this->commercialConsultationInterface->execConsultaSaveXml($customer->CEDULA);
+		}
+
 		//3.1 Estado de documento
 		$estadoCliente = 'PREAPROBADO';
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
@@ -617,11 +622,10 @@ class assessorsController extends Controller
 		}
 
 		// 5	Puntaje y 3.4 Calificacion Score
-		if ($customer->latestCifinScore) {
+		if ($customer->latestCifinScore && $customer->latestCifinScore->score) {
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
 		} else {
-			$this->commercialConsultationInterface->execConsultaSaveXml($customer->CEDULA);
 			$customer        = $this->customerInterface->findCustomerById($customer->CEDULA);
 			$lastCifinScore  = $customer->latestCifinScore;
 			$customerScore   = $lastCifinScore->score;
