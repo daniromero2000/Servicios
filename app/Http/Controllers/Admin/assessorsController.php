@@ -617,7 +617,6 @@ class assessorsController extends Controller
 		}
 
 		// 5	Puntaje y 3.4 Calificacion Score
-		dd(			$this->commercialConsultationInterface->execConsultaSaveXml($customer->CEDULA));
 		if ($customer->latestCifinScore) {
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
