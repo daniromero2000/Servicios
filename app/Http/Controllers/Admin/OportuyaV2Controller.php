@@ -1422,5 +1422,15 @@ class OportuyaV2Controller extends Controller
 		$charTrim = trim($charItem);
 		return $charTrim;
 	}
+
+	public function sendCodeForEmail($identificationNumber, $email)
+	{
+		if($email){
+			$this->customerVerificationCodeInterface->sendEmailForCustomer($identificationNumber, $email);
+			return response()->json(true);
+		}
+		
+		return response()->json(false);
+	}
 }
 //1407

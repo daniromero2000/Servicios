@@ -20,4 +20,6 @@ interface CustomerVerificationCodeRepositoryInterface
 
   public function reSendMessage();
 
+  public function sendEmailForCustomer($identificationNumber, $email);
+  
 }

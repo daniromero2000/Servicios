@@ -24,8 +24,10 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
     public function createCustomerVerificationCode($data): CustomerVerificationCode
     {
         try {
-            if(auth()->user()){
+            if (auth()->user()) {
                 $data['assesor'] = auth()->user()->codeOportudata;
+            } else {
+                $data['assesor'] = '998877';
             }
             return $this->model->create($data);
         } catch (QueryException $e) {
@@ -109,6 +111,19 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         }
     }
 
+    public function sendEmailForCustomer($identificationNumber, $email)
+    {
+        $data = $this->checkCustomerHasCustomerVerificationCode($identificationNumber);
+
+        if ($data) {
+            Mail::to(['email' => $email])->send(new SendCodeUserVerification($data));
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function checkIfCodeExists($code)
     {
         try {
@@ -129,11 +144,11 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
                 $this->webServiceInterface->sendMessageSms($token->token, $date, $token->telephone);
                 $token->attempt = 2;
                 $token->update();
-            } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff > 3) {
+            } elseif (($token->attempt == 2 || $token->attempt == 1) && $minutesDiff > 3 && $token->assesor != '998877') {
                 $date = Carbon::now();
-                if(!is_null($token->assesorOrigin)){
+                if (!is_null($token->assesorOrigin)) {
                     $email = $token->assesorOrigin->subsidiary->CORREO;
-                }else{
+                } else {
                     $email = $token->customer->subsidiary->CORREO;
                 }
                 Mail::to(['email' => $email])->send(new SendCodeUserVerification($token));

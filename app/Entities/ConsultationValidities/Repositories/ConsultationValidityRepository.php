@@ -24,7 +24,6 @@ class ConsultationValidityRepository implements ConsultationValidityRepositoryIn
         }
     }
 
-
     public function getConsultationValidity()
     {
         try {

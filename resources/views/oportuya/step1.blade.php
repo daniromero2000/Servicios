@@ -269,6 +269,7 @@
 									<button type="submit" class="btn btn-primary">Confirmar Código</button>
 									<button type="button" ng-show="reNewToken" class="btn btn-warning"
 										ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
+                             <p ng-show="reSendEmail" class="alert alert-success mt-4 mb-0">Debido al que token no se ha confirmado, lo hemos enviado a tu correo electrónico</p>
 								</div>
 								<div class="col-12 text-center" ng-show="showAlertCode">
 									<div class="alert alert-danger" role="alert">

@@ -6,6 +6,7 @@ angular.module('appStep1', ['moment-picker'])
 		$scope.showAlertCode = false;
 		$scope.showWarningCode = false;
 		$scope.showInfoCode = false;
+		$scope.reSendEmail = false;
 		$scope.showWarningErrorData = false;
 		$scope.totalErrorData = 0;
 		$scope.validateNum = 0;
@@ -272,10 +273,18 @@ angular.module('appStep1', ['moment-picker'])
 						$timeout(function () {
 							$scope.reNewToken = true;
 						}, 15000);
+						$timeout(function () {
+							$scope.reSendEmail = true;
+							$scope.sendEmail();
+						}, 120000);
 					} else {
 						$timeout(function () {
 							$scope.reNewToken = true;
 						}, 15000);
+						$timeout(function () {
+							$scope.reSendEmail = true;
+							$scope.sendEmail();
+						}, 120000);
 						$('#confirmCodeVerification').modal('show');
 					}
 				}
@@ -319,6 +328,18 @@ angular.module('appStep1', ['moment-picker'])
 			} else {
 				alert('Por favor ingresa el token correspondiente');
 			}
+		};
+
+		$scope.sendEmail = function () {
+			$http({
+				method: 'GET',
+				url: 'api/oportuya/sendEmail/' + $scope.leadInfo.identificationNumber + '/' + $scope.leadInfo.email,
+			}).then(function successCallback(response) {
+				console.log('success');
+			}, function errorCallback(response) {
+				response.url = 'api/oportuya/sendEmail/' + $scope.leadInfo.identificationNumber + '/' + $scope.leadInfo.email;
+				$scope.addError(response, $scope.leadInfo.identificationNumber);
+			});
 		};
 
 		$scope.saveStep1 = function () {
