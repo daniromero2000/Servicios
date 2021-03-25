@@ -624,7 +624,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					$scope.disabledButton = false;
 					if ($scope.totalErrorData >= 2) {
 						$scope.deniedLeadForFecExp('1');
-						
+						$scope.sendEmailErrorInformation();
 					} else {
 						$('#showWarningErrorData').modal('show');
 					}
@@ -666,6 +666,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			});
 		};
 
+		$scope.sendEmailErrorInformation = function () {
+			$http({
+				method: 'GET',
+				url: '/api/sendEmailErrorInformation/' + $scope.lead.CEDULA + '/' + $scope.lead.CIUD_UBI,
+			}).then(function successCallback(response) {
+				$scope.economicSectors = response.data;
+			});
+		};
 
 		$scope.desistCredit = function () {
 			var opcion = confirm("Desea desistir la solicitud de crédito ?");
