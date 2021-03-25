@@ -52,6 +52,8 @@ use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterfa
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\Policies\PolicyTrait;
+use App\Mail\InconsistenciesInTheInformation\SendNotificationError;
+use Illuminate\Support\Facades\Mail;
 
 class assessorsController extends Controller
 {
@@ -1284,6 +1286,19 @@ class assessorsController extends Controller
 	public function getEconomicsSectors()
 	{
 		return $this->economicSectorInterface->listEconomicSector();
+	}
+
+	public function sendErrorInformation($identificationNumber, $subsidiary)
+	{
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$consultasRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduriaForError($customer);
+		$email = $this->subsidiaryInterface->getSubsidiaryByCode($subsidiary);
+		
+		if($consultasRegistraduria['type'] != -1){
+			Mail::to(['email' => $email->CORREO])->send(new SendNotificationError($consultasRegistraduria));
+		}
+		
+		return response()->json(true);
 	}
 
 	public function getFormVentaContado()

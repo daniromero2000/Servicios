@@ -46,6 +46,15 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         }
     }
 
+    public function getSubsidiaryByCode($code)
+    {
+        try {
+            return $this->model->where('CODIGO', $code)->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getSubsidiaryCodeByCity($city)
     {
         try {

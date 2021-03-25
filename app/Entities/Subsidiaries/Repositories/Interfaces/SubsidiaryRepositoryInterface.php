@@ -24,4 +24,6 @@ interface SubsidiaryRepositoryInterface
     public function listSubsidiaryForDirector();
 
     public function getSubsidiaryForCities();
+
+    public function getSubsidiaryByCode($code);
 }

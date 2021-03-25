@@ -215,6 +215,7 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}', 'Admin\OportuyaV2Controller@execConsultasleadAsesores');
+
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de catalogo
     Route::get('getProduct/productList/{sku}', 'Admin\ListProducts\ListProductController@getProduct');
@@ -313,6 +314,8 @@ Route::get('/getAssessors', 'Admin\UserController@getAllAssessor');
 
 // Administrator
 Route::resource('/api/appError', 'Admin\AppErrors\AppErrorController');
+Route::get('/api/sendEmailErrorInformation/{identificationNumber}/{subsidiary}', 'Admin\assessorsController@sendErrorInformation');
+
 Route::get('/Administrator/appError', 'Admin\AppErrors\AppErrorController@index');
 
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {

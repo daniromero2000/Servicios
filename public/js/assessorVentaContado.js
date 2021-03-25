@@ -624,6 +624,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					$scope.disabledButton = false;
 					if ($scope.totalErrorData >= 2) {
 						$scope.deniedLeadForFecExp('1');
+						
 					} else {
 						$('#showWarningErrorData').modal('show');
 					}

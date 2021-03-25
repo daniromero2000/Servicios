@@ -183,6 +183,62 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         return 1;
     }
 
+    public function validateConsultaRegistraduriaForError($oportudataLead)
+    {
+        // Registraduria
+        $respEstadoCedula =  $this->getLastRegistraduriaConsultation($oportudataLead->CEDULA);
+
+        if ($respEstadoCedula->fechaExpedicion != '') {
+            $dateExpEstadoCedula = $respEstadoCedula->fechaExpedicion;
+            $dateExpEstadoCedula = str_replace(" DE ", "/", $dateExpEstadoCedula);
+            $dateExpEstadoCedula;
+            $dateExplode = explode("/", $dateExpEstadoCedula);
+            $numMonth = $this->getNumMonthOfText(strtolower($dateExplode[1]));
+            $dateExpEstadoCedula = str_replace($dateExplode[1], $numMonth, $dateExpEstadoCedula);
+            $dateExplode = explode("/", $dateExpEstadoCedula);
+            $dateExpEstadoCedula = $dateExplode[2] . "/" . $dateExplode[1] . "/" . $dateExplode[0];
+
+            if (strtotime($oportudataLead->FEC_EXP) != strtotime($dateExpEstadoCedula)) {
+                return [
+                    'message' => 'Fecha de expedicion no coincide',
+                    'identificationNumber' => $oportudataLead->CEDULA,
+                    'type'    => -4,
+                    'error'   => [
+                        'dataCustomer'      => $oportudataLead->FEC_EXP,
+                        'dataRegistraduria' => $respEstadoCedula->fechaExpedicion
+                    ]
+                ]; // Fecha de expedicion no coincide
+            }
+        }
+
+        if ($respEstadoCedula->estado != 'VIGENTE') {
+            return [
+                'message' => 'Cédula no vigente',
+                'type'    => -1,
+            ]; // Cédula no vigente
+        }
+
+        $nameComplete = $oportudataLead->NOMBRES . ' ' . $oportudataLead->APELLIDOS;
+        $nameDataLead = explode(" ", $nameComplete);
+        $nameBdua = explode(" ", $respEstadoCedula->primerNombre);
+        $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
+
+        if ($coincideNames == 0) {
+            return [
+                'message' => 'Nombres y/o apellidos no coinciden',
+                'identificationNumber' => $oportudataLead->CEDULA,
+                'type'    => -5,
+                'error'   => [
+                    'dataCustomer'      => $nameComplete,
+                    'dataRegistraduria' => $respEstadoCedula->primerNombre
+                ]
+            ]; // Nombres y/o apellidos no coinciden
+        }
+
+        // DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $oportudataLead->CEDULA]);
+        // return 1;
+    }
+
     private function getNumMonthOfText($monthText)
     {
         $numMonth = "";
